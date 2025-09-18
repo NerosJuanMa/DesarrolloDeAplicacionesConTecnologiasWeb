@@ -1,0 +1,72 @@
+/*Estilos Generales*/
+/*"  ! important  --Para dar prioridad al estilo, no usar a menos que no funcione otra cosa */
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing:border-box;
+   
+    
+}
+body{
+    font-family: Arial, sans-serif;
+    line-height: 2;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    
+}
+header {
+    font-family: 'Courier New', Courier, monospace;    
+    background-color: hwb(240 1% 0%);
+    color: aliceblue;
+    padding: 1rem 0;
+    text-align: center;
+}
+header p{
+    margin: 0;
+    font-size: 1.2rem;
+}
+header li{
+    border: 2px solid red;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px auto;
+    background-color: hwb(240 30% 69%);
+}
+
+nav {
+    text-align: center;
+   
+}
+
+#sobre-los-parques {
+    border: 2px solid red;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    
+    
+}
+#sobre-los-parques img {
+    border: 2px solid red;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 100%;
+    display: block;
+    
+    
+}
+.lista-parques li{
+    border: 2px solid red;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px auto;
+    background-color: hwb(240 30% 69%);
+}
+footer {
+    text-align: center;
+    display:0;
+
+}

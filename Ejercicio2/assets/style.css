@@ -1,0 +1,110 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  margin: 0;
+  padding: 24px;
+}
+
+h2 {
+  color: #e65100;
+}
+
+.contenedor-flexible {
+  display: flex;
+  /* Prueba a cambiar estas propiedades: */
+  flex-direction: row;  /* row | column | row-reverse | column-reverse */
+  justify-content: center; /* flex-start | center | flex-end | space-between | space-around | space-evenly */
+  align-items: center; /* stretch | flex-start | center | flex-end | baseline */
+  gap: 16px;              /* Espacio entre los items */
+  background: #fff3e0;
+  border: 2px solid #e65100;
+  border-radius: 10px;
+  padding: 20px ;
+  margin-top: 24px;
+  min-height: 120px;
+}
+
+.item-flexible1 {
+  background: #f90e0e;
+  color: #fff;
+  padding: 18px 24px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  text-align: center;
+  flex: 2; /* crece, reduce, base */
+  transition: background 0.3s;
+  
+}
+.item-flexible1:hover {
+  background: #4500e6;
+}
+.item-flexible2 {
+  background: #ff7043;
+  color: #fff;
+  padding: 18px 24px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  text-align: center;
+  flex: 1; /* crece, reduce, base */
+  transition: background 0.3s;
+  
+}
+.item-flexible2:hover {
+  background: #4500e6;
+}
+.item-flexible3 {
+  background: #43ff43;
+  color: #fff;
+  padding: 18px 24px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  text-align: center;
+  flex: 3; /* crece, reduce, base */
+  transition: background 0.3s;
+  
+}
+.item-flexible3:hover {
+  background: #4500e6;
+}
+.item-flexible4 {
+  background: #43ffff;
+  color: #fff;
+  padding: 18px 24px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  text-align: center;
+  flex: 1 1 500px; /* crece, reduce, base */
+  transition: background 0.3s;
+  
+}
+.item-flexible4:hover {
+  background: #4500e6;
+}
+/* Añade este bloque al final de tu archivo 1.css */
+.contenedor-grid {
+  display: grid;
+  /* Prueba a cambiar estas propiedades: */
+  grid-template-columns: 1fr 1fr 1fr; /* Cambia el número de columnas */
+  gap: 116px;                      /* Espacio entre los items */
+  background: #e3f2fd;
+  border: 2px solid #1976d2;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 32px;
+  min-height: 120px;
+}
+
+.item-grid {
+  background: #1976d2;
+  color: #fff;
+  padding: 18px 0;
+  border-radius: 8px;
+  font-size: 1.1em;
+  text-align: center;
+  /*transition: background 0.3s;*/
+}
+
+.item-grid:hover {
+  background: #fa8a09;
+}
