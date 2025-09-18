@@ -1,0 +1,239 @@
+/* ============================================================
+   RESET BÁSICO Y TIPOGRAFÍA GLOBAL
+   ============================================================ */
+
+/* El * (selector universal) afecta a todos los elementos.
+   box-sizing: border-box → hace que padding y borde se incluyan
+   dentro del ancho/alto declarado, evitando cálculos confusos. */
+* { box-sizing: border-box; }
+
+/* Estilo base del body (toda la página):
+   - margin: 0 → quita márgenes que los navegadores ponen por defecto.
+   - font-family → tipografía moderna y legible, con varias alternativas.
+   - color → texto principal en gris muy oscuro (casi negro). */
+body {
+  margin: 0;
+  font-family: Roboto, Arial, sans-serif;
+  color: #1f1f1f;
+}
+
+/* ============================================================
+   GRID GLOBAL DE LA PÁGINA
+   ============================================================ */
+
+.grid-container {
+  display: grid; /* Activa el modelo Grid en este contenedor */
+
+  /* grid-template-areas → define el “mapa” de la página.
+     Cada fila entre comillas representa una fila del grid.
+     Los nombres (header, banner, main, aside, footer) son áreas
+     que luego asignaremos a los elementos. */
+  grid-template-areas:
+    "header header header" /* Fila 1: header ocupa las 3 columnas */
+    "banner main aside"    /* Fila 2: 3 columnas distintas */
+    "footer footer footer";/* Fila 3: footer ocupa todo el ancho */
+
+  /* grid-template-columns → ancho de las columnas:
+     - 150px para el banner (izquierda)
+     - 1fr (fracción) para el contenido central
+     - 220px para el aside (derecha) */
+  grid-template-columns: 150px 1fr 220px;
+
+  /* grid-template-rows → alto de las filas:
+     - auto: altura según contenido (header)
+     - 1fr: ocupa el espacio sobrante (cuerpo principal)
+     - auto: altura según contenido (footer) */
+  grid-template-rows: auto 1fr auto;
+
+  /* min-height: 100vh → asegura que la página ocupe
+     al menos el 100% de la altura de la ventana. */
+  min-height: 100vh; /* al menos toda la altura de la ventana; es la unidad de altura de la vista */
+}
+
+/* Asignamos cada área a su zona correspondiente.
+   Estos nombres deben coincidir con grid-template-areas. */
+header  { grid-area: header; }
+.banner { grid-area: banner; }
+main    { grid-area: main; }
+aside   { grid-area: aside; }
+footer  { grid-area: footer; }
+
+/* ============================================================
+   ESTILOS BÁSICOS DE LAS ZONAS
+   ============================================================ */
+
+/* HEADER y FOOTER comparten estilos:
+   - fondo oscuro (#333)
+   - texto blanco
+   - padding interno
+   - display: flex → nos permite alinear elementos fácilmente
+   - justify-content: space-between → título a la izquierda,
+     menú a la derecha.
+   - align-items: center → alineación vertical centrada. */
+header, footer {
+  background: #333;
+  color: #fff;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Menú de navegación (dentro del header):
+   - list-style: none → sin viñetas
+   - display: flex → en fila
+   - gap: 12px → separación entre <li>
+   - padding y margin a 0 → limpia estilos por defecto */
+.menu { list-style: none; display: flex; gap: 12px; padding: 0; margin: 0; }
+
+/* Los enlaces del menú en blanco, sin subrayado */
+.menu a { color: #fff; text-decoration: none; }
+
+/* Banner lateral: fondo naranja HTML (#F16529), texto blanco */
+.banner { background: #F16529; color: #fff; padding: 12px; }
+
+/* Aside derecho: gris claro */
+aside  { background: #e9e9e9; padding: 12px; }
+
+/* ============================================================
+   GRID INTERIOR DEL MAIN (9 TARJETAS → 3x3)
+   ============================================================ */
+
+.rejilla {
+  display: grid; /* Activamos Grid */
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+  grid-template-rows: 100px 200px 100px; /* Fila 1 y 3 bajas, fila 2 más alta */
+  gap: 12px;      /* Espacio entre tarjetas */
+  padding: 16px;  /* Margen interno alrededor */
+}
+
+/* ============================================================
+   TARJETA BASE (estilos comunes) clase base que se reutiliza con una clase concreta
+   ============================================================ */
+
+.card {
+  border: 1px solid #ddd;  /* Borde gris suave */
+  background: #fafafa;     /* Fondo gris muy claro */
+  border-radius: 8px;      /* Esquinas redondeadas */
+  padding: 10px;           /* Espaciado interno */
+}
+
+/* ============================================================
+   FILA 1: TEXTO + FECHA (Flex en columna)
+   ============================================================ */
+
+.card--meta {
+  display: flex;
+  flex-direction: column; /* Eje principal vertical */
+  justify-content: center;/* Centra verticalmente dentro de su celda */
+  align-items: flex-center;/* Texto alineado a la izquierda */
+  gap: 6px;               /* Espacio entre título y fecha */
+}
+
+/* Estilo del título dentro de la tarjeta */
+.card-title { margin: 0; font-weight: 600; }
+
+/* Estilo de la fecha: más pequeña y gris suave */
+.card-date  { font-size: 0.9rem; color: #6b6b6b; }
+    /*Estilo de la fecha, como la anterior, pero siendo en html un <p> y no un tipo fecha, que parece que esta preconfigurada sin margen*/
+    .fechamia { font-size: 0.9rem; color: #6b6b6b; margin: 0px;}
+
+/* ============================================================
+   FILA 2: IMAGEN CENTRADA + TEXTO (Flex en columna)
+   ============================================================ */
+
+.card--media {
+  display: flex;
+  flex-direction: column; /* Apila imagen + caption */
+  align-items: center;    /* Centra horizontal */
+  justify-content: center;/* Centra vertical */
+  gap: 8px;               /* Espacio entre imagen y texto */
+  background: #f3f3f3;    /* Fondo ligeramente más oscuro */
+}
+
+/* Imagen dentro de la tarjeta media */
+.card--media img {
+  width: 120px;
+  height: 120px;
+  max-width: 100%;       /* Evita que se desborde en pantallas pequeñas */
+  border-radius: 10px;   /* Bordes redondeados */
+  object-fit: cover;     /* Rellena el recuadro recortando sin deformar */
+}
+
+/* Texto debajo de la imagen, centrado */
+.card-caption { margin: 0; text-align: center; }
+
+/* ============================================================
+   FILA 3: AVATAR + TEXTO + BOTÓN (Flex en fila)
+   ============================================================ */
+
+.card--row {
+  display: flex;           /* Elementos en fila */
+  align-items: center;     /* Centrado vertical */
+  gap: 10px;               /* Separación entre elementos */
+  padding: 12px;
+  background: #fff;        /* Fondo blanco */
+  border: 1px solid #ccc;  /* Borde más fuerte */
+}
+
+/* Avatar circular dentro de la tarjeta */
+.card--row .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;   /* Lo hace circular */
+  object-fit: cover;    /* Ajusta la imagen sin deformar */
+}
+
+/* Bloque de texto (título + subtítulo) en columna */
+.row-text { display: flex; flex-direction: column; line-height: 1.2; }
+
+/* Texto secundario en gris */
+.muted { color: #777; }
+
+/* Botón de acción */
+.btn {
+  margin-left: auto;       /* Empuja el botón al extremo derecho */
+  border: 0;               /* Sin borde */
+  background: #E44D26;     /* Naranja HTML (paleta oficial) */
+  color: #fff;             /* Texto blanco */
+  padding: 8px 12px;       /* Tamaño del botón */
+  border-radius: 8px;      /* Esquinas redondeadas */
+  cursor: pointer;         /* Cursor tipo “mano” al pasar */
+}
+
+/* ============================================================
+   VARIANTES DIDÁCTICAS (fila 3)
+   ============================================================ */
+
+/* Variante: centra todo el contenido en la fila */
+.card--row-center { justify-content: center; }
+
+/* Variante: reparte espacio entre los elementos
+   → avatar a la izquierda, botón a la derecha, texto en medio */
+.card--row-space  { justify-content: space-between; }
+
+/* ============================================================
+   RESPONSIVE SIMPLE (pantallas menores de 900px)
+   ============================================================ */
+
+@media (max-width: 900px) {
+  /* El GRID GLOBAL pasa a 1 sola columna:
+     las áreas se apilan en este orden. */
+  .grid-container {
+    grid-template-areas:
+      "header"
+      "main"
+      "banner"
+      "aside"
+      "footer";
+    grid-template-columns: 1fr; /* solo una columna */
+    grid-template-rows: auto auto auto auto auto; /* 5 filas */
+  }
+
+  /* El GRID INTERNO de las tarjetas también se apila:
+     todas las tarjetas en una columna vertical */
+  .articulos {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(9, auto); /* 9 filas automáticas */
+  }
+}

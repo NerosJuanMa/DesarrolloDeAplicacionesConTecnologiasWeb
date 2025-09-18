@@ -1,0 +1,182 @@
+<!DOCTYPE html> <!-- Declara el tipo de documento: HTML5. Ayuda al navegador a usar el modo estándar -->
+<html lang="es"> <!-- Idioma del documento: español. Importante para accesibilidad y SEO -->
+<head>
+  <!-- Conjunto de caracteres. UTF-8 permite acentos y caracteres especiales correctamente -->
+  <meta charset="UTF-8" />
+  <!-- Hace que el layout sea responsive: el “ancho” lógico coincide con el ancho del dispositivo -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Título de la pestaña/navegador -->
+  <title>Ejercicio: Grid global + Flex en tarjetas</title>
+  <!-- Enlazamos hoja de estilos externa. Desde aquí controlaremos Grid y Flex -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- CONTENEDOR PRINCIPAL DE LA PÁGINA
+       En CSS lo convertiremos en un GRID GLOBAL con grid-template-areas:
+       - header arriba (a lo ancho)
+       - banner (izquierda), main (centro), aside (derecha)
+       - footer abajo (a lo ancho)
+  -->
+  <div class="grid-container">
+
+    <!-- HEADER (encabezado del sitio)
+         Semánticamente reúne logo/título y navegación principal.
+         En CSS: usaremos FLEX para alinear h1 a la izquierda y el menú a la derecha.
+         Además, esta zona ocupará el área "header" del Grid global.
+    -->
+    <header>
+      <!-- Título del sitio (podría ser un logo). Etiqueta h1 por jerarquía semántica -->
+      <h1>Mi Página</h1>
+
+      <!-- Navegación principal del sitio -->
+      <nav>
+        <!-- Lista de enlaces del menú. En CSS: display:flex; gap; quitar viñetas -->
+        <ul class="menu">
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#">Servicios</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- BANNER LATERAL (columna izquierda del Grid global)
+         Útil para promos, menú secundario o anuncios.
+         En el Grid global esta caja ocupará el área "banner".
+    -->
+    <aside class="banner">Banner lateral</aside>
+
+    <!-- CONTENIDO PRINCIPAL
+         Esta zona ocupará el área "main" del Grid global.
+         Dentro, tendremos OTRA REJILLA (Grid) con 9 tarjetas (3x3).
+    -->
+    <main>
+      <!-- SECCIÓN DE ARTÍCULOS/TARJETAS
+           En CSS: .articulos será un GRID INTERNO con 3 columnas y 3 filas:
+             - Fila 1 (baja) → tarjetas pequeñas
+             - Fila 2 (alta) → tarjetas grandes
+             - Fila 3 (baja) → tarjetas pequeñas
+           Además, CADA tarjeta usará FLEX internamente para organizar sus elementos.
+      -->
+      <section class="rejilla"> <!-- .articulos es el Grid interno -->
+
+        <!-- ===================== FILA 1: TEXTO + FECHA =====================
+             Patrón didáctico: FLEX EN COLUMNA dentro de cada tarjeta.
+             Objetivo: mostrar cómo apilar elementos (título arriba, fecha debajo)
+             y alinear al inicio con pequeños espacios (gap).
+        -->
+
+        <!-- Tarjeta 1: título y fecha. <time> aporta semántica de fecha -->
+        <article class="card card--meta">
+          <!-- Título de la tarjeta. En CSS: sin margen, font-weight 600 -->
+          <p class="card-title">Tarjeta 1 — Texto breve</p>
+          <!-- Fecha visible para personas y atributo datetime para máquinas/SEO -->
+          <!--<time datetime="2025-09-17" class="card-date">17/09/2025</time>-->
+          <p class="fechamia">17-09-2025</p>
+        </article>
+
+        <!-- Tarjeta 2: mismo patrón (repetición para que practiquen consistencia) -->
+        <article class="card card--meta">
+          <p class="card-title">Tarjeta 2 — Texto breve</p>
+          <time datetime="2025-09-18" class="card-date">18/09/2025</time>
+        </article>
+
+        <!-- Tarjeta 3: mismo patrón -->
+        <article class="card card--meta">
+          <p class="card-title">Tarjeta 3 — Texto breve</p>
+          <time datetime="2025-09-19" class="card-date">19/09/2025</time>
+        </article>
+
+        <!-- ===================== FILA 2: IMAGEN + TEXTO =====================
+             Patrón didáctico: FLEX EN COLUMNA centrado (justify + align center).
+             Objetivo: centrar una imagen y poner un pie de foto/caption debajo.
+             Notas:
+               - object-fit: cover en CSS evita deformaciones
+               - border-radius para suavizar esquinas
+        -->
+
+        <!-- Tarjeta 4: imagen centrada + caption -->
+        <article class="card card--media">
+          <!-- Imagen de placeholder (120x120). Sustituible por imágenes reales /img/... -->
+          <img src="https://placehold.co/120x120" alt="Imagen ejemplo" />
+          <!-- Pie de imagen / descripción corta -->
+          <p class="card-caption">Tarjeta 4 — Texto principal</p>
+        </article>
+
+        <!-- Tarjeta 5: mismo patrón -->
+        <article class="card card--media">
+          <img src="https://placehold.co/120x120" alt="Imagen ejemplo" />
+          <p class="card-caption">Tarjeta 5 — Texto principal</p>
+        </article>
+
+        <!-- Tarjeta 6: mismo patrón -->
+        <article class="card card--media">
+          <img src="https://placehold.co/120x120" alt="Imagen ejemplo" />
+          <p class="card-caption">Tarjeta 6 — Texto principal</p>
+        </article>
+
+        <!-- ================= FILA 3: AVATAR + TEXTO + BOTÓN =================
+             Patrón didáctico: FLEX EN FILA.
+             Objetivos:
+               - Alinear verticalmente (align-items: center)
+               - Usar gap para separación consistente
+               - Empujar el botón al extremo con margin-left: auto
+               - Probar variantes de justify-content (center / space-between)
+        -->
+
+        <!-- Tarjeta 7: patrón base → avatar | bloque de texto | botón a la derecha -->
+        <article class="card card--row">
+          <!-- Avatar redondo. object-fit: cover recorta sin deformar -->
+          <img class="avatar" src="https://placehold.co/80x80" alt="Avatar" />
+          <!-- Bloque de texto en columna: título + ayuda con <small> -->
+          <div class="row-text">
+            <p class="card-title">Tarjeta 7 — Con acciones</p>
+            <small class="muted">Texto corto de apoyo</small>
+          </div>
+          <!-- Botón de acción. Con margin-left:auto se “pega” a la derecha -->
+          <button class="btn">Ver</button>
+        </article>
+
+        <!-- Tarjeta 8: variante centrada → justify-content: center
+             Nota: si queremos que el botón no quede separado por “auto”,
+             podríamos retirar el margin-left:auto en la clase del botón para esta variante.
+        -->
+        <article class="card card--row card--row-center">
+          <img class="avatar" src="https://placehold.co/80x80" alt="Avatar" />
+          <div class="row-text">
+            <p class="card-title">Tarjeta 8 — Centrada</p>
+            <small class="muted">Alineación diferente</small>
+          </div>
+          <button class="btn">Abrir</button>
+        </article>
+
+        <!-- Tarjeta 9: variante con espacio repartido → justify-content: space-between
+             Efecto: avatar al inicio, botón al final y texto ocupando el medio.
+        -->
+        <article class="card card--row card--row-space">
+          <!-- Aquí el avatar va un poco más pequeño (48x48) para ver otra escala -->
+          <img class="avatar" src="https://placehold.co/48x48" alt="Avatar" />
+          <div class="row-text">
+            <p class="card-title">Tarjeta 9 — Espaciada</p>
+            <small class="muted">justify-content: space-between</small>
+          </div>
+          <button class="btn">Ir</button>
+        </article>
+
+      </section> <!-- /section.articulos -->
+    </main>
+
+    <!-- ASIDE DERECHO (columna derecha del Grid global)
+         Útil para enlaces de ayuda, widgets, contenidos relacionados, etc.
+    -->
+    <aside class="aside">Aside — Enlaces o info extra</aside>
+
+    <!-- FOOTER (pie de página)
+         En CSS: también podemos usar FLEX para centrar su contenido.
+         En el Grid global ocupará el área "footer".
+    -->
+    <footer class="site-footer">© 2025 — Ejercicio Grid & Flex</footer>
+
+  </div> <!-- /.grid-container -->
+</body>
+</html>
