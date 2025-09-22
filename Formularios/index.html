@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Formulario</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <fieldset>
+        <legend class="tipo">Datos personales</legend>
+    <form action="mailto:hola@gmail.com" method="post" enctype="text/plain">
+        <label class="tipo2" for="name">Nombre</label>
+        <input id="name" type="text" placeholder="Ingrese su Nombre">
+        <br>
+        <label for="surname">Apellidos</label>
+        <input id="surname" type="text" placeholder="Ingrese sus Apellidos">
+        <br>
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="Ingrese su Email">
+        <br>
+        <label for="password">Password</label>
+        <input id="password" type="password" placeholder="Ingrese su Password">
+        <br>
+        <label for="edad">Edad</label>
+        <input id="edad" type="text" placeholder="Ingrese su Edad" list="edades">
+            <datalist id="edades">
+                <option value="Menor">
+                <option value="Adolescente">
+                <option value="Adulto">
+                <option value="Mayor">
+                <option value="Anciano">
+            </datalist>
+        </fieldset>
+        <br>
+        <fieldset>
+            <legend>Tipo de asiento</legend>
+        <label for="premium">Asiento Premium</label>
+        <input id="premium" type="radio" value="Asiento-Premium" name="asiento">
+        <br>
+        <label for="eco-plus">Asiento Economy +</label>
+        <input id="eco-plus" type="radio" value="Asiento-eco-plus" name="asiento">
+        <br>
+        <label for="eco">Asiento Economy</label>
+        <input id="eco" type="radio" value="Asiento-eco" name="asiento">
+        </fieldset>
+        <br>
+        <fieldset>
+            <legend>Selecciona adicionales</legend>
+        <label for="vino-premium">Vino Premium</label>
+        <input id="vino-premium" type="checkbox" value="vino-premium" name="adicionales">
+        <br>
+        <label for="vino">Vino</label>
+        <input id="vino" type="checkbox" value="vino" name="adicionales">
+        <br>
+        <label for="manta">Manta</label>
+        <input id="manta" type="checkbox" value="manta" name="adicionales">
+        </fieldset>
+        <br>
+        <fieldset>
+            <legend>Seleccion de Hotel</legend>
+        <label for="hoteles">Hoteles Disponibles</label>
+        <select name="hoteles" id="hoteles" required>
+            <option value="" disabled selected>Seleccione un hotel...</option>
+            <option value="hotel-1">Abasto Hotel</option>
+            <option value="hotel-2">Ritz</option>
+            <option value="hotel-3">Islas Caiman Hotel</option> 
+        </select>
+        </fieldset>
+        <br>
+        <fieldset>
+            <legend>Varios</legend>
+        <label for="color">Color Favorito</label>
+        <input id="color" type="color">
+        <br><br>
+        <label for="range">Temperatura asiento</label>
+        <span>15</span>
+        <input id="range" type="range" min="15" max="50">
+        <span>50</span>
+        </fieldset>
+        <br>
+        <label for="mensaje">Mensaje:</label>
+        <textarea name="mensaje" minlength="10" maxlength="50" id="mensaje" required></textarea>
+        
+        <br><br>
+        <label for="pass">Contraseña (para tu área privada)</label>
+        <input type="password" id="pass" name="pass"
+           pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,10}"
+           title="Mínimo 8 caracteres, al menos 1 mayúscula, 1 minúscula y 1 número"
+           aria-describedby="ayuda-pass"
+           required>
+        <small id="ayuda-pass">Usa 8 caracteres, con mayúsculas, minúsculas y números.</small>
+    <br>
+        <input type="submit">
+        <input type="reset">
+    </form>
+</body>
+</html>
