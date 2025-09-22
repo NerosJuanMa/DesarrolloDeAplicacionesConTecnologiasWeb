@@ -1,6 +1,7 @@
 :root{
 --color1: rgb(30, 0, 255);
 --color2: green;
+  
 --tipoletra1: arial;
 --tipoletra2: georgia ;
 
@@ -14,3 +15,15 @@
     font-family: var(--tipoletra2);
     color: var(--color1);
 }
+.degradado {
+      width: 300px;
+      height: 150px;
+      background:
+      linear-gradient(
+        to right,
+        var(--color2) 30%,
+        yellow 60%,
+        green 100%
+      );
+      border: 1px solid #000;
+    }
