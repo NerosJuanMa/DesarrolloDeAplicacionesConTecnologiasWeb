@@ -1,0 +1,16 @@
+:root{
+--color1: rgb(30, 0, 255);
+--color2: green;
+--tipoletra1: arial;
+--tipoletra2: georgia ;
+
+}
+/*Las variables del root solo pueden tener un dato, no se pueden meter mas de una opcion en una variable*/
+.tipo{
+    font-family: var(--tipoletra1);
+    color: var(--color1);
+}
+.tipo2{
+    font-family: var(--tipoletra2);
+    color: var(--color1);
+}
