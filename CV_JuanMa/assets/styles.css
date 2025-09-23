@@ -1,0 +1,870 @@
+/* ============================================================
+   📚 HOJA DE ESTILOS EDUCATIVA PARA ESTUDIANTES
+   ============================================================
+   
+   Esta hoja de estilos está diseñada con fines didácticos.
+   Cada sección está explicada paso a paso para que puedas
+   aprender cómo funciona CSS desde lo básico hasta conceptos
+   más avanzados como Grid, Flexbox y animaciones.
+   
+   📖 ESTRUCTURA DEL ARCHIVO:
+   1. Reset y configuración base
+   2. Variables CSS (colores y /* ============================================================
+   📺 20. SECCIÓN MULTIMEDIA - Tarjetas horizontales con Grid
+   ============================================================ */
+
+/* Contenedor principal de multimedia */
+#multimedia {
+    padding: 3rem 0;                    /* Espaciado vertical */
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); /* Fondo degradado sutil */
+}
+
+/* Título de la sección multimedia */
+#multimedia h2 {
+    text-align: center;                 /* Centrado */
+    margin-bottom: 2.5rem;              /* Espacio debajo */
+    font-size: 2.2rem;                  /* Título grande */
+    color: var(--color-secundario);     /* Color de marca */
+    font-weight: 700;                   /* Negrita */
+}
+
+/* Grid de 2 tarjetas horizontales con 1.5fr cada una */
+.multimedia-grid {
+    display: grid;                      /* Activa CSS Grid */
+    grid-template-columns: 1.5fr 1.5fr; /* 2 columnas de 1.5fr cada una - lado a lado */
+    gap: 2rem;                          /* Espacio entre tarjetas */
+    max-width: 1200px;                  /* Mismo ancho máximo que los cursos */
+    margin: 0 auto;                     /* Centrado */
+}
+
+/* ¿Qué hace 1.5fr?
+   - fr = fracción del espacio disponible
+   - 1.5fr + 1.5fr = 3fr total
+   - Cada tarjeta ocupa 50% del espacio (1.5/3 = 0.5)
+   - Las dos tarjetas están una AL LADO de la otra */
+
+/* Estilo de cada tarjeta horizontal */
+.multimedia-card {
+    display: grid;                      /* Grid interno */
+    grid-template-columns: 200px 1fr;   /* Imagen más pequeña 200px para que quepa el contenido */
+    background: #ffffff;                /* Fondo blanco */
+    border-radius: 15px;                /* Bordes redondeados */
+    overflow: hidden;                   /* Oculta contenido que se desborda */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12); /* Sombra */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación suave */
+    border: 2px solid transparent;      /* Borde invisible inicial */
+    min-height: 200px;                  /* Altura mínima para consistencia */
+}
+
+/* Efecto hover en toda la tarjeta */
+.multimedia-card:hover {
+    transform: translateY(-8px);        /* Elevación mayor */
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2); /* Sombra más intensa */
+    border-color: var(--color-base);    /* Borde de color marca */
+}
+
+/* Contenedor de imagen/video */
+.multimedia-card__image {
+    position: relative;                 /* Para posicionamiento interno */
+    overflow: hidden;                   /* Oculta desbordamiento */
+}
+
+/* Imagen dentro de la tarjeta */
+.multimedia-card__image img {
+    width: 100%;                        /* Ocupa todo el ancho */
+    height: 100%;                       /* Ocupa toda la altura */
+    object-fit: cover;                  /* Recorta sin deformar */
+    object-position: center;            /* Centra el recorte */
+    transition: transform 0.3s ease;    /* Animación suave */
+}
+
+/* Efecto hover solo en la imagen */
+.multimedia-card:hover .multimedia-card__image img {
+    transform: scale(1.1);              /* Zoom en la imagen */
+}
+
+/* Contenedor del video */
+.video-container {
+    position: relative;                 /* Para el iframe absoluto */
+    width: 100%;                        /* Ancho completo */
+    height: 200px;                      /* Altura fija */
+    background: #000;                   /* Fondo negro */
+}
+
+/* iframe del video */
+.video-container iframe {
+    position: absolute;                 /* Posición absoluta */
+    top: 0;
+    left: 0;
+    width: 100%;                        /* Ancho completo */
+    height: 100%;                       /* Altura completa */
+    border: none;                       /* Sin borde */
+}
+
+/* Contenido de texto de la tarjeta */
+.multimedia-card__content {
+    padding: 1.5rem;                    /* Espaciado interno */
+    display: flex;                      /* Flexbox para organizar contenido */
+    flex-direction: column;             /* Contenido en columna */
+    justify-content: space-between;     /* Distribuye espacio */
+}
+
+/* Título de la tarjeta */
+.multimedia-card__title {
+    font-size: 1.3rem;                  /* Tamaño grande */
+    font-weight: 700;                   /* Negrita */
+    color: var(--color-secundario);     /* Color de marca */
+    margin-bottom: 0.75rem;             /* Espacio debajo */
+    line-height: 1.2;                   /* Líneas compactas */
+}
+
+/* Descripción de la tarjeta */
+.multimedia-card__description {
+    font-size: 0.95rem;                 /* Tamaño cómodo de lectura */
+    color: #555;                        /* Gris para diferenciarlo del título */
+    line-height: 1.5;                   /* Buena legibilidad */
+    margin-bottom: 1.25rem;             /* Espacio antes del botón */
+    flex: 1;                           /* Ocupa espacio disponible */
+}
+
+/* Botón dentro de la tarjeta */
+.multimedia-card .btn {
+    align-self: flex-start;             /* Alineado a la izquierda */
+    padding: 0.5rem 1rem;               /* Espaciado cómodo */
+    font-size: 0.9rem;                  /* Tamaño menor que el principal */
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    /* Grid mantiene una sola columna */
+    .multimedia-grid {
+        grid-template-columns: 1fr;     /* Sigue siendo una columna */
+        gap: 1.5rem;                    /* Menos espacio entre tarjetas */
+    }
+    
+    /* Tarjetas se vuelven verticales en móvil */
+    .multimedia-card {
+        grid-template-columns: 1fr;     /* Una sola columna: imagen arriba, contenido abajo */
+        min-height: auto;               /* Altura automática en móvil */
+    }
+    
+    .multimedia-card__image {
+        height: 200px;                  /* Altura fija para imagen/video */
+    }
+    
+    .video-container {
+        height: 200px;                  /* Misma altura que imagen */
+    }
+    
+    #multimedia h2 {
+        font-size: 1.8rem;              /* Título más pequeño */
+        margin-bottom: 2rem;            /* Menos espacio */
+    }
+}
+
+/* ============================================================
+   📚 ÍNDICE DE CONTENIDOS DEL CSS EDUCATIVO
+   ============================================================
+   1. Reset CSS - Eliminar estilos por defecto
+   2. Variables CSS (custom properties)
+   3. Estilos generales del body
+   4. Layout principal con CSS Grid
+   5. Componentes específicos (header, nav, cards, etc.)
+   6. Breadcrumbs (migas de pan)
+   7. Responsive design
+   ============================================================ */
+
+
+/* ============================================================
+   🔧 1. RESET CSS - Eliminamos estilos por defecto del navegador
+   ============================================================ */
+
+/* El selector * aplica estilos a TODOS los elementos */
+* {
+    margin: 0;           /* Quita márgenes por defecto */
+    padding: 0;          /* Quita espaciado interno por defecto */
+    box-sizing: border-box;  /* Incluye borde y padding en el ancho total */
+}
+
+/* ¿Por qué box-sizing: border-box?
+   - Por defecto, el ancho de un elemento NO incluye padding ni bordes
+   - Con border-box, el ancho INCLUYE todo, facilitando los cálculos
+   Ejemplo: un div de 200px será exactamente 200px, no 200px + padding + border */
+
+
+/* ============================================================
+   🎨 2. VARIABLES CSS - Nuestros colores y fuentes de marca
+   ============================================================ */
+
+/* Las variables CSS se declaran en :root para usarlas en toda la página */
+:root {
+    /* 🎯 COLORES DE MARCA - Cambia estos valores para cambiar toda la identidad visual */
+    --color-base: #e010a8;          /* Rosa principal - botones, enlaces */
+    --color-secundario: #073B4C;    /* Azul oscuro - títulos, bordes */
+    --color-sabermas: #F0FFFF;      /* Celeste claro - fondos especiales */
+    --color-hoover: #118AB2;        /* Azul medio - efectos hover */
+    
+    /* 📝 TIPOGRAFÍAS */
+    --fuente-principal: 'Arial', sans-serif;      /* Fuente principal legible */
+    --fuente-secundaria: 'Courier New', monospace; /* Fuente para código */
+}
+
+/* ¿Cómo usar variables CSS?
+   - Se declaran con -- al inicio: --mi-variable: valor;
+   - Se usan con var(): color: var(--color-base);
+   - Ventaja: cambias un valor y se actualiza en toda la página */
+
+
+/* ============================================================
+   🏗️ 3. ESTILOS BASE DEL BODY
+   ============================================================ */
+
+body {
+    font-family: var(--fuente-principal);  /* Usa nuestra variable de fuente */
+    background-color: #f4f4f4;            /* Fondo gris claro */
+    color: #333;                          /* Texto gris oscuro (buena legibilidad) */
+    line-height: 1.6;                     /* Espaciado entre líneas (1.6 = 160%) */
+    padding: 20px;                        /* Espaciado interno */
+}
+
+/* ¿Por qué line-height: 1.6?
+   - Mejora la legibilidad del texto
+   - Valor entre 1.4-1.6 es considerado óptimo
+   - Sin unidad = relativo al tamaño de fuente */
+
+
+/* ============================================================
+   📐 4. LAYOUT PRINCIPAL CON CSS GRID
+   ============================================================ */
+
+/* GRID LAYOUT - Organiza la página en áreas definidas */
+.layout {
+    display: grid;                        /* Activa CSS Grid */
+    grid-template-columns: 1fr 2fr 3fr;   /* 3 columnas: 1 parte, 2 partes, 3 partes */
+    grid-template-areas:                  /* Define las áreas de la página */
+        "header header header"            /* Header ocupa las 3 columnas */
+        "nav    nav    nav"              /* Nav ocupa las 3 columnas */
+        "aside  main   main"             /* Aside en 1 columna, main en 2 */
+        "footer footer footer";          /* Footer ocupa las 3 columnas */
+    gap: 16px;                           /* Espacio entre elementos */
+}
+
+/* Asignamos cada elemento HTML a su área del grid */
+header { grid-area: header; }
+nav { grid-area: nav; }
+main { grid-area: main; }
+footer { grid-area: footer; }
+.sidebar { grid-area: aside; }
+
+/* ¿Qué hace grid-template-areas?
+   - Define un "mapa" visual de la página
+   - Cada palabra representa un área
+   - Las comillas representan filas
+   - Muy fácil de entender y modificar */
+
+
+/* ============================================================
+   👤 5. HEADER - Cabecera con foto y datos personales
+   ============================================================ */
+
+/* Contenedor interno del header con grid */
+.header__inner {
+    display: grid;                    /* Grid para organizar foto + info */
+    grid-template-columns: 120px 1fr; /* Foto fija 120px, info ocupa el resto */
+    gap: 16px;                       /* Espacio entre foto e info */
+    align-items: center;             /* Centra verticalmente */
+    max-width: 1100px;               /* Ancho máximo */
+    margin: 0 auto;                  /* Centra horizontalmente */
+}
+
+/* Foto de perfil circular */
+.header__photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;              /* Hace la imagen circular */
+    object-fit: cover;               /* Recorta sin deformar */
+    border: 4px solid var(--color-base); /* Borde con color de marca */
+    background: #fff;
+}
+
+/* ¿Qué hace object-fit: cover?
+   - Recorta la imagen para que llene el contenedor
+   - Mantiene las proporciones originales
+   - Alternativas: contain, fill, scale-down */
+
+/* Información del perfil */
+.header__info {
+    text-align: left;
+    color: #06313f;
+}
+
+.header__name {
+    font-size: 2rem;               /* Título grande */
+    line-height: 1.1;             /* Líneas más compactas */
+    margin-bottom: 6px;
+}
+
+.header__role {
+    font-weight: 700;             /* Texto en negrita */
+    color: var(--color-base);     /* Color de marca */
+}
+
+/* Contacto con flexbox horizontal */
+.header__contact {
+    margin-top: 8px;
+    display: flex;                /* Elementos en línea horizontal */
+    gap: 12px;                   /* Espacio entre elementos */
+    flex-wrap: wrap;             /* Baja a siguiente línea si no cabe */
+    font-size: 0.95rem;
+}
+
+.header__contact a {
+    color: #06313f;
+}
+
+.header__contact a:hover {
+    color: var(--color-base);
+}
+
+
+/* ============================================================
+   🧭 6. NAVEGACIÓN - Menú horizontal con flexbox
+   ============================================================ */
+
+/* Lista horizontal del menú */
+nav ul {
+    /*display:flex;                Elementos en línea horizontal */
+    justify-content: center;     /* Centra horizontalmente */
+    align-items: center;         /* Centra verticalmente */
+    gap: 1rem;                  /* Espacio entre botones */
+    list-style: none;           /* Quita los puntos de la lista */
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;            /* Baja línea en pantallas pequeñas */
+}
+
+nav li {
+    margin: 0;                  /* Sin márgenes extra */
+}
+
+/* Estilo de botón para los enlaces */
+nav a {
+    display: inline-block; /* Permite padding y margin */
+    padding: 0.6rem 1.1rem;    /* Espaciado interno */
+    border-radius: 8px;        /* Bordes redondeados */
+    background: var(--color-sabermas); /* Fondo claro */
+    color: var(--color-base);   /* Texto de marca */
+    font-weight: 600;          /* Semi-negrita */
+    text-decoration: none;     /* Sin subrayado */
+    transition: background 0.2s ease; /* Animación suave */
+}
+
+nav a:hover {
+    background: var(--color-hoover); /* Cambia color al pasar ratón */
+    color: white;
+}
+
+/* ¿Qué hace transition?
+   - Crea animaciones suaves entre estados
+   - Sintaxis: propiedad duración tipo
+   - ease = animación natural (lenta-rápida-lenta) */
+
+
+/* ============================================================
+   📱 7. SIDEBAR - Columna lateral con información
+   ============================================================ */
+
+.sidebar {
+    background: #ffffff;
+    border: 2px dashed var(--color-secundario); /* Borde punteado */
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.sidebar h3 {
+    color: var(--color-secundario);
+    margin-bottom: 0.5rem;
+}
+
+
+/* ============================================================
+   📄 8. SECCIONES PRINCIPALES - Contenido del main
+   ============================================================ */
+
+.section {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06); /* Sombra sutil */
+    margin-bottom: 12px;
+}
+
+.section h2 {
+    color: var(--color-secundario);
+    margin-bottom: 0.5rem;
+}
+
+/* ¿Qué hace box-shadow?
+   - Sintaxis: x y blur spread color
+   - 0 2px 6px = no desplazamiento horizontal, 2px vertical, 6px difuminado
+   - rgba(0,0,0,0.06) = negro con 6% transparencia */
+
+
+/* ============================================================
+   🃏 9. TARJETAS - Sección de navegación rápida
+   ============================================================ */
+
+/* Tarjeta contenedora principal */
+.repaso {
+    font-family: var(--fuente-principal);
+    background: #fafafa;              /* Fondo muy claro */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Sombra más marcada */
+}
+
+/* Título centrado de la sección */
+h2.repaso {
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--color-secundario);
+}
+
+/* Grid de 3 columnas para las tarjetas */
+.repaso-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+    gap: 1rem;                             /* Espacio entre tarjetas */
+}
+
+/* ¿Qué hace repeat(3, 1fr)?
+   - repeat() evita escribir "1fr 1fr 1fr"
+   - 1fr = 1 fracción del espacio disponible
+   - 3 columnas que se reparten el espacio por igual */
+
+/* Estilo individual de cada tarjeta */
+.card {
+    background: #fff;
+    border: 3px groove var(--color-secundario); /* Borde 3D */
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s; /* Animación hover */
+}
+
+/* Efecto al pasar el ratón por encima */
+.card:hover {
+    transform: translateY(-3px);              /* Mueve hacia arriba */
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12); /* Sombra más intensa */
+}
+
+/* ¿Qué hace transform: translateY()?
+   - translateY = mueve vertical (Y)
+   - Valor negativo = hacia arriba
+   - Crea efecto de "elevación" */
+
+.card__cabecera {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--color-base);
+}
+
+.card__contenido {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+
+/* ============================================================
+   🔗 10. BOTONES - Elementos interactivos
+   ============================================================ */
+
+/* Botón estilo "marca" */
+.btn-brand {
+    background: var(--color-base);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.btn-brand:hover {
+    background: #c60e90;  /* Tono más oscuro */
+    color: #fff;
+}
+
+/* Botón genérico */
+.button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--color-base);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.button:hover {
+    background: var(--color-hoover);
+    color: white;
+}
+
+
+/* ============================================================
+   📝 11. FORMULARIOS - Elementos de entrada de datos
+   ============================================================ */
+
+/* Grid para organizar campos del formulario */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 columnas iguales */
+    gap: 12px;
+}
+
+/* Clase para campos que ocupan toda la fila */
+.form-grid .full {
+    grid-column: 1 / -1;  /* Desde columna 1 hasta la última */
+}
+
+/* ¿Qué significa 1 / -1?
+   - 1 = empieza en la primera línea del grid
+   - -1 = termina en la última línea del grid
+   - Resultado: ocupa todo el ancho disponible */
+
+label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: block;        /* Ocupa toda la línea */
+    margin-bottom: 0.25rem;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    font: inherit;         /* Hereda fuente del padre */
+    background: #fafafa;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;      /* Solo permite redimensionar verticalmente */
+}
+
+button[type="submit"] {
+    display: inline-block;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1.1rem;
+    background: var(--color-base);
+    color: white;
+    font-weight: 800;
+    cursor: pointer;       /* Cambia cursor a manita */
+    transition: background 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    background: #c60e90;
+}
+
+
+/* ============================================================
+   🍞 12. BREADCRUMBS - Migas de pan para navegación
+   ============================================================ */
+
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;              /* Baja línea si no cabe */
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    background-color: #f8f9fa;    /* Fondo gris muy claro */
+    border-radius: 0.375rem;
+    border: 1px solid #dee2e6;    /* Borde sutil */
+    font-size: 0.875rem;
+}
+
+.breadcrumb-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;            /* Sin puntos de lista */
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+}
+
+/* Separador entre elementos (símbolo >) */
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";                /* Inserta el símbolo > */
+    color: var(--color-secundario);
+    margin: 0 0.5rem;
+    font-weight: bold;
+}
+
+/* ¿Qué hace ::before?
+   - Pseudo-elemento que inserta contenido ANTES del elemento
+   - content: "" es obligatorio
+   - + selecciona el hermano inmediatamente siguiente */
+
+.breadcrumb-item a {
+    color: var(--color-base);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--color-hoover);
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: var(--color-secundario);
+    font-weight: 600;
+}
+
+
+/* ============================================================
+   🏢 13. FOOTER - Pie de página
+   ============================================================ */
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+    border-top: 5px solid var(--color-base); /* Borde superior grueso */
+    color: whitesmoke;                       /* Texto claro */
+    background-color: var(--color-secundario); /* Fondo oscuro */
+    font-size: 0.9rem;
+}
+
+
+/* ============================================================
+   🖼️ 14. IMÁGENES - Estilos para contenido visual
+   ============================================================ */
+
+.imagenes {
+    display: block;          /* Permite usar margin auto */
+    margin: 1rem auto;       /* Centra horizontalmente */
+    border-radius: 12px;     /* Bordes redondeados */
+    max-width: 80%;         /* No se desborda del contenedor */
+    height: auto;           /* Mantiene proporción */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Sombra */
+}
+
+
+/* ============================================================
+   � 20. SECCIÓN MULTIMEDIA - Foto y Video mejorados
+   ============================================================ */
+
+.multimedia-grid {
+  display: flex;
+  flex-wrap: wrap;         /* permite que salten a otra línea en móviles */
+  justify-content: center; /* centra el contenido */
+  gap: 2rem;               /* espacio entre tarjetas */
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.multimedia-grid > .card {
+  flex: 1 1 400px; /* ancho flexible mínimo 400px, máximo se adapta */
+  max-width: 420px; /* evita que crezca demasiado */
+}
+
+
+/* ============================================================
+   �📱 15. RESPONSIVE DESIGN - Adaptación a móviles
+   ============================================================ */
+
+/* Reglas específicas para pantallas pequeñas (móviles) */
+@media (max-width: 576px) {
+    
+    /* Grid de tarjetas: de 3 columnas a 1 columna */
+    .repaso-grid {
+        grid-template-columns: 1fr; /* Una sola columna */
+    }
+    
+    /* Breadcrumbs más compactos */
+    .breadcrumb-item + .breadcrumb-item::before {
+        margin: 0 0.25rem;      /* Menos espacio */
+        font-size: 0.8rem;      /* Símbolo más pequeño */
+    }
+    
+    .breadcrumb {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    /* Layout principal: todo en una columna */
+    .layout {
+        grid-template-columns: 1fr; /* Una sola columna */
+        grid-template-areas:
+            "header"
+            "nav"
+            "main"
+            "aside"
+            "footer";
+    }
+    
+    /* Header más compacto en móvil */
+    .header__inner {
+        grid-template-columns: 80px 1fr; /* Foto más pequeña */
+        gap: 12px;
+    }
+    
+    .header__photo {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .header__name {
+        font-size: 1.5rem;      /* Título más pequeño */
+    }
+    
+    /* Formulario: de 2 columnas a 1 columna */
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ¿Qué son las Media Queries?
+   - Aplican estilos solo cuando se cumple una condición
+   - max-width: 576px = pantallas menores a 576px
+   - Permiten diseño responsive (adaptable) */
+
+
+/* ============================================================
+   🎨 16. UTILIDADES ADICIONALES
+   ============================================================ */
+
+/* Títulos de sección con color de marca */
+.section-title {
+    color: var(--color-secundario);
+}
+
+/* Enlaces de navegación activos */
+.navbar-brand,
+.nav-link.active {
+    color: var(--color-base) !important;
+}
+
+/* ¿Qué hace !important?
+   - Fuerza la aplicación de un estilo
+   - Úsalo con cuidado, puede complicar el mantenimiento
+   - Aquí se usa para sobrescribir estilos de Bootstrap */
+
+/* Badges (etiquetas) con color secundario */
+.card .badge {
+    background: var(--color-secundario);
+}
+
+
+/* ============================================================
+   📝 17. TARJETAS AVANZADAS PARA BOOTSTRAP
+   ============================================================ */
+
+/* Asegura que todas las tarjetas tengan la misma altura */
+.card {
+    display: flex;
+    flex-direction: column;   /* Organiza contenido verticalmente */
+}
+
+/* Imagen con altura fija para uniformidad */
+.card-img-top {
+    height: 200px;           /* Altura fija */
+    object-fit: cover;       /* Recorta sin deformar */
+    object-position: center; /* Centra el recorte */
+}
+
+/* Cuerpo de la tarjeta también flexible */
+.card .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Título con altura mínima y recorte de texto */
+.card .card-title {
+    line-height: 1.2;
+    min-height: calc(1.2em * 2);        /* Reserva espacio para 2 líneas */
+    display: -webkit-box;               /* Modo caja para webkit */
+    -webkit-line-clamp: 2;              /* Máximo 2 líneas */
+    line-clamp: 2;                      /* Versión estándar para compatibilidad */
+    -webkit-box-orient: vertical;       /* Orientación vertical */
+    overflow: hidden;                   /* Oculta el texto extra */
+    margin-bottom: 0.35rem;
+}
+
+/* ¿Qué hace -webkit-line-clamp?
+   - Limita el texto a N líneas
+   - Añade "..." automáticamente al final
+   - Solo funciona con display: -webkit-box */
+
+/* Texto que ocupa el espacio disponible */
+.card .card-text {
+    flex: 1;                           /* Ocupa espacio disponible */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;             /* Máximo 3 líneas */
+    line-clamp: 3;                     /* Versión estándar para compatibilidad */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+/* Botón siempre al final de la tarjeta */
+.card .btn {
+    align-self: flex-start;            /* No ocupa todo el ancho */
+}
+
+
+
+
+/* ============================================================
+   🖼️ 19. GALERÍA DE IMÁGENES
+   ============================================================ */
+
+.gallery img {
+    width: 100%;
+    height: 180px;          /* Altura uniforme */
+    object-fit: cover;      /* Recorte consistente */
+    border-radius: 0.5rem;  /* Bordes suavemente redondeados */
+}
+
+
+/* ============================================================
+   🎓 NOTAS EDUCATIVAS FINALES
+   ============================================================
+   
+   💡 CONCEPTOS CLAVE APRENDIDOS:
+   
+   1. VARIABLES CSS (--variable): Reutilizar valores en toda la hoja
+   2. FLEXBOX: Organizar elementos en línea horizontal o vertical
+   3. CSS GRID: Crear layouts complejos con áreas definidas
+   4. BOX-SIZING: Controlar cómo se calculan las dimensiones
+   5. TRANSITIONS: Animaciones suaves entre estados
+   6. HOVER: Efectos al pasar el ratón
+   7. MEDIA QUERIES: Diseño responsive para diferentes pantallas
+   8. PSEUDO-ELEMENTOS (::before): Insertar contenido con CSS
+   9. OBJECT-FIT: Controlar cómo se recortan las imágenes
+   10. WEBKIT-LINE-CLAMP: Limitar texto a N líneas
+   
+   🚀 PRÓXIMOS PASOS:
+   - Experimenta cambiando los valores de las variables
+   - Prueba diferentes combinaciones de colores
+   - Modifica los tamaños del grid
+   - Añade nuevas animaciones con transition
+   - Crea tus propias media queries
+   
+   ============================================================ */
