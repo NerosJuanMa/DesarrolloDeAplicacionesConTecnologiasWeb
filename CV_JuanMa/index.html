@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Currículum Digital — Perfil Tech</title>
+
+  <!-- Tu hoja de estilos original -->
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+</head>
+<body>
+  <div class="layout">
+    <!-- ================= HEADER ================= -->
+    <header>
+      <div class="header__inner">
+        <img class="header__photo"
+             src ="/Ejercicio6/assets/yo.jpeg"
+             alt="Foto de perfil (placeholder)">
+        <div class="header__info">
+          <h1 class="header__name">Juan Manuel Mudarra Pozo</h1>
+          <p class="header__role">Desarrollador Web · Frontend / UI</p>
+          <div class="header__contact">
+            <a href="mailto:jmmudarra@gmail.com">jmmudarra@gmail.com</a>
+            <span>·</span>
+            <a href="tel:+34627334682">+34 627 33 46 82</a>
+            <span>·</span>
+            <a href="#" target="_blank" rel="noopener">portfolio</a>
+            <span>·</span>
+            <a href="#" target="_blank" rel="noopener">GitHub</a>
+            <span>·</span>
+            <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= NAV ================= -->
+    <nav aria-label="Secciones del CV">
+      <ul>
+        <li><a href="#perfil">Perfil</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href='/ejerciciofinalhtmlycss/pages/formacion'>Formación</a></li>
+        <li><a href="#experiencia">Experiencia</a></li>
+        <li><a href="#habilidades">Habilidades</a></li>
+        <li><a href="#certificaciones">Certificaciones</a></li>
+        
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <!-- BREADCRUMBS / MIGAS DE PAN -->
+    <div style="grid-column: 1 / -1; margin: 0 20px;">
+      <nav aria-label="Migas de pan" class="breadcrumb">
+        <ol class="breadcrumb-list">
+          <li class="breadcrumb-item active" aria-current="page">
+            Inicio
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- ================= ASIDE (lateral) ================= -->
+    <aside class="sidebar">
+      <h3>Resumen</h3>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores ab,
+        consequatur laboriosam fugit tempora ducimus sint tenetur.
+      </p>
+
+      <h3>Datos clave</h3>
+      <ul style="margin-left:1rem; list-style:square;">
+        <li>Lorem · Remoto</li>
+        <li>Disponibilidad: Lorem ipsum</li>
+        <li>Idiomas: Lorem / Ipsum</li>
+      </ul>
+
+      <h3>Intereses</h3>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo,
+        ratione.
+      </p>
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+    <main>
+      <!-- Tarjetas de acceso rápido -->
+      <section class="repaso" aria-labelledby="repaso-cv">
+        <h2 id="repaso-cv" class="repaso">Explora el CV</h2>
+        <div class="repaso-grid">
+          <article class="card">
+            <h3 class="card__cabecera">Formación</h3>
+            <p class="card__contenido">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, odit.</p>
+            <a class="button" href="#formacion">Ver formación</a>
+          </article>
+
+          <article class="card">
+            <h3 class="card__cabecera">Experiencia</h3>
+            <p class="card__contenido">Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, pariatur.</p>
+            <a class="button" href="#experiencia">Ver experiencia</a>
+          </article>
+
+          <article class="card">
+            <h3 class="card__cabecera">Habilidades</h3>
+            <p class="card__contenido">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, quos.</p>
+            <a class="button" href="#habilidades">Ver habilidades</a>
+          </article>
+        </div>
+      </section>
+
+      <!-- Perfil / Sobre mí -->
+      <section id="perfil" class="section" aria-labelledby="h-perfil">
+        <h2 id="h-perfil">Perfil</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias
+          exercitationem, voluptate temporibus dignissimos, impedit laborum
+          accusamus non commodi omnis ab obcaecati repellat amet.
+        </p>
+      </section>
+
+      <!-- Proyectos destacados -->
+      <section id="proyectos" class="section" aria-labelledby="h-proyectos">
+        <h2 id="h-proyectos">Proyectos</h2>
+        <article style="margin-bottom:.75rem;">
+          <h3 style="margin-bottom:.2rem;">Lorem Project One</h3>
+          <small>Lorem — 2025</small>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur,
+            beatae. Lorem ipsum dolor sit amet.
+          </p>
+        </article>
+        <article>
+          <h3 style="margin-bottom:.2rem;">Ipsum Project Two</h3>
+          <small>Ipsum — 2024</small>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia
+            amet, nihil illum recusandae impedit.
+          </p>
+        </article>
+      </section>
+
+      <!-- Formación -->
+      <section id="formacion" class="section" aria-labelledby="h-formacion">
+        <h2 id="h-formacion">Formación</h2>
+        <ul style="margin-left:1rem;">
+          <li><strong>Lorem IFCD0110</strong> — Lorem ipsum dolor sit amet, consectetur.</li>
+          <li><strong>Ipsum IFCD0210</strong> — Lorem ipsum dolor sit amet consectetur adipisicing.</li>
+          <li>Lorem Pro · Lorem Accesibilidad · Lorem UX.</li>
+        </ul>
+      </section>
+
+      <!-- Experiencia -->
+      <section id="experiencia" class="section" aria-labelledby="h-experiencia">
+        <h2 id="h-experiencia">Experiencia</h2>
+        <article style="margin-bottom:.75rem;">
+          <h3 style="margin-bottom:.2rem;">Lorem Company · Frontend</h3>
+          <small>2023–2025 · Lorem</small>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
+            suscipit consequuntur, labore nam eligendi alias.
+          </p>
+        </article>
+        <article>
+          <h3 style="margin-bottom:.2rem;">Ipsum Studio · UI Dev</h3>
+          <small>2021–2023 · Ipsum</small>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab,
+            repellendus illum. Distinctio, molestias?
+          </p>
+        </article>
+      </section>
+
+      <!-- Habilidades -->
+      <section id="habilidades" class="section" aria-labelledby="h-habilidades">
+        <h2 id="h-habilidades">Habilidades</h2>
+        <ul style="columns:2; gap:1.5rem; margin-left:1rem;">
+          <li>HTML semántico</li><li>CSS Grid/Flex</li><li>Formularios</li><li>Bootstrap</li>
+          <li>Git/GitHub</li><li>React (base)</li><li>Accesibilidad</li><li>UI básica</li>
+        </ul>
+      </section>
+
+      <!-- Certificaciones -->
+      <section id="certificaciones" class="section" aria-labelledby="h-certificaciones">
+        <h2 id="h-certificaciones">Certificaciones</h2>
+        <ul style="margin-left:1rem;">
+          <li>Lorem Web Certification — 2024</li>
+          <li>Ipsum CSS Advanced — 2023</li>
+        </ul>
+      </section>
+
+      
+
+      <!-- Contacto -->
+      <section id="contacto" class="section" aria-labelledby="h-contacto">
+        <h2 id="h-contacto">Contacto</h2>
+        <form action="#" method="post" novalidate>
+          <div class="form-grid">
+            <div>
+              <label for="nombre">Nombre</label>
+              <input id="nombre" name="nombre" type="text" placeholder="Lorem ipsum" required>
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="lorem@example.com" required>
+            </div>
+            <div class="full">
+              <label for="asunto">Asunto</label>
+              <input id="asunto" name="asunto" type="text" placeholder="Ipsum dolor sit amet" required>
+            </div>
+            <div class="full">
+              <label for="mensaje">Mensaje</label>
+              <textarea id="mensaje" name="mensaje" placeholder="Consectetur adipisicing elit..." required></textarea>
+            </div>
+            <div class="full" style="display:flex; justify-content:flex-end; gap:.5rem;">
+              <button type="submit">Enviar</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+      © 2025 Lorem Ipsum — CV Digital · HTML + CSS (Grid & Flex) · <a href="#top" style="color:#F0FFFF;">Volver arriba</a>
+    </footer>
+  </div>
+</body>
+</html>
