@@ -1,0 +1,77 @@
+/* El selector * aplica estilos a TODOS los elementos */
+* {
+    margin: 0;           /* Quita márgenes por defecto */
+    padding: 0;          /* Quita espaciado interno por defecto */
+    box-sizing: border-box;  /* Incluye borde y padding en el ancho total */
+}
+/* Las variables CSS se declaran en :root para usarlas en toda la página */
+:root {
+    /* 🎯 COLORES DE MARCA - Cambia estos valores para cambiar toda la identidad visual */
+    --color-base: #e010a8;          /* Rosa principal - botones, enlaces */
+    --color-secundario: #073B4C;    /* Azul oscuro - títulos, bordes */
+    --color-sabermas: #F0FFFF;      /* Celeste claro - fondos especiales */
+    --color-hoover: #118AB2;        /* Azul medio - efectos hover */
+    
+    /* 📝 TIPOGRAFÍAS */
+    --fuente-principal: 'Arial', sans-serif;      /* Fuente principal legible */
+    --fuente-secundaria: 'Courier New', monospace; /* Fuente para código */
+}
+body{
+    display: grid; /* activa CSS Grid en el body*/
+    grid-template-areas: 
+        "header header"
+        "aside main"
+        "footer footer";
+    grid-template-columns: 250px 1fr; /*2 columnas; 1 fija y 1 flexible*/
+    grid-template-rows: auto 1fr auto; /*3 filas: header (auto) main (1fr) footer (auto)*/
+    gap: 1px;
+   
+    border: 12px solid var(--color-base);
+/*GAP: espacio entre casillas de un grid
+gap: var(--gap);
+*/
+
+}
+header{grid-area: header;border: 12px solid var(--color-base);} 
+main{grid-area: main;border: 12px solid var(--color-base);}
+aside{grid-area: aside;border: 12px solid var(--color-base);}
+footer{grid-area: footer;border: 12px solid var(--color-base);}
+
+/* Lista horizontal del menú */
+nav ul {
+    display: flex;               /* Elementos en línea horizontal */
+    justify-content: center;     /* Centra horizontalmente */
+    align-items: center;         /* Centra verticalmente */
+    gap: 1rem;                  /* Espacio entre botones */
+    list-style: none;           /* Quita los puntos de la lista */
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;            /* Baja línea en pantallas pequeñas */
+}
+
+nav li {
+    margin: 0;                  /* Sin márgenes extra */
+}
+
+/* Estilo de botón para los enlaces */
+nav a {
+    display: inline-block; /* Permite padding y margin */
+    padding: 0.6rem 1.1rem;    /* Espaciado interno */
+    border-radius: 8px;        /* Bordes redondeados */
+    background: var(--color-sabermas); /* Fondo claro */
+    color: var(--color-base);   /* Texto de marca */
+    font-weight: 600;          /* Semi-negrita */
+    text-decoration: none;     /* Sin subrayado */
+    transition: background 0.2s ease; /* Animación suave */
+}
+
+nav a:hover {
+    background: var(--color-hoover); /* Cambia color al pasar ratón */
+    color: white;
+}
+
+/* ¿Qué hace transition?
+   - Crea animaciones suaves entre estados
+   - Sintaxis: propiedad duración tipo
+   - ease = animación natural (lenta-rápida-lenta) */
+
