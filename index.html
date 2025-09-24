@@ -1,27 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Desarrollo de aplicaciones con tecnologías webs</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desarrollo de aplicaciones con tecnologías webs</title>
 
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-areas:
+        "header header"
+        "aside main"
+        "footer footer";
+      grid-template-columns: 1fr 2fr;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 1.5rem;
+      padding: 1.5rem;
+    }
+
+    header {
+      grid-area: header;
+      background-color: #4CAF50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav {
+      grid-area: nav;
+      background-color: #e0e0e0;
+      padding: 1rem;
+    }
+
+    nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      list-style-type: none;
+      padding: 10px;
+      margin: 0;
+    }
+
+    nav li {
+      padding: 0.5rem;
+      border: 3px double red;
+      border-radius: 5px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+    }
+
+    main {
+      grid-area: main;
+      background-color: #ffffff;
+      padding: 1rem;
+    }
+
+    aside {
+      grid-area: aside;
+      background-color: #f9f9f9;
+      padding: 1rem;
+      border-left: 4px solid #ccc;
+    }
+
+    footer {
+      grid-area: footer;
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    /* Cajas internas, por si se usan */
+    .cajas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .cajas div {
+      background-color: #ddd;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 5px;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+      .main-content {
+        grid-template-areas:
+          "header"
+          "aside"
+          "main"
+          "footer";
+        grid-template-columns: 1fr;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0;
+      }
+
+      nav li {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Desarrollo de aplicaciones con tecnologías webs</h1>
-    <nav>
-            <ul>
-                <li style="display: flex;"><a href="/Dia1/index.html">Dia1</a></li>
-                <li style="display: flex;"><a href="/Ejercicio1/index.html">Ejercicio1</a></li>
-                <li style="display: flex;"><a href="/Ejercicio2/index.html">Ejercicio2</a></li>                
-                <li style="display: flex;"><a href="/Ejercicio3/index.html">Ejercicio3</a></li>
-                <li style="display: flex;"><a href="/Ejercicio4/index.html">Ejercicio4</a></li>
-                <li style="display: flex;"><a href="/Ejercicio5/index.html">Ejercicio5</a></li>
-                <li style="display: flex;"><a href="/Formularios/">Formularios</a></li>
-                <li style="display: flex;"><a href="/Ejercicio6/index.html">Ejercicio6</a></li>
-                <li style="display: flex;"><a href="/Ejercicio7/index.html">Ejercicio7</a></li>
-            </ul>
-        </nav>
-    <p>Esta es pagina de inicio donde aparecerán todas las versiones de los ejercicios que hagamos en el curso de Desarrollo de aplicaciones con tecnologías webs.</p>
+  <div class="main-content">
+    <header>
+      <h1>Desarrollo de aplicaciones con tecnologías webs</h1>
+    </header>
+
+    <aside>
+      <p>
+        Esta es la página de inicio donde aparecerán todas las versiones de los ejercicios
+        que hagamos en el curso de Desarrollo de aplicaciones con tecnologías webs.
+      </p>
+    </aside>
+
+    <main>
+      <nav>
+        <ul>
+          <li><a href="/Dia1/index.html">Día 1</a></li>
+          <li><a href="/Ejercicio1/index.html">Ejercicio 1</a></li>
+          <li><a href="/Ejercicio2/index.html">Ejercicio 2</a></li>
+          <li><a href="/Ejercicio3/index.html">Ejercicio 3</a></li>
+          <li><a href="/Ejercicio4/index.html">Ejercicio 4</a></li>
+          <li><a href="/Ejercicio5/index.html">Ejercicio 5</a></li>
+          <li><a href="/Formularios/">Formularios</a></li>
+          <li><a href="/Ejercicio6/index.html">Ejercicio 6</a></li>
+          <li><a href="/Ejercicio7/index.html">Ejercicio 7</a></li>
+        </ul>
+      </nav>
+    </main>
+
+    <footer>
+      <h5>@NerosJuanMa</h5>
+    </footer>
+  </div>
 </body>
 </html>
