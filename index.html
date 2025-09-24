@@ -4,121 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Desarrollo de aplicaciones con tecnologías webs</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" tipo="image/x-icon" href="favicon.ico">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-    }
-
-    .main-content {
-      display: grid;
-      grid-template-areas:
-        "header header"
-        "aside main"
-        "footer footer";
-      grid-template-columns: 1fr 2fr;
-      grid-template-rows: auto auto 1fr auto;
-      gap: 1.5rem;
-      padding: 1.5rem;
-    }
-
-    header {
-      grid-area: header;
-      background-color: #4CAF50;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    nav {
-      grid-area: nav;
-      background-color: #e0e0e0;
-      padding: 1rem;
-    }
-
-    nav ul {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      list-style-type: none;
-      padding: 10px;
-      margin: 0;
-    }
-
-    nav li {
-      padding: 0.5rem;
-      border: 3px double red;
-      border-radius: 5px;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: #333;
-    }
-
-    main {
-      grid-area: main;
-      background-color: #ffffff;
-      padding: 1rem;
-    }
-
-    aside {
-      grid-area: aside;
-      background-color: #f9f9f9;
-      padding: 1rem;
-      border-left: 4px solid #ccc;
-    }
-
-    footer {
-      grid-area: footer;
-      background-color: #222;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-    }
-
-    /* Cajas internas, por si se usan */
-    .cajas {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .cajas div {
-      background-color: #ddd;
-      padding: 1rem;
-      text-align: center;
-      border-radius: 5px;
-    }
-
-    /* RESPONSIVE DESIGN */
-    @media (max-width: 768px) {
-      .main-content {
-        grid-template-areas:
-          "header"
-          "aside"
-          "main"
-          "footer";
-        grid-template-columns: 1fr;
-      }
-
-      nav ul {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0;
-      }
-
-      nav li {
-        width: 100%;
-        text-align: center;
-      }
-    }
-  </style>
+  
 </head>
 <body>
   <div class="main-content">
@@ -145,6 +34,7 @@
           <li><a href="/Formularios/">Formularios</a></li>
           <li><a href="/Ejercicio6/index.html">Ejercicio 6</a></li>
           <li><a href="/Ejercicio7/index.html">Ejercicio 7</a></li>
+          <li><a href="/CV_JuanMa/index.html">CV JuanMa</a></li>
         </ul>
       </nav>
     </main>
