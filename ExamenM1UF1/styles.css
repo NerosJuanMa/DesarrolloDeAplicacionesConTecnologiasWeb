@@ -1,0 +1,71 @@
+/* 1) SELECTOR UNIVERSAL: se aplica a todos los elementos */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(225, 225, 225)
+}
+
+/* 2) SELECTOR DE TIPO: aplica a todos los párrafos */
+p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 1em;
+}
+
+/* También aplicamos estilo a todos los <h2> */
+h2 {
+    color: #0007cc;
+    font-size: 1.5em;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+/* 3) SELECTOR DE CLASE: para destacar elementos con fondo y borde */
+.destacado {
+    background-color: #50aabb;
+    padding: 10px;
+    border-left: 4px solid #0007cc;
+    font-weight: bold;
+}
+
+/* 4) SELECTOR DE ID: aplica estilo único al encabezado con id="cabecera" */
+#cabecera {
+    background-color: #e0e0e0;
+    padding: 20px;
+    text-align: center;
+    color: #900099;
+}
+
+/* 5) CAMBIO DE TIPOGRAFÍA: fuente global para todo el cuerpo del documento */
+body {
+    font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
+    background-color: #fafafa;
+    padding: 20px;
+}
+
+/* 6) LISTA CON BORDES Y ESPACIADOS DEFINIDOS */
+.lista-estilizada {
+    display: grid; 
+    gap: 12px; 
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+    justify-items: center;
+}
+
+.lista-estilizada li {
+    border: 4px solid #900099;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+/* Estilo opcional para footer */
+footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #666;
+    font-size: 0.9em;
+}
