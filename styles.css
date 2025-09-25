@@ -53,6 +53,32 @@
       text-decoration: none;
       color: #333;
     }
+    .nav2 {
+      grid-area: nav;
+      background-color: #e0e0e0;
+      padding: 1rem;
+    }
+
+    .nav2  ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      list-style-type: none ;
+      padding: 10px;
+      margin: 0;
+    }
+
+    .nav2  li {
+      padding: 0.5rem;
+      border: 3px double red;
+      border-radius: 5px;
+    }
+
+    .nav2  a {
+      text-decoration: none;
+      color: #333;
+    }
 
     main {
       grid-area: main;
