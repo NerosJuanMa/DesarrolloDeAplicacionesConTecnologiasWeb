@@ -200,33 +200,33 @@ let asistencia = 85;
 let notaFinal = (examen * 0.6) + (trabajos * 0.4);
 console.log(notaFinal);
 let calificacion;
-if(notaFinal >= 9){
+if (notaFinal >= 9) {
     console.log("Excelente")
-    calificacion="Excelente";
+    calificacion = "Excelente";
 }
-else if(notaFinal >=7 && notaFinal <9){
+else if (notaFinal >= 7 && notaFinal < 9) {
     console.log("Notable")
-    calificacion="Notable";
-}else if(notaFinal >=5 && notaFinal <7){
+    calificacion = "Notable";
+} else if (notaFinal >= 5 && notaFinal < 7) {
     console.log("Aprobado")
-    calificacion="Aprobado";
-}else{
+    calificacion = "Aprobado";
+} else {
     console.log("Suspenso")
-    calificacion="Suspenso";
+    calificacion = "Suspenso";
 };
 let notaRedondeada = Math.ceil(notaFinal);
 let notaEntera = Math.floor(notaFinal);
 console.log(`La nota final redondeada es: ${notaRedondeada} y la nota entera es ${notaEntera}`);
 
-let aprueba =((notaFinal >=5) && (asistencia >= 80));
+let aprueba = ((notaFinal >= 5) && (asistencia >= 80));
 console.log("Para aprobar el curso la nota tiene que ser mayor o igual a 5 y  asistencia un minimom de 80%: " + aprueba);
-(aprueba? true: false)
+(aprueba ? true : false)
 
-console.log(notaFinal>=5 ? "APRUEBA" : "SUSPENSO") 
+console.log(notaFinal >= 5 ? "APRUEBA" : "SUSPENSO")
 // Paso 5: Recomendación con SWITCH
 
 let recomendacion = "";
-switch(calificacion) {
+switch (calificacion) {
     case "Excelente":
         recomendacion = "¡Felicitaciones! Considera cursos avanzados";
         break;
@@ -240,16 +240,19 @@ switch(calificacion) {
         recomendacion = "Necesitas estudiar más y mejorar asistencia";
         break;
 }
-console.log (recomendacion);
+console.log(recomendacion);
 
 // Mostrar informe completo con concatenación
 let informe = "=== INFORME ACADÉMICO ===\n";
-informe =  informe + "Estudiante: " + estudiante + "\n";
-informe =  informe+ "Nota Examen: " + examen + "/10\n";
-informe =  informe + "Nota Trabajos: " + trabajos + "/10\n";
-informe =  informe + "Asistencia: " + asistencia + "%\n";
-informe =  informe + "NOTA FINAL: " + notaFinal.toFixed(2) + "/10 (" + calificacion + ")\n";
+informe = informe + "Estudiante: " + estudiante + "\n";
+informe = informe + "Nota Examen: " + examen + "/10\n";
+informe = informe + "Nota Trabajos: " + trabajos + "/10\n";
+informe = informe + "Asistencia: " + asistencia + "%\n";
+informe = informe + "NOTA FINAL: " + notaFinal.toFixed(2) + "/10 (" + calificacion + ")\n";
 //informe =  informe + "ESTADO: " + estadoCurso + "\n";
-informe =  informe + "Recomendación: " + recomendacion;
+informe = informe + "Recomendación: " + recomendacion;
 
 console.log(informe);
+
+
+//---------------
