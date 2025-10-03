@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Primera Página Interactiva</title>
+    <style>
+        /* Estilos para que se vea bonito */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 50px;
+            text-align: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        input {
+            padding: 15px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            margin: 10px;
+            width: 250px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            font-size: 1.3em;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👋 Mi Primera Página Interactiva</h1>
+        <p>¡Escribe tu nombre y te saludaré!</p>
+        
+        <!-- Aquí el usuario escribe su nombre -->
+        <input type="text" id="nombre" placeholder="Escribe tu nombre aquí...">
+        
+        <!-- Botón que activará el saludo -->
+        <button onclick="saludar()">🎯 Saludar</button>
+        
+        <!-- Aquí aparecerá el resultado -->
+        <div id="resultado">
+            ✨ Escribe tu nombre y haz clic en el botón
+        </div>
+    </div>
+
+    <script>
+        // ¡AQUÍ VA TU CÓDIGO JAVASCRIPT!
+       // Esta función se ejecuta cuando haces clic en el botón
+function saludar() {
+    // 1. OBTENER el nombre que escribió el usuario
+    let nombreUsuario = document.getElementById('nombre').value;
+    
+    // 2. VERIFICAR si escribió algo
+    if (nombreUsuario === '') {
+        // Si no escribió nada, le pedimos que lo haga
+        document.getElementById('resultado').innerHTML = 
+            '⚠️ ¡Ups! Escribe tu nombre primero';
+    } else {
+        // 3. CREAR el mensaje de saludo personalizado
+        let mensajeSaludo = '¡Hola, ' + nombreUsuario + '! 👋 ¡Bienvenido/a a tu primera página interactiva!';
+        
+        // 4. MOSTRAR el saludo en la página
+        document.getElementById('resultado').innerHTML = 
+            '🎉 ' + mensajeSaludo;
+    }
+}
+    </script>
+</body>
+</html>
