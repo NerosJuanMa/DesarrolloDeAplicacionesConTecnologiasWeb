@@ -8,6 +8,11 @@
 <body>
     <h2 id="titulo1">¡Hola alumno!</h2>
 <button id="btnCambiar1">Cambiar saludo</button>
+
+<br><br><br><br>
+
+<img id="img5" src="https://via.placeholder.com/150" style="transition:0.3s">
+
 <script>
 document.getElementById('btnCambiar1').onclick = function() {
   let titulo = document.getElementById('titulo1');
@@ -17,6 +22,14 @@ document.getElementById('btnCambiar1').onclick = function() {
   } else {
     titulo.textContent = '¡Hola alumno!';
   }
+}
+
+let img = document.getElementById('img5');
+img.onmouseover = function() {
+  img.src = "sevilla.gif";
+}
+img.onmouseout = function() {
+  img.src = "sevil.webp";
 }
 </script>
  
