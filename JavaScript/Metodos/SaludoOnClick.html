@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2 id="titulo1">¡Hola alumno!</h2>
+<button id="btnCambiar1">Cambiar saludo</button>
+<script>
+document.getElementById('btnCambiar1').onclick = function() {
+  let titulo = document.getElementById('titulo1');
+ 
+  if (titulo.textContent === '¡Hola alumno!') {
+    titulo.textContent = '¡Bienvenido a la interactividad!';
+  } else {
+    titulo.textContent = '¡Hola alumno!';
+  }
+}
+</script>
+ 
+</body>
+</html>
+ 
