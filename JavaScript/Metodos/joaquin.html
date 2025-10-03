@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Validación y Envío WhatsApp</title>
+    <style>
+        /* ==================================== */
+        /* 1. ESTILOS BASE Y TIPOGRAFÍA */
+        /* ==================================== */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 40px;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+ 
+        h1, h2 {
+            color: #1a73e8; /* Azul primario */
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+ 
+        /* ==================================== */
+        /* 2. ESTILOS DE FORMULARIO (INPUTS y BUTTON) */
+        /* ==================================== */
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #555;
+        }
+ 
+        input[type="text"] {
+            display: block;
+            margin-bottom: 15px;
+            width: 90%;
+            max-width: 450px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: border-color 0.3s;
+        }
+ 
+        input[type="text"]:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+ 
+        /* Campo espejo de solo lectura */
+        #campoEspejo {
+            background-color: #e8e8e8; /* Fondo gris para indicar que no es editable */
+            font-style: italic;
+            color: #666;
+            cursor: default;
+        }
+ 
+        /* Botón principal de enviar */
+        button {
+            padding: 10px 20px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+ 
+        button:hover {
+            background-color: #155bb5;
+        }
+ 
+        /* Separador */
+        hr {
+            border: 0;
+            border-top: 1px solid #ddd;
+            margin: 30px 0;
+        }
+ 
+        /* ==================================== */
+        /* 3. ESTILOS DE LA LISTA (UL y LI) */
+        /* ==================================== */
+        #listaResultados {
+            padding: 0;
+            margin: 0;
+            max-width: 600px;
+        }
+ 
+        /* Estilo para cada elemento de la lista (la nota registrada) */
+        #listaResultados li {
+            list-style: none;
+            margin-bottom: 10px;
+            display: flex; /* Alineación horizontal */
+            justify-content: space-between; /* Mueve el botón a la derecha */
+            align-items: center;
+            padding: 10px 15px;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            font-size: 14px;
+        }
+ 
+        /* Estilo para el botón de borrar (clase asignada en JS) */
+        .boton-borrar {
+            padding: 5px 10px;
+            margin-left: 15px;
+            background-color: #dc3545; /* Rojo de peligro */
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+ 
+        .boton-borrar:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+ 
+    <h1>Registro de Notas</h1>
+    <label for="campoPrincipal">Escribe tu nota:</label>
+    <input type="text" id="campoPrincipal" placeholder="Introduce texto aquí..." oninput="sincronizarCampos()">
+    <label for="campoEspejo">Previsualización (constante):</label>
+    <input type="text" id="campoEspejo" readonly placeholder="Se rellena al instante...">
+    <button onclick="agregarLinea()">Registrar Línea</button>
+    <hr>
+    <h2>Historial de Registros</h2>
+    <ul id="listaResultados"></ul>
+    <hr>
+    <button id="btnMostrarEnvio">
+        📲 Enviar Registros por WhatsApp
+    </button>
+   
+    <div id="seccionEnvio">
+        <h3>Paso Final: Teléfono Destino</h3>
+       
+        <form id="formWhatsApp">
+            <label for="telefonoDestino">Teléfono (Ej: 34600123456):</label>
+            <input
+                type="tel"
+                id="telefonoDestino"
+                placeholder="Código de país + número (solo dígitos)"
+                required
+                pattern="^[0-9]{9,15}$"
+                title="Debe contener solo números, de 9 a 15 dígitos (incluye el código de país)."
+            >
+ 
+            <button type="submit" id="btnFinalEnviar">
+                Enviar WhatsApp Ahora
+            </button>
+        </form>
+    </div>
+ 
+    <script>
+        // [Tus funciones sincronizarCampos, borrarLinea y agregarLinea van aquí]
+        // Las reescribo por brevedad, asumiendo que están disponibles:
+ 
+        let valorActual = "";
+        const campoPrincipal = document.getElementById('campoPrincipal');
+        const campoEspejo = document.getElementById('campoEspejo');
+        const listaResultados = document.getElementById('listaResultados');
+        const seccionEnvio = document.getElementById('seccionEnvio');
+        const formWhatsApp = document.getElementById('formWhatsApp');
+        const btnMostrarEnvio = document.getElementById('btnMostrarEnvio');
+ 
+        // ... (Tu código de sincronizarCampos, borrarLinea y agregarLinea) ...
+        function sincronizarCampos() { valorActual = campoPrincipal.value; campoEspejo.value = valorActual; }
+        function borrarLinea(evento) { evento.target.parentElement.remove(); }
+        function agregarLinea() {
+            if (valorActual.trim() === "") { alert("Escribe algo antes de registrar."); return; }
+            const nuevaLinea = document.createElement('li');
+            const botonBorrar = document.createElement('button');
+            botonBorrar.textContent = 'X';
+            botonBorrar.className = 'boton-borrar';
+            botonBorrar.addEventListener('click', borrarLinea);
+            nuevaLinea.appendChild(document.createTextNode(`Has introducido: "${valorActual}"`));
+            nuevaLinea.appendChild(botonBorrar);
+            listaResultados.appendChild(nuevaLinea);
+            campoPrincipal.value = ""; campoEspejo.value = ""; valorActual = ""; campoPrincipal.focus();
+        }
+ 
+        // ====================================================
+        // FUNCIONES DE CONTROL DE WHATSAPP
+        // ====================================================
+ 
+        // Muestra la sección del formulario de envío
+        btnMostrarEnvio.addEventListener('click', function() {
+            if (listaResultados.children.length === 0) {
+                alert("No hay registros en la lista para enviar.");
+                return;
+            }
+            seccionEnvio.style.display = 'block'; // Hace visible la sección
+            document.getElementById('telefonoDestino').focus(); // Mueve el foco al input de teléfono
+            btnMostrarEnvio.style.display = 'none'; // Oculta el botón disparador original
+        });
+ 
+        // 1. Asignamos la función al evento SUBMIT del formulario
+        formWhatsApp.addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe de forma tradicional (recarga de página)
+           
+            // Si el navegador permite el submit, es porque la validación del pattern fue exitosa.
+            enviarWhatsApp();
+        });
+ 
+        // 2. Función de envío (modificada para tomar el valor del input con ID)
+        function enviarWhatsApp() {
+            const telefonoInput = document.getElementById('telefonoDestino');
+            const telefono = telefonoInput.value.trim();
+ 
+            let registros = "RESUMEN DE REGISTROS:\n";
+            const items = listaResultados.querySelectorAll('li');
+ 
+            items.forEach((item, index) => {
+                const textoRegistro = item.childNodes[0].nodeValue;
+                registros += `${index + 1}. ${textoRegistro.trim()}\n`;
+            });
+ 
+            const textoCodificado = encodeURIComponent(registros);
+ 
+            // Crear el enlace de WhatsApp
+            const urlWhatsApp = `https://wa.me/${telefono}?text=${textoCodificado}`;
+ 
+            // Abrir la nueva ventana/pestaña
+            window.open(urlWhatsApp, '_blank');
+        }
+    </script>
+ 
+</body>
+</html>
