@@ -36,10 +36,23 @@
 <input type="text" id="nombre-usuario" placeholder="Escribe tu nombre...">
 <p id="saludo-usuario">Aquí aparecerá el saludo</p>
 <br>
+
 <input type="text" id="tarea" placeholder="Escribe una tarea">
 <button id="btn-agregar-tarea">Agregar tarea</button>
 <button id="btn-borrar-tarea">Borrar última tarea</button>
 <ul id="lista-tareas"></ul>
-
+<br>
+<div class="resultado">
+<!-- Aquí el usuario escribe su nombre -->
+        <input type="text" id="nombre" placeholder="Escribe tu nombre aquí..." maxlength="50">
+        
+        <!-- Botón que activará el saludo -->
+<button onclick="saludar()">🎯 Saludar</button>
+        
+        <!-- Aquí aparecerá el resultado -->
+        <div id="resultado">
+            ✨ Escribe tu nombre y haz clic en el botón
+        </div>
+</div>
 </body>
 </html>
