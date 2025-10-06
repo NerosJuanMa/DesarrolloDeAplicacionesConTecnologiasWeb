@@ -129,3 +129,39 @@ document.getElementById('nombre-usuario').addEventListener('input', function(rec
 });
 // Usar function(event) permite acceder al objeto del evento y sus propiedades.
 // Así puedes recoger el valor que el usuario escribe en el input en tiempo real.
+
+//----------------------
+var tareas = [];
+
+function agregarTarea() {
+    var texto = document.getElementById('tarea').value;
+    if (texto) {
+        tareas.push(texto);
+        mostrarTareas();
+        document.getElementById('tarea').value = '';
+    }
+}
+
+function borrarTarea() {
+    tareas.pop();
+    mostrarTareas();
+}
+
+function mostrarTareas() {
+    var lista = document.getElementById('lista-tareas');
+    lista.innerHTML = '';
+    tareas.forEach(function(tarea) {
+        var li = document.createElement('li');
+        li.textContent = tarea;
+        lista.appendChild(li);
+    });
+}
+
+// Usar addEventListener para los botones
+document.getElementById('btn-agregar-tarea').addEventListener('click', agregarTarea);
+document.getElementById('btn-borrar-tarea').addEventListener('click', borrarTarea);
+
+// Permitir agregar tarea con Enter en el input
+document.getElementById('tarea').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') agregarTarea();
+});
