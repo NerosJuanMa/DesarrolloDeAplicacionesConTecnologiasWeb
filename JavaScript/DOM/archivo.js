@@ -165,3 +165,37 @@ document.getElementById('btn-borrar-tarea').addEventListener('click', borrarTare
 document.getElementById('tarea').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') agregarTarea();
 });
+
+// Función para crear efecto de confeti simple
+        function crearConfeti() {
+            const colores = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7'];
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const confeti = document.createElement('div');
+                    confeti.style.position = 'fixed';
+                    confeti.style.width = '10px';
+                    confeti.style.height = '10px';
+                    confeti.style.background = colores[Math.floor(Math.random() * colores.length)];
+                    confeti.style.left = Math.random() * window.innerWidth + 'px';
+                    confeti.style.top = '-10px';
+                    confeti.style.borderRadius = '50%';
+                    confeti.style.pointerEvents = 'none';
+                    confeti.style.zIndex = '1000';
+                    
+                    document.body.appendChild(confeti);
+                    
+                    // Animación de caída
+                    const caida = confeti.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                        { transform: `translateY(${window.innerHeight + 20}px) rotate(360deg)`, opacity: 0 }
+                    ], {
+                        duration: 3000,
+                        easing: 'ease-out'
+                    });
+                    
+                    caida.onfinish = () => confeti.remove();
+                }, i * 100);
+            }
+        }
+        
