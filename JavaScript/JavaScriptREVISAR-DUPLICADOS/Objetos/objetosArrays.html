@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo de Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .producto {
+            border: 1px solid #ccc;
+            border-left: 5px solid #888;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .disponible {
+            background-color: #e6ffe6;
+            border-left-color: green;
+        }
+        .agotado {
+            background-color: #ffe6e6;
+            border-left-color: red;
+        }
+        .barato {
+            font-weight: bold;
+        }
+        .filtros {
+            margin-bottom: 20px;
+        }
+        .filtros button, select {
+            margin-right: 10px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📦 Catálogo de Productos</h1>
+
+    <div class="filtros">
+        <label for="categoria">Filtrar por categoría:</label>
+        <select id="categoria">
+            <option value="todas">Todas</option>
+        </select>
+
+        <button onclick="ordenarPorPrecio('asc')">⬆️ Ordenar por precio (asc)</button>
+        <button onclick="ordenarPorPrecio('desc')">⬇️ Ordenar por precio (desc)</button>
+        <button onclick="resetear()">🔁 Resetear</button>
+    </div>
+
+    <div id="total-productos"></div>
+
+    <div id="lista-productos"></div>
+
+    <script>
+        // Catálogo de productos
+        const productosOriginales = [
+            {
+                id: 1,
+                nombre: "Smartphone",
+                precio: 599.99,
+                categoria: "Electrónicos",
+                enStock: true
+            },
+            {
+                id: 2,
+                nombre: "Auriculares",
+                precio: 79.99,
+                categoria: "Electrónicos",
+                enStock: false
+            },
+            {
+                id: 3,
+                nombre: "Libro JavaScript",
+                precio: 29.99,
+                categoria: "Libros",
+                enStock: true
+            },
+            {
+                id: 4,
+                nombre: "Cargador Rápido",
+                precio: 19.99,
+                categoria: "Accesorios",
+                enStock: true
+            },
+            {
+                id: 5,
+                nombre: "Monitor 24''",
+                precio: 129.99,
+                categoria: "Electrónicos",
+                enStock: false
+            }
+        ];
+
+        // Copia del catálogo para modificar con filtros/orden
+        let productos = [...productosOriginales];
+
+        // Elementos del DOM
+        const listaProductos = document.getElementById("lista-productos");
+        const totalProductos = document.getElementById("total-productos");
+        const categoriaSelect = document.getElementById("categoria");
+
+        // Inicialización
+        mostrarCategorias();
+        renderizarProductos();
+
+        // Mostrar opciones únicas de categorías
+        function mostrarCategorias() {
+            const categorias = ["todas", ...new Set(productosOriginales.map(p => p.categoria))];
+            categorias.forEach(cat => {
+                const option = document.createElement("option");
+                option.value = cat;
+                option.textContent = cat;
+                categoriaSelect.appendChild(option);
+            });
+
+            categoriaSelect.addEventListener("change", () => {
+                filtrarPorCategoria(categoriaSelect.value);
+            });
+        }
+
+        // Mostrar productos en el DOM
+        function renderizarProductos() {
+            listaProductos.innerHTML = "";
+            totalProductos.textContent = `Total: ${productos.length} productos encontrados`;
+
+            productos.forEach(p => {
+                const div = document.createElement("div");
+                div.className = "producto " + (p.enStock ? "disponible" : "agotado");
+
+                const esBarato = p.precio < 50;
+
+                div.innerHTML = `
+                    <strong>${p.nombre}</strong> ${!p.enStock ? "❌ (Agotado)" : "✅"}<br>
+                    Precio: <span class="${esBarato ? 'barato' : ''}">${p.precio} €</span><br>
+                    Categoría: ${p.categoria}<br>
+                `;
+
+                listaProductos.appendChild(div);
+            });
+        }
+
+        // Ordenar productos por precio
+        function ordenarPorPrecio(direccion) {
+            productos.sort((a, b) => {
+                return direccion === "asc"
+                    ? a.precio - b.precio
+                    : b.precio - a.precio;
+            });
+            renderizarProductos();
+        }
+
+        // Filtrar por categoría
+        function filtrarPorCategoria(categoria) {
+            if (categoria === "todas") {
+                productos = [...productosOriginales];
+            } else {
+                productos = productosOriginales.filter(p => p.categoria === categoria);
+            }
+            renderizarProductos();
+        }
+
+        // Resetear filtros y orden
+        function resetear() {
+            categoriaSelect.value = "todas";
+            productos = [...productosOriginales];
+            renderizarProductos();
+        }
+    </script>
+</body>
+</html>
