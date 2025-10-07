@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primera web con JS</title>
+
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Mi mensaje</h1>
+        <p id="parrafo"></p>
+        <div id="emoticon"></div>
+    </div>   
+    <script>
+       /* let nota=tablaX(6);
+        document.getElementById("parrafo").textContent=nota;
+
+        function tablaX(x){
+            for (let i = 1; i <=10 ; i++) { 
+            //console.log(i*x)
+            document.writeln(i*x);       
+            }
+        }
+        */
+       let nota= tablaMultiplicar(5)
+       document.getElementById("parrafo").textContent=nota;
+       function tablaMultiplicar(numX){
+    
+            for (let i = numX; i <= (numX*10); i+=numX) {
+                //console.log(`${numX} * ${i/numX} = ${i}.`); 
+                document.writeln(`${numX} * ${i/numX} = ${i}.`)
+
+            }       
+        }
+        
+        
+        
+        //document.getElementById("parrafo").textContent=nota;
+
+    </script> 
+</body>
+</html>
