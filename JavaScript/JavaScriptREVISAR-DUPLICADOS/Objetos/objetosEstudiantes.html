@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gestión de Estudiantes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .estudiante {
+      border: 1px solid #ccc;
+      padding: 12px;
+      margin: 10px 0;
+      border-left: 6px solid #888;
+      border-radius: 5px;
+    }
+
+    .activo {
+      background-color: #e6ffe6;
+      border-left-color: green;
+    }
+
+    .inactivo {
+      background-color: #fff0f0;
+      border-left-color: red;
+    }
+
+    .mejor {
+      border: 2px solid gold;
+    }
+
+    .controles {
+      margin-bottom: 20px;
+    }
+
+    .controles button {
+      margin-right: 10px;
+    }
+
+    form {
+      margin-top: 30px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      max-width: 400px;
+    }
+
+    form input, form select {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+    }
+
+    form label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>📚 Gestión de Estudiantes</h1>
+
+  <div class="controles">
+    <button onclick="mostrarTodos()">Mostrar todos</button>
+    <button onclick="filtrarActivos()">Solo activos</button>
+    <button onclick="mostrarPromedios()">Ver promedios</button>
+    <button onclick="mostrarMejor()">Mejor estudiante</button>
+    <button onclick="reiniciar()">Reiniciar</button>
+  </div>
+
+  <div id="contenedor"></div>
+
+  <form onsubmit="agregarEstudiante(event)">
+    <h2>➕ Añadir nuevo estudiante</h2>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" required>
+
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" required min="1">
+
+    <label for="curso">Curso:</label>
+    <input type="text" id="curso" value="JavaScript">
+
+    <label for="notas">Notas (separadas por coma):</label>
+    <input type="text" id="notas" placeholder="Ej: 8,7.5,9" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+
+    <label for="activo">¿Está activo?</label>
+    <select id="activo">
+      <option value="true">Sí</option>
+      <option value="false">No</option>
+    </select>
+
+    <button type="submit">Agregar estudiante</button>
+  </form>
+
+  <script>
+    const estudiantesOriginal = [
+      {
+        id: 1,
+        nombre: "Ana López",
+        edad: 20,
+        curso: "JavaScript",
+        notas: [8.5, 9.0, 7.5],
+        activo: true,
+        email: "ana@email.com"
+      },
+      {
+        id: 2,
+        nombre: "Carlos Martín",
+        edad: 22,
+        curso: "JavaScript",
+        notas: [7.0, 8.5, 9.0],
+        activo: true,
+        email: "carlos@email.com"
+      },
+      {
+        id: 3,
+        nombre: "Elena García",
+        edad: 19,
+        curso: "JavaScript",
+        notas: [9.5, 9.0, 9.5],
+        activo: false,
+        email: "elena@email.com"
+      }
+    ];
+
+    let estudiantes = [...estudiantesOriginal];
+    let siguienteId = 4;
+
+    const contenedor = document.getElementById("contenedor");
+
+    function render(lista, destacar = null, mostrarProm = false) {
+      contenedor.innerHTML = "";
+
+      lista.forEach(est => {
+        const div = document.createElement("div");
+        div.className = "estudiante " +
+          (est.activo ? "activo" : "inactivo") +
+          (destacar && est.id === destacar.id ? " mejor" : "");
+
+        const promedio = est.notas.reduce((a, b) => a + b, 0) / est.notas.length;
+
+        div.innerHTML = `
+          <strong>${est.nombre}</strong> (${est.edad} años) <br>
+          Curso: ${est.curso} <br>
+          Email: <a href="mailto:${est.email}">${est.email}</a><br>
+          Estado: ${est.activo ? "✅ Activo" : "❌ Inactivo"}<br>
+          ${mostrarProm ? `<strong>Promedio:</strong> ${promedio.toFixed(2)}<br>` : ""}
+        `;
+
+        contenedor.appendChild(div);
+      });
+    }
+
+    function mostrarTodos() {
+      render(estudiantes);
+    }
+
+    function filtrarActivos() {
+      const activos = estudiantes.filter(e => e.activo);
+      render(activos);
+    }
+
+    function mostrarPromedios() {
+      render(estudiantes, null, true);
+    }
+
+    function mostrarMejor() {
+      let mejor = null;
+      let mejorProm = 0;
+
+      estudiantes.forEach(est => {
+        const promedio = est.notas.reduce((a, b) => a + b, 0) / est.notas.length;
+        if (promedio > mejorProm) {
+          mejorProm = promedio;
+          mejor = est;
+        }
+      });
+
+      render(estudiantes, mejor, true);
+    }
+
+    function reiniciar() {
+      estudiantes = [...estudiantesOriginal];
+      siguienteId = estudiantesOriginal.length + 1;
+      render(estudiantes);
+    }
+
+    function agregarEstudiante(event) {
+      event.preventDefault();
+
+      const nombre = document.getElementById("nombre").value;
+      const edad = parseInt(document.getElementById("edad").value);
+      const curso = document.getElementById("curso").value;
+      const notasStr = document.getElementById("notas").value;
+      const email = document.getElementById("email").value;
+      const activo = document.getElementById("activo").value === "true";
+
+      const notas = notasStr
+        .split(",")
+        .map(n => parseFloat(n.trim()))
+        .filter(n => !isNaN(n));
+
+      if (notas.length === 0) {
+        alert("Por favor, introduce al menos una nota válida.");
+        return;
+      }
+
+      const nuevo = {
+        id: siguienteId++,
+        nombre,
+        edad,
+        curso,
+        notas,
+        activo,
+        email
+      };
+
+      estudiantes.push(nuevo);
+      render(estudiantes);
+      event.target.reset(); // limpia el formulario
+    }
+
+    // Mostrar al inicio
+    reiniciar();
+  </script>
+</body>
+</html>
