@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Calculadora de Notas Inteligente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .emoji {
+            font-size: 3rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎓 Mi Calculadora de Notas</h1>
+        <div class="emoji" id="emoji">🤔</div>
+        <p id="mensaje">Cargando tu evaluación personalizada...</p>
+    </div>
+    <script> 
+    // Paso 1: Preguntamos la nota al usuario 
+        let nota = prompt("¡Hola! 🙋 ♀️ ¿Cuál fue tu nota? (0-10):");
+        //atencion lo que introducimos por prompt es un string 
+
+    // Paso 2: Convertimos el texto a número // 
+        // El método Number() transforma el valor recibido por prompt (que es texto) en un número. // 
+        // Así podemos comparar la nota correctamente en los condicionales. 
+        nota = Number(nota);
+    // Paso 3: Variables para el mensaje y emoji 
+        let mensaje;
+        let emoji = "";
+    // Paso 4: Decidimos qué mensaje y emoji mostrar según la nota 
+        if (nota >= 9) { 
+            mensaje = `¡INCREÍBLE! 🌟 Con un ${nota} eres prácticamente un genio. ¡Sigue así, campeón!`; 
+            emoji = "🏆"; 
+        } 
+        else if (nota >= 7) { 
+            mensaje = `¡Muy bien! 👏 Un ${nota} es una nota estupenda. ¡Estás en el buen camino!`; 
+            emoji = "😊"; 
+        } 
+        else if (nota >= 5) { 
+            mensaje = `¡Aprobado! ✅ Un ${nota} significa que lo conseguiste. ¡Ahora a por más!`; 
+            emoji = "👍"; 
+        } 
+        else {
+            mensaje = `No te rindas 💪 Un ${nota} es solo el comienzo. ¡La próxima vez será mejor!`; 
+            emoji = "🚀"; 
+        }
+    // Paso 5: Mostramos el resultado en la página 
+        document.getElementById("mensaje").textContent = mensaje; 
+        document.getElementById("emoji").textContent = emoji; 
+        </script>
+</body>
+
+</html>
