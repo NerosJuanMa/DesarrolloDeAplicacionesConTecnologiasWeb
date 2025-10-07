@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juan Manuel Nerosi | Portfolio</title>
+  <style>
+    /* === VARIABLES DE COLOR === */
+    :root {
+      --bg-color: #f9f9f9;
+      --text-color: #333;
+      --accent-color: #00adb5;
+      --header-bg: #1a1a1a;
+      --header-text: white;
+      --card-bg: white;
+      --button-bg: #00adb5;
+      --button-hover: #007e85;
+    }
+
+    /* === MODO OSCURO AUTOMÁTICO === */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #121212;
+        --text-color: #e0e0e0;
+        --accent-color: #00adb5;
+        --header-bg: #1a1a1a;
+        --header-text: white;
+        --card-bg: #1e1e1e;
+        --button-bg: #00adb5;
+        --button-hover: #007e85;
+      }
+    }
+
+    /* === ESTILOS GENERALES === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    nav {
+      width: 90%;
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav h1 {
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: var(--header-text);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--accent-color);
+      border-bottom: 3px solid var(--accent-color);
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    /* === SECCIÓN HERO === */
+    #inicio {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 80vh;
+    }
+
+    #inicio img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      object-fit: cover;
+    }
+
+    #inicio h2 {
+      font-size: 2.5rem;
+      color: var(--text-color);
+    }
+
+    #inicio p {
+      font-size: 1.2rem;
+      max-width: 600px;
+    }
+
+    /* === EXPERIENCIA === */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .job {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .job h3 {
+      color: var(--text-color);
+      margin-bottom: 5px;
+    }
+
+    .job p strong {
+      color: var(--accent-color);
+    }
+
+    /* === EDUCACIÓN === */
+    .education {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* === HABILIDADES === */
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .skill {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s, background 0.3s, color 0.3s;
+    }
+
+    .skill:hover {
+      transform: scale(1.05);
+    }
+
+    /* === CONTACTO === */
+    #contacto form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 600px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: inherit;
+      resize: none;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      border-color: #888;
+    }
+
+    button {
+      background-color: var(--button-bg);
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: var(--button-hover);
+    }
+
+    footer {
+      text-align: center;
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 20px 0;
+      margin-top: 40px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* === BOTÓN MODO === */
+    #modeToggle {
+      background: var(--accent-color);
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: 20px;
+      transition: background 0.3s;
+    }
+
+    #modeToggle:hover {
+      background: #007e85;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- === HEADER === -->
+  <header>
+    <nav>
+      <h1>Juan Manuel Nerosi</h1>
+      <div>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#sobre-mi">Sobre mí</a></li>
+          <li><a href="#experiencia">Experiencia</a></li>
+          <li><a href="#educacion">Educación</a></li>
+          <li><a href="#habilidades">Habilidades</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="https://juanma-tech-folio.lovable.app/">CV</a></li>
+          
+        </ul>
+        <button id="modeToggle">🌙 Dark/Light</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- === INICIO === -->
+  <section id="inicio">
+    <img src="https://via.placeholder.com/160" alt="Foto de perfil" />
+    <h2>Desarrollador Full Stack & Diseñador Multimedia</h2>
+    <p>Combino el diseño creativo con la lógica del desarrollo web para construir experiencias digitales funcionales, accesibles y atractivas.</p>
+  </section>
+
+  <!-- === SOBRE MÍ === -->
+  <section id="sobre-mi">
+    <h2>Sobre mí</h2>
+    <p>Soy Juan Manuel Nerosi, desarrollador y diseñador con un perfil multidisciplinar que une la creatividad del diseño gráfico con la precisión del desarrollo web.</p>
+    <p>Apasionado por el aprendizaje continuo, la tecnología y el diseño de experiencias digitales centradas en el usuario.</p>
+  </section>
+
+  <!-- === EXPERIENCIA PROFESIONAL === -->
+  <section id="experiencia">
+    <h2>Experiencia Profesional</h2>
+    <div class="timeline">
+      <div class="job">
+        <h3>Diseñador Gráfico de Preprensa</h3>
+        <p><strong>Lumaprint</strong> · jun. 2024 – ago. 2024 · Sevilla</p>
+        <p>Procesos de preimpresión y diseño para productos multimedia interactivos.</p>
+      </div>
+      <div class="job">
+        <h3>Desarrollo de Diseño Web</h3>
+        <p><strong>LAYBET</strong> · jun. 2023 – jul. 2023 · Sevilla</p>
+        <p>Diseño y desarrollo web con WordPress y gestión de proyectos digitales.</p>
+      </div>
+      <div class="job">
+        <h3>Auxiliar Administrativo Contable</h3>
+        <p><strong>AVICARS</strong> · dic. 2021 · Alcalá de Guadaíra</p>
+        <p>Apoyo contable y administrativo en entorno empresarial.</p>
+      </div>
+      <div class="job">
+        <h3>Auxiliar de Laboratorio e I+D</h3>
+        <p><strong>MP Lifts</strong> · jun. 2015 – ago. 2018 · Sevilla</p>
+        <p>Diseño de sistemas de control eléctrico y apoyo técnico-administrativo.</p>
+      </div>
+      <div class="job">
+        <h3>Responsable de Taller y Técnico Informático</h3>
+        <p><strong>CALA Componentes</strong> · 2003 · Sevilla</p>
+        <p>Montaje de equipos informáticos y gestión de taller.</p>
+      </div>
+      <div class="job">
+        <h3>Técnico Informático y Auxiliar Administrativo</h3>
+        <p><strong>Instituto Informático Hispalense</strong> · 2001 – 2002 · Sevilla</p>
+        <p>Mantenimiento informático, redes y gestión administrativa.</p>
+      </div>
+    </div>
+
+    <div class="education">
+      <h3>Resumen Profesional</h3>
+      <p>Con más de 20 años de experiencia, he combinado el ámbito técnico con el creativo, trabajando tanto en desarrollo web como en diseño gráfico y soporte informático.</p>
+      <p>Mi perfil multidisciplinar me permite comprender el proceso completo de un proyecto digital, desde el concepto visual hasta la implementación técnica. Hoy enfoco mi carrera hacia el desarrollo full stack y el diseño de experiencias interactivas, integrando mis bases en programación, sistemas y comunicación visual.</p>
+    </div>
+  </section>
+
+  <!-- === EDUCACIÓN === -->
+  <section id="educacion">
+    <h2>Educación</h2>
+    <div class="education">
+      <h3>Certificado de Profesionalidad - Desarrollo de Productos Multimedia Interactivos (IMSV0209)</h3>
+      <p>540 horas de formación · FPE Andalucía</p>
+      <h3>Certificado de Profesionalidad - Administración de Base de Datos (IFCT0310)</h3>
+      <p>FPE Andalucía</p>
+      <h3>Certificado de Profesionalidad - Actividades de Gestión Administrativa</h3>
+      <p>FPE Andalucía</p>
+    </div>
+  </section>
+
+  <!-- === HABILIDADES === -->
+  <section id="habilidades">
+    <h2>Habilidades</h2>
+    <div class="skills">
+      <div class="skill">HTML5 / CSS3</div>
+      <div class="skill">JavaScript</div>
+      <div class="skill">WordPress</div>
+      <div class="skill">Adobe Photoshop</div>
+      <div class="skill">Adobe Illustrator</div>
+      <div class="skill">Gestión de Proyectos</div>
+      <div class="skill">Creatividad</div>
+      <div class="skill">Adaptabilidad</div>
+    </div>
+  </section>
+
+  <!-- === CONTACTO === -->
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <form onsubmit="sendMessage(event)">
+      <input type="text" id="nombre" placeholder="Tu nombre" required />
+      <input type="email" id="email" placeholder="Tu correo electrónico" required />
+      <textarea id="mensaje" rows="5" placeholder="Tu mensaje..." required></textarea>
+      <button type="submit">Enviar mensaje</button>
+    </form>
+  </section>
+
+  <!-- === FOOTER === -->
+  <footer>
+    <p>© 2025 Juan Manuel Nerosi — Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    // Enviar mensaje (alert)
+    function sendMessage(e) {
+      e.preventDefault();
+      alert("¡Gracias por tu mensaje! Te responderé pronto.");
+    }
+
+    // Toggle dark/light mode
+    const modeToggle = document.getElementById("modeToggle");
+    modeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+      if(document.body.classList.contains("dark-mode")){
+        document.documentElement.style.setProperty('--bg-color', '#121212');
+        document.documentElement.style.setProperty('--text-color', '#e0e0e0');
+        document.documentElement.style.setProperty('--card-bg', '#1e1e1e');
+        document.documentElement.style.setProperty('--header-bg', '#1a1a1a');
+        document.documentElement.style.setProperty('--header-text', 'white');
+      } else {
+        document.documentElement.style.setProperty('--bg-color', '#f9f9f9');
+        document.documentElement.style.setProperty('--text-color', '#333');
+        document.documentElement.style.setProperty('--card-bg', 'white');
+        document.documentElement.style.setProperty('--header-bg', '#1a1a1a');
+        document.documentElement.style.setProperty('--header-text', 'white');
+      }
+    });
+  </script>
+</body>
+</html>
