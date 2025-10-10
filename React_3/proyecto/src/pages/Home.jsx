@@ -27,6 +27,9 @@ function Home() {
             <li>✅ Botón de contacto con hover</li>
           </ul>
         </div>
+        <div style={{textAlign: "center"}}>
+          <iframe src="https://weather-app-delta-pink-13.vercel.app/" frameborder="0" width="500" height="500"></iframe>
+        </div>
         {/* Primera fila - 3 noticias destacadas sobre IA */}
         <div className="tarjetas-container">
         
