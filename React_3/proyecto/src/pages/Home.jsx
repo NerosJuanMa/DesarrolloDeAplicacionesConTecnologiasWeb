@@ -29,7 +29,7 @@ function Home() {
         </div>
         {/* Primera fila - 3 noticias destacadas sobre IA */}
         <div className="tarjetas-container">
-          
+        
           {/* Tarjeta 1: GPT-5 y OpenAI */}
           <Tarjeta 
             titulo="OpenAI anuncia GPT-5"
