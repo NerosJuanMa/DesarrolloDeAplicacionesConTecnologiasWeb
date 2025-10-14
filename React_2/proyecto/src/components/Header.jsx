@@ -7,9 +7,11 @@ function Header() {
       <h1 className="title">Mi Proyecto</h1>
       <button className='button'>Buscar</button>
       <nav className="nav">
-        <Link to="/" className="navLink">Inicio</Link>
+        <Link to="./pages/Index" className="navLink">Inicio</Link>
+        <Link to="/Home_copy" className="navLink">Home_Copy</Link>
         <Link to="/proyectos" className="navLink">Proyectos</Link>
         <Link to="/sobre-mi" className="navLink">Sobre mí</Link>
+        
         <button className="button">Contacto</button>
       </nav>
       
