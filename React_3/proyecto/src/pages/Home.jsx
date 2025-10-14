@@ -3,6 +3,9 @@ import Footer from "../components/Footer";
 import Tarjeta from "../components/Tarjeta";
 
 import "./Home.css";
+import BotonAlerta from "../components/BotonAlerta";
+import FormularioSimple from "../components/FormularioSimple";
+import BotonColor from "../components/BotonColor";
 
 function Home() {
   return (
@@ -26,6 +29,11 @@ function Home() {
             <li>✅ Enlaces de navegación interactivos</li>
             <li>✅ Botón de contacto con hover</li>
           </ul>
+        </div>
+        <div>
+          <BotonAlerta />
+          <FormularioSimple />
+          <BotonColor />
         </div>
         <div style={{textAlign: "center"}}>
           <iframe src="https://weather-app-delta-pink-13.vercel.app/" frameborder="0" width="500" height="500"></iframe>

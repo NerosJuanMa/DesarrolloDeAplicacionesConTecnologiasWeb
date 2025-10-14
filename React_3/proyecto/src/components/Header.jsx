@@ -9,6 +9,7 @@ function Header() {
         <Link to="/" className="navLink">Inicio</Link>
         <Link to="/proyectos" className="navLink">Proyectos</Link>
         <Link to="/sobre-mi" className="navLink">Sobre mí</Link>
+        <Link to="/estados" className="navLink">Estados</Link>
         <button className="button">Contacto</button>
       </nav>
     </header>
