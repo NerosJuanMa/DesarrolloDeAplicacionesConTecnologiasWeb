@@ -29,9 +29,14 @@ import Home from "./pages/Home";
 import Proyectos from "./pages/Proyectos";
 import SobreMi from "./pages/SobreMi";
 import Estados from "./pages/Estados";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+
  
 export default function App() {
   return (
+    <>
+    <Header />
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Inicio />} />
@@ -41,5 +46,7 @@ export default function App() {
         <Route path="/estados" element={<Estados />} />
       </Route>
     </Routes>
+    <Footer />
+    </>
  );
 }
