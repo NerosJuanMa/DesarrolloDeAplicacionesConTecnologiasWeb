@@ -1,0 +1,10 @@
+.nav{
+    
+    position: fixed;
+    right: 0;
+    background-color: red; 
+}
+.navLink{
+    display: flex;
+    background-color: rgb(218, 149, 149); 
+}
