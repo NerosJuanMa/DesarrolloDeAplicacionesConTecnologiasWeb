@@ -7,12 +7,16 @@ function NavBar(){
         <>
         {/* <br /><br /><br /><br /><br /> */}
         <nav className="nav">
-            <ul>
+            
+            <Link to="/" className="navLink">Inicio</Link>
+            <Link to="/Ejercicios" className="navLink">Ejercicios</Link>
+            <Link to="/Contacto" className="navLink">Contacto</Link>
+            {/* <ul>
             <li><Link to="/" className="navLink">Inicio</Link></li>
             <li><Link to="/Home" className="navLink">Home</Link></li>
             
             
-            </ul>
+            </ul> */}
         </nav>
         </>
     );
