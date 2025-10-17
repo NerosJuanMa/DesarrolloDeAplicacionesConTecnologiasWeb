@@ -1,4 +1,5 @@
 import './Footer.css';
+import NavBar from './NavBar';
 
 // function Footer(){
 //     return(
@@ -26,6 +27,7 @@ function Footer() {
         
         <div className="footer-section">
           <h4 className="footer-subtitle">Enlaces Rápidos</h4>
+          
           <ul className="footer-links">
             <li><a href="#inicio" className="footer-link">Inicio</a></li>
             <li><a href="#proyectos" className="footer-link">Proyectos</a></li>
@@ -43,7 +45,7 @@ function Footer() {
           </div>
         </div>
       </div>
-      
+      <NavBar />
       <div className="footer-bottom">
         <p className="footer-copyright">
           © {currentYear} @NerosJuanMa ❤️ 
