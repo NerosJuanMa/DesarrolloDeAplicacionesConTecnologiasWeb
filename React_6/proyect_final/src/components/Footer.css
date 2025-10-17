@@ -45,7 +45,7 @@
 
 /* Título principal del footer */
 .footer-title {
-  color: #00C890;
+  color: aliceblue;
   font-size: 1.5rem;
   margin-bottom: 1rem;
   font-weight: 700;
@@ -53,7 +53,7 @@
 
 /* Subtítulos de secciones */
 .footer-subtitle {
-  color: #00C890;
+  /* color: #00C890; */
   font-size: 1.1rem;
   margin-bottom: 1rem;
   font-weight: 600;
