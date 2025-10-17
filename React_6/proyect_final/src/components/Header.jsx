@@ -1,11 +1,14 @@
-import NavBar from './NavBar';
+
+import Cabecera from './Cabecera';
 import './Header.css';
 function Header(){
     return(
     <header className="header">
-        <NavBar />
-        <h1>Hola Mundo React</h1>   
+        
+        <h1>Hola Mundo React</h1>  
+        <Cabecera /> 
     </header>
+    
     );
 }
 export default Header;
