@@ -2,7 +2,7 @@ import './Cabecera.css';
 import reactLogo from "../assets/react.svg";
 import viteLogo from "/vite.svg";
 import { useState } from "react";
-
+import NavBar from './NavBar';
 
 export default function Cabecera(){
   const [count, setCount] = useState(0)
@@ -10,7 +10,7 @@ export default function Cabecera(){
         <>
         
           <main className='main'>
-              <div>
+               <div>
                 <a href="https://react.dev" target="_blank">
                   <img src={reactLogo} className="logoReact" alt="React logo" />
                 </a>
@@ -18,8 +18,10 @@ export default function Cabecera(){
                   <img src={viteLogo} className="logoC" alt="Vite logo" />
                 </a>
               </div>
-              <h1> React + Vite </h1>             
+              <h1> React + Vite </h1>    
+                  <NavBar />  
             </main>
+            
             
         </>
     );
