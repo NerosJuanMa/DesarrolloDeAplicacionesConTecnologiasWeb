@@ -179,4 +179,11 @@
 
   </div> <!-- /.grid-container -->
 </body>
+<!-- */El siguiente script hace que TODOS los enlaces externos e Internos se abran en otra ventana -->
+    <script>
+        document.querySelectorAll('a').forEach(link => {
+        link.setAttribute('target', '_blank');
+        });
+    </script>
+
 </html>
