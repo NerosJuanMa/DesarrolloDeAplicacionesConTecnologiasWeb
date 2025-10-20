@@ -61,6 +61,9 @@ body {
 
 /* Nota de accesibilidad:
    Si eliminas outlines globalmente, reemplázalos por reglas visibles con :focus-visible para usuarios de teclado. */
+
+   /*------------------*/
+   
     body {
       font-family: Arial, sans-serif;
       margin: 0;
