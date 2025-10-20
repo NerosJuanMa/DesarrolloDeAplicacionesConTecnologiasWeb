@@ -48,5 +48,12 @@
         <a href="@mailto">info@ejemplo.com</a>
         </p>
     </footer>
+    <!-- */El siguiente script hace que SOLO los enlaces externos se abran en otra ventana -->
+    <script>
+    document.querySelectorAll('a[href^="http"]').forEach(link => {
+    link.setAttribute('target', '_blank');
+    });
+    </script> 
+
 </body>
 </html>
