@@ -3,9 +3,9 @@
     /* Reset / Base recomendado para empezar un proyecto limpio */
 
 /* 1) Caja: hacer que los anchos incluyan padding/border */
-*, *::before, *::after {
+/* *, *::before, *::after {
     box-sizing: border-box;
-}
+} */
 
 /* 2) Reset de márgenes y paddings comunes , rem = 10px*/
 html, body, h1, h2, h3, h4, h5, h6, p,
@@ -157,7 +157,7 @@ body {
       padding: 1rem;
       border-left: 4px solid #ccc;
     }
-
+   
     footer {
       grid-area: footer;
       background-color: #222;
