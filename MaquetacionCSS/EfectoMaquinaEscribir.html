@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Efecto Máquina de Escribir</title>
+
+<style>
+body {
+  font-family: 'Courier New', monospace;
+  background: #111;
+  color: #00ff88;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.dtq-animated-text-head {
+  font-size: 28px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #00ff88;
+  width: 0;
+  animation: blinkCursor 0.7s infinite;
+}
+
+@keyframes blinkCursor {
+  50% {
+    border-color: transparent;
+  }
+}
+</style>
+</head>
+
+<body>
+  <div class="dtq-animated-text-head" id="typewriter"></div>
+
+  <script>
+    const texts = [
+      "Hola, bienvenido a mi sitio 🌎",
+      "Disfruta la experiencia ✨",
+      "Gracias por visitar 🙌"
+    ];
+
+    let index = 0;
+    let charIndex = 0;
+    let currentText = '';
+    let isDeleting = false;
+    const typingSpeed = 100;     // velocidad de escritura (ms)
+    const deletingSpeed = 50;    // velocidad de borrado (ms)
+    const delayBetween = 1500;   // pausa entre textos (ms)
+    const el = document.getElementById('typewriter');
+
+    function type() {
+      currentText = texts[index];
+
+      if (!isDeleting) {
+        el.textContent = currentText.substring(0, charIndex + 1);
+        charIndex++;
+
+        if (charIndex === currentText.length) {
+          isDeleting = true;
+          setTimeout(type, delayBetween);
+          return;
+        }
+      } else {
+        el.textContent = currentText.substring(0, charIndex - 1);
+        charIndex--;
+
+        if (charIndex === 0) {
+          isDeleting = false;
+          index = (index + 1) % texts.length;
+        }
+      }
+
+      setTimeout(type, isDeleting ? deletingSpeed : typingSpeed);
+    }
+
+    type();
+  </script>
+</body>
+</html>
