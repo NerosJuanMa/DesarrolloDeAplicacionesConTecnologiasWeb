@@ -1,7 +1,91 @@
-html { 
-    font-size: 62.5%; 
+html {
+    font-size: 62.5%;
 }
-h1{
+
+h1 {
     font-size: 3rem;
     text-align: center;
+}
+
+.dtq-animated-text-head {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.dtq-module .dtq-animated-text-head {
+    font-size: 22px;
+}
+
+.dtq-animated-text-head {
+    line-height: 1;
+    padding-bottom: 0;
+}
+
+ul.dtq-animated-text-slide {
+    transform: translateY(3px);
+}
+
+.dtq-animated-text .typed-cursor {
+    opacity: 0;
+    visibility: hidden;
+    max-width: 1px;
+    min-width: 1px;
+}
+
+.dtq-text-animation.dtq-animated-text-main {
+    display: inline-block;
+}
+
+.dtq-animated-text-prefix span,
+.dtq-animated-text-suffix span {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.dtq-animated-text-slide li {
+    display: none;
+    list-style: none;
+    line-height: 1;
+}
+
+.dtq-animated-text-slide li.text-in {
+    display: block;
+    animation: fadeInOut 3s infinite;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10%, 50% { opacity: 1; }
+    60%, 100% { opacity: 0; }
+}
+
+.dtq-text-animation {
+    position: relative;
+}
+
+.dtq-text-animation:after {
+    position: absolute;
+    content: "";
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    animation: dtq-blink .7s infinite;
+    display: none;
+}
+
+@keyframes dtq-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.animated.hinge {
+    animation-duration: 2s;
 }
