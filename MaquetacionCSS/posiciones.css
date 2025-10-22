@@ -1,0 +1,61 @@
+html { 
+    font-size: 62.5%; 
+}
+h1{
+    font-size: 3rem;
+    text-align: center;
+}
+.container{
+    background-color: blue;
+    width: 400px;
+    height: 100px;
+    position: relative;
+    top: 40px;
+    z-index: 2;
+    
+}
+.box1{
+    background-color: green;
+    width: 100px;
+    /* bottom: 50px; */
+    top: 150px;
+    right: 100px;
+    position: fixed;
+
+}
+.box2{
+    background-color: blueviolet;
+    /* z-index: inherit; */
+    /* position:relative; */
+    right: 150px;
+    width: 100px;
+    height: 300px;
+}
+.box3{
+    background-color: chocolate;
+}
+.box4{
+    background-color: aqua;
+}
+.box5{
+    background-color: rgb(250, 13, 13);
+    position: sticky;
+    top:0; /* Hay que declarar el top para que funcione el sticky*/
+    width: 150px;
+    
+}.box6{
+    background-color: rgb(255, 0, 242);
+    width: 250px;
+}
+.section1{
+    background-color: rgb(156, 239, 13);
+    border: 5px solid red;
+    /* position: relative; */
+    /* z-index: 1; */
+}.section2{
+    background-color: aquamarine;
+    border: 5px solid rgb(48, 33, 180);
+}.section3{
+    background-color: aquamarine;
+    border: 5px solid rgb(231, 208, 62);
+}
