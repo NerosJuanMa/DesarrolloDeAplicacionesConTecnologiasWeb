@@ -1,28 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taller de Maquetación</title>
 </head>
+
 <body>
-    <p><h1 style="background: grey;">TALLER DE MAQUETACION</h1></p>
+    <p>
+    <h1 style="background: grey;">TALLER DE MAQUETACION</h1>
+    </p>
+    <br>
+    <br>
+    <br>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Texto animado con JS</title>
+<style>
+.dtq-animated-text-head {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+ul.dtq-animated-text-slide {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  height: 1.5em;
+  position: relative;
+}
+
+.dtq-animated-text-slide li {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 1s, transform 1s;
+  transform: translateY(10px);
+}
+
+.dtq-animated-text-slide li.text-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+
+<body>
+        <br>
+    <br>
     <button style="position:sticky;">Boton 1 </button>
     <button style="display: block;position:relative;;">Boton 2 </button>
     <button style="display: block;position: absolute;">Boton 3 </button>
-    <p style="background: red; color: goldenrod; display: inline;">Este es un texto para ver como funciona la etiqueta "span", <span style="color: blue;"> el resultado a continuacion</span> y ahora otra vez normal.</p>
+    <p style="background: red; color: goldenrod; display: inline;">Este es un texto para ver como funciona la etiqueta
+        "span", <span style="color: blue;"> el resultado a continuacion</span> y ahora otra vez normal.</p>
     <div style="background: rgb(19, 190, 193);">Soy la caja 1</div>
     <div style="background: rgb(224, 7, 199); display: inline-block;">Soy la caja 2</div>
     <div style="background: rgb(99, 207, 27);">Soy la caja 3</div>
-    <img   src="https://picsum.photos/120/80" alt="Imagen de prueba">
+    <img src="https://picsum.photos/120/80" alt="Imagen de prueba">
     <button style="position:sticky;">Boton 4 </button>
     <button style="display: block;position:relative;;">Boton 5</button>
     <button style="display: block;">Boton 6 </button>
 
     <div style="background: rgb(19, 190, 193);border: 6px solid; margin: 5px;">Soy la caja 4</div>
     <div style="background: rgb(224, 7, 199); border: 1px solid greenyellow;width: 200px;">Soy la caja 5
-        <div style="background: rgb(34, 9, 220);border: 4px solid; border-color: beige;padding: 20px;width: 200px;margin:0px;box-sizing: border-box;">Soy la caja hija</div>
+        <div
+            style="background: rgb(34, 9, 220);border: 4px solid; border-color: beige;padding: 20px;width: 200px;margin:0px;box-sizing: border-box;">
+            Soy la caja hija</div>
     </div>
     <div style="background: rgb(99, 207, 27);border: 2px solid;border-color: rgb(254, 7, 7); ">Soy la caja 6</div>
+   
+  <div class="dtq-animated-text-head">
+    <ul class="dtq-animated-text-slide">
+      <li class="text-in">Hola mundo</li>
+      <li>Esto es una animación</li>
+      <li>Hecha con CSS y JS</li>
+      <li>Fácil de usar</li>
+    </ul>
+  </div>
+
+  <script>
+    const items = document.querySelectorAll('.dtq-animated-text-slide li');
+    let index = 0;
+
+    setInterval(() => {
+      items[index].classList.remove('text-in');
+      index = (index + 1) % items.length;
+      items[index].classList.add('text-in');
+    }, 2500);
+  </script>
 </body>
 </html>
+
+
+
