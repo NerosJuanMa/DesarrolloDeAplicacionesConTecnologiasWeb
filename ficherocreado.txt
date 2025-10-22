@@ -1,0 +1,1 @@
+Hello este es el texto dentro del fichero que estoy leyendo

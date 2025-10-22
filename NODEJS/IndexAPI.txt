@@ -1,0 +1,11 @@
+Para crear una web en HTML que se alimente de una API, necesitas usar JavaScript para hacer la llamada a la API y luego mostrar los datos en el HTML. Los pasos clave son: crear un archivo index.html con la estructura básica, incluir un script de JavaScript (<script src="tu-script.js"></script>) y en ese script, usar fetch() para solicitar datos a la API. Una vez que obtienes la respuesta, procesas la información y la insertas dinámicamente en elementos HTML como divs o listas. 
+1. Crea el archivo HTML (index.html)
+Estructura básica: Empieza con la estructura HTML estándar.
+Elemento para mostrar datos: Crea un elemento (por ejemplo, un div con un id) donde se mostrarán los datos de la API.
+Enlace al script de JavaScript: Incluye una etiqueta <script> para enlazar el archivo JavaScript que contendrá la lógica para interactuar con la API. 
+
+2. Escribe el código JavaScript (index.js)
+Usa fetch(): Esta función de JavaScript se utiliza para hacer peticiones a la API.
+Maneja la respuesta: La respuesta de fetch() es una promesa. Debes usar .then() para manejar la respuesta y convertirla a formato JSON (response.json()).
+Maneja los datos: Usa otro .then() para trabajar con los datos ya procesados.
+Inserta los datos en el HTML: Accede al elemento HTML con document.getElementById() y modifica su innerHTML o crea nuevos nodos para mostrar la información. 
