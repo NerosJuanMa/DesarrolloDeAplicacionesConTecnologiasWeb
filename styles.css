@@ -3,9 +3,9 @@
     /* Reset / Base recomendado para empezar un proyecto limpio */
 
 /* 1) Caja: hacer que los anchos incluyan padding/border */
-/* *, *::before, *::after {
+*, *::before, *::after {
     box-sizing: border-box;
-} */
+}
 
 /* 2) Reset de márgenes y paddings comunes , rem = 10px*/
 html, body, h1, h2, h3, h4, h5, h6, p,
@@ -33,6 +33,7 @@ img, picture, video, canvas, svg {
 }
 
 /* 5) Formularios y controles: heredar tipografía y limpiar estilos por defecto */
+ 
 button, input, select, textarea {
     font: inherit;
     color: inherit;
@@ -164,8 +165,7 @@ body {
       color: white;
       text-align: center;
       padding: 1rem;
-    }
-
+    } 
     /* Cajas internas, por si se usan */
     .cajas {
       display: grid;
@@ -181,8 +181,111 @@ body {
       border-radius: 5px;
     }
 
-    /* RESPONSIVE DESIGN */
-    @media (max-width: 768px) {
+  
+:root {
+  --form-bg: #ede9ee;         /* Fondo del formulario */
+  --input-bg: #ffeeff;        /* Fondo de los inputs */
+  --accent-color: #f180e2;    /* Color principal (botón, foco) */
+  --text-color: #333;         /* Color del texto */
+  --font-family:  "Poppins", sans-serif;
+  --input-width: 150px;       /* Ancho fijo de inputs */
+  --input-height: 20px;       /* Altura base de inputs */
+  --border-radius: 8px;       /* Bordes redondeados */
+  --transition: 0.25s ease;
+}
+
+/* ===== FORMULARIO GENERAL ===== */
+.custom-form {
+  background-color: var(--form-bg);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== LABELS ===== */
+.custom-form label {
+  align-self: flex-start;
+  font-weight: 500;
+  margin-left: calc((100% - var(--input-width)) / 2);
+}
+
+/* ===== CAMPOS DE ENTRADA ===== */
+.custom-form input,
+.custom-form textarea {
+  width: var(--input-width);
+  background-color: var(--input-bg);
+  border: 1.5px solid #ccc;
+  border-radius: var(--border-radius);
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  transition: var(--transition);
+  font-family: inherit;
+  color: var(--text-color);
+}
+
+/* Altura específica */
+.custom-form input {
+  height: var(--input-height);
+}
+
+.custom-form textarea {
+  height: calc(var(--input-height) * 5);
+  resize: vertical; /* Permite redimensionar si se desea */
+}
+
+/* ===== PLACEHOLDERS ===== */
+.custom-form input::placeholder,
+.custom-form textarea::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+/* ===== EFECTOS DE FOCO ===== */
+.custom-form input:focus,
+.custom-form textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 6px rgba(0, 119, 255, 0.3);
+}
+
+/* ===== BOTÓN ===== */
+.custom-form button {
+  width: 25%;
+  height: var(--input-height);
+  text-align: center;
+  background-color: var(--accent-color);
+  color: #fff;
+  font-weight: 1rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+.custom-form button:hover {
+  background-color: #d400c9;
+  transform: scale(1.03);
+}
+
+/* ===== VALIDACIÓN ===== */
+.custom-form input:invalid {
+  border-color: #e63946;
+}
+
+.custom-form input:invalid:focus {
+  box-shadow: 0 0 6px rgba(230, 57, 70, 0.4);
+}
+  /* RESPONSIVE DESIGN */
+    @media (max-width: 368px) {
       .main-content {
         grid-template-areas:
           "header"
