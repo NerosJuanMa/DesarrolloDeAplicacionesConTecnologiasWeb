@@ -1,0 +1,143 @@
+/* ====== Tokens (root) ====== */
+:root{
+  --font-sans: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+  --color-bg: #cac3eb;
+  --color-text: #111111;
+  --color-muted: #555555;
+
+  --color-primary: #1942d8;   /* botón principal oscuro */
+  --color-secondary: #b412a9; /* botón secundario gris */
+
+  --color-card: #ffffff;
+  --color-border: #e5e7eb;
+
+  --color-focus: #3b82f6;
+  --focus-ring: rgba(59,130,246,.2);
+
+  --radius: 10px;
+  --gap: 10px;
+  --img-h: 200px;
+
+  --shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+/* ====== Estilos mínimos para el buscador GIPHY ====== */
+
+/* 1) Base legible */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body{
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  padding: 16px;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+/* 2) Formulario de búsqueda */
+.buscador{
+  display: grid;
+  grid-template-columns: 1fr auto auto; /* input grande + 2 botones */
+  gap: 8px;
+  max-width: 900px;
+  margin: 0 auto 12px;
+}
+
+#campo-busqueda{
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  outline: none;
+}
+#campo-busqueda:focus{
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+/* 3) Botones */
+.boton{
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: #fff;
+  cursor: pointer;
+}
+.boton:hover{ filter: brightness(1.05); }
+.boton:active{ transform: translateY(1px); }
+
+.boton.secundario{
+  background: var(--color-secondary);
+}
+
+/* 4) Mensaje de estado */
+#mensaje-estado{
+  max-width: 900px;
+  margin: 8px auto 16px;
+  color: var(--color-muted);
+}
+
+/* 5) Zona de resultados (rejilla responsive) */
+/* Rejilla de resultados (mínimo) */
+.rejilla{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+/* Tarjeta mínima */
+.card{
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* Imagen de la tarjeta */
+.card img{
+  display: block;
+  width: 100%;
+  height: 200px;      /* altura fija simple */
+  object-fit: cover;  /* recorta manteniendo proporción */
+}
+
+/* Pie de la tarjeta (título + enlace) */
+.card .info{
+  padding: 8px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #111;
+}
+
+.card .title{
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+/* 6) Accesibilidad: texto solo para lectores de pantalla */
+.solo-lectores{
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+/* ====== Resumen en un solo párrafo con borde punteado ====== */
+.resumen{
+  max-width: 1100px;
+  margin: 2rem auto 0;
+  padding: 1rem 1.25rem;
+  background: var(--color-card);
+  color: var(--color-text);
+  border: 2px dotted var(--color-border);
+  border-radius: var(--radius);
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>🔎 Buscador de GIFs (GIPHY)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script defer src="./script.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>Buscador de GIFs</h1>
+    <p class="subtitle">GIPHY API · demo</p>
+  </header>
+
+  <main class="container">
+   <!-- 🔎 Formulario de búsqueda de GIFs -->
+<form id="formulario-busqueda" class="buscador" role="search" aria-label="Buscar GIFs">
+  <label for="campo-busqueda" class="solo-lectores">Escribe una palabra para buscar GIFs:</label>
+
+  <input 
+    id="campo-busqueda" 
+    name="campo-busqueda" 
+    type="search" 
+    placeholder="Ejemplo: gatos, baile, café…" 
+    autocomplete="off" 
+  />
+
+  <button type="submit" class="boton">Buscar</button>
+  <button type="button" id="boton-tendencias" class="boton secundario" title="Ver los GIFs más populares">
+    Tendencias
+  </button>
+</form>
+
+<!-- 💬 Mensaje de estado (accesible para lectores de pantalla) -->
+<p id="mensaje-estado" class="estado" aria-live="polite">Listo para comenzar.</p>
+
+<!-- 🖼️ Zona donde se mostrarán los resultados -->
+<section id="zona-resultados" class="rejilla" aria-live="polite" aria-busy="false"></section>
+
+<!-- Cuadro resumen para portfolio -->
+<p class="resumen">
+  📋 En este proyecto hemos aprendido a integrar una <strong>API pública (GIPHY)</strong> en una página web y a mostrar resultados de forma dinámica usando 
+  <code>JavaScript</code>. Hemos trabajado con los endpoints 
+  <code>GET https://api.giphy.com/v1/gifs/search</code> y 
+  <code>GET https://api.giphy.com/v1/gifs/trending</code>, que devuelven un 
+  <strong>array de objetos</strong> con la información de cada GIF (URL, título y metadatos). 
+  Se ha utilizado <code>fetch()</code> junto con <code>async/await</code> para realizar las peticiones, aplicando 
+  <code>try/catch</code> para manejar errores y construyendo las URLs de forma dinámica mediante parámetros como 
+  <code>api_key</code>, <code>q</code> y <code>limit</code>.  
+  En la parte visual, hemos creado tarjetas accesibles con título, imagen y enlace al GIF original, 
+  empleando <code>loading="lazy"</code> para mejorar el rendimiento y 
+  <code>referrerpolicy="no-referrer"</code> para mayor seguridad.  
+  Por último, se ha diseñado una interfaz <em>responsive</em> con un <strong>grid adaptable</strong>, 
+  mensajes de estado claros (<em>cargando / error / sin resultados</em>) y retroalimentación accesible mediante 
+  <code>aria-live</code> y <code>aria-busy</code>.  
+  En conjunto, este ejercicio demuestra la capacidad de consumir APIs, procesar datos JSON y renderizarlos 
+  en el DOM aplicando buenas prácticas de <strong>usabilidad, accesibilidad y diseño limpio</strong>.
+</p>
+
+  
+  </main>
+
+  <footer class="footer">
+    <small>Hecho con ❤️ y la <a href="https://developers.giphy.com/" target="_blank" rel="noopener">GIPHY API</a>.</small>
+  </footer>
+</body>
+</html>
