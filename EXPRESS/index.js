@@ -10,18 +10,18 @@ boton1.addEventListener("click", () => {
     .then((res) => res.text()) // texto JSON → objeto JS 
     .then((data) => { resultado.textContent = data;}) 
     }); 
-boton2.addEventListener("click", () => {
-    fetch("http://localhost:3000/contacto")
-    .then((res) => res.json()) // texto JSON → objeto JS 
-    .then((data) => { resultado.textContent = data.nombre + " — " + data.curso;}) 
-    }); 
-boton3.addEventListener("click", () => {
-    fetch("http://localhost:3000/info")
-    .then((res) => res.json()) // texto JSON → objeto JS 
-    .then((data) => { resultado.textContent = data.mensaje + " — " + data.curso;}) 
-    }); 
-boton4.addEventListener("click", () => {
-    fetch("http://localhost:3000/tienda")
-    .then((res) => res.json()) // texto JSON → objeto JS 
-    .then((data) => { resultado.textContent = data.mensaje + " — " + data.curso;}) 
-    }); 
+// boton2.addEventListener("click", () => {
+//     fetch("http://localhost:3000/contacto")
+//     .then((res) => res.json()) // texto JSON → objeto JS 
+//     .then((data) => { resultado.textContent = data.nombre + " — " + data.curso;}) 
+//     }); 
+// boton3.addEventListener("click", () => {
+//     fetch("http://localhost:3000/info")
+//     .then((res) => res.json()) // texto JSON → objeto JS 
+//     .then((data) => { resultado.textContent = data.mensaje + " — " + data.curso;}) 
+//     }); 
+// boton4.addEventListener("click", () => {
+//     fetch("http://localhost:3000/tienda")
+//     .then((res) => res.json()) // texto JSON → objeto JS 
+//     .then((data) => { resultado.textContent = data.mensaje + " — " + data.curso;}) 
+//     }); 
