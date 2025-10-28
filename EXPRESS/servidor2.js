@@ -18,7 +18,7 @@ app.get('/info', (req,res) =>{
 });
 
 app.get('/contacto', (req,res) =>{
-    res.send('<h1>CONTACTO</h1> <br> <p>Puedes contactarnos en <a href="mailto:contacto@ejemplo.com">contacto@ejemplo.com</a></p>')
+    res.send("<h1>CONTACTO</h1> <br> <p>Puedes contactarnos en <a href="mailto:contacto@ejemplo.com">contacto@ejemplo.com</a></p>")
 });
 
 app.get('/tienda', (req,res) =>{
