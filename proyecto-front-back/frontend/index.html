@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi primer ejercicio conn Fetch</title>
+    <link rel="stylesheet" href="style.css">
+    <script src ="script.js"defer></script>
+</head>
+<body>
+    <main class="container">
+    <h1>Mi primer boton conectado al servidor</h1>
+    <button id="boton">Saludar</button> <br>
+    <button id="boton2">Despedida</button>
+      
+    <p id="respuesta">Aquí aparecerá la respuesta del servidor...</p>
+
+    <section class="explicacion">
+      <h2>¿Qué he aprendido en este ejercicio?</h2>
+      <ul>
+        <li>
+          <strong>Creación de un servidor básico con Node y Express:</strong>
+          He configurado un servidor local con una ruta <code>/api/saludo</code> que devuelve una respuesta en formato JSON.
+        </li>
+        <li>
+          <strong>Conexión entre frontend y backend con <code>fetch()</code>:</strong>
+          Desde el navegador envío una petición HTTP GET al servidor y muestro el mensaje recibido en pantalla.
+        </li>
+        <li>
+          <strong>Manipulación del DOM con JavaScript:</strong>
+          Accedo al párrafo mediante <code>document.querySelector("p")</code> y actualizo su contenido dinámicamente.
+        </li>
+        <li>
+          <strong>Separación de responsabilidades:</strong>
+          Los estilos están en un archivo externo <code>styles.css</code>, siguiendo buenas prácticas de organización.
+        </li>
+        <li>
+          <strong>Valor añadido para mi formación:</strong>
+          Este ejercicio demuestra mi comprensión del flujo cliente-servidor y representa un avance clave en mi aprendizaje como desarrollador.
+        </li>
+      </ul>
+    </section>
+  </main>
+  <!-- <script>
+    const boton= document.getElementById("boton");
+    const boton2= document.getElementById("boton2");
+    const parrafo= document.getElementById("respuesta");
+
+    boton.addEventListener("click", () =>{
+        fetch ("http://localhost:3000/api/saludo")
+        .then ((res) => res.json())
+        .then ((data) => {
+            parrafo.textContent = data.mensaje;
+        })
+        .catch ((err) => console.error ("ERROR: algo a fallado", err));
+   
+    });
+
+    boton2.addEventListener("click", () =>{
+        fetch ("http://localhost:3000/api/despedida")
+        .then ((res) => res.json())
+        .then ((data) => {
+            parrafo.textContent = data.mensaje;
+        })
+        .catch ((err) => console.error ("ERROR: algo a fallado", err));
+   
+    });
+  </script> -->
+ 
+</body>
+</html>
