@@ -1,9 +1,8 @@
 // SERVIDOR BACKEND - Ejercicio de Estudiantes
 // Este archivo maneja la lógica del servidor y las rutas API
-
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
+import express from "express";
+import cors from "cors";
+import path from "path";
 
 const app = express();
 const PORT = 3000;
