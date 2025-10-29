@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Ejercicio básico de CRUD con Express y JavaScript vanilla",
   "main": "servidor.js",
+  "type": "module",
   "scripts": {
     "start": "node servidor.js",
     "dev": "nodemon servidor.js"
