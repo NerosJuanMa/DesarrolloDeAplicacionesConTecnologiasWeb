@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "titulo": "Donde los árboles cantan",
+    "autor": "Laura Gallego",
+    "anio": 2011
+  },
+  {
+    "id": 2,
+    "titulo": "La chica del tren",
+    "autor": "Paula Hawkins",
+    "anio": 2015
+  },
+  {
+    "id": 3,
+    "titulo": "Patria",
+    "autor": "Fernando Aramburu",
+    "anio": 2016
+  },
+  {
+    "id": 4,
+    "titulo": "El tatuador de Auschwitz",
+    "autor": "Heather Morris",
+    "anio": 2018
+  },
+  {
+    "id": 5,
+    "titulo": "Reina Roja",
+    "autor": "Juan Gómez-Jurado",
+    "anio": 2018
+  },
+  {
+    "id": 6,
+    "titulo": "La catedral del mar",
+    "autor": "ildelfonso Falcones",
+    "anio": 2016
+  }
+]

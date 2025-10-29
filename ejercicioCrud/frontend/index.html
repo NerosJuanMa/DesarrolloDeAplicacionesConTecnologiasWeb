@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📚 Biblioteca Personal</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <h1>📚 Biblioteca Personal</h1>
+  </header>
+
+  <main class="container">
+    
+    <section aria-labelledby="form-title" class="section-form">
+      <h2 id="form-title" class="visually-hidden">Añadir Nuevo Libro</h2>
+      
+      <form id="form-libro" class="card form" aria-describedby="msg">
+        <fieldset>
+          <legend class="visually-hidden">Datos del Libro</legend>
+          <input id="titulo" name="titulo" placeholder="Título " required aria-label="Título del libro" />
+          <input id="autor"  name="autor"  placeholder="Autor " required aria-label="Autor del libro" />
+          <input id="anio"   name="anio"   placeholder="Año (opcional)" type="number" min="0" step="1" aria-label="Año de publicación" />
+        </fieldset>
+        
+        <button type="submit">➕ Añadir libro</button>
+        <p id="msg" class="msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <div class="toolbar" role="toolbar" aria-controls="grid">
+      <button id="recargar" aria-label="Recargar lista de libros">
+        🔁 Recargar
+      </button>
+    </div>
+
+    <section aria-labelledby="list-title" class="section-list">
+      <h2 id="list-title" class="visually-hidden">Lista de Libros Disponibles</h2>
+      <div id="grid" class="grid" role="log" aria-live="polite">
+        <p class="empty">Carga inicial de la lista...</p>
+      </div>
+    </section>
+    <section class="project-deep-dive" aria-labelledby="deep-dive-title">
+    <h2 id="deep-dive-title" class="summary-title">📈 Evolución Full Stack: De Node a la Persistencia Asíncrona</h2>
+    
+    <div class="summary-content">
+        <p>
+            Este proyecto de API de Biblioteca no es solo una aplicación CRUD funcional, sino una crónica de mi viaje en el desarrollo Full Stack. Aborda los desafíos clave de la arquitectura moderna de aplicaciones y demuestra un dominio práctico del patrón MVC (Modelo-Vista-Controlador) en un entorno real.
+        </p>
+
+        <h3>🧠 1. La Arquitectura Backend: Node.js, Express y la Persistencia de Datos</h3>
+        
+        <p>
+            El corazón del proyecto reside en el backend, construido con Node.js y el framework Express. Mi principal objetivo fue establecer una API RESTful robusta y modular, manteniendo una estricta separación de responsabilidades:
+        </p>
+        
+        <ul>
+            <li>
+                <strong>Rutas Modulares (Express Router):</strong> Implementé un enrutador dedicado (<code>libros.routes.js</code>) que mapea los verbos HTTP (GET, POST, PUT, DELETE) a funciones específicas del controlador, asegurando que la API sea intuitiva y estándar.
+            </li>
+            <li>
+                <strong>Controladores (Lógica de Negocio):</strong> La capa de controladores (<code>libros.controller.js</code>) se enfoca exclusivamente en manejar la petición y la respuesta HTTP (validación de entrada, códigos de estado 400/404/201), delegando toda la gestión de datos al Modelo.
+            </li>
+            <li>
+                <strong>Persistencia Asíncrona (El Modelo):</strong> Este fue un punto de aprendizaje crucial. En lugar de una base de datos tradicional, utilicé un archivo JSON como capa de persistencia (<code>libros.json</code>). El <strong>Modelo</strong> (<code>libros.model.js</code>) fue diseñado con las siguientes consideraciones avanzadas:
+                <ol>
+                    <li>
+                        <strong>Operaciones No Bloqueantes:</strong> Se usó la API de promesas de Node (<strong><code>fs/promises</code></strong>) con <code>async/await</code> para asegurar que las operaciones de lectura/escritura del disco sean no bloqueantes. Esto es fundamental para el rendimiento del servidor.
+                    </li>
+                    <li>
+                        <strong>Robustez y Encapsulación:</strong> Se implementó la lógica completa de lectura, modificación, y guardado dentro de funciones atómicas del Modelo (como <code>eliminarLibroPorId</code>), garantizando que el controlador nunca manipule directamente el archivo JSON, promoviendo la integridad de los datos.
+                    </li>
+                </ol>
+            </li>
+        </ul>
+        
+        <p>
+            Adicionalmente, la configuración de CORS mediante un middleware fue esencial para resolver la política de seguridad del navegador, permitiendo la comunicación fluida entre orígenes distintos (el frontend y el backend).
+        </p>
+
+        <hr/>
+
+        <h3>🎨 2. Frontend Reactivo: Vanilla JS y la Conexión Asíncrona</h3>
+        
+        <p>
+            En la capa de presentación, el objetivo fue construir una interfaz de usuario funcional utilizando Vanilla JavaScript y el motor de renderizado del navegador, demostrando que puedo manejar la manipulación del DOM y la lógica de la aplicación sin depender de librerías externas complejas.
+        </p>
+        
+        <ul>
+            <li>
+                <strong>Consumo de API (<code>fetch</code>):</strong> Se utilizó <code>fetch</code> con la sintaxis <code>async/await</code> para consumir los endpoints de la API, manejando asíncronamente tanto la carga inicial de datos como el envío de formularios y la eliminación de elementos.
+            </li>
+            <li>
+                <strong>Gestión Dinámica del DOM:</strong> La lista de libros se renderiza dinámicamente (`GRID.innerHTML = libros.map(...)`), y se implementó la delegación de eventos en el contenedor principal para manejar acciones de elementos generados dinámicamente (como el botón "Eliminar"). Esta técnica es crucial para la eficiencia y el rendimiento del frontend.
+            </li>
+            <li>
+                <strong>Experiencia de Usuario (UX) y Accesibilidad (A11y):</strong> Se añadió manejo de errores y mensajes de estado claros (`setMsg`). Además, la estructura HTML se enriqueció con atributos ARIA (`role="status"`, `aria-live="polite"`) para asegurar que los cambios de contenido sean notificados a usuarios de tecnologías de asistencia.
+            </li>
+        </ul>
+        
+        <p class="call-to-action">
+            Este proyecto sirve como una prueba tangible de mi capacidad para diseñar, implementar y depurar soluciones Full Stack coherentes, desde la gestión de I/O en el servidor hasta la interacción con el usuario en el navegador. Demuestra resiliencia en el manejo de dependencias, protocolos y patrones de arquitectura.
+        </p>
+    </div>
+</section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Mini Biblioteca API. Implementación con Express y Vanilla JS.</p>
+  </footer>
+</body>
+</html>
