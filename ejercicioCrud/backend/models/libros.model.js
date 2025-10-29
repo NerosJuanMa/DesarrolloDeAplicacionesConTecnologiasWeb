@@ -1,13 +1,15 @@
 // models/libros.model.js
 // ✅ Modelo: se encarga de leer y escribir el archivo JSON donde guardamos los libros.
-
+//Importamos modulos para lectura de asrchivos
 import { readFile, writeFile } from "fs/promises"; 
+//Importamos las rutas
 import path from "path";
 import { fileURLToPath } from "url";
 
-// 1. Obtención de la ruta absoluta del archivo libros.json
+// 1. Obtención de la ruta absoluta del archivo libros.json (le dice a nuestro archivo donde encuentra los datos)
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const RUTA_ARCHIVO = path.join(__dirname, "..", "data", "libros.json");
+const RUTA_ARCHIVO = path.join(__dirname, "../data/libros.json");
+ //"..", "data", "libros.json"
 
 /**
  * 📖 Lee la lista de libros del archivo JSON.

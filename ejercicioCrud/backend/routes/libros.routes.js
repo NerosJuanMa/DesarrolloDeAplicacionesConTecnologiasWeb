@@ -1,6 +1,6 @@
 // routes/libros.routes.js
 import { Router } from "express";
-import { getAll, getOne, create, update, remove } from "../controllers/libros.controller.js";
+import { getAll, getOne, create, remove } from "../controllers/libros.controller.js";
 
 const router = Router();
 

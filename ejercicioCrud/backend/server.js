@@ -12,7 +12,7 @@ app.use(express.json());     // ← parsea JSON entrante a req.body
 app.use(cors());
 app.use(morgan("dev"));
 
-// Montar rutas MVC
+// Montar rutas MVC (Modelo Vista Controlador)
 app.use("/api/libros", librosRouter);
 
 // 404
