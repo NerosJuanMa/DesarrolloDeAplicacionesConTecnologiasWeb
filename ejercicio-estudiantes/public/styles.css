@@ -1,0 +1,475 @@
+/* ====================================
+   ESTILOS GENERALES
+==================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* ====================================
+   HEADER
+==================================== */
+.header {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* ====================================
+   MENSAJES
+==================================== */
+.mensajes {
+    padding: 15px 30px;
+    margin: 0;
+    font-weight: bold;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.mensajes.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 5px solid #28a745;
+}
+
+.mensajes.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 5px solid #dc3545;
+}
+
+.mensajes.hidden {
+    display: none;
+}
+
+/* ====================================
+   FORMULARIO
+==================================== */
+.formulario-section {
+    padding: 30px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+}
+
+.formulario-section h2 {
+    color: #495057;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+.formulario {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    align-items: end;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #495057;
+    font-size: 1rem;
+}
+
+.campo input {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.campo input:invalid {
+    border-color: #dc3545;
+}
+
+.botones {
+    display: flex;
+    gap: 10px;
+    grid-column: 1 / -1;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* ====================================
+   BOTONES
+==================================== */
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d, #5a6268);
+    color: white;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+    color: white;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ffc107, #e0a800);
+    color: #212529;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ====================================
+   CONTROLES
+==================================== */
+.controles {
+    padding: 20px 30px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ====================================
+   LISTA DE ESTUDIANTES
+==================================== */
+.lista-section {
+    padding: 30px;
+}
+
+.lista-section h2 {
+    color: #495057;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.contador {
+    background: #e9ecef;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
+
+.lista-estudiantes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.mensaje-vacio {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 40px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 2px dashed #dee2e6;
+}
+
+/* ====================================
+   TARJETAS DE ESTUDIANTES
+==================================== */
+.estudiante-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.estudiante-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+}
+
+.estudiante-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.estudiante-info h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.estudiante-info p {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #555;
+}
+
+.estudiante-info strong {
+    color: #2c3e50;
+    min-width: 80px;
+}
+
+.promedio {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.promedio.excelente {
+    color: #28a745;
+}
+
+.promedio.bueno {
+    color: #17a2b8;
+}
+
+.promedio.regular {
+    color: #ffc107;
+}
+
+.promedio.bajo {
+    color: #dc3545;
+}
+
+.estudiante-acciones {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+/* ====================================
+   MODAL
+==================================== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.modal-content h3 {
+    margin-bottom: 15px;
+    color: #dc3545;
+    font-size: 1.5rem;
+}
+
+.modal-content p {
+    margin-bottom: 25px;
+    color: #555;
+    font-size: 1.1rem;
+}
+
+.modal-botones {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* ====================================
+   FOOTER
+==================================== */
+.footer {
+    background: #2c3e50;
+    color: white;
+    padding: 25px 30px;
+    text-align: center;
+}
+
+.footer p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.footer code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+}
+
+/* ====================================
+   UTILIDADES
+==================================== */
+.hidden {
+    display: none !important;
+}
+
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* ====================================
+   RESPONSIVE
+==================================== */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        border-radius: 10px;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .formulario {
+        grid-template-columns: 1fr;
+    }
+    
+    .controles {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .lista-estudiantes {
+        grid-template-columns: 1fr;
+    }
+    
+    .estudiante-acciones {
+        flex-direction: column;
+    }
+    
+    .modal-botones {
+        flex-direction: column;
+    }
+}
+
+/* ====================================
+   ANIMACIONES
+==================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.estudiante-card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.btn:active {
+    animation: pulse 0.2s ease-out;
+}
