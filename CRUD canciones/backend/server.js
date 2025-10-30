@@ -83,6 +83,7 @@ function leerCanciones() {
         return canciones;
     } catch (error) {
         // Si hay un error (archivo no existe, está corrupto, etc.), devolver array vacío
+        //Estos erroes son solo visto en la terminal, al ser un archivo del back nunca aparecen en la web.
         console.error('❌ Error al leer canciones:', error.message);
         return [];
     }
