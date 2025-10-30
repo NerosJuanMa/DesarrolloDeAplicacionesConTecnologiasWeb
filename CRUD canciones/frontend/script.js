@@ -169,6 +169,13 @@ async function obtenerTodasLasCanciones() {
     }
 }
 
+ // Crear objeto con los datos
+    const datosCancion = {
+        titulo: titulo,
+        artista: artista,
+        año: año
+    };
+
 /**
  * CREAR NUEVA CANCIÓN
  * ===================
@@ -414,12 +421,7 @@ formulario.addEventListener('submit', async (evento) => {
         return; // Salir de la función sin hacer nada más
     }
     
-    // Crear objeto con los datos
-    const datosCancion = {
-        titulo: titulo,
-        artista: artista,
-        año: año
-    };
+   
     
     // Decidir si crear nueva canción o actualizar existente
     if (cancionQueEstamosEditando) {

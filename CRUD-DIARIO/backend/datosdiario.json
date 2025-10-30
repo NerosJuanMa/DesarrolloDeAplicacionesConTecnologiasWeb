@@ -1,0 +1,6 @@
+[
+    {"id":1, "Dia":"30 de Octubre", "Anotacion":"Primera anotacion", "Estado":"En curso"},
+    {"id":2, "Dia":"30 de Octubre", "Anotacion":"Segunda anotacion", "Estado":"Finalizada"},
+    {"id":3, "Dia":"31 de Octubre", "Anotacion":"Ir al Gym", "Estado":"En curso"},
+    {"id":4, "Dia":"31 de Octubre", "Anotacion":"Ir al Supermercado", "Estado":"En curso"}
+]
