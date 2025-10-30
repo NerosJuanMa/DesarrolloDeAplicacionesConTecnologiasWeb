@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "titulo": "La Llorona",
+    "artista": "Manu Chao",
+    "año": 2001
+  },
+  {
+    "id": 2,
+    "titulo": "Mediterráneo",
+    "artista": "Joan Manuel Serrat",
+    "año": 1971
+  },
+  {
+    "id": 3,
+    "titulo": "Se nos rompió el amor",
+    "artista": "Rocío Jurado",
+    "año": 1993
+  },
+  {
+    "id": 4,
+    "titulo": "Bamboléo",
+    "artista": "Gipsy Kings",
+    "año": 1987
+  },
+  {
+    "id": 5,
+    "titulo": "La Puerta Violeta",
+    "artista": "Rozalén",
+    "año": 2017
+  },
+  {
+    "id": 7,
+    "titulo": "Me prometo",
+    "artista": "Antoñito Molina",
+    "año": 2024
+  },
+  {
+    "id": 8,
+    "titulo": "Bailando en pijama",
+    "artista": "El arrebato",
+    "año": 2025
+  }
+]

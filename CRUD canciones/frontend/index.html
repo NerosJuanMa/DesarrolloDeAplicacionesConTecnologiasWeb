@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- 
+    METADATOS: Información sobre nuestra página web
+    ================================================
+    -->
+    <meta charset="UTF-8"> <!-- Permite usar acentos y ñ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Se ve bien en móviles -->
+    <title>🎵 Gestión de Canciones</title> <!-- Título que aparece en la pestaña del navegador -->
+    
+    <!-- ENLACE AL ARCHIVO DE ESTILOS: Hace que la página se vea bonita -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 
+    CONTENEDOR PRINCIPAL: Todo el contenido de la página va aquí dentro
+    ==================================================================
+    -->
+    <div class="container">
+        
+        <!-- 
+        ENCABEZADO: El título grande de la página
+        ========================================
+        -->
+        <header>
+            <h1>🎵 Gestión de Canciones</h1>
+            <p>Aprende CRUD: Crear, Leer, Actualizar y Eliminar canciones</p>
+        </header>
+
+        <!-- 
+        MENSAJES: Aquí aparecerán mensajes para el usuario (éxito, error, etc.)
+        ======================================================================
+        Inicialmente está oculto (class="oculto") y se muestra cuando hay algo que decir
+        -->
+        <div id="mensaje" class="mensaje oculto"></div>
+
+        <!-- 
+        FORMULARIO: Donde el usuario escribe los datos de las canciones
+        ==============================================================
+        -->
+        <section class="formulario-seccion">
+            <!-- Título del formulario (cambia cuando editamos) -->
+            <h2 id="titulo-formulario">➕ Agregar Nueva Canción</h2>
+            
+            <!-- 
+            EL FORMULARIO: Los campos donde el usuario escribe
+            ================================================
+            Cuando el usuario hace clic en "Guardar", se ejecuta el JavaScript
+            -->
+            <form id="formulario-cancion">
+                
+                <!-- CAMPO: TÍTULO DE LA CANCIÓN -->
+                <div class="campo">
+                    <label for="titulo">Título de la canción:</label>
+                    <input 
+                        type="text" 
+                        id="titulo" 
+                        name="titulo" 
+                        required 
+                        placeholder="Ejemplo: La Llorona"
+                        maxlength="100">
+                </div>
+
+                <!-- CAMPO: ARTISTA -->
+                <div class="campo">
+                    <label for="artista">Artista:</label>
+                    <input 
+                        type="text" 
+                        id="artista" 
+                        name="artista" 
+                        required 
+                        placeholder="Ejemplo: Manu Chao"
+                        maxlength="100">
+                </div>
+
+                <!-- CAMPO: AÑO -->
+                <div class="campo">
+                    <label for="año">Año de lanzamiento:</label>
+                    <input 
+                        type="number" 
+                        id="año" 
+                        name="año" 
+                        required 
+                        min="1900" 
+                        max="2030" 
+                        placeholder="Ejemplo: 2001">
+                </div>
+
+                <!-- 
+                BOTONES DEL FORMULARIO
+                =====================
+                -->
+                <div class="botones-formulario">
+                    <!-- Botón principal: Guardar o Actualizar -->
+                    <button type="submit" id="btn-guardar">💾 Guardar Canción</button>
+                    
+                    <!-- Botón cancelar: Solo aparece cuando editamos (inicialmente oculto) -->
+                    <button type="button" id="btn-cancelar" class="oculto">❌ Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- 
+        BOTONES DE ACCIÓN: Acciones generales de la aplicación
+        =====================================================
+        -->
+        <section class="acciones">
+            <button id="btn-cargar" class="btn-accion">🔄 Cargar Canciones</button>
+           
+        </section>
+
+        <!-- 
+        LISTA DE CANCIONES: Aquí se muestran todas las canciones
+        ========================================================
+        -->
+        <section class="lista-seccion">
+            <h2>📋 Lista de Canciones</h2>
+            
+            <!-- Indicador de carga (aparece mientras se cargan las canciones) -->
+            <div id="loading" class="loading oculto">🔄 Cargando canciones...</div>
+            
+            <!-- Aquí aparecerán las canciones (se llenan con JavaScript) -->
+            <div id="lista-canciones" class="lista-canciones">
+                <!-- Las canciones aparecerán aquí dinámicamente -->
+            </div>
+        </section>
+
+        <!-- 
+        ESTADÍSTICAS: Muestra cuántas canciones hay
+        ==========================================
+        -->
+        <section class="estadisticas">
+            <div class="estadistica">
+                <!-- El número se actualiza con JavaScript -->
+                <span class="numero" id="total-canciones">0</span>
+                <span class="etiqueta">Total de Canciones</span>
+            </div>
+        </section>
+    </div>
+
+    <!-- 
+    MODAL DE CONFIRMACIÓN: Ventana que aparece para confirmar eliminar
+    ================================================================
+    -->
+    <div id="modal-confirmar" class="modal oculto">
+        <div class="modal-contenido">
+            <h3>⚠️ Confirmar Eliminación</h3>
+            <!-- El mensaje específico se pone con JavaScript -->
+            <p id="mensaje-confirmacion">¿Estás seguro de que quieres eliminar esta canción?</p>
+            
+            <div class="botones-modal">
+                <!-- Botón peligroso: Sí, eliminar -->
+                <button id="btn-confirmar-eliminar" class="btn-peligro">🗑️ Sí, Eliminar</button>
+                <!-- Botón seguro: No, cancelar -->
+                <button id="btn-cancelar-eliminar" class="btn-secundario">❌ Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+    ENLACE AL JAVASCRIPT: Aquí está toda la lógica de la aplicación
+    ==============================================================
+    Se pone al final para que cargue después de todo el HTML
+    -->
+    <script src="script.js"></script>
+</body>
+</html>
+
+<!-- 
+¿QUÉ HACE ESTE ARCHIVO?
+======================
+
+Este archivo HTML es la ESTRUCTURA de nuestra página web. Es como el "esqueleto" de una casa:
+
+1. ENCABEZADO: El título grande que ven los usuarios
+2. FORMULARIO: Donde escriben los datos de las canciones
+3. LISTA: Donde se muestran todas las canciones
+4. MODAL: Una ventana pequeña para confirmar eliminar
+
+Los elementos importantes tienen un ID (como "formulario-cancion") para que 
+el JavaScript pueda encontrarlos y trabajar con ellos.
+
+Las clases CSS (como "container", "campo") se usan para darle estilo bonito 
+con el archivo styles.css.
+
+Cuando el usuario hace algo (clic en un botón, escribe en un campo), 
+el JavaScript (en script.js) se encarga de responder y hacer que la aplicación funcione.
+-->
