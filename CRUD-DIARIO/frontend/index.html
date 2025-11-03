@@ -1,140 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diario</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Diario Personal</title>
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto 2rem;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 0.3rem;
+    }
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #2563eb;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1d4ed8;
+    }
+    #botonMostrar {
+      display: block;
+      margin: 0 auto 2rem;
+      background-color: #10b981;
+    }
+    #botonMostrar:hover {
+      background-color: #059669;
+    }
+    #diarioList {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .diario-card {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    .diario-card h3 {
+      margin-top: 0;
+      color: #2563eb;
+    }
+    #total-diario {
+      display: block;
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    #mensaje {
+      text-align: center;
+      color: #444;
+      margin-bottom: 1rem;
+    }
+    #loading {
+      text-align: center;
+      display: none;
+    }
+  </style>
 </head>
-
 <body>
-    <div class="container">
-        <header>
-            <h1>DIARIO PERSONAL</h1>
-            <p>Aprende CRUD: Crear, Leer, Actualizar y Eliminar</p>
-        </header>
-    </div>
-    <div id="mensaje" class="mensaje oculto"></div>
-    <button id="botonMostrar">Mostrar</button>
-    <p id="resultados">Aquí aparecerán los resutados</p>
-<section class="lista-jaime">
-  
-  <h1>📋Listado de Entradas del diario</h1>
-  <div class="diario-list" id="diarioList"></div>
- 
- 
-</section>
-    <section class="formulario-seccion">
-        <!-- Título del formulario (cambia cuando editamos) -->
-        <h2 id="titulo-formulario">➕ Agregar Nueva Entrada de Diario</h2>
 
-        <!-- "id":1, "Dia":"30 de Octubre", "Anotacion":"Primera anotacion", "Estado":"En curso"},
-            EL FORMULARIO: Los campos donde el usuario escribe
-            ================================================
-            Cuando el usuario hace clic en "Guardar", se ejecuta el JavaScript
-            -->
-        <form id="formulario-diario">
+  <h1>📔 Mi Diario Personal</h1>
 
-            <!-- CAMPO: DIA DE LA ENTRADA -->
-            <div class="campo">
-                <label for="dia">Día:</label>
-                <input type="text" id="dia" name="dia" required placeholder="Ejemplo: 1 de Noviembre del 2025"
-                    maxlength="100">
-            </div>
+  <!-- FORMULARIO -->
+  <form id="formulario-diario">
+    <label for="dia">Día</label>
+    <input type="text" id="dia" placeholder="Ej: Lunes 3 de noviembre" />
 
-            <!-- CAMPO: Anotacion -->
-            <div class="campo">
-                <label for="anotacion">Anotacion:</label>
-                <input type="text" id="anotacion" name="anotacion" required
-                    placeholder="Ejemplo: Evento, anotacion, recordar" maxlength="100">
-            </div>
+    <label for="anotacion">Anotación</label>
+    <textarea id="anotacion" rows="3" placeholder="¿Qué pasó hoy?"></textarea>
 
-            <!-- CAMPO: ESTADO -->
-            <div class="campo">
-                <label for="estado">Estado:</label>
-                <input type="text" id="estado" name="estado" required value="En curso"
-                    placeholder="Ejemplo: En curso, Finalizado.">
-            </div>
-            <div class="campo">
-                <label for="estado">Estado:</label>
-                <select id="estado" name="estado" required>
-                    <option value="En curso" selected>En curso</option>
-                    <option value="Finalizado">Finalizado</option>
-                </select>
-            </div>
+    <label for="estado">Estado</label>
+    <select id="estado">
+      <option value="">Selecciona un estado...</option>
+      <option value="Feliz">Feliz</option>
+      <option value="Triste">Triste</option>
+      <option value="Cansado">Cansado</option>
+      <option value="Motivado">Motivado</option>
+      <option value="Neutral">Neutral</option>
+    </select>
 
-            <!-- 
-                BOTONES DEL FORMULARIO
-                =====================
-                -->
-            <div class="botones-formulario">
-                <!-- Botón principal: Guardar o Actualizar -->
-                <button type="submit" id="btn-guardar">💾 Guardar Canción</button>
+    <button id="botonGuardar" type="submit">Guardar entrada</button>
+  </form>
 
-                <!-- Botón cancelar: Solo aparece cuando editamos (inicialmente oculto) -->
-                <button type="button" id="btn-cancelar" class="oculto">❌ Cancelar</button>
-            </div>
-        </form>
-    </section>
-      <!-- 
-        BOTONES DE ACCIÓN: Acciones generales de la aplicación
-        =====================================================
-        -->
-        <section class="acciones">
-            <button id="btn-cargar" class="btn-accion">🔄 Cargar Diario</button>
-           
-        </section>
-<!-- 
-        LISTA DE CANCIONES: Aquí se muestran todas las canciones
-        ========================================================
-        -->
-        <section class="lista-jaime">
-            <h2>📋 Lista de Entradas de Diario</h2>
-            
-            <!-- Indicador de carga (aparece mientras se cargan las canciones) -->
-            <div id="loading" class="loading oculto">🔄 Cargando entradas...</div>
-            
-            <!-- Aquí aparecerán las canciones (se llenan con JavaScript) -->
-            <div id="diariolist" class="diario-list">
-                <!-- Las canciones aparecerán aquí dinámicamente -->
-            </div>
-        </section>
+  <!-- BOTÓN DE MOSTRAR -->
+  <button id="botonMostrar">Mostrar todas las entradas</button>
 
-        <!-- 
-        ESTADÍSTICAS: Muestra cuántas canciones hay
-        ==========================================
-        -->
-        <section class="estadisticas">
-            <div class="estadistica">
-                <!-- El número se actualiza con JavaScript -->
-                <span class="numero" id="total-diario">0</span>
-                <span class="etiqueta">Total de entradas a Diario</span>
-            </div>
-        </section>
-    </div>
+  <!-- ELEMENTOS DE INFORMACIÓN -->
+  <span id="total-diario">Total de entradas: 0</span>
+  <div id="mensaje"></div>
+  <div id="loading">Cargando...</div>
 
-    <!-- 
-    MODAL DE CONFIRMACIÓN: Ventana que aparece para confirmar eliminar
-    ================================================================
-    -->
-    <div id="modal-confirmar" class="modal oculto">
-        <div class="modal-contenido">
-            <h3>⚠️ Confirmar Eliminación</h3>
-            <!-- El mensaje específico se pone con JavaScript -->
-            <p id="mensaje-confirmacion">¿Estás seguro de que quieres eliminar esta canción?</p>
-            
-            <div class="botones-modal">
-                <!-- Botón peligroso: Sí, eliminar -->
-                <button id="btn-confirmar-eliminar" class="btn-peligro">🗑️ Sí, Eliminar</button>
-                <!-- Botón seguro: No, cancelar -->
-                <button id="btn-cancelar-eliminar" class="btn-secundario">❌ Cancelar</button>
-            </div>
-        </div>
-    </div>
+  <!-- CONTENEDOR DE RESULTADOS Y LISTA -->
+  <ul id="resultados"></ul>
+  <div id="diarioList"></div>
 
-
+  <!-- Enlace al script -->
+  <script src="./script.js"></script>
 </body>
-
 </html>

@@ -108,11 +108,12 @@ header p {
 
 /* ===== FORMULARIO ===== */
 .formulario-seccion {
-    background: white;
+    
+    background: rgb(126, 219, 231);
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .formulario-seccion h2 {
@@ -122,20 +123,44 @@ header p {
 }
 
 .campo {
-    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-bottom: 5px;
 }
-
+.campo-anotacion{
+    margin-bottom: 5px;
+    
+}
 .campo label {
-    display: block;
-    margin-bottom: 8px;
+    width: auto;
+    display:flex;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #555;
+}
+.campo-anotacion label{
+    display:flex;
+    margin-bottom: 10px;
     font-weight: 600;
     color: #555;
 }
 
 .campo input,
 .campo select {
+    /* text-align: center; */
+    width: auto;
+    padding: 10px 10px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.campo-anotacion input, .campo-anotacion select{
+    text-align:left;
     width: 100%;
-    padding: 12px 16px;
+    height: 100px;
+    padding: 10px 10px;
     border: 2px solid #e1e5e9;
     border-radius: 8px;
     font-size: 1rem;
@@ -148,7 +173,12 @@ header p {
     border-color: #667eea;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
-
+.campo-anotacion input:focus,
+.campo-anotacion select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
 .botones-formulario {
     display: flex;
     gap: 15px;
