@@ -43,6 +43,8 @@ async function cargarEntradas() {
         <h3>${item.dia}</h3>
         <p><strong>anotacion:</strong> ${item.anotacion}</p>
         <p><strong>estado:</strong> ${item.estado}</p>
+        <button class="botoneditar" onclick="prepararEdicion(${item.id})"> ✏️ Editar</button>
+        <button class="botonborrar" onclick="preguntarSiEliminar(${item.id}, '${item.dia}')"> 🗑️ Eliminar</button>
       `;
       contenedorLista.appendChild(card);
     });
