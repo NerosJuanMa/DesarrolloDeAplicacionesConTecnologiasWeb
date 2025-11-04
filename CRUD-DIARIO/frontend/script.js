@@ -31,10 +31,12 @@ botonMostrar.addEventListener('click', async () => {
 // Cargar entradas y pintar tarjetas
 async function cargarEntradas() {
   try {
+    contenedorLista.innerHTML = '<p>Cargando...</p>';
     const res = await fetch(URL_API);
     const datos = await res.json();
-    if (!datos.exito) throw new Error('Error en respuesta API');
-
+    //if (!datos.exito) throw new Error('Error en respuesta API');
+    if (!datos.exito) return contenedorLista.innerHTML = '<p>Error al cargar.</p>';
+      
     contenedorLista.innerHTML = '';
     datos.datos.forEach(item => {
       const card = document.createElement('div');
@@ -78,8 +80,7 @@ formulario.addEventListener('submit', async (evento) => {
 // Crear nueva entrada
 async function crearNuevaEntrada(datosdiario) {
      console.log('Enviando a API:', datosdiario);
-  try {
-    
+  try {    
     const respuesta = await fetch(URL_API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -88,18 +89,77 @@ async function crearNuevaEntrada(datosdiario) {
    const resultado = await respuesta.json();
     
     if (resultado.exito) {
-      alert('Entrada guardada');
+      alert('✅ Entrada agregada');
       formulario.reset();
       await cargarEntradas();
     } else {
-      alert('Error: ' + (resultado.mensaje || 'no se guardó'));
+      alert('⚠️ Error: ' + (resultado.mensaje || 'no se guardó'));
     }
     
   } catch (error) {
     console.error('Error al crear entrada:', error);
-    alert('No se pudo guardar la entrada');
+    alert('⚠️ No se pudo guardar la entrada');
+  } 
+}
+
+    //EDITAR ENTRADA
+async function editarEntrada(id, nuevosDatos) {
+  try {
+    const respuesta = await fetch(`${URL_API}/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(nuevosDatos)
+    });
+
+    const data = await respuesta.json();
+    if (data.exito) {
+      alert('✅ Entrada actualizada');
+      cargarEntradas();
+      console.log('✅ Entrada actualizada:', data.datos);
+    } else {
+      alert('⚠️ ' + data.mensaje);
+      console.warn('⚠️ Error al actualizar:', data.mensaje);
+    }
+  } catch (error) {
+    console.error('❌ Error de red al editar:', error);
   }
 }
 
+// // Ejemplo de uso:
+// // editarEntrada(2, {
+// //   dia: '2025-11-04',
+// //   anotacion: 'Actualicé mi entrada del diario.',
+// //   estado: 'feliz'
+// // });
 
+// // editarEntrada(2, { estado: 'motivado' });
 
+//BORRADO
+async function borrarEntrada(id) {
+  if (!confirm('¿Seguro que quieres borrar esta entrada?')) return;
+  try {
+    const respuesta = await fetch(`${URL_API}/${id}`, {
+      method: 'DELETE'
+    });
+    const data = await respuesta.json(); 
+    if (data.exito) {
+      alert('🗑️ Entrada eliminada');
+      cargarEntradas();
+      console.log('🗑️ Entrada eliminada:', data.datos);
+    } else {
+      alert('⚠️ ' + data.mensaje);
+      console.warn('⚠️ No se pudo eliminar:', data.mensaje);
+    }
+  } catch (error) {
+    console.error('❌ Error de red al borrar:', error);
+  }
+}
+
+// // Ejemplo de uso:
+// //borrarEntrada(3);
+
+//REFRESCAR
+// 🔄 Cargar al inicio
+ cargarEntradas(); 
