@@ -33,6 +33,21 @@
     .diario-card p {
       margin: 0.3rem 0;
     }
+    .diario-card button{
+        
+        align-content: center;
+    }
+    .botoneditar, .botonborrar{
+        padding: 3px 3px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: red;
+       
+    }
 /* ===== ESTILOS GENERALES ===== */
 * {
     margin: 0;
