@@ -11,6 +11,8 @@ const campoEstado = document.getElementById('estado');
 const botonGuardar = document.getElementById('btn-guardar');
 const botonCancelar = document.getElementById('btn-cancelar');
 const botonCargar = document.getElementById('btn-cargar');
+const botoneditar = document.getElementById('botoneditar');
+const botonborrar = document.getElementById('botonborrar');
 // Elementos para mostrar información
 const listadiario = document.getElementById('lista-diario');
 const mensajes = document.getElementById('mensaje');
@@ -57,6 +59,8 @@ async function cargarentradaDiario() {
             <h3>${diario.Dia}</h3>
             <p><strong>Anotacion:</strong> ${diario.Anotacion}</p>
             <p><strong>Estado:</strong> ${diario.Estado}</p>
+            <button class="botoneditar" onclick="prepararEdicion(${diario.id})"> ✏️ Editar</button>
+            <button class="botonborrar" onclick="preguntarSiEliminar(${diario.id}, '${diario.dia}')"> 🗑️ Eliminar</button>
           `;
           contenedor.appendChild(card);
         });
