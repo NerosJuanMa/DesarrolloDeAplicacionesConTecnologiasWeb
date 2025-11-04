@@ -1,6 +1,7 @@
 // script.js (cliente) - variables globales y elementos
 const URL_API = 'http://localhost:3000/api/diario';
 let entradaQueEstamosEditando = null;
+const API = 'http://localhost:3000/api/diario'
 
 const formulario = document.getElementById('formulario-diario');
 const campodia = document.getElementById('dia');
@@ -103,9 +104,11 @@ async function crearNuevaEntrada(datosdiario) {
 }
 
     //EDITAR ENTRADA
+    
 async function editarEntrada(id, nuevosDatos) {
+  //  const nuevosDatos = { dia: dia, anotacion: anotacion, estado: estado };
   try {
-    const respuesta = await fetch(`${URL_API}/${id}`, {
+    const res = await fetch(`${API}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -113,7 +116,7 @@ async function editarEntrada(id, nuevosDatos) {
       body: JSON.stringify(nuevosDatos)
     });
 
-    const data = await respuesta.json();
+    const data = await res.json();
     if (data.exito) {
       alert('✅ Entrada actualizada');
       cargarEntradas();
@@ -138,12 +141,11 @@ async function editarEntrada(id, nuevosDatos) {
 
 //BORRADO
 async function borrarEntrada(id) {
+  
   if (!confirm('¿Seguro que quieres borrar esta entrada?')) return;
   try {
-    const respuesta = await fetch(`${URL_API}/${id}`, {
-      method: 'DELETE'
-    });
-    const data = await respuesta.json(); 
+    const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
+    const data = await res.json(); 
     if (data.exito) {
       alert('🗑️ Entrada eliminada');
       cargarEntradas();
