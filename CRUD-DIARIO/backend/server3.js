@@ -84,60 +84,60 @@ app.post('/api/diario', async (req, res) => {
 });
 
 
-// // Actualizar entrada
-// app.put('/api/diario/:id', async (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const { dia, anotacion, estado } = req.body;
+// Actualizar entrada
+app.put('/api/diario/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  const { dia, anotacion, estado } = req.body;
 
-//   if (!dia || !anotacion || !estado) {
-//     return res.status(400).json({
-//       exito: false,
-//       mensaje: 'Faltan datos (dia, anotacion, estado)'
-//     });
-//   }
+  if (!dia || !anotacion || !estado) {
+    return res.status(400).json({
+      exito: false,
+      mensaje: 'Faltan datos (dia, anotacion, estado)'
+    });
+  }
 
-//   const diario = await leerDiario();
-//   const indice = diario.findIndex(c => c.id === id);
+  const diario = await leerDiario();
+  const indice = diario.findIndex(c => c.id === id);
 
-//   if (indice === -1) {
-//     return res.status(404).json({
-//       exito: false,
-//       mensaje: `No se encontró entrada con ID ${id}`
-//     });
-//   }
+  if (indice === -1) {
+    return res.status(404).json({
+      exito: false,
+      mensaje: `No se encontró entrada con ID ${id}`
+    });
+  }
 
-//   diario[indice] = { id, dia, anotacion, estado };
-//   await escribirDiario(diario);
+  diario[indice] = { id, dia, anotacion, estado };
+  await escribirDiario(diario);
 
-//   res.json({
-//     exito: true,
-//     datos: diario[indice],
-//     mensaje: `Entrada actualizada correctamente`
-//   });
-// });
+  res.json({
+    exito: true,
+    datos: diario[indice],
+    mensaje: `Entrada actualizada correctamente`
+  });
+});
 
-// // Eliminar entrada
-// app.delete('/api/diario/:id', async (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const diario = await leerDiario();
+// Eliminar entrada
+app.delete('/api/diario/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  const diario = await leerDiario();
 
-//   const indice = diario.findIndex(c => c.id === id);
-//   if (indice === -1) {
-//     return res.status(404).json({
-//       exito: false,
-//       mensaje: `No se encontró entrada con ID ${id}`
-//     });
-//   }
+  const indice = diario.findIndex(c => c.id === id);
+  if (indice === -1) {
+    return res.status(404).json({
+      exito: false,
+      mensaje: `No se encontró entrada con ID ${id}`
+    });
+  }
 
-//   const eliminado = diario.splice(indice, 1)[0];
-//   await escribirDiario(diario);
+  const eliminado = diario.splice(indice, 1)[0];
+  await escribirDiario(diario);
 
-//   res.json({
-//     exito: true,
-//     datos: eliminado,
-//     mensaje: `Entrada "${eliminado.dia}" eliminada correctamente`
-//   });
-// });
+  res.json({
+    exito: true,
+    datos: eliminado,
+    mensaje: `Entrada "${eliminado.dia}" eliminada correctamente`
+  });
+});
 
 // Iniciar servidor
 app.listen(PORT, () => {
