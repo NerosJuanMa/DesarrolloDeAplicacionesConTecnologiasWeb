@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📔 Mi Diario</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      color: #333;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: #444;
+    }
+    form {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input, textarea, select, button {
+      margin: .5rem 0;
+      padding: .5rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .entrada {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .acciones {
+      display: flex;
+      gap: .5rem;
+      margin-top: .5rem;
+    }
+    .acciones button {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>📔 Mi Diario Personal</h1>
+
+  <!-- Formulario para nueva entrada -->
+  <form id="form-nueva">
+    <label>Día:</label>
+    <input type="date" id="dia" required />
+
+    <label>Anotación:</label>
+    <textarea id="anotacion" rows="3" required></textarea>
+
+    <label>Estado:</label>
+    <select id="estado" required>
+      <option value="">Seleccionar...</option>
+      <option value="feliz">Feliz</option>
+      <option value="triste">Triste</option>
+      <option value="motivado">Motivado</option>
+      <option value="neutral">Neutral</option>
+    </select>
+
+    <button type="submit">➕ Agregar entrada</button>
+  </form>
+
+  <!-- Contenedor para mostrar las entradas -->
+  <div id="contenedor"></div>
+
+  <script>
+    const API = 'http://localhost:3000/api/diario';
+    const contenedor = document.getElementById('contenedor');
+    const form = document.getElementById('form-nueva');
+
+    // 🧾 Mostrar todas las entradas
+    async function mostrarEntradas() {
+      contenedor.innerHTML = '<p>Cargando...</p>';
+      const res = await fetch(API);
+      const data = await res.json();
+
+      if (!data.exito) return contenedor.innerHTML = '<p>Error al cargar.</p>';
+      contenedor.innerHTML = '';
+
+      data.datos.forEach(e => {
+        const div = document.createElement('div');
+        div.className = 'entrada';
+        div.innerHTML = `
+          <strong>${e.dia}</strong> — <em>${e.estado}</em>
+          <p>${e.anotacion}</p>
+          <div class="acciones">
+            <button onclick="editarEntrada(${e.id})">✏️ Editar</button>
+            <button onclick="borrarEntrada(${e.id})">🗑️ Borrar</button>
+          </div>
+        `;
+        contenedor.appendChild(div);
+      });
+    }
+
+    // ➕ Crear nueva entrada
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const dia = document.getElementById('dia').value;
+      const anotacion = document.getElementById('anotacion').value;
+      const estado = document.getElementById('estado').value;
+
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dia, anotacion, estado })
+      });
+
+      const data = await res.json();
+      if (data.exito) {
+        alert('✅ Entrada agregada');
+        form.reset();
+        mostrarEntradas();
+      } else {
+        alert('⚠️ ' + data.mensaje);
+      }
+    });
+
+    // ✏️ Editar entrada (simple con prompt)
+    async function editarEntrada(id) {
+      const nuevoTexto = prompt('Escribe la nueva anotación:');
+      if (!nuevoTexto) return;
+
+      const res = await fetch(`${API}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ anotacion: nuevoTexto })
+      });
+
+      const data = await res.json();
+      if (data.exito) {
+        alert('✅ Entrada actualizada');
+        mostrarEntradas();
+      } else {
+        alert('⚠️ ' + data.mensaje);
+      }
+    }
+
+    // 🗑️ Borrar entrada
+    async function borrarEntrada(id) {
+      if (!confirm('¿Seguro que quieres borrar esta entrada?')) return;
+
+      const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.exito) {
+        alert('🗑️ Entrada eliminada');
+        mostrarEntradas();
+      } else {
+        alert('⚠️ ' + data.mensaje);
+      }
+    }
+
+    // 🔄 Cargar al inicio
+    mostrarEntradas();
+  </script>
+</body>
+</html>
