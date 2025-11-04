@@ -59,8 +59,8 @@ async function cargarentradaDiario() {
             <h3>${diario.Dia}</h3>
             <p><strong>Anotacion:</strong> ${diario.Anotacion}</p>
             <p><strong>Estado:</strong> ${diario.Estado}</p>
-            <button class="botoneditar" onclick="prepararEdicion(${diario.id})"> ✏️ Editar</button>
-            <button class="botonborrar" onclick="preguntarSiEliminar(${diario.id}, '${diario.dia}')"> 🗑️ Eliminar</button>
+            <button class="botoneditar" onclick="editarEntrada(${diario.id})"> ✏️ Editar</button>
+            <button class="botonborrar" onclick="borrarEntrada(${diario.id}, '${diario.dia}')"> 🗑️ Eliminar</button>
           `;
           contenedor.appendChild(card);
         });
