@@ -80,7 +80,7 @@ app.post('/api/diario', async (req, res) => {
 // =======================
 app.put('/api/diario/:id', async (req, res) => {
     try {
-        const id = Number(req.params.id);
+        const id = Number(req.body.id);
         const { dia, anotacion, estado } = req.body;
         const diario = await leerDiario();
 
@@ -111,9 +111,9 @@ app.put('/api/diario/:id', async (req, res) => {
 // =======================
 // 🗑️ BORRAR (DELETE)
 // =======================
-app.delete(`${ARCHIVO_DIARIO}/${id}`, async (req, res) => {
+app.delete(`/api/diario/:id`, async (req, res) => {
     try {
-        const id = Number(req.params.id);
+        const id = Number(req.body.id);
         const diario = await leerDiario();
         const indice = diario.findIndex(e => e.id === id);
 
