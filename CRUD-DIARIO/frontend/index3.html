@@ -61,7 +61,7 @@
   <!-- Formulario para nueva entrada -->
   <form id="form-nueva">
     <label>Día:</label>
-    <input type="date" id="dia" required />
+    <input type="date" id="dia" required value="YYYY-MM-DD"/>
 
     <label>Anotación:</label>
     <textarea id="anotacion" rows="3" required></textarea>
@@ -169,6 +169,18 @@
 
     // 🔄 Cargar al inicio
     mostrarEntradas();
+    
+    // Obtener la fecha de hoy en formato YYYY-MM-DD
+    const today = new Date();
+    const year = today.getFullYear();
+    // getMonth() es base 0, por eso se suma 1
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day}`;
+
+    // Establecer el valor del campo de fecha
+    document.getElementById('dia').value = formattedDate;
   </script>
 </body>
 </html>

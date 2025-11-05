@@ -1,14 +1,32 @@
 [
   {
-    "id": 2,
-    "dia": "2025-11-20",
-    "anotacion": "prueba2",
-    "estado": "motivado"
+    "id": 1,
+    "dia": "2025-11-05",
+    "estado": "neutral",
+    "anotacion": "empezamos denuevo"
   },
   {
-    "id": 3,
+    "id": 5,
+    "dia": "2025-11-30",
+    "estado": "neutral",
+    "anotacion": "cambio?"
+  },
+  {
+    "id": 7,
+    "dia": "2025-11-20",
+    "estado": "Pendiente",
+    "anotacion": "prueba id 1l"
+  },
+  {
+    "id": 8,
+    "dia": "2025-11-27",
+    "estado": "feliz",
+    "anotacion": "empezamos denuevo"
+  },
+  {
+    "id": 9,
     "dia": "1 de Noviembre de 2025",
-    "anotacion": "<sfsFSDFASF",
-    "estado": "Finalizado"
+    "estado": "Feliz",
+    "anotacion": "jbkjhvkh"
   }
 ]
