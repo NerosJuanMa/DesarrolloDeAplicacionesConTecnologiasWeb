@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diario</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>DIARIO PERSONAL</h1>
+            <p>Aprende CRUD: Crear, Leer, Actualizar y Eliminar</p>
+        </header>
+    </div>
+ 
+    <section class="formulario-seccion">
+        <!-- Título del formulario (cambia cuando editamos) -->
+        <h2 id="titulo-formulario">➕ Agregar Nueva Entrada de Diario</h2>
+
+        <!--EL FORMULARIO: Los campos donde el usuario escribe
+            ================================================
+            Cuando el usuario hace clic en "Guardar", se ejecuta el JavaScript
+            -->
+        <form id="formulario-diario">
+            <!-- CAMPO: DIA DE LA ENTRADA -->
+            <div class="campo">
+            <label for="dia">Día:</label>
+            <input type="date" id="dia" name="dia" required value="YYYY-MM-DD" />
+            </div>
+            <!-- CAMPO: ESTADO -->
+            <div class="campo">
+            <label for="estado">Estado:</label>
+            <select id="estado" name="estado" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="feliz">Feliz</option>
+                    <option value="triste">Triste</option>
+                    <option value="motivado">Motivado</option>
+                    <option value="neutral">Neutral</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En Proceso">En Proceso</option>
+                    <option value="Completado">Completado</option>
+            </select>
+            </div>
+            <!-- CAMPO: Anotacion -->
+            <div class="campo-anotacion">
+            <label for="anotacion">Anotación:</label>
+            <input type="text" id="anotacion" name="anotacion" rows="3" required placeholder="Ejemplo: Evento, anotacion, recordar" maxlength="100">
+            </div>
+            <button class="btn-agregar" id="btn-guardar" type="submit">💾 Guardar entrada ➕ </button>
+        </form>      
+
+           
+            </div>
+
+
+           
+        </form>
+    </section>
+      <!-- 
+        LISTA DE CANCIONES: Aquí se muestran todas las canciones
+        ========================================================
+        -->
+    <div id="mensaje" class="mensaje oculto"></div>
+    <button id="botonMostrar" class="btn-mostrar">🔄Mostrar Diario</button>
+    <p id="resultados">Aquí aparecerán los resutados</p>
+    <section class="lista-jaime">
+        <h1>📋Listado de Entradas del diario</h1>
+        <div class="diario-list" id="diarioList"></div>
+    </section>
+
+        <!-- Indicador de carga (aparece mientras se cargan las canciones) -->
+        <div id="loading" class="loading oculto">🔄 Cargando entradas...</div>
+
+        <!-- Aquí aparecerán las canciones (se llenan con JavaScript) -->
+        <div id="diariolist" class="diario-list">
+
+            <!-- Las canciones aparecerán aquí dinámicamente -->
+        </div>
+    </section>
+
+    <!-- 
+        ESTADÍSTICAS: Muestra cuántas canciones hay
+        ==========================================
+        -->
+    <section class="estadisticas">
+        <div class="estadistica">
+            <!-- El número se actualiza con JavaScript -->
+            <span class="numero" id="total-diario">0</span>
+            <span class="etiqueta">Total de entradas a Diario</span>
+        </div>
+    </section>
+    </div>
+
+    <!-- 
+    MODAL DE CONFIRMACIÓN: Ventana que aparece para confirmar eliminar
+    ================================================================
+    -->
+    <div id="modal-confirmar" class="modal oculto">
+        <div class="modal-contenido">
+            <h3>⚠️ Confirmar Eliminación</h3>
+            <!-- El mensaje específico se pone con JavaScript -->
+            <p id="mensaje-confirmacion">¿Estás seguro de que quieres eliminar esta canción?</p>
+
+            <div class="botones-modal">
+                <!-- Botón peligroso: Sí, eliminar -->
+                <button id="btn-confirmar-eliminar" class="btn-peligro">🗑️ Sí, Eliminar</button>
+                <!-- Botón seguro: No, cancelar -->
+                <button id="btn-cancelar-eliminar" class="btn-secundario">❌ Cancelar</button>
+            </div>
+        </div>
+    </div>
+     <!-- //FORMULARIO MODAL EDICION -->
+      <div id="modal-edicion" class="modal2 oculto2 ">
+        <div class="modal-edicion">
+        <p id="mensaje-confirmacion-edicion">¿Estás seguro de que quieres modificar esta entrada?</p>
+            <form  id="form-edicion" >
+                <label for="edit-id">Id:</label>
+                <input type="text" id="edit-id">
+                <label for="edit-dia">Día:</label>
+                <input type="date" id="edit-dia" name="dia" required><br><br>
+                <label for="edit-estado">Estado:</label>
+                <select id="edit-estado" name="estado" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="feliz">Feliz</option>
+                    <option value="triste">Triste</option>
+                    <option value="motivado">Motivado</option>
+                    <option value="neutral">Neutral</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En Proceso">En Proceso</option>
+                    <option value="Completado">Completado</option>
+                </select><br><br>
+                <label for="edit-anotacion">Anotación:</label>
+                <input type="text" id="edit-anotacion" name="anotacion" rows="3" required placeholder="Ejemplo: Evento, anotacion, recordar" maxlength="100">
+                <div class="botones-modal2">
+                <button type="submit" id="btn-guardar-cambios">Guardar Cambios</button>
+                <button type="button"
+                    id="btn-cancelar-cambios"
+                    onclick="document.getElementById('modal-edicion').style.display = 'flex'">Cancelar</button>
+                </div>
+            </form>
+            </div>
+            </div>
+            </div>
+</body>
+
+</html>

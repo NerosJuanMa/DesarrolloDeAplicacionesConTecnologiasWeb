@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "dia": "2025-11-05",
+    "estado": "neutral",
+    "anotacion": "empezamos denuevo"
+  },
+  {
+    "id": 7,
+    "dia": "2025-11-06",
+    "estado": "feliz",
+    "anotacion": "cambio de anotacion2"
+  },
+  {
+    "id": 9,
+    "dia": "1 de Noviembre de 2025",
+    "estado": "Feliz",
+    "anotacion": "jbkjhvkh"
+  },
+  {
+    "id": 10,
+    "dia": "2025-11-13",
+    "estado": "motivado",
+    "anotacion": "hola es dia de examen"
+  },
+  {
+    "id": 11,
+    "dia": "2025-11-15",
+    "estado": "En Proceso",
+    "anotacion": "empezamos denuevo"
+  }
+]

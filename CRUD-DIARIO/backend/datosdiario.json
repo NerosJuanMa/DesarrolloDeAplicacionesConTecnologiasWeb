@@ -6,16 +6,10 @@
     "anotacion": "empezamos denuevo"
   },
   {
-    "id": 5,
-    "dia": "2025-11-30",
-    "estado": "neutral",
-    "anotacion": "cambio?"
-  },
-  {
     "id": 7,
-    "dia": "2025-11-20",
-    "estado": "Pendiente",
-    "anotacion": "prueba id 1l"
+    "dia": "2025-11-06",
+    "estado": "feliz",
+    "anotacion": "cambio de anotacion2"
   },
   {
     "id": 8,
@@ -28,5 +22,11 @@
     "dia": "1 de Noviembre de 2025",
     "estado": "Feliz",
     "anotacion": "jbkjhvkh"
+  },
+  {
+    "id": 10,
+    "dia": "2025-11-13",
+    "estado": "motivado",
+    "anotacion": "hola es dia de examen"
   }
 ]

@@ -1,0 +1,562 @@
+/* styles.css - Estilos para la aplicación de gestión de canciones */
+.lista-jaime {
+      font-family: Arial, sans-serif;
+      background-color: #05328b;
+      color: #f1f5f9;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: #38bdf8;
+    }
+    .diario-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .diario-card {
+      background-color: #1e293b;
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease;
+    }
+    .diario-card:hover {
+      transform: scale(1.03);
+    }
+    .diario-card h3 {
+      margin: 0;
+      color: #facc15;
+    }
+    .diario-card p {
+      margin: 0.3rem 0;
+    }
+    .diario-card button{
+        
+        align-content: center;
+    }
+    .botoneditar, .botonborrar{
+        padding: 3px 3px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all 0.3s ease;             
+    }
+    .botoneditar{
+        color: rgb(36, 9, 243);
+    }
+    .botonborrar{
+        color: rgb(255, 0, 0);
+    }
+/* ===== ESTILOS GENERALES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ===== ENCABEZADO ===== */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* ===== MENSAJES ===== */
+/* .mensaje {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.mensaje.info {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.mensaje.exito {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.mensaje.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+} */
+
+.oculto {
+    display: none !important;
+    visibility: hidden;
+    opacity: 0;
+}
+.oculto2 {
+    display: none !important;
+    visibility: hidden;
+    opacity: 0;
+}
+
+/* ===== FORMULARIO ===== */
+.formulario-seccion {
+    
+    background: rgb(126, 219, 231);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+}
+
+.formulario-seccion h2 {
+    color: #667eea;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+/* .campo {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    margin-bottom: 1px;
+} */
+.campo-anotacion{
+    margin-bottom: 5px;
+    
+}
+.campo label {
+    width: auto;
+    display:flex;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #555;
+}
+.campo-anotacion label{
+    display:flex;
+    margin-bottom: 3px;
+    font-weight: 600;
+    color: #555;
+}
+
+.campo input,
+.campo select {
+    width: auto;
+    padding: 10px 10px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.campo-anotacion input, .campo-anotacion select{
+    text-align:left;
+    width: 100%;
+    height: 100px;
+    padding: 10px 10px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.campo input:focus,
+.campo select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+.campo-anotacion input:focus,
+.campo-anotacion select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+/* .botones-formulario {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+} */
+
+/* ===== BOTONES ===== */
+button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* display: flex; */
+    /* gap: 15px; */
+    /* margin-top: 25px; */
+}
+.btn-agregar{
+    
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    flex: 1;
+}
+.btn-agregar:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+
+.btn-mostrar {
+    background: rgb(222, 166, 244);
+    color: #667eea;
+    border: 2px solid #667eea;
+    margin: 0 10px 10px 0;
+}
+
+.btn-mostrar:hover {
+    background: #667eea;
+    color: white;
+}
+
+
+
+/* ===== LISTA DE CANCIONES ===== */
+.lista-seccion {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.lista-seccion h2 {
+    color: #667eea;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+    color: #667eea;
+}
+
+.vacio {
+    text-align: center;
+    padding: 40px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.diario-item {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.diario-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: #667eea;
+}
+
+.diario-info h3 {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1.3rem;
+}
+
+.diario-info .dia {
+    color: #667eea;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.diario-info .detalles {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.diario-acciones {
+    display: flex;
+    gap: 10px;
+}
+
+.botoneditar {
+    background: #08bc32;
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.botoneditar:hover {
+    background: #218838;
+}
+
+.botonborrar {
+    background: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.botonborrar:hover {
+    background: #c82333;
+}
+
+/* ===== ESTADÍSTICAS ===== */
+.estadisticas {
+    text-align: center;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.estadistica {
+    display: inline-block;
+}
+
+.numero {
+    display: block;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #667eea;
+    line-height: 1;
+}
+
+.etiqueta {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+/* ===== MODAL ===== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+/* Asegurar que el modal esté oculto por defecto */
+#modal-confirmar.oculto {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+#modal-edicion.oculto2{
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+.modal-edicion{
+    background: rgb(122, 124, 240);
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+.modal-contenido {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.modal-contenido h3 {
+    color: #dc3545;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+.modal-edicion p{
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 1.5rem;
+}
+.modal-contenido p {
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.botones-modal {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+.botones-modal2 {
+    display: flex;
+    gap: 15px;
+    justify-content: center;  
+}
+#btn-guardar-cambios{
+    background: #35dc5f;
+    color: #1900fd;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+#btn-guardar-cambios:hover{
+    background: #dc3545;
+    color: #280225;
+}
+
+#btn-cancelar-cambios{
+    background: #35dc5f;
+    color: #fd0000;
+}
+#btn-cancelar-cambios:hover{
+    background: #dc3545;
+    color: #21021e;
+}
+.btn-peligro {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-peligro:hover {
+    background: #c82333;
+}
+
+.btn-secundario {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secundario:hover {
+    background: #5a6268;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .formulario-seccion,
+    .lista-seccion {
+        padding: 20px;
+    }
+    
+    .diario-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .diario-acciones {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    .botones-formulario {
+        flex-direction: column;
+    }
+    
+    .acciones {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn-mostrar {
+        margin: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .diario-acciones {
+        flex-direction: column;
+    }
+    
+    .btn-editar,
+    .btn-eliminar {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.diario-item {
+    animation: fadeIn 0.3s ease;
+}
+
+/* ===== EFECTOS HOVER ADICIONALES ===== */
+.formulario-seccion:hover,
+.lista-seccion:hover,
+.estadisticas:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
