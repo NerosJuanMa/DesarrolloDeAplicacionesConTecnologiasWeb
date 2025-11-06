@@ -2,7 +2,6 @@
 📎 *Proyecto Full Stack con Node.js, Express y JSON*  
 🔗 [Mi Portfolio](https://nerosjuanma.github.io/JuanManuel-MudarraPozo.github.io/)
 
-![Vista previa del proyecto](/frontend/assets/preview.png) 
 ---
 
 ## 🌟 Introducción
@@ -47,7 +46,7 @@ Este proyecto integra los fundamentos esenciales del desarrollo web Full Stack:
 ### 🚀 Ejecución en Local
 1️⃣ **Clonar el repositorio**
 ```bash
-git clone https://github.com/NerosJuanMa/CRUD-DIARIO-GIT.git
+git clone https://github.com/tuusuario/CRUD-DIARIO-GIT.git
 cd CRUD-DIARIO-GIT/backend
 ```
 2️⃣ **Instalar dependencias**
@@ -138,7 +137,9 @@ Este proyecto simboliza mi transición de simples páginas HTML y CSS a **una ap
 CRUD-DIARIO-GIT/
 ├── backend/
 │   ├── node_modules/
-│   ├── datosdiario.json
+│   ├── tareas.json
+│   ├── notas.json
+│   ├── citas.json
 │   ├── package.json
 │   ├── package-lock.json
 │   └── server.js

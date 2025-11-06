@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Planificador de tareas y metas para adolescentes">
+    <title>Mi Planificador de Tareas y Metas</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Mi Planificador de Tareas y Metas</h1>
+        <button id="toggle-theme" aria-label="Cambiar entre modo claro y oscuro">🌓</button>
+    </header>
+
+    <main>
+        <section id="tareas">
+            <h2>Añadir Tarea</h2>
+            <form id="form-tarea">
+                <input type="text" id="nueva-tarea" placeholder="Ej: Estudiar para el examen de matemáticas" required aria-label="Ingresa una nueva tarea">
+                <button type="submit">Añadir</button>
+            </form>
+            <ul id="lista-tareas" aria-label="Lista de tareas pendientes"></ul>
+        </section>
+
+        <section id="metas">
+            <h2>Mis Metas</h2>
+            <form id="form-meta">
+                <input type="text" id="nueva-meta" placeholder="Ej: Aprender a tocar la guitarra" required aria-label="Ingresa una nueva meta">
+                <button type="submit">Añadir Meta</button>
+            </form>
+            <div id="progreso-metas" aria-label="Progreso de tus metas"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 - Mi Planificador de Tareas y Metas</p>
+    </footer>
+
+    <script src="scripts/app.js"></script>
+</body>
+</html>
