@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Infografía — Biblioteca → Base de Datos</title>
+  <meta name="description" content="Infografía didáctica: qué es una base de datos explicada como una biblioteca (tablas, filas, columnas, préstamos)." />
+  <style>
+    :root{
+      --bg:#f6f7f9;
+      --surface:#ffffff;
+      --ink:#0b1220;
+      --muted:#64748b;
+      --border:#e5e7eb;
+      --primary:#10b981; /* verde acento */
+      --primary-2:#064e3b;
+      --code:#0f172a;
+      --accent:#f59e0b;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial;line-height:1.55}
+    .wrap{width:min(100%,1100px);margin-inline:auto;padding:1.25rem}
+    header{background:linear-gradient(120deg, var(--primary) 0%, #22d3ee 60%, #60a5fa 100%);color:#fff}
+    header .hero{display:grid;gap:.75rem;align-items:center;min-height:160px}
+    .badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);padding:.25rem .6rem;border-radius:999px;font-size:.85rem}
+    h1{margin:0;font-size:clamp(1.6rem,2.2vw+1rem,2.6rem)}
+    .subtitle{margin:.25rem 0 0;opacity:.95;max-width:70ch}
+
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.1rem;margin:1rem 0}
+    .card h2{margin-top:0}
+
+    .table{width:100%;border-collapse:collapse}
+    .table th,.table td{border-top:1px solid var(--border);padding:.7rem .8rem;vertical-align:top}
+    .table thead th{border-top:none;background:#f0fdf4}
+
+    .hint{color:var(--muted);font-size:.95rem}
+    .cta{display:flex;gap:.6rem;flex-wrap:wrap}
+    .btn{appearance:none;border:1px solid var(--border);background:#fff;border-radius:999px;padding:.6rem .9rem;text-decoration:none;color:inherit}
+    .btn.primary{background:var(--primary);border-color:var(--primary-2);color:#002b1f;font-weight:600}
+
+    .grid{display:grid;gap:1rem}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:860px){.grid-2{grid-template-columns:1fr}}
+
+    .callout{border-left:6px solid var(--primary);padding:.75rem 1rem;background:#f0fdf4;border-radius:10px}
+    .pill{display:inline-flex;gap:.4rem;align-items:center;background:#ecfeff;color:#155e75;border:1px solid #99f6e4;border-radius:999px;padding:.25rem .6rem;font-size:.85rem}
+
+    /* Print A4 */
+    @page{size:A4;margin:18mm}
+    @media print{
+      header{background:none;color:var(--ink)}
+      .badge{border-color:var(--ink)}
+      .btn{display:none !important}
+      body{background:#fff}
+      .card{break-inside:avoid}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <div>
+        <span class="badge">Infografía</span>
+        <h1>Una biblioteca como base de datos</h1>
+        <p class="subtitle">Ejemplo visual para entender qué es una base de datos y cómo organiza libros, usuarios y préstamos.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido">
+    <section class="card">
+      <h2>1) Imagina una biblioteca real</h2>
+      <p>En una biblioteca hay miles de libros, usuarios, autores y préstamos. Sin organización sería imposible encontrar nada. Una <strong>base de datos</strong> es el sistema que <strong>organiza y relaciona</strong> toda esa información para poder <strong>buscarla y actualizarla</strong> de forma fiable.</p>
+    </section>
+
+    <section class="card">
+      <h2>2) Cómo se organiza una base de datos</h2>
+      <table class="table" aria-label="Organización típica de una base de datos">
+        <thead>
+          <tr><th>Tabla</th><th>Contenido</th><th>Ejemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Libros</strong></td><td>Catálogo de ejemplares</td><td>Título, autor, año, ISBN, copias</td></tr>
+          <tr><td><strong>Usuarios</strong></td><td>Personas con carnet</td><td>Nombre, dirección, correo, teléfono</td></tr>
+          <tr><td><strong>Préstamos</strong></td><td>Qué libro pidió quién y cuándo</td><td>ID libro, ID usuario, fecha préstamo, fecha devolución</td></tr>
+        </tbody>
+      </table>
+      <p class="hint">En SQL se usan <em>tablas, filas y columnas</em>. En MongoDB se usan <em>colecciones y documentos JSON</em> con campos flexibles.</p>
+    </section>
+
+    <section class="card">
+      <h2>3) Ejemplo de tablas (SQL)</h2>
+      <div class="grid grid-2">
+        <div>
+          <h3>Libros</h3>
+          <table class="table">
+            <thead><tr><th>id_libro</th><th>título</th><th>autor</th><th>año</th><th>disponible</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Don Quijote</td><td>M. de Cervantes</td><td>1605</td><td>Sí</td></tr>
+              <tr><td>2</td><td>Cien años de soledad</td><td>G. G. Márquez</td><td>1967</td><td>No</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Préstamos</h3>
+          <table class="table">
+            <thead><tr><th>id_prestamo</th><th>id_libro</th><th>id_usuario</th><th>fecha_prestamo</th><th>fecha_devolución</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>2</td><td>1</td><td>2025-11-01</td><td>2025-11-10</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4) El flujo cuando alguien pide un libro</h2>
+      <ol>
+        <li>El sistema <strong>busca</strong> si el libro está disponible en <em>Libros</em>.</li>
+        <li>Se <strong>crea un registro</strong> en <em>Préstamos</em> con usuario y fechas.</li>
+        <li>Se <strong>relaciona</strong> ese préstamo con el libro y el usuario mediante sus identificadores.</li>
+        <li>Queda todo <strong>guardado</strong> para consultas futuras (quién tiene qué y desde cuándo).</li>
+      </ol>
+      <div class="callout"><strong>Moraleja:</strong> una BBDD evita pérdidas y duplicados y permite respuestas en segundos.</div>
+    </section>
+
+    <section class="card">
+      <h2>5) Paralelismo biblioteca ⇄ base de datos</h2>
+      <table class="table" aria-label="Paralelismos">
+        <thead>
+          <tr><th>Elemento real</th><th>En la base de datos</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Biblioteca</td><td>Base de datos</td></tr>
+          <tr><td>Estanterías</td><td>Tablas (o colecciones)</td></tr>
+          <tr><td>Libros</td><td>Filas/Registros (o documentos)</td></tr>
+          <tr><td>Etiquetas: autor/título</td><td>Columnas/Campos</td></tr>
+          <tr><td>Bibliotecario</td><td>Sistema gestor (MySQL, PostgreSQL, MongoDB)</td></tr>
+          <tr><td>Usuario que busca</td><td>Consulta/Query</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>6) Conclusión</h2>
+      <p>Una <strong>base de datos</strong> es como el sistema de organización de una biblioteca digital: permite <strong>guardar, buscar y relacionar</strong> información de forma fiable. Igual que un bibliotecario sabe quién tiene un libro, una BBDD puede responder al instante a tus consultas.</p>
+      <div class="cta" style="margin-top:.5rem">
+        <a class="btn" href="#" onclick="window.print()">🖨️ Imprimir / Guardar en PDF</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap" style="opacity:.8">
+    Manual “Mongoo” · Infografía Biblioteca → BBDD · © 2025
+  </footer>
+</body>
+</html>

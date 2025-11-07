@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tema 4 — Tipos de datos en MongoDB (Versión sencilla)</title>
+  <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header>
+    <div class="wrap hero">
+      <div>
+        <span class="badge">Tema 4</span>
+        <h1>Tipos de datos en MongoDB</h1>
+        <p class="subtitle">Aprende a guardar texto, números, fechas, listas y objetos paso a paso.</p>
+      </div>
+    </div>
+  </header>
+ <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+      <a class="btn btn-outline" href="03-mongoo-vs-mysql.html">⬅ Tema anterior</a>
+      <a class="btn btn-primary" href="05.registro.html">Siguiente tema ➜</a>
+    </div>
+  <main id="contenido" class="wrap">
+
+    <section class="card">
+      <h2>📘 1️⃣ ¿Qué son los tipos de datos?</h2>
+      <p>Los <strong>tipos de datos</strong> indican <em>qué clase de información</em> puede tener cada campo dentro de un documento.  
+      MongoDB guarda los datos en formato <strong>JSON</strong> (texto con llaves y comas) y cada valor puede ser texto, número, sí/no, fecha, lista, etc.</p>
+      
+      <p>Cuando hagas tu CRUD, deberás elegir el tipo correcto para cada campo: nombre → texto, edad → número, activo → verdadero/falso, etc.</p>
+    </section>
+
+    <section class="card">
+      <h2>🧱 2️⃣ Tipos básicos que usaremos en clase</h2>
+
+      <h3>📝 Texto (<code>String</code>)</h3>
+      <p>Para guardar palabras, nombres, correos, direcciones, etc.</p>
+      <pre><code>{
+  "nombre": "María González",
+  "email": "maria@email.com",
+  "ciudad": "Sevilla"
+}</code></pre>
+
+      <h3>🔢 Números (<code>Number</code>)</h3>
+      <p>Para edades, precios, cantidades, notas… No llevan comillas.</p>
+      <pre><code>{
+  "edad": 25,
+  "precio": 19.99,
+  "stock": 30
+}</code></pre>
+
+      <h3>✅ Verdadero o falso (<code>Boolean</code>)</h3>
+      <p>Para campos que solo pueden tener dos valores: <code>true</code> (sí) o <code>false</code> (no).</p>
+      <pre><code>{
+  "activo": true,
+  "admin": false
+}</code></pre>
+
+      <h3>📅 Fechas (<code>Date</code> o <code>String</code>)</h3>
+      <p>MongoDB puede guardar fechas, pero es más fácil usar texto.</p>
+      <ul>
+        <li>Versión sencilla : <code>"2025-11-05"</code></li>
+        <li>Versión completa (avanzada): <code>new Date("2025-11-05")</code></li>
+      </ul>
+      <pre><code>{
+  "fechaRegistro": "2025-11-05"
+}</code></pre>
+
+      <h3>🚫 Vacío (<code>null</code>)</h3>
+      <p>Sirve cuando un dato no existe o está pendiente.</p>
+      <pre><code>{
+  "telefono": null,
+  "linkedin": null
+}</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>📚 3️⃣ Tipos que dan estructura</h2>
+
+      <h3>📦 Listas (<code>Array</code>)</h3>
+      <p>Permiten guardar varios valores dentro de un mismo campo.</p>
+      <pre><code>{
+  "idiomas": ["Español", "Inglés", "Francés"],
+  "notas": [8.5, 9, 7.5]
+}</code></pre>
+
+      <h3>🏠 Objetos anidados (<code>Object</code>)</h3>
+      <p>Sirven para agrupar información relacionada dentro de un mismo documento.</p>
+      <pre><code>{
+  "direccion": {
+    "calle": "Gran Vía 12",
+    "ciudad": "Madrid",
+    "codigoPostal": "28001"
+  }
+}</code></pre>
+
+      <h3>🆔 Identificador (<code>_id</code>)</h3>
+      <p>MongoDB crea automáticamente un <strong>_id</strong> único para cada documento, no hace falta escribirlo tú.</p>
+      <pre><code>{
+  "_id": "507f1f77bcf86cd799439011",
+  "nombre": "Pedro"
+}</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>🧩 4️⃣ Documento completo de ejemplo</h2>
+      <p>Veamos un ejemplo real con todos los tipos básicos combinados. Este tipo de documento ya se puede usar en un CRUD.</p>
+      <pre><code>{
+  "nombre": "Ana García",
+  "edad": 28,
+  "email": "ana.garcia@email.com",
+  "activo": true,
+  "fechaRegistro": "2025-01-15",
+  "direccion": {
+    "calle": "Calle Mayor 45",
+    "ciudad": "Barcelona",
+    "codigoPostal": "08001"
+  },
+  "habilidades": ["JavaScript", "MongoDB", "HTML"],
+  "telefono": null
+}</code></pre>
+
+      <p>👉 Observa que cada valor tiene un tipo diferente, pero todo se guarda dentro de un solo documento.</p>
+    </section>
+
+    <section class="card">
+      <h2>🧠 5️⃣ Consejos para tus primeros proyectos</h2>
+      <ul>
+        <li>Usa comillas solo para texto.</li>
+        <li>No pongas comillas en números o booleanos.</li>
+        <li>Usa "AAAA-MM-DD" para fechas sencillas.</li>
+        <li>No abuses de anidar objetos o listas dentro de listas.</li>
+        <li>Mantén los mismos tipos en todos los documentos (si “edad” es número, que lo sea siempre).</li>
+      </ul>
+    </section>
+
+  
+
+    <section class="card">
+      <h2>💬 7️⃣ Conclusión</h2>
+      <p>MongoDB te permite guardar datos de forma natural, casi igual que escribir un objeto de JavaScript.  
+      Con solo entender estos tipos (texto, número, booleano, fecha, lista y objeto) ya puedes crear y leer tus propios documentos.</p>
+      <p>En el siguiente tema veremos cómo se organizan en <strong>colecciones</strong> y cómo hacer un <strong>CRUD completo</strong> con ellos.</p>
+    </section>
+    <section class="card cta-practice" style="border-left: 5px solid #007bff; background-color: #e9f7ff; padding: 20px;">
+    <h2>🚀 6️⃣ ¡A Practicar! Crea tu primera BBDD en Mongoo. Vamos al lio. </h2>
+    <p>Ya sabes qué es una bbdd, qué es una bbdd no sql y ahora ya conoces los los tipos de datos que usa MongoDB. ¡Es hora de ponerlos en acción!</p>
+
+    <div style="margin-top: 15px;">
+        <h3>Primeros pasos (¡Es gratis y fácil!):</h3>
+        <ol>
+            <li>Regístrate en la plataforma de MongoDB (Mongoo/Atlas). Es como abrir una cuenta de correo, pero para bases de datos.</li>
+            <li>Crea tu primer Cluster: Esto es como pedir tu propio servidor en la nube. Tómate el tiempo de elegir un nombre divertido.</li>
+            <li>Dentro del Cluster, crea una nueva base de datos llamada <code>mongoo</code> y una colección llamada <code>alumnos</code>.</li>
+            <li>¡Hora de insertar documentos! Crea al menos tres documentos diferentes en la colección <code>alumnos</code> usando los tipos de datos que has aprendido:
+                <pre><code>{
+  "nombre": "Pedro",
+  "edad": 22,
+  "email": "pedro@email.com",
+  "activo": true,
+  "fechaRegistro": "2025-01-15",
+  "direccion": {
+    "calle": "Calle Falsa 123",
+    "ciudad": "Madrid",
+    "codigoPostal": "28001"
+  },
+  "habilidades": ["JavaScript", "MongoDB"],
+  "telefono": null
+}</code></pre>
+            </li>
+            <li>Explora tus documentos: Usa las herramientas de MongoDB Atlas para ver y modificar los documentos que has creado.</li>
+            <li>¿Qué es un cluster? Un cluster es un conjunto de servidores que trabajan juntos para almacenar y gestionar tus bases de datos en la nube. Es como tener tu propio equipo de servidores dedicado a tus datos.</li>
+            <li>¿Qué es una colección? Una colección es un grupo de documentos en MongoDB, similar a una tabla en una base de datos relacional.</li>
+            <li>¿Qué es un documento? Un documento es una unidad de datos en MongoDB, que se almacena en formato JSON y puede contener diferentes tipos de datos.</li>
+            <li>¿Qué es un campo? Un campo es una clave dentro de un documento que almacena un valor. Es similar a una columna en una tabla relacional.
+              <ul>
+                <li>Ejemplo de campo: en el documento de un usuario, "nombre" es un campo que almacena el nombre del usuario.</li>
+              </ul>
+              <p>Recuerda que los campos pueden contener diferentes tipos de datos, como texto, números, booleanos, fechas, listas y objetos.</p>
+              <p>Ejemplo de campo: en el documento de un usuario, "nombre" es un campo que almacena el nombre del usuario. </p>
+              <p>Dirección es un campo que almacena un objeto con información sobre la ubicación del usuario.</p>
+              <p>Habilidades es un campo que almacena una lista de habilidades del usuario.Un Array</p>
+              <p>Activo es un campo que almacena un valor booleano indicando si el usuario está activo o no.</p>
+              <p>Teléfono es un campo que almacena un valor nulo, indicando que no se ha proporcionado un número de teléfono pero ya está preparado para recibirlo.</p>
+              <p>Fecha de Registro es un campo que almacena la fecha en que el usuario se registró en la plataforma.</p>
+              <p>¿es posible no declarar un campo y luego en el formulario incluirlo y que se cree directamente en el documento? Sí, MongoDB permite la creación dinámica de campos. Si un campo no está declarado en el esquema, se puede agregar en cualquier momento simplemente incluyendo el campo en el documento.
+                <br>Ejemplo: Si en el formulario de registro se incluye un campo "telefono" que no estaba en el esquema original, MongoDB lo añadirá automáticamente al documento.
+                ¿aunque no estuviera declarado como null? Sí, incluso si el campo no estaba declarado inicialmente, MongoDB lo añadirá al documento con el valor proporcionado en el formulario, ya sea un valor específico o null si no se proporciona ningún valor.
+                <br>En resumen, MongoDB es flexible y permite la evolución de los documentos a lo largo del tiempo.
+
+              </p>
+            </li>
+
+        </ol>
+    </div>
+
+    <p style="margin-top: 20px; font-weight: bold;">
+        👉 Recuerda: Entender es bueno, pero hacer es mejor. ¡Solo practicando el CRUD (Crear, Leer, Actualizar, Borrar) verás cómo funcionan de verdad estos tipos de datos!
+    </p>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a class="btn btn-primary" href="05.registro.html" style="text-decoration: none; padding: 10px 20px; font-size: 1.1em;">
+            ¡Empezar a Registrarme en MongoDB! ➜
+        </a>
+    </div>
+</section>
+
+
+    <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="03-mongoo-vs-mysql.html">⬅ Tema anterior</a>
+      <a class="btn btn-primary" href="05.registro.html">Siguiente tema ➜</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Manual "Mongoo" — Tema 4 (Versión didáctica) · © 2025
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tema 5 — Registrarse y empezar a usar MongoDB Atlas</title>
+  <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header>
+    <div class="wrap hero">
+      <div>
+        <span class="badge">Tema 5</span>
+        <h1>Registrarse y empezar a usar MongoDB Atlas</h1>
+        <p class="subtitle">Tu primer contacto con MongoDB en la nube: crear cuenta, base de datos y colección paso a paso.</p>
+      </div>
+    </div>
+  </header>
+   <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+      <a class="btn btn-primary" href="06-colecciones-y-documentos.html">➡️ Tema 6: Creando colecciones y CRUD</a>
+    </div>
+
+
+  <main id="contenido" class="wrap">
+
+    <section class="card">
+      <h2>🌍 1️⃣ ¿Qué es MongoDB Atlas?</h2>
+      <p><strong>MongoDB Atlas</strong> es la versión en la nube de MongoDB.  
+      No necesitas instalar nada en tu ordenador: todo funciona online desde el navegador.</p>
+      <p>Podrás crear bases de datos, colecciones y documentos en pocos clics y conectarlas fácilmente con tus proyectos Node.js.</p>
+    </section>
+
+    <section class="card">
+      <h2>🧭 2️⃣ Crear tu cuenta gratuita</h2>
+      <ol>
+        <li>Abre la página oficial:  
+          👉 <a href="https://www.mongodb.com/atlas" target="_blank" rel="noopener">https://www.mongodb.com/atlas</a></li>
+        <li>Haz clic en <strong>“Try Free”</strong> o <strong>“Start Free”</strong>.</li>
+        <li>Regístrate con Google o con correo electrónico (elige plan <strong>Free Tier</strong>).</li>
+        <li>Completa el formulario inicial. Si pregunta por el uso, elige “Learning” o “Personal”.</li>
+      </ol>
+
+      <div style="background:#f0fdf4;padding:1rem;border-radius:8px;">
+        <h4>💡 Consejo:</h4>
+        <p>Usa tu correo habitual para no perder el acceso. Si usas Google, podrás entrar con un clic.  
+        Cuando te pregunte si quieres “Serverless”, elige “No por ahora”.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🧱 3️⃣ Crear tu primer Deployment (Cluster)</h2>
+      <ol>
+        <li>En el panel principal, haz clic en <strong>“Build a Database”</strong>.</li>
+        <li>Selecciona el plan gratuito <strong>Shared (Free)</strong>.</li>
+        <li>Proveedor: <strong>AWS</strong> — Región: <strong>Paris (eu-west-3)</strong>.</li>
+        <li>Deja activado <em>Automate security setup</em>.</li>
+        <li>Pulsa <strong>“Create Deployment”</strong>. Espera 1–2 minutos.</li>
+      </ol>
+
+      <h3>🔐 Seguridad inicial</h3>
+      <ul>
+        <li>Atlas añadirá automáticamente tu IP actual (para permitir conexiones).</li>
+        <li>Te pedirá crear un usuario de base de datos. Puedes dejar el que te sugiere o usar uno simple como  
+        <code>mongoo_user</code> / <code>mongoo123</code> (solo para prácticas).</li>
+      </ul>
+      <p>Después, haz clic en <strong>“Elija un método de conexión”</strong>.</p>
+    </section>
+
+    <section class="card">
+      <h2>🔗 4️⃣ Obtener el URI limpio y configurar variables .env</h2>
+      <ol>
+        <li>En la ventana “Elija un método de conexión”, selecciona <strong>“Connect your application”</strong>.</li>
+        <li>Elige el controlador <strong>Node.js</strong> y copia la cadena de conexión.</li>
+        <li>Te mostrará algo como:
+          <pre><code>mongodb+srv://TU_USUARIO:TU_CONTRASEÑA@TUNOMBRE.lfxkraj.mongodb.net/?appName=TUAPP</code></pre>
+        </li>
+        <li>Elimina la contraseña (lo que hay después de los dos puntos <code>:</code> hasta el <code>@</code>):  
+          <pre><code>mongodb+srv://TU_USUARIO@TUNOMBRE.lfxkraj.mongodb.net/?appName=TUAPP</code></pre>
+        </li>
+        <li>Copia ese enlace en un archivo llamado <strong>.env</strong> (sin nombre delante).</li>
+      </ol>
+
+      <h3>📄 Tu archivo <code>.env</code> debe quedar así:</h3>
+      <pre><code>MONGO_URI="mongodb+srv://inmacontreras2709_db_user@ici27.lfxkraj.mongodb.net/mongoo?retryWrites=true&w=majority&appName=ici27"
+MONGO_USER="inmacontreras2709_db_user"
+MONGO_PASS="TU_CONTRASEÑA_REAL"</code></pre>
+
+      <div style="background:#fffbeb;padding:1rem;border-radius:8px;">
+        <h4>⚠️ Importante</h4>
+        <ul>
+          <li>Atlas solo muestra la contraseña una vez. Cópiala y guárdala.</li>
+          <li>No pongas la contraseña dentro del URI.</li>
+          <li>No subas tu archivo <code>.env</code> a GitHub.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🧩 5️⃣ Crear el archivo .gitignore</h2>
+      <p>Git necesita saber qué archivos <strong>no debe subir</strong>. Crea un archivo llamado <code>.gitignore</code> en la raíz del proyecto y pega:</p>
+      <pre><code>node_modules/
+.env
+.DS_Store
+Thumbs.db</code></pre>
+      <p>Esto evita subir tus contraseñas y dependencias innecesarias.</p>
+    </section>
+
+    <section class="card">
+      <h2>⚙️ 6️⃣ Crear y probar la conexión con Mongoose</h2>
+      <ol>
+        <li>Instala Mongoose:
+          <pre><code>npm install mongoose</code></pre>
+        </li>
+        <li>Crea <code>server.js</code> con este contenido:</li>
+      </ol>
+
+      <pre><code>import mongoose from "mongoose";
+
+const uri = process.env.MONGO_URI;
+const user = process.env.MONGO_USER;
+const pass = process.env.MONGO_PASS;
+
+mongoose.connect(uri, { user, pass })
+  .then(() => console.log("✅ Conectado a MongoDB Atlas"))
+  .catch(err => console.error("❌ Error de conexión:", err));</code></pre>
+
+      <h3>▶️ Ejecutar correctamente</h3>
+      <p>En lugar de usar el botón “Run Code” de VS Code (que no carga el archivo <code>.env</code>), abre la terminal y escribe:</p>
+      <pre><code>node --env-file=.env server.js</code></pre>
+
+      <p>Deberías ver:</p>
+      <pre><code>✅ Conectado a MongoDB Atlas</code></pre>
+
+      <div style="background:#fffbeb;padding:1rem;border-radius:8px;">
+        <h4>💡 Consejo:</h4>
+        <p>Para no tener que escribir el comando completo cada vez, abre tu <code>package.json</code> y agrega:</p>
+        <pre><code>"scripts": {
+  "start": "node --env-file=.env server.js"
+}</code></pre>
+        <p>Ahora podrás ejecutar el servidor con:</p>
+        <pre><code>npm start</code></pre>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🧪 7️⃣ Añadir un servidor Express para probar</h2>
+      <p>Para comprobar que tu servidor responde correctamente, instala Express:</p>
+      <pre><code>npm install express</code></pre>
+
+      <p>Y modifica tu <code>server.js</code> así:</p>
+      <pre><code>import express from "express";
+import mongoose from "mongoose";
+
+const app = express();
+app.use(express.json());
+
+const uri = process.env.MONGO_URI;
+const user = process.env.MONGO_USER;
+const pass = process.env.MONGO_PASS;
+
+mongoose.connect(uri, { user, pass })
+  .then(() => console.log("✅ Conectado a MongoDB Atlas"))
+  .catch(err => console.error("❌ Error de conexión:", err));
+
+// Pequeña ruta de prueba
+app.get("/", (req, res) => {
+  res.json({ mensaje: "Servidor funcionando", productos: [] });
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor escuchando en http://localhost:${PORT}`);
+});</code></pre>
+
+      <p>Ejecuta:</p>
+      <pre><code>npm start</code></pre>
+
+      <p>Abre tu navegador en <strong>http://localhost:3000</strong> y deberías ver:</p>
+      <pre><code>{
+  "mensaje": "Servidor funcionando",
+  "productos": []
+}</code></pre>
+
+      <p>🎉 ¡Felicidades! Tu servidor Node, Express y MongoDB Atlas están conectados correctamente.</p>
+    </section>
+
+    <section class="card">
+      <h2>🚀 8️⃣ Siguiente paso</h2>
+      <p>En el <strong>Tema 6</strong> aprenderás a:</p>
+      <ul>
+        <li>Crear un <strong>modelo de datos (Schema)</strong> con Mongoose.</li>
+        <li>Insertar documentos en tu colección <code>productos</code>.</li>
+        <li>Consultar, modificar y eliminar registros (CRUD completo).</li>
+      </ul>
+      <p>Con esto, tu proyecto pasará de una simple conexión a una aplicación dinámica con base de datos real.</p>
+    </section>
+
+    <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+      <a class="btn btn-primary" href="06-colecciones-y-documentos.html">➡️ Tema 6: Creando colecciones y CRUD</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Manual "Mongoo" — Tema 5: Registrarse y comenzar con MongoDB Atlas · © 2025
+    </div>
+  </footer>
+</body>
+</html>

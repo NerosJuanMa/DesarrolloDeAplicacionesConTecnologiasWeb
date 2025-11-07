@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tema 2 — Relacional vs. No relacional</title>
+  <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="favicon.ico" />
+  <meta name="description" content="Comparación clara entre SQL y NoSQL: estructura, esquema, relaciones, escalabilidad y cuándo usar cada una. Enlaces a ACID/BASE y ejemplos del Tema 1." />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header>
+    <div class="wrap hero">
+      <div>
+        <span class="badge">Tema 2</span>
+        <h1>Relacional vs. No relacional</h1>
+        <p class="subtitle">Diferencias fundamentales entre SQL y NoSQL </p>
+      </div>
+    </div>
+  </header>
+    <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+      <a class="btn btn-outline" href="01-introduccion-bbdd.html">⬅ Tema anterior</a>
+      <a class="btn btn-primary" href="03-mongoo-vs-mysql.html">Siguiente tema ➜</a>
+    </div>
+
+  <main id="contenido" class="wrap">
+    <section class="card">
+      <h2>🏗️ Base de datos RELACIONAL (SQL)</h2>
+      <p>Organiza datos en <strong>tablas</strong> con <strong>filas</strong> y <strong>columnas</strong>; relaciones mediante claves. Para una introducción general, revisa <a href="01-introduccion-bbdd.html#filas-columnas">Tema 1 · Filas/Columnas</a>.</p>
+
+      <h3>📋 Características</h3>
+      <ul>
+        <li>Estructura rígida (esquema predefinido)</li>
+        <li>Relaciones con claves foráneas</li>
+        <li>Consultas con SQL</li>
+        <li>Transaccionalidad <a href="01-introduccion-bbdd.html#acid-base">ACID</a></li>
+      </ul>
+
+      <div class="note code">
+        <h4>Ejemplo minimal en SQL</h4>
+        <pre><code>CREATE TABLE usuarios (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(100) NOT NULL,
+  email VARCHAR(100) UNIQUE
+);
+CREATE TABLE posts (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  titulo VARCHAR(200),
+  contenido TEXT,
+  usuario_id INT,
+  FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);</code></pre>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🗂️ Base de datos NO RELACIONAL (NoSQL)</h2>
+      <p>Almacena datos de forma <strong>flexible</strong>, a menudo como <strong>documentos</strong> JSON en colecciones. Para primera toma de contacto, repasa <a href="01-introduccion-bbdd.html#tipos">Tema 1 · Tipos</a>.</p>
+
+      <h3>📋 Características</h3>
+      <ul>
+        <li>Esquema flexible (documentos pueden variar)</li>
+        <li>Datos anidados o referencias</li>
+        <li>Escalabilidad horizontal</li>
+        <li>Consistencia eventual (ver <a href="01-introduccion-bbdd.html#acid-base">BASE</a>)</li>
+      </ul>
+
+      <div class="note code">
+        <h4>Ejemplo minimal en MongoDB</h4>
+        <pre><code>// Documento en "usuarios"
+{
+  "_id": "507f1f77bcf86cd799439011",
+  "nombre": "Ana García",
+  "email": "ana@email.com",
+  "posts": [{ "titulo": "Mi primer post", "fecha": "2025-01-15" }],
+  "perfil": { "edad": 25, "ciudad": "Madrid" }
+}</code></pre>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>⚖️ Comparación directa</h2>
+      <table style="width:100%; border-collapse:collapse; text-align:left;">
+        <thead>
+          <tr style="background:#f0fdf4;">
+            <th>Aspecto</th>
+            <th>Relacional (SQL)</th>
+            <th>No Relacional (NoSQL)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Estructura</strong></td><td>Tablas</td><td>Documentos/colecciones</td></tr>
+          <tr><td><strong>Esquema</strong></td><td>Rígido</td><td>Flexible</td></tr>
+          <tr><td><strong>Relaciones</strong></td><td>JOINs / FKs</td><td>Embebidos o referencias</td></tr>
+          <tr><td><strong>Lenguaje</strong></td><td>SQL</td><td>APIs/operadores (find, agg)</td></tr>
+          <tr><td><strong>Escalabilidad</strong></td><td>Vertical</td><td>Horizontal</td></tr>
+          <tr><td><strong>Consistencia</strong></td><td>ACID (ver Tema 1)</td><td>Eventual (ver Tema 1)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>🧭 ¿Cuándo usar cada una?</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Usa RELACIONAL (SQL) si…</h3>
+          <ul>
+            <li>Relaciones complejas y reporting potente</li>
+            <li>Consistencia fuerte</li>
+            <li>Transacciones críticas</li>
+            <li>Esquema estable</li>
+          </ul>
+          <p><strong>Ejemplos:</strong> banca, ERP, inventarios.</p>
+        </div>
+        <div>
+          <h3>Usa NO RELACIONAL (NoSQL) si…</h3>
+          <ul>
+            <li>Esquema flexible o cambiante</li>
+            <li>Escalado horizontal y disponibilidad</li>
+            <li>Grandes volúmenes y tiempo real</li>
+            <li>Iteración rápida (MVPs)</li>
+          </ul>
+          <p><strong>Ejemplos:</strong> redes sociales, catálogos, IoT, analytics.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="video-sql-nosql" class="card">
+      <h2>🎥 Vídeo recomendado: ¿SQL o NoSQL?</h2>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/8K1PKSqHFRQ?rel=0&modestbranding=1"
+          title="¿SQL o NoSQL? ¿Cuál base de datos es mejor?"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+      </div>
+      <p class="sr-only">
+        Enlace directo:
+        <a href="https://www.youtube.com/watch?v=8K1PKSqHFRQ" target="_blank" rel="noopener">Abrir en YouTube</a>
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>🌉 Puente conceptual </h2>
+      <ul>
+        <li><strong>MongoDB Colección</strong> ↔ <strong>MySQL Tabla</strong></li>
+        <li><strong>MongoDB Documento</strong> ↔ <strong>MySQL Fila</strong></li>
+        <li><strong>MongoDB Campo</strong> ↔ <strong>MySQL Columna</strong></li>
+        <li><strong>MongoDB find()</strong> ↔ <strong>MySQL SELECT</strong></li>
+      </ul>
+      <p>Si quieres ver CRUD comparado y fortalezas/déficits de cada sistema, continúa al <a href="03-mongoo-vs-mysql.html">Tema 3</a>.</p>
+    </section>
+
+    <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="index.html">⬅ Inicio</a>
+      <a class="btn btn-outline" href="01-introduccion-bbdd.html">⬅ Tema anterior</a>
+      <a class="btn btn-primary" href="03-mongoo-vs-mysql.html">Siguiente tema ➜</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Manual "Mongoo" — Tema 2 · © 2025
+    </div>
+  </footer>
+</body>
+</html>

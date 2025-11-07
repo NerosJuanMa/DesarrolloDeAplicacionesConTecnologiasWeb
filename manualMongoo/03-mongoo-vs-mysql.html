@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tema 3 — MongoDB vs MySQL: semejanzas y diferencias</title>
+  <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="favicon.ico" />
+  <meta name="description" content="Comparación práctica entre MongoDB (NoSQL) y MySQL (SQL): equivalencias, fortalezas, desafíos, CRUD comparado, casos de uso y ruta de aprendizaje." />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header>
+    <div class="wrap hero">
+      <div>
+        <span class="badge">Tema 3</span>
+        <h1>MongoDB vs MySQL</h1>
+        <p class="subtitle">Comparación aplicada sin repetir fundamentos de los Temas 1 y 2.</p>
+      </div>
+    </div>
+  </header>
+  <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+      <a class="btn btn-outline" href="02-relacional-vs-no-relacional.html">⬅ Tema anterior</a>
+      <a class="btn btn-primary" href="04-tipos-de-datos.html">Siguiente tema ➜</a>
+    </div>
+  <main id="contenido" class="wrap">
+    <section class="card">
+      <h2>🍃 ¿Qué es MongoDB?</h2>
+      <p>Base de datos <strong>NoSQL</strong> de documentos (BSON/JSON) con esquema flexible y escalabilidad horizontal.</p>
+      <div class="note code">
+        <h4>Documento ejemplo</h4>
+        <pre><code>{
+  "_id": ObjectId("507f1f77bcf86cd799439011"),
+  "nombre": "Carlos Ruiz",
+  "email": "carlos@email.com",
+  "edad": 28,
+  "direccion": { "calle": "Gran Vía 123", "ciudad": "Madrid", "codigoPostal": "28013" },
+  "hobbies": ["programación", "música"],
+  "fechaRegistro": ISODate("2025-01-15T10:30:00Z")
+}</code></pre>
+      </div>
+    </section>
+    <!-- Sección: Introducción a Mongoose — Tablas de características -->
+<section class="wrap" id="caracteristicas-mongoose">
+  <header style="padding-top:1rem;padding-bottom:0">
+    <span class="badge" aria-label="Mongoose">Mongoose</span>
+
+    <p class="lead">Resumen de las <strong>características técnicas</strong> y las <strong>características generales/de entorno</strong> de Mongoose para tu manual.</p>
+  </header>
+
+  <div class="grid cols-3" style="grid-template-columns:1fr; gap:1.25rem; margin-top:1rem;">
+    <!-- Tabla 1: Técnicas -->
+    <article class="card">
+      <h3 class="section-title">🧠 Tabla 1 — Características técnicas de Mongoose</h3>
+      <div class="table-wrapper">
+        <table class="table">
+          <caption class="sr-only">Características técnicas de Mongoose</caption>
+          <thead>
+            <tr>
+              <th scope="col">Categoría</th>
+              <th scope="col">Característica</th>
+              <th scope="col">Explicación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>🧩 ODM</td>
+              <td>Mapeo documento → objeto JS</td>
+              <td>Trabaja con documentos como objetos JavaScript, sin consultas de bajo nivel.</td>
+            </tr>
+            <tr>
+              <td>🧾 Esquemas &amp; Modelos</td>
+              <td><code>Schema</code> y <code>Model</code></td>
+              <td>Define estructura (tipos, requeridos, por defecto) y opera CRUD sobre colecciones.</td>
+            </tr>
+            <tr>
+              <td>⚙️ Validaciones</td>
+              <td>Validación automática</td>
+              <td>Tipos, <code>required</code>, rangos, <code>match</code> (regex), enums, custom validators.</td>
+            </tr>
+            <tr>
+              <td>🔗 Relaciones</td>
+              <td><code>ref</code> + <code>.populate()</code></td>
+              <td>Simula relaciones entre colecciones y trae documentos referenciados.</td>
+            </tr>
+            <tr>
+              <td>🔄 Middleware</td>
+              <td>Hooks pre/post</td>
+              <td><code>pre('save')</code>, <code>post('deleteOne')</code>, etc. para auditoría, hashing, logs.</td>
+            </tr>
+            <tr>
+              <td>🚀 Consultas</td>
+              <td>API de queries</td>
+              <td><code>.find()</code>, <code>.findOne()</code>, <code>.sort()</code>, <code>.limit()</code>, <code>.select()</code>, <code>.aggregate()</code>.</td>
+            </tr>
+            <tr>
+              <td>🧱 Metadatos</td>
+              <td>Timestamps &amp; versionado</td>
+              <td>Campos <code>createdAt</code>/<code>updatedAt</code> y control de versiones de documentos.</td>
+            </tr>
+            <tr>
+              <td>🧬 Tipos</td>
+              <td>Conversión JS ↔ Mongo</td>
+              <td>Coerce de tipos (p. ej. ISO → <code>Date</code>) según el esquema definido.</td>
+            </tr>
+            <tr>
+              <td>🧩 Plugins</td>
+              <td>Extensibilidad</td>
+              <td>Paginación, soft-delete, slugs, RBAC, auditoría, etc.</td>
+            </tr>
+            <tr>
+              <td>🔄 Async</td>
+              <td>Promesas / <code>async/await</code></td>
+              <td>Código asincrónico moderno sin callbacks anidados.</td>
+            </tr>
+            <tr>
+              <td>🧱 Índices</td>
+              <td>Definición en esquema</td>
+              <td><code>index: true</code>, <code>unique</code>, índices compuestos y textuales.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <!-- Tabla 2: Generales -->
+    <article class="card">
+      <h3 class="section-title">🌍 Tabla 2 — Características generales de Mongoose</h3>
+      <div class="table-wrapper">
+        <table class="table">
+          <caption class="sr-only">Características generales y de entorno de Mongoose</caption>
+          <thead>
+            <tr>
+              <th scope="col">Tipo</th>
+              <th scope="col">Característica</th>
+              <th scope="col">Explicación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>🧩 Open Source</td>
+              <td>Licencia MIT</td>
+              <td>Gratuita, código abierto; se puede auditar, mejorar y adaptar.</td>
+            </tr>
+            <tr>
+              <td>💻 Multiplataforma</td>
+              <td>Node.js en Windows/macOS/Linux</td>
+              <td>Funciona donde se ejecute Node.js (LTS recomendado).</td>
+            </tr>
+            <tr>
+              <td>🌐 JavaScript</td>
+              <td>CommonJS y ES Modules</td>
+              <td>Escrita en JS/ECMAScript; se integra con Express/Nest sin fricción.</td>
+            </tr>
+            <tr>
+              <td>🔌 Integración</td>
+              <td>Driver oficial de MongoDB</td>
+              <td>Compatibilidad total con MongoDB Community y Atlas.</td>
+            </tr>
+            <tr>
+              <td>📦 Ecosistema</td>
+              <td>Comunidad activa</td>
+              <td>Docs extensas, actualizaciones frecuentes y numerosos ejemplos.</td>
+            </tr>
+            <tr>
+              <td>⚙️ Configuración</td>
+              <td>Opciones globales</td>
+              <td>Log, indexación automática, validación estricta, strictQuery, etc.</td>
+            </tr>
+            <tr>
+              <td>🚧 Debug</td>
+              <td><code>mongoose.set('debug', true)</code></td>
+              <td>Imprime las consultas internas para facilitar la depuración.</td>
+            </tr>
+            <tr>
+              <td>🔒 Robustez</td>
+              <td>Validación &amp; saneamiento</td>
+              <td>Reduce inconsistencias y riesgos en la base de datos.</td>
+            </tr>
+            <tr>
+              <td>🌱 Escalabilidad</td>
+              <td>Orientada a volumen</td>
+              <td>Aprovecha MongoDB para grandes datasets y múltiples conexiones.</td>
+            </tr>
+            <tr>
+              <td>🧠 Compatibilidad</td>
+              <td>Soporte moderno</td>
+              <td>Funciona con Node.js LTS y versiones recientes de MongoDB/Atlas.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Opcional: estilo mínimo para tablas, alineado a tu paleta -->
+<style>
+  .table-wrapper{ overflow:auto; border:1px solid var(--color-border); border-radius:0.75rem; }
+  .table{ width:100%; border-collapse:collapse; background:var(--color-surface); }
+  .table th, .table td{ padding:0.8rem; vertical-align:top; text-align:left; border-bottom:1px solid var(--color-border); }
+  .table thead th{ background:rgba(19,170,82,0.06); color:#065f46; font-weight:700; }
+  .table tbody tr:last-child td{ border-bottom:none; }
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+</style>
+<!-- ======================================================
+     Introducción explicativa — Mongoose
+     Compatible con styles.css (verde Mongo)
+====================================================== -->
+<section class="wrap" id="introduccion-mongoose">
+  <header class="hero" style="grid-template-columns:1fr; text-align:left; padding:2rem 0 1rem;">
+    <div>
+      <span class="badge" aria-label="Tema Mongoose">Mongoose</span>
+      <h1>Introducción a Mongoose</h1>
+      <p class="subtitle">Una librería ODM para Node.js que facilita el trabajo con bases de datos MongoDB.</p>
+    </div>
+  </header>
+
+  <article class="card">
+    <h2 class="section-title">🧾 ¿Qué es Mongoose?</h2>
+    <p>
+      <strong>Mongoose</strong> es una librería escrita en <strong>JavaScript</strong> que actúa como un 
+      <strong>ODM (Object Data Modeling)</strong>, es decir, un intermediario entre el lenguaje de 
+      programación y la base de datos <strong>MongoDB</strong>.
+      Su función principal es <em>facilitar la gestión de datos</em> mediante un sistema de 
+      <strong>esquemas y modelos</strong>, ofreciendo control, estructura y validación sobre la 
+      información almacenada en las colecciones de MongoDB.
+    </p>
+    <p>
+      Mientras que MongoDB permite trabajar de forma libre con documentos JSON, Mongoose introduce 
+      una <strong>capa de organización y coherencia</strong>, ideal para proyectos que requieren mantener 
+      una estructura de datos más estable y profesional, como aplicaciones creadas con 
+      <strong>Node.js</strong> y <strong>Express</strong>.
+    </p>
+  </article>
+
+  <article class="card">
+    <h2 class="section-title">🧠 Características técnicas</h2>
+    <p>
+      En la primera tabla se muestran las <strong>características técnicas</strong> de Mongoose, es decir, 
+      aquellas que definen cómo funciona internamente y cómo ayuda al desarrollador a interactuar 
+      con la base de datos.
+    </p>
+    <p>
+      Mongoose utiliza <code>Schema</code> para describir la forma que deben tener los documentos: qué 
+      campos contienen, sus tipos de datos, si son obligatorios o tienen valores por defecto. 
+      A partir de estos esquemas se crean los <code>Model</code>, que permiten realizar operaciones 
+      <strong>CRUD</strong> (Create, Read, Update, Delete).
+    </p>
+    <p>
+      Entre sus aspectos más destacados se encuentran:
+    </p>
+    <ul>
+      <li>✅ <strong>Validación automática</strong> de los datos antes de guardarlos.</li>
+      <li>⚙️ <strong>Middleware o hooks</strong> para ejecutar acciones antes o después de eventos.</li>
+      <li>🔗 <strong>Relaciones simuladas</strong> entre colecciones mediante <code>.populate()</code>.</li>
+      <li>🚀 <strong>Consultas avanzadas</strong> compatibles con promesas y <code>async/await</code>.</li>
+      <li>🧩 <strong>Plugins reutilizables</strong> para añadir funcionalidades sin modificar el código base.</li>
+    </ul>
+    <p>
+      En resumen, sus características técnicas hacen que trabajar con MongoDB sea 
+      <strong>más estructurado, seguro y predecible</strong>, sin perder la flexibilidad del modelo NoSQL.
+    </p>
+  </article>
+
+  <article class="card">
+    <h2 class="section-title">🌍 Características generales y de entorno</h2>
+    <p>
+      La segunda tabla recoge las <strong>características generales</strong> de Mongoose, relacionadas con 
+      su entorno, filosofía y compatibilidad.
+    </p>
+    <p>
+      Mongoose es un proyecto <strong>open source</strong> bajo licencia <strong>MIT</strong>, mantenido por 
+      una comunidad activa y con actualizaciones constantes. Está 
+      <strong>escrito íntegramente en JavaScript</strong> y se ejecuta sobre 
+      <strong>Node.js</strong>, lo que lo convierte en una herramienta 
+      <strong>multiplataforma</strong> disponible en sistemas Windows, macOS o Linux.
+    </p>
+    <p>
+      Su integración con el <strong>driver oficial de MongoDB</strong> garantiza la compatibilidad con 
+      cualquier versión moderna, incluyendo <strong>MongoDB Atlas</strong>. Además, incluye herramientas 
+      de <em>depuración</em>, opciones de configuración global y soporte para entornos de desarrollo 
+      profesionales.
+    </p>
+    <p>
+      Por su naturaleza ligera, estable y segura, Mongoose es ampliamente utilizado en el desarrollo 
+      de <strong>APIs RESTful</strong>, <strong>backends</strong> y proyectos <strong>full-stack</strong> 
+      junto a frameworks como Express.js o Nest.js.
+    </p>
+  </article>
+
+  <article class="card">
+    <h2 class="section-title">🧩 Conclusión</h2>
+    <p>
+      En conjunto, Mongoose combina <strong>potencia técnica</strong> y <strong>filosofía abierta</strong>, 
+      ofreciendo una manera eficiente, escalable y coherente de trabajar con bases de datos 
+      <strong>NoSQL</strong> desde <strong>Node.js</strong>.
+    </p>
+    <p>
+      Gracias a sus esquemas, validaciones y comunidad, se ha convertido en una herramienta esencial 
+      dentro del ecosistema de desarrollo moderno con MongoDB.
+    </p>
+  </article>
+</section>
+
+
+    <section class="card">
+      <h2>🐬 ¿Qué es MySQL?</h2>
+      <p>Base de datos <strong>relacional (SQL)</strong> con tablas/filas/columnas y transacciones completas.</p>
+      <div class="note code">
+        <h4>Esquema equivalente</h4>
+        <pre><code>CREATE TABLE usuarios (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(100) NOT NULL,
+  email VARCHAR(100) UNIQUE,
+  edad INT,
+  fecha_registro DATETIME
+);
+CREATE TABLE direcciones (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  usuario_id INT,
+  calle VARCHAR(200),
+  ciudad VARCHAR(100),
+  codigo_postal VARCHAR(10),
+  FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);</code></pre>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🔄 Equivalencias conceptuales</h2>
+      <table style="width:100%; border-collapse:collapse; text-align:left;">
+        <thead>
+          <tr style="background:#f0fdf4;">
+            <th>Concepto</th>
+            <th>MongoDB</th>
+            <th>MySQL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Contenedor</td><td>Base de datos</td><td>Base de datos</td></tr>
+          <tr><td>Agrupación</td><td>Colección</td><td>Tabla</td></tr>
+          <tr><td>Registro</td><td>Documento</td><td>Fila</td></tr>
+          <tr><td>Atributo</td><td>Campo</td><td>Columna</td></tr>
+          <tr><td>ID único</td><td>_id (ObjectId)</td><td>PRIMARY KEY</td></tr>
+          <tr><td>Índice</td><td>Index</td><td>Index</td></tr>
+        </tbody>
+      </table>
+      <p class="muted">Para ACID/BASE, revisa <a href="01-introduccion-bbdd.html#acid-base">Tema 1</a>. Para SQL vs NoSQL conceptual, ver <a href="02-relacional-vs-no-relacional.html">Tema 2</a>.</p>
+    </section>
+
+    <section class="card">
+      <h2>⚔️ Fortalezas y desafíos</h2>
+
+      <h3>💪 MongoDB — Fortalezas</h3>
+      <ul>
+        <li>Flexibilidad de esquema (JSON nativo)</li>
+        <li>Desarrollo ágil (Node.js/JS)</li>
+        <li>Datos jerárquicos/anidados</li>
+        <li>Escalabilidad horizontal (sharding)</li>
+      </ul>
+      <h3>⚠️ MongoDB — Desafíos</h3>
+      <ul>
+        <li>Posibles duplicidades (desnormalización)</li>
+        <li>Consistencia eventual en distribuciones</li>
+        <li>Mayor uso de memoria en ciertos escenarios</li>
+      </ul>
+
+      <h3>💪 MySQL — Fortalezas</h3>
+      <ul>
+        <li>Integridad y consistencia (ACID)</li>
+        <li>JOINs y reporting SQL</li>
+        <li>Madurez y ecosistema amplio</li>
+      </ul>
+      <h3>⚠️ MySQL — Desafíos</h3>
+      <ul>
+        <li>Rigidez de esquema</li>
+        <li>Escalado principalmente vertical</li>
+        <li>Complejidad en optimizar JOINs pesados</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🛠️ Casos de uso ideales</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Usa MongoDB para:</h3>
+          <ul>
+            <li>Prototipos y desarrollo rápido</li>
+            <li>APIs REST/GraphQL con JSON</li>
+            <li>Catálogos de productos variables</li>
+            <li>Analytics/Big Data y realtime</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Usa MySQL para:</h3>
+          <ul>
+            <li>Sistemas financieros, facturación</li>
+            <li>ERP/CRM con relaciones complejas</li>
+            <li>E-commerce con inventarios estrictos</li>
+            <li>Reportes SQL robustos</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>📊 CRUD comparado</h2>
+
+      <h3>Crear (Create)</h3>
+      <div class="grid-2">
+        <div class="note code">
+          <h4>MongoDB</h4>
+          <pre><code>db.usuarios.insertOne({
+  nombre: "Ana López",
+  email: "ana@email.com",
+  edad: 25
+});</code></pre>
+        </div>
+        <div class="note code">
+          <h4>MySQL</h4>
+          <pre><code>INSERT INTO usuarios (nombre, email, edad)
+VALUES ('Ana López', 'ana@email.com', 25);</code></pre>
+        </div>
+      </div>
+
+      <h3>Leer (Read)</h3>
+      <div class="grid-2">
+        <div class="note code">
+          <h4>MongoDB</h4>
+          <pre><code>db.usuarios.find({ edad: { $gte: 18 } });</code></pre>
+        </div>
+        <div class="note code">
+          <h4>MySQL</h4>
+          <pre><code>SELECT * FROM usuarios WHERE edad >= 18;</code></pre>
+        </div>
+      </div>
+
+      <h3>Actualizar (Update)</h3>
+      <div class="grid-2">
+        <div class="note code">
+          <h4>MongoDB</h4>
+          <pre><code>db.usuarios.updateOne(
+  { email: "ana@email.com" },
+  { $set: { edad: 26 } }
+);</code></pre>
+        </div>
+        <div class="note code">
+          <h4>MySQL</h4>
+          <pre><code>UPDATE usuarios SET edad = 26
+WHERE email = 'ana@email.com';</code></pre>
+        </div>
+      </div>
+
+      <h3>Borrar (Delete)</h3>
+      <div class="grid-2">
+        <div class="note code">
+          <h4>MongoDB</h4>
+          <pre><code>db.usuarios.deleteOne({ email: "ana@email.com" });</code></pre>
+        </div>
+        <div class="note code">
+          <h4>MySQL</h4>
+          <pre><code>DELETE FROM usuarios
+WHERE email = 'ana@email.com';</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🌱 ¿Por qué empezar con MongoDB?</h2>
+      <ul>
+        <li>Sintaxis natural (JSON/JS)</li>
+        <li>Menos fricción en el arranque</li>
+        <li>Iteración rápida</li>
+        <li>Transferencia de conceptos a SQL más adelante</li>
+      </ul>
+      <div class="note">
+        <h4>Ruta sugerida</h4>
+        <ol>
+          <li>MongoDB básico (colecciones/documentos)</li>
+          <li>CRUD completo</li>
+          <li>Proyecto Full Stack (API + Front)</li>
+          <li>Transición a MySQL y SQL profundo</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>💬 Cierre</h2>
+      <p>MongoDB y MySQL son <strong>complementarios</strong>. Elige según el caso de uso y combina cuando sea necesario.</p>
+    </section>
+
+    <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="02-relacional-vs-no-relacional.html">⬅ Tema anterior</a>
+      <a class="btn btn-primary" href="04-tipos-de-datos.html">Siguiente tema ➜</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Manual "Mongoo" — Tema 3 · © 2025
+    </div>
+  </footer>
+</body>
+</html>

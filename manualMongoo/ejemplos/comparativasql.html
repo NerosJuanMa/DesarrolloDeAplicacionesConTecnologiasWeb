@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Infografía — SQL vs MongoDB (Manual Mongoo)</title>
+<style>
+  :root{
+    --primary:#1ac74e;
+    --sql:#0f766e;
+    --mongo:#b45309;
+    --ink:#0f172a;
+    --muted:#475569;
+    --surface:#ffffff;
+    --surface-2:#f8fafc;
+    --border:#e5e7eb;
+    --focus:#2563eb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;
+    background:var(--surface-2);
+    color:var(--ink);
+    line-height:1.55;
+  }
+  .wrap{max-width:1100px;margin:auto;padding:24px}
+  header{
+    background:linear-gradient(90deg, var(--primary), #22c55e);
+    color:white;
+  }
+  header .wrap{padding:40px 24px}
+  h1{margin:0 0 6px 0;font-size:clamp(28px, 4vw, 40px);line-height:1.1}
+  .subtitle{margin:0;opacity:.9}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 1px 0 rgba(0,0,0,.04)}
+  .title-sm{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 4px}
+  h2{margin:6px 0 12px;font-size:clamp(20px, 2.8vw, 28px)}
+  h3{margin:10px 0 8px;font-size:clamp(18px, 2.4vw, 22px)}
+  .cols-2{grid-column:span 12;display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:900px){.cols-2{grid-template-columns:1fr 1fr}}
+  .lead{font-size:1.03rem}
+  code, pre{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}
+  pre{margin:0;padding:12px;background:#0b1021;color:#e8edf7;border-radius:12px;overflow:auto;border:1px solid #111827}
+  .sql{border-left:6px solid var(--sql)}
+  .mongo{border-left:6px solid var(--mongo)}
+  .table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .table thead th{background:#eef2ff;text-align:left;padding:10px;font-weight:700;border-bottom:1px solid var(--border)}
+  .table tbody td{padding:10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .kvs{display:grid;grid-template-columns:1fr;gap:8px}
+  @media(min-width:860px){.kvs{grid-template-columns:1fr 1fr}}
+  .badge{display:inline-block;background:#ffffff22;border:1px solid #ffffff44;padding:.15rem .5rem;border-radius:999px}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+  .btn{display:inline-block;padding:.7rem 1rem;border-radius:12px;border:1px solid var(--border);text-decoration:none}
+  .btn-primary{background:var(--primary);color:white;border-color:transparent}
+  .btn-outline{background:transparent;color:var(--ink)}
+  a:focus{outline:3px solid var(--focus);outline-offset:2px}
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <span class="badge">Infografía</span>
+      <h1>SQL vs MongoDB — Comparación Visual</h1>
+      <p class="subtitle">Estructura, consultas, y <strong>usos recomendados</strong> para tu Manual <em>Mongoo</em>.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <p class="lead">En SQL (relacional) trabajas con <strong>tablas (filas+columnas)</strong> y esquemas rígidos; en MongoDB (NoSQL) trabajas con <strong>colecciones y documentos JSON</strong> con esquema flexible. Esta guía te ayuda a elegir con criterio y a ver código en paralelo.</p>
+    </section>
+
+    <section class="grid">
+      <div class="cols-2">
+        <article class="card sql">
+          <p class="title-sm">Modelo Relacional (SQL)</p>
+          <h2>Tabla: <code>alumnos</code></h2>
+          <pre><code>-- Esquema
+CREATE TABLE alumnos (
+  id SERIAL PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  edad INT,
+  ciudad VARCHAR(100)
+);
+
+-- Inserción
+INSERT INTO alumnos (nombre, edad, ciudad)
+VALUES ('Ana López', 20, 'Sevilla');
+
+-- Consulta
+SELECT id, nombre, ciudad
+FROM alumnos
+WHERE edad &gt;= 20
+ORDER BY nombre ASC;</code></pre>
+        </article>
+
+        <article class="card mongo">
+          <p class="title-sm">Documento (MongoDB)</p>
+          <h2>Colección: <code>alumnos</code></h2>
+          <pre><code>// Inserción
+db.alumnos.insertMany([
+  { nombre: "Ana López", edad: 20, ciudad: "Sevilla" },
+  { nombre: "Luis Díaz", correo: "luis@example.com", activo: true }
+]);
+
+// Consulta
+db.alumnos.find(
+  { edad: { $gte: 20 } },
+  { nombre: 1, ciudad: 1 }
+);
+
+// Actualización
+db.alumnos.updateOne(
+  { nombre: "Ana López" },
+  { $set: { ciudad: "Córdoba" } }
+);</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Comparativa esencial</h2>
+      <table class="table" role="table" aria-label="Comparativa SQL vs MongoDB">
+        <thead>
+          <tr>
+            <th>Aspecto</th>
+            <th>SQL (Relacional)</th>
+            <th>MongoDB (NoSQL)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Estructura</td>
+            <td>Tablas → filas &amp; columnas; esquema fijo</td>
+            <td>Colecciones → documentos JSON; esquema flexible</td>
+          </tr>
+          <tr>
+            <td>Relaciones</td>
+            <td>Claves primarias/foráneas; JOINs</td>
+            <td>Referencias o datos embebidos; agregaciones</td>
+          </tr>
+          <tr>
+            <td>Integridad</td>
+            <td>Fuerte (constraints, transacciones ACID)</td>
+            <td>Buena (transacciones multi-documento), enfoque flexible</td>
+          </tr>
+          <tr>
+            <td>Escalado</td>
+            <td>Vertical (y horizontal con complejidad)</td>
+            <td>Horizontal por particionado (sharding) nativo</td>
+          </tr>
+          <tr>
+            <td>Consultas</td>
+            <td>SQL declarativo, joins potentes</td>
+            <td>API de consultas con operadores y pipelines</td>
+          </tr>
+          <tr>
+            <td>Esquemas</td>
+            <td>Rígidos; migraciones formales</td>
+            <td>Flexibles; evolución por versiones de documento</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Usos recomendados</h2>
+      <div class="kvs">
+        <div class="card" style="border-left:6px solid var(--sql)">
+          <h3>¿Cuándo elegir SQL?</h3>
+          <ul>
+            <li><strong>Datos altamente estructurados</strong> y <em>consistencia estricta</em>.</li>
+            <li>Procesos financieros, contabilidad, inventarios con <em>integridad referencial</em>.</li>
+            <li><em>Informes complejos</em> y <strong>joins</strong> entre muchas tablas.</li>
+            <li>Analítica BI tradicional (OLTP/OLAP con modelos en estrella/copo).</li>
+            <li>Regulaciones que exigen <strong>transacciones ACID</strong> fuertes.</li>
+          </ul>
+        </div>
+        <div class="card" style="border-left:6px solid var(--mongo)">
+          <h3>¿Cuándo elegir MongoDB (Mongoo)?</h3>
+          <ul>
+            <li><strong>Contenido JSON</strong> con estructura variable y anidada.</li>
+            <li>Apps web/mobile en <strong>Node.js</strong> con cambios de modelo frecuentes.</li>
+            <li><strong>Escalado horizontal</strong> y alto volumen de lecturas/escrituras.</li>
+            <li>Catálogos, perfiles, comentarios, feeds, IoT, logs.</li>
+            <li>Prototipado ágil donde el esquema <em>evoluciona</em> con el producto.</li>
+          </ul>
+        </div>
+      </div>
+      <p style="color:#475569">💡 Regla práctica: si tu dominio es muy relacional y crítico (banca, ERP), empieza por SQL. Si tu dominio es documento‑centrado, cambia mucho y necesita escalar horizontalmente, empieza por MongoDB.</p>
+    </section>
+
+    <section class="card">
+      <h2>De “filas/columnas” a “documentos/claves”</h2>
+      <div class="cols-2">
+        <div>
+          <h3>SQL → Fila</h3>
+          <pre><code>| id | nombre     | edad | ciudad   |
+|----|------------|------|----------|
+| 1  | Ana López  | 20   | Sevilla  |</code></pre>
+        </div>
+        <div>
+          <h3>MongoDB → Documento</h3>
+          <pre><code>{ "_id": 1, "nombre": "Ana López", "edad": 20, "ciudad": "Sevilla" }</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta">
+      <a class="btn btn-outline" href="index.html">⬅ Volver</a>
+      <a class="btn btn-primary" href="02-relacional-vs-no-relacional.html">Siguiente tema ➜</a>
+    </div>
+  </main>
+
+  <footer class="wrap" style="opacity:.8">
+    Infografía para el Manual “Mongoo” · © 2025
+  </footer>
+</body>
+</html>

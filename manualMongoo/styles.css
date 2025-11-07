@@ -1,0 +1,250 @@
+/* ======================================================
+   styles.css — Manual “Mongoo” (Introducción a MySQL)
+   ======================================================
+   Paleta accesible, fondo claro y texto oscuro.
+   Reutilizable en todas las páginas del manual.
+====================================================== */
+
+:root {
+  --color-primary: #13aa52;      /* verde Mongo */
+  --color-primary-light: #16c264;
+  --color-bg: #f8fafc;           /* fondo muy claro */
+  --color-surface: #ffffff;      /* tarjetas */
+  --color-text: #1e1e1e;         /* texto principal oscuro */
+  --color-muted: #4b5563;        /* texto secundario gris */
+  --color-border: #d1d5db;       /* bordes suaves */
+  --ring: #13aa52;               /* foco accesible */
+}
+
+/* ======================================================
+   Reset y base
+====================================================== */
+* {
+  box-sizing: border-box;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* ======================================================
+   Enlaces y foco
+====================================================== */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:is(a, button, .btn):focus {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+
+/* ======================================================
+   Skip link (accesibilidad)
+====================================================== */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.6rem 1rem;
+  background: #000;
+  color: #fff;
+  border-radius: 0.75rem;
+  outline: 3px solid var(--ring);
+}
+
+/* ======================================================
+   Cabecera y hero
+====================================================== */
+header {
+  background: linear-gradient(
+    180deg,
+    rgba(19, 170, 82, 0.08) 0%,
+    rgba(19, 170, 82, 0) 100%
+  );
+  border-bottom: 1px solid var(--color-border);
+}
+
+.wrap {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 3rem 1rem;
+}
+
+.badge {
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #065f46;
+  background: #e3fcef;
+  border: 1px solid #baf7ce;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  margin: 0.6rem 0 1rem;
+}
+
+.subtitle {
+  color: var(--color-muted);
+  font-size: 1.05rem;
+  margin-top: 0.25rem;
+}
+
+/* ======================================================
+   Botones
+====================================================== */
+.cta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+.btn {
+  appearance: none;
+  border: 0;
+  border-radius: 0.9rem;
+  padding: 0.8rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+  color: #fff;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+/* ======================================================
+   Tarjetas y secciones
+====================================================== */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.grid.cols-3 {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.section-title {
+  font-size: 1.3rem;
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.lead {
+  color: var(--color-muted);
+}
+
+/* ======================================================
+   Listas e índices
+====================================================== */
+ol.indice {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+ol.indice li {
+  margin: 0.35rem 0;
+}
+
+.objetivos li {
+  margin: 0.35rem 0;
+}
+
+/* ======================================================
+   Pie de página
+====================================================== */
+footer {
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+/* ======================================================
+   Accesibilidad: movimiento reducido
+====================================================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ======================================================
+   Videos incrustados
+====================================================== */
+/* Vídeo responsive 16:9 */
+.video-wrapper{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+}
+
+.video-wrapper iframe{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+/* ======================================================
+   Fin de styles.css
+

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tema 6 — Colecciones y Documentos en MongoDB</title>
+  <meta name="description" content="Aprende a crear colecciones e insertar documentos en MongoDB. Diferencia clara entre crear colección e insertar documento. Ejemplos: productos y productos." />
+  <link rel="stylesheet" href="styles.css" /> 
+    <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header>
+    <div class="wrap hero">
+      <div>
+        <span class="badge">Tema 6</span>
+        <h1>Colecciones y Documentos en MongoDB: El Fundamento CRUD</h1>
+        <p class="subtitle">¡Bienvenidos! Aquí entenderemos el corazón de MongoDB: la diferencia entre Colección (el contenedor) y Documento (el dato), y cómo usar la sintaxis básica del Shell para CRUD (Crear, Leer, Actualizar, Borrar).</p>
+      </div>
+    </div>
+  </header>
+  <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+      <a class="btn btn-primary" href="07-mongo-consola.html">Siguiente tema ➜</a>
+    </div>
+
+  <main id="contenido" class="wrap">
+    
+    <section class="card">
+      <h2>🗺️ 0️⃣ El Mapa Mental: De Cluster a Documento</h2>
+      <p>Antes de empezar, debemos entender la jerarquía de almacenamiento en MongoDB, especialmente si vienes del mundo SQL. Piénsalo como una estructura de carpetas:</p>
+      
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Concepto MongoDB</th>
+              <th>Analogía SQL</th>
+              <th>Lo que Contiene</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cluster (Servidor) ☁️</td>
+              <td>Servidor / Instancia</td>
+              <td>Bases de Datos (DB)</td>
+            </tr>
+            <tr>
+              <td>Base de Datos (DB)</td>
+              <td>Base de Datos</td>
+              <td>Colecciones</td>
+            </tr>
+            <tr>
+              <td>Colección 📦</td>
+              <td>Tabla</td>
+              <td>Documentos (datos)</td>
+            </tr>
+            <tr>
+              <td>Documento 📄</td>
+              <td>Fila / Registro</td>
+              <td>Campos (atributos)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>☁️ ¿Qué es un Cluster en MongoDB Atlas?</h3>
+      <p>Un Cluster es la infraestructura distribuida que aloja tus bases de datos. No es solo un ordenador, sino una red de servidores que garantiza que tus datos sean:</p>
+      <ul>
+        <li>Seguros: Los datos se replican (copian) en varios lugares.</li>
+        <li>Disponibles: Si un servidor falla, otro lo reemplaza automáticamente.</li>
+      </ul>
+      <p>✅ Solo lo creas una vez en MongoDB Atlas. Dentro de tu Cluster activo, podrás crear y gestionar tus Bases de Datos.</p>
+    </section>
+
+    <hr>
+    
+    <section class="card">
+      <h2>📦 1️⃣ Colección y 📄 2️⃣ Documento: Los Protagonistas</h2>
+      
+      <h3>📦 La Colección (Tu Carpeta de Datos)</h3>
+      <p>Una Colección es el contenedor lógico de documentos. Es el equivalente a una Tabla SQL, pero con una diferencia CLAVE: los documentos dentro no tienen por qué tener la misma estructura.</p>
+      <ul>
+        <li>Ejemplo: La colección se llamará `productos`.</li>
+        <li>Sintaxis: Siempre la nombras en minúsculas y plural, siguiendo la convención de la comunidad (ej. `db.productos`).</li>
+      </ul>
+
+      <h3>📄 El Documento (Tu Dato Completo)</h3>
+      <p>Un Documento es el registro individual, un objeto escrito en formato JSON (o BSON en memoria). Es la Fila de SQL, pero con campos flexibles.</p>
+      
+      <div class="grid-2">
+        <div>
+          <h4>Ejemplo: Alumno (Documento en la colección `alumnos`)</h4>
+          <pre><code>{
+  "nombre": "Laura López",
+  "edad": 22,
+  "curso": "Full Stack",
+  "ciudad": "Sevilla",
+  "activo": true
+}</code></pre>
+        </div>
+        <div>
+          <h4>Ejemplo: Producto (Documento en la colección `productos`)</h4>
+          <pre><code>{
+  "nombre": "Camiseta React",
+  "precio": 19.99,
+  "stock": 50,
+  "categoria": "ropa",
+  "activo": true
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <hr>
+
+    <section class="card">
+      <h2>🧪 3️⃣ El CRUD: Creación de Datos (INSERT)</h2>
+      <p>La operación de Creación (CREATE) o Inserción (INSERT) es el primer paso. Aquí es donde debes prestar más atención a la sintaxis del Shell.</p>
+      
+      <h3>La Sintaxis de Oro del MongoDB Shell</h3>
+      <p>Todos los comandos que verás aquí y en el resto del CRUD siguen este patrón:</p>
+      <pre><code>db.nombreColeccion.metodo(argumentos)</code></pre>
+      <ul>
+        <li>`db`: Es una palabra reservada que representa tu Base de Datos actual. ¡Siempre empieza por `db`!</li>
+        <li>`.nombreColeccion`: El nombre de la carpeta donde quieres guardar el dato (ej. `.productos`).</li>
+        <li>`.metodo()`: La acción que quieres ejecutar (ej. `.insertOne()`).</li>
+      </ul>
+
+      <h3>Importante: ¿Cuándo se Crea la Colección?</h3>
+      <div class="note" style="background:#fefce8;padding:1rem;border-radius:8px;border-left:5px solid #fbbf24;">
+        <strong>¡Atención!</strong> En MongoDB, NO existe un comando `CREATE COLLECTION`. La colección se crea de forma implícita y automática en el momento en que se inserta el primer documento.
+      </div>
+
+      <h3>Método 1: Inserción de un Único Documento (`insertOne`)</h3>
+      <p>Utiliza este método para añadir un solo documento. El argumento es el objeto JSON que quieres guardar.</p>
+      
+      <pre><code>// Comando: Insertar UN solo documento en la colección 'productos'
+db.productos.insertOne({
+  nombre: "Auriculares Bluetooth",
+  precio: 35.0,
+  stock: 100,
+  categoria: "tecnologia",
+  activo: true
+});</code></pre>
+      
+      <h3>Método 2: Inserción de Varios Documentos (`insertMany`)</h3>
+      <p>Es más eficiente si quieres añadir varios documentos a la vez. El argumento debe ser una lista (array `[]`) que contiene los objetos JSON a insertar.</p>
+      
+      <pre><code>// Comando: Insertar VARIOS documentos en la colección 'productos'
+db.productos.insertMany([
+  { nombre: "Camiseta React", precio: 19.99, stock: 50, categoria: "ropa" },
+  { nombre: "Taza JavaScript", precio: 9.5, stock: 120, categoria: "accesorios" }
+]);</code></pre>
+
+      <hr>
+
+      <h3>✅ Las Tres Formas de Insertar Datos (Tu Rutina Profesional)</h3>
+      <p>Aunque usamos el Shell para practicar, en un proyecto real la inserción se hace desde tu código. Aquí están las 3 vías:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Vía</th>
+              <th>Uso Principal</th>
+              <th>Forma Profesional</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1. MongoDB Shell 🧠</td>
+              <td>Pruebas, chequeos rápidos o tareas administrativas.</td>
+              <td>`db.coleccion.insertOne(...)`</td>
+            </tr>
+            <tr>
+              <td>2. Código (Mongoose/ORM) 💻</td>
+              <td>¡El 99% de tu trabajo! Construir la API y gestionar las interacciones del usuario.</td>
+              <td>`await Modelo.create(...)`</td>
+            </tr>
+            <tr>
+              <td>3. Importación de Archivos 📤</td>
+              <td>Carga inicial de datos grandes (.json, .csv) en un nuevo proyecto.</td>
+              <td>`mongoimport` o herramientas de Atlas.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="note" style="background:#f0f9ff;padding:1rem;border-radius:8px;border-left:5px solid #007bff;">
+        <strong>Tu Foco: La Inserción desde el Código.</strong><br>
+        En el próximo tema aprenderás a usar Mongoose (para Node.js). Con Mongoose, tu código recibe los datos del usuario y usa el método `.save()` o `.create()` para llevarlos al Cluster. Esto es lo que se hace en la industria.
+      </div>
+    </section>
+
+    <hr>
+
+    <section class="card">
+      <h2>🔍 4️⃣ El RUD: Leer (Buscar) Documentos</h2>
+      <p>La lectura de datos se hace con el método `.find()`. Es el equivalente al `SELECT` de SQL.</p>
+      
+      <h3>Sintaxis: `db.coleccion.find(filtro)`</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Buscar TODO (El SELECT *)</h4>
+          <pre><code>db.productos.find(); 
+// Si dejas los paréntesis vacíos, trae todos los documentos.</code></pre>
+        </div>
+        <div>
+          <h4>Buscar con Filtro (El WHERE)</h4>
+          <pre><code>db.productos.find({ activo: true }); 
+// Busca todos los productos donde el campo 'activo' sea true.</code></pre>
+        </div>
+      </div>
+      
+      <h4>Extras: Ordenar y Contar</h4>
+      <pre><code>// Ordenar por precio ascendente (1) o descendente (-1)
+db.productos.find().sort({ precio: 1 }); 
+
+// Usando operadores: Buscar los que tengan un precio MENOR O IGUAL ($lte) a 20
+db.productos.find({ precio: { $lte: 20 } });</code></pre>
+    </section>
+
+    <hr>
+
+    <section class="card">
+      <h2>✏️ 5️⃣ El CUD: Actualizar Documentos</h2>
+      <p>Para modificar datos, usamos los métodos `updateOne()` y `updateMany()`. Es OBLIGATORIO usar un Operador de Actualización para indicarle a MongoDB cómo cambiar el dato. El más común es `$set`.</p>
+      
+      <h3>Sintaxis: `db.coleccion.updateOne(filtro, { operador: { ... } })`</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Actualizar UNO (`updateOne`)</h4>
+          <p>Solo cambia el primer documento que cumpla el filtro.</p>
+          <pre><code>db.productos.updateOne(
+  { nombre: "Taza JavaScript" }, // Filtro: ¿Qué documento?
+  { $set: { precio: 10.0 } }      // Operador: Cambia el precio a 10.0
+);</code></pre>
+        </div>
+        <div>
+          <h4>Actualizar VARIOS (`updateMany`)</h4>
+          <p>Cambia todos los documentos que cumplan el filtro.</p>
+          <pre><code>db.productos.updateMany(
+  { categoria: "ropa" }, 
+  { $inc: { stock: 10 } } // Operador: Suma 10 al stock de TODA la ropa
+);</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <hr>
+
+    <section class="card">
+      <h2>🗑️ 6️⃣ El CRD: Borrar Documentos</h2>
+      <p>Para eliminar registros, usamos `deleteOne()` o `deleteMany()`. ¡No hay vuelta atrás, úsalo con mucho cuidado!</p>
+      
+      <h3>Sintaxis: `db.coleccion.deleteMany(filtro)`</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Borrar UNO (`deleteOne`)</h4>
+          <pre><code>db.productos.deleteOne({ nombre: "Camiseta React" });</code></pre>
+        </div>
+        <div>
+          <h4>Borrar VARIOS (`deleteMany`)</h4>
+          <pre><code>db.productos.deleteMany({ activo: false }); 
+// Borra todos los productos que hemos marcado como inactivos.</code></pre>
+        </div>
+      </div>
+      <p class="note" style="color: red; font-weight: bold;">⚠️ ¡Peligro! El borrado en MongoDB no se puede deshacer. Siempre revisa bien tu filtro antes de ejecutar un `deleteMany()`.</p>
+    </section>
+
+    <hr>
+
+    <section class="card">
+      <h2>🧰 7️⃣ Trucos Esenciales del Shell</h2>
+      <p>Comandos adicionales que te serán muy útiles en tu día a día:</p>
+      <pre><code>// 1. Proyección: Muestra SOLO los campos 'nombre' y 'precio'
+db.productos.find({}, { nombre: 1, precio: 1, _id: 0 }); // El _id: 0 oculta el ID por defecto.
+
+// 2. Contar: Averigua cuántos documentos cumplen el criterio
+db.productos.countDocuments({ categoria: "ropa" });
+
+// 3. Paginación: Para ver los datos en partes (p. ej., primeros 10)
+db.productos.find().skip(0).limit(10); </code></pre>
+    </section>
+
+    <section class="card">
+  <h2>🌟 10 Métodos Fundamentales: La Guía Rápida del CRUD</h2>
+  <p>Estos son los comandos esenciales que debes memorizar. Son la base de las operaciones en MongoDB, tanto si trabajas directamente en la consola (Shell) como si programas con Mongoose. Hay muchos más y
+    muchos más operadores pero recuerda que Roma no se construyó en una semana. Empieza por dominar estos y luego ve ampliando tu repertorio.
+  </p>
+  
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>CRUD</th>
+          <th>Función</th>
+          <th>Sintaxis en MongoDB Shell (Prueba)</th>
+          <th>Sintaxis en Mongoose (Profesional)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="4" style="text-align: center; font-weight: bold; background: #e0f7fa;">CREAR (INSERTAR)</td>
+        </tr>
+        <tr>
+          <td>CREATE</td>
+          <td>Inserta un documento.</td>
+          <td><code>db.productos.insertOne({ ... })</code></td>
+          <td><code>await Producto.create({ ... })</code></td>
+        </tr>
+        <tr>
+          <td>CREATE</td>
+          <td>Inserta varios documentos a la vez.</td>
+          <td><code>db.productos.insertMany([ {..}, {..} ])</code></td>
+          <td><code>await Producto.insertMany([ {..}, {..} ])</code></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align: center; font-weight: bold; background: #e8f5e9;">READ (LEER / BUSCAR)</td>
+        </tr>
+        <tr>
+          <td>READ</td>
+          <td>Busca uno o más documentos (el SELECT básico).</td>
+          <td><code>db.productos.find( {filtro} )</code></td>
+          <td><code>Modelo.find( {filtro} )</code></td>
+        </tr>
+        <tr>
+          <td>READ</td>
+          <td>Busca solo el primer documento que coincida.</td>
+          <td><code>db.productos.findOne( {filtro} )</code></td>
+          <td><code>Modelo.findOne( {filtro} )</code></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align: center; font-weight: bold; background: #fffde7;">UPDATE (ACTUALIZAR)</td>
+        </tr>
+        <tr>
+          <td>UPDATE</td>
+          <td>Actualiza solo el primer documento que coincida.</td>
+          <td><code>db.productos.updateOne( {filtro}, {$set: {..}} )</code></td>
+          <td><code>Modelo.updateOne( {filtro}, {$set: {..}} )</code></td>
+        </tr>
+        <tr>
+          <td>UPDATE</td>
+          <td>Actualiza todos los documentos que coincidan.</td>
+          <td><code>db.productos.updateMany( {filtro}, {$inc: {..}} )</code></td>
+          <td><code>Modelo.updateMany( {filtro}, {$inc: {..}} )</code></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align: center; font-weight: bold; background: #ffebee;">DELETE (BORRAR)</td>
+        </tr>
+        <tr>
+          <td>DELETE</td>
+          <td>Borra solo el primer documento que coincida.</td>
+          <td><code>db.productos.deleteOne( {filtro} )</code></td>
+          <td><code>Modelo.deleteOne( {filtro} )</code></td>
+        </tr>
+        <tr>
+          <td>DELETE</td>
+          <td>Borra todos los documentos que coincidan.</td>
+          <td><code>db.productos.deleteMany( {filtro} )</code></td>
+          <td><code>Modelo.deleteMany( {filtro} )</code></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align: center; font-weight: bold; background: #f3e5f5;">UTILIDAD ESENCIAL</td>
+        </tr>
+        <tr>
+          <td>COUNT</td>
+          <td>Cuenta cuántos documentos cumplen un filtro.</td>
+          <td><code>db.productos.countDocuments( {filtro} )</code></td>
+          <td><code>Modelo.countDocuments( {filtro} )</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <p class="note" style="background:#fef0f4;padding:1rem;border-radius:8px;border-left:5px solid #d81b60;">
+    Recuerda la clave: En el Shell usas <code>db.nombre_coleccion</code>. En Mongoose (código) usas <code>Modelo</code> (con mayúscula y singular, por convención, como <code>Producto</code>).
+  </p>
+</section>
+    <hr>
+
+  <section class="card">
+  <h2>🎬 8️⃣ Práctica Guiada: Explorando Datos Reales (`muestra_mflix`)</h2>
+  <p>¡Antes de ensuciarnos las manos creando nuestros propios datos, vamos a investigar una base de datos real! MongoDB Atlas te regala la base <code>muestra_mflix</code>, una simulación de plataforma de películas, ideal para practicar el READ (Lectura/Búsqueda) sin riesgo.</p>
+
+  <div class="note" style="background:#e8f5e9;padding:1rem;border-radius:8px;border-left:5px solid #4caf50;">
+    Objetivo: Practicar el cambio de base de datos (`use`), el conteo (`countDocuments`), la búsqueda (`find`) y la proyección (`{campo: 1}`).
+  </div>
+
+  <ol>
+    <li>
+      <h3>Paso 1: Conectarse a la Base de Datos de Ejemplo</h3>
+      <p>Debes decirle al Shell que quieres trabajar en la BBDD de películas, no en la tuya (`mi_tienda`).</p>
+      <pre><code>// ⭐️ Palabra Reservada: Te conecta a la Base de Datos 'muestra_mflix'
+use muestra_mflix </code></pre>
+      <p>El Shell responderá: <code>switched to db muestra_mflix</code>.</p>
+    </li>
+
+    <li>
+      <h3>Paso 2: Inspeccionar una Colección y Contar Documentos</h3>
+      <p>Vamos a usar la colección `comentarios`. Primero, verificamos cuántos documentos (comentarios) tiene la colección.</p>
+      <pre><code>// Cuenta cuántos documentos hay en la colección 'comentarios'
+db.comentarios.countDocuments({})</code></pre>
+      <p>*(Deberías obtener un número grande, ¡cerca de 41.000!)*</p>
+    </li>
+
+    <li>
+      <h3>Paso 3: Leer Todo y Limitar Resultados (`.find()` y `.limit()`)</h3>
+      <p>Ejecuta tu primer `SELECT *` para ver un documento real. IMPORTANTE: Si no limitas el resultado, la consola se llenará. Por eso usamos el método `.limit()`.</p>
+      <pre><code>// Encuentra TODOS los documentos, pero solo muestra los primeros 5
+db.comentarios.find().limit(5)</code></pre>
+      <p>⭐ Tip: Observa el campo `_id`. Este es el identificador único que MongoDB asigna automáticamente a cada documento.</p>
+    </li>
+
+    <li>
+      <h3>Paso 4: Buscar con Filtro y Proyección (Lectura Avanzada)</h3>
+      <p>Queremos encontrar comentarios de un autor específico, y solo mostrar el nombre y el texto del comentario. Esto se llama Proyección.</p>
+      <pre><code>// Filtra los comentarios donde el 'name' sea "John Smith"
+// Y proyecta (muestra) solo los campos 'name' y 'text'. 
+db.comentarios.find(
+  { name: "John Smith" }, 
+  { name: 1, text: 1, _id: 0 } // El 1 significa "mostrar", el 0 significa "ocultar"
+).limit(3)</code></pre>
+    </li>
+  </ol>
+
+  <p>¡Felicidades! Acabas de ejecutar las operaciones de lectura más comunes del CRUD sobre una base de datos profesional. Esto es el 90% del trabajo de consulta de datos en el mundo real.</p>
+</section>
+
+    <hr>
+
+    <section class="card">
+      <h2>🚀 9️⃣ Siguiente Paso: Del Shell al Código Real</h2>
+      <p>Ya dominas la sintaxis. El siguiente paso es llevar estas operaciones a la programación. En el Tema 7, verás cómo se usa Node.js y Mongoose para integrar este CRUD en un backend real, siguiendo la arquitectura MVC.</p>
+    </section>
+
+    <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+      <a class="btn btn-primary" href="07-mongo-consola.html">Siguiente tema ➜</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Manual "Mongoo" — Tema 6: Colecciones y Documentos · © 2025
+    </div>
+  </footer>
+</body>
+</html>

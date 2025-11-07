@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tema 7 — CRUD en el Mongo Shell (Caparazón)</title>
+  <meta name="description" content="Tema 7 del Manual Mongoo. Aprende a conectarte a tu cluster de Atlas y realizar operaciones CRUD (Crear, Leer, Actualizar, Borrar) desde el Mongo Shell, antes de pasar a Mongoose." />
+  <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header>
+    <div class="wrap hero">
+      <div>
+        <span class="badge">Tema 7</span>
+        <h1>CRUD en el Mongo Shell (Caparazón)</h1>
+        <p class="subtitle">Conéctate a tu cluster, inserta, consulta, actualiza y borra datos desde el Shell. El primer paso hacia el uso profesional de <strong>Mongoose</strong>.</p>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido" class="wrap">
+
+    <section class="card">
+      <h2>💡 Introducción</h2>
+      <p>En este tema aprenderás a usar el <strong>Mongo Shell</strong> (también llamado <code>mongosh</code> o <em>Caparazón</em>), la herramienta de línea de comandos oficial de MongoDB. 
+      Con ella puedes practicar las operaciones <strong>CRUD</strong>: <em>Create, Read, Update y Delete</em>, directamente sobre tu base de datos Atlas.</p>
+      <p>Este método es ideal para estudiantes y administradores, porque te permite manipular los datos sin necesidad de un programa. 
+      En el siguiente tema harás exactamente lo mismo, pero de forma <strong>profesional</strong> con <code>Node.js</code> y <code>Mongoose</code>.</p>
+    </section>
+
+    <section class="card">
+      <h2>🧩 1️⃣ Acceder al Mongo Shell (Caparazón)</h2>
+      <h3>💻 ¿Qué es el Shell?</h3>
+      <p>El <strong>Shell</strong> es una consola que permite escribir comandos para comunicarse directamente con tu base de datos. Es el equivalente a una terminal, pero especializada en MongoDB.</p>
+
+      <h3>☁️ Acceso desde Atlas</h3>
+      <ol>
+        <li>Entra en tu <strong>Cluster</strong> dentro de Atlas (por ejemplo: <code>ici27</code>).</li>
+        <li>Haz clic en el botón <strong>“Conectar”</strong>.</li>
+        <li>Selecciona la opción <strong>“Caparazón”</strong> (Shell).</li>
+      </ol>
+      <p>Atlas te mostrará un comando parecido a este:</p>
+      <pre><code>mongosh "mongodb+srv://ici27.lfxkraj.mongodb.net/" --apiVersion 1 --username inmacontreras2709_db_user</code></pre>
+
+      <h3>⚙️ Pasos para conectarte</h3>
+      <ol>
+        <li>Abre tu terminal (CMD o PowerShell en Windows).</li>
+        <li>Pega el comando anterior.</li>
+        <li>Cuando te lo pida, escribe la contraseña de tu usuario Atlas (no se muestra mientras escribes).</li>
+      </ol>
+      <p>Si ves el mensaje de bienvenida y algo como <code>Atlas [primary] mi_tienda&gt;</code>, ¡ya estás dentro del Shell!</p>
+    </section>
+
+    <section class="card">
+      <h2>🏗️ 2️⃣ Crear la Base de Datos y la Colección</h2>
+      <p>MongoDB crea las bases de datos y colecciones automáticamente cuando insertas tu primer documento.  
+      Sin embargo, puedes crearlas manualmente desde Atlas o con el comando <code>use</code>.</p>
+
+      <h3>🛠️ Opción práctica: crear base y colección desde Atlas</h3>
+      <ol>
+        <li>Abre <strong>Data Explorer</strong> en Atlas.</li>
+        <li>Pulsa <strong>“+ Create Database”</strong>.</li>
+        <li>Introduce:
+          <ul>
+            <li>Base de datos: <code>mi_tienda</code></li>
+            <li>Colección: <code>productos</code></li>
+          </ul>
+        </li>
+        <li>Haz clic en <strong>Crear</strong>.</li>
+      </ol>
+
+      <h3>💻 Opción con comandos (en el Shell)</h3>
+      <pre><code>// Cambiar a la base de datos (si no existe, se crea)
+use mi_tienda
+// Inserta tu primer documento (creará la colección automáticamente)
+db.productos.insertOne({
+  nombre: "Taza Code Master",
+  precio: 12.5,
+  stock: 50,
+  categoria: "accesorios",
+  activo: true
+})</code></pre>
+      <p>✔️ Con esto ya tienes la base <code>mi_tienda</code> y la colección <code>productos</code>.</p>
+    </section>
+
+    <section class="card">
+      <h2>📥 3️⃣ Insertar Datos (CREATE)</h2>
+      <h3>Insertar múltiples documentos</h3>
+      <p>Usa <code>insertMany()</code> para crear varios registros a la vez:</p>
+      <pre><code>db.productos.insertMany([
+  { nombre: "Taza Code Master", precio: 12.5, stock: 50, categoria: "accesorios", activo: true },
+  { nombre: "Sudadera Node", precio: 55.0, stock: 10, categoria: "ropa", activo: true },
+  { nombre: "Libreta Desarrollo", precio: 4.99, stock: 120, categoria: "papeleria", activo: false }
+])</code></pre>
+      <p>💡 MongoDB crea automáticamente la colección si no existía. No necesitas un comando “create table” como en SQL.</p>
+    </section>
+
+   <section class="card">
+  <h2>🔍 4️⃣ Leer los Datos (READ)</h2>
+  <p>La lectura o consulta de documentos en MongoDB se realiza con el método <code>find()</code>. Este método te permite ver toda la información guardada en una colección o aplicar filtros y formatos para obtener solo lo que necesitas.</p>
+
+  <h3>📘 Sintaxis general del método <code>find()</code></h3>
+
+<p>El método <code>find()</code> se usa para leer los documentos guardados en una colección.  
+Tiene hasta <strong>dos parámetros principales</strong> y, en casos especiales, un tercero para opciones avanzadas.</p>
+
+<pre><code>db.coleccion.find(filtro, proyeccion, opciones)</code></pre>
+
+<ul>
+  <li><strong>filtro</strong> → indica <em>qué documentos</em> quieres buscar.  
+    Ejemplo: <code>{ categoria: "ropa" }</code> o <code>{ precio: { $gt: 50 } }</code>.</li>
+  <li><strong>proyección</strong> → indica <em>qué campos</em> mostrar u ocultar.  
+    Ejemplo: <code>{ nombre: 1, precio: 1 }</code>.</li>
+  <li><strong>opciones</strong> (opcional) → controla detalles como el orden o el número de resultados  
+    Ejemplo: <code>{ sort: { precio: -1 }, limit: 5 }</code>.</li>
+</ul>
+
+<p>📎 Si no pasas ningún parámetro, MongoDB mostrará <strong>todos los documentos</strong> con todos sus campos.  
+Por defecto, <strong>siempre muestra también el campo <code>_id</code></strong>, a menos que tú lo ocultes explícitamente con <code>_id: 0</code>.</p>
+
+<h3>🧩 Ejemplos prácticos</h3>
+
+<pre><code>// 0️⃣ Sin parámetros → muestra TODO (incluye _id)
+db.productos.find()
+
+// 1️⃣ Solo filtro → muestra los productos de la categoría "ropa"
+db.productos.find({ categoria: "ropa" })
+
+// 2️⃣ Solo proyección → se puede usar dejando el filtro vacío {}
+// Muestra todos los productos pero solo los campos nombre y precio
+db.productos.find({}, { nombre: 1, precio: 1 })
+
+// 2️⃣b Filtro + proyección → busca y muestra solo ciertos campos
+// Filtro: productos con stock mayor a 10
+// Proyección: muestra solo nombre, stock y oculta el _id
+db.productos.find({ stock: { $gt: 10 } }, { nombre: 1, stock: 1, _id: 0 })
+
+// 3️⃣ Con opciones → por ejemplo, limitar y ordenar
+// Busca productos activos, muestra nombre y precio,
+// ordena de mayor a menor precio y limita a 3 resultados
+db.productos.find(
+  { activo: true },
+  { nombre: 1, precio: 1, _id: 0 },
+  { sort: { precio: -1 }, limit: 3 }
+)
+
+// 🔎 Formatear el resultado en consola para mejor lectura
+db.productos.find().pretty()
+</code></pre>
+
+<div class="note" style="background:#fffbe6;padding:1rem;border-left:4px solid #ffb703;margin-top:1rem;">
+  <p><strong>🧠 Resumen rápido:</strong></p>
+  <ul>
+    <li>Si no pones parámetros → muestra todo.</li>
+    <li>El campo <code>_id</code> siempre se incluye, <strong>salvo</strong> que pongas <code>_id: 0</code> en la proyección.</li>
+    <li>El primer parámetro es el filtro, el segundo la proyección, y el tercero las opciones.</li>
+    <li><code>.pretty()</code> solo mejora la presentación en consola, no cambia los datos.</li>
+  </ul>
+</div>
+
+<h3>💡 Ejemplo completo y comentado</h3>
+<pre><code>// Buscar productos activos y caros
+db.productos.find(
+  { activo: true, precio: { $gt: 50 } },      // Filtro
+  { nombre: 1, precio: 1, stock: 1, _id: 0 }, // Proyección
+  { sort: { precio: -1 } }                    // Opciones (orden descendente)
+)
+</code></pre>
+
+<p>🔍 Este comando mostrará solo los productos activos con precio mayor que 50,  
+ordenados de mayor a menor, mostrando únicamente el nombre, precio y stock (sin <code>_id</code>).</p>
+
+
+  <div class="note" style="background:#fffbe6;padding:1rem;border-left:4px solid #ffb703;margin:1rem 0;">
+    <p><strong>🧠 Recuerda:</strong> en la proyección <code>1</code> significa “mostrar” y <code>0</code> significa “ocultar”.<br>
+    Por eso <code>{ nombre: 1, precio: 1, _id: 0 }</code> muestra solo <em>nombre</em> y <em>precio</em>, ocultando el <em>_id</em>.</p>
+  </div>
+  <h3>📋 Resumen visual de usos de <code>find()</code></h3>
+
+<table style="width:100%;border-collapse:collapse;margin-top:1rem;">
+  <thead style="background:#f7f7f7;">
+    <tr>
+      <th style="border:1px solid #ddd;padding:8px;"># Parámetros</th>
+      <th style="border:1px solid #ddd;padding:8px;">Qué hace</th>
+      <th style="border:1px solid #ddd;padding:8px;">Ejemplo</th>
+      <th style="border:1px solid #ddd;padding:8px;">Resultado esperado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid #ddd;padding:8px;text-align:center;">0</td>
+      <td style="border:1px solid #ddd;padding:8px;">Muestra todos los documentos y todos los campos (incluye <code>_id</code>).</td>
+      <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.find()</code></td>
+      <td style="border:1px solid #ddd;padding:8px;">Todos los productos completos.</td>
+    </tr>
+
+    <tr>
+      <td style="border:1px solid #ddd;padding:8px;text-align:center;">1</td>
+      <td style="border:1px solid #ddd;padding:8px;">Usa un <strong>filtro</strong> para seleccionar qué documentos ver.</td>
+      <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.find({ categoria: "ropa" })</code></td>
+      <td style="border:1px solid #ddd;padding:8px;">Solo productos donde la categoría sea “ropa”.</td>
+    </tr>
+
+    <tr>
+      <td style="border:1px solid #ddd;padding:8px;text-align:center;">2</td>
+      <td style="border:1px solid #ddd;padding:8px;">Usa <strong>filtro + proyección</strong> para decidir qué documentos y qué campos mostrar.</td>
+      <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.find({ activo: true }, { nombre: 1, precio: 1, _id: 0 })</code></td>
+      <td style="border:1px solid #ddd;padding:8px;">Productos activos, mostrando solo nombre y precio, sin <code>_id</code>.</td>
+    </tr>
+
+    <tr>
+      <td style="border:1px solid #ddd;padding:8px;text-align:center;">3</td>
+      <td style="border:1px solid #ddd;padding:8px;">Usa <strong>filtro + proyección + opciones</strong> (ordenar, limitar, etc.).</td>
+      <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.find({}, { nombre: 1 }, { sort: { precio: -1 }, limit: 3 })</code></td>
+      <td style="border:1px solid #ddd;padding:8px;">Muestra los 3 productos más caros, solo con el campo <code>nombre</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="note" style="background:#eefbf3;padding:1rem;border-left:4px solid #198754;margin-top:1rem;">
+  <p><strong>💡 Consejo del profesor:</strong>  
+  En la práctica profesional, casi siempre usarás <strong>dos parámetros</strong> (filtro y proyección).  
+  El tercero (opciones) se usa en casos más avanzados, como ordenaciones, límites o paginación.</p>
+</div>
+
+
+  <h3>🔍 Ejemplo avanzado con operadores de comparación</h3>
+  <p>MongoDB permite realizar búsquedas más potentes usando <strong>operadores</strong> que comienzan con el signo <code>$</code>.  
+  Los más comunes son:</p>
+  <ul>
+    <li><code>$gt</code> → mayor que (greater than)</li>
+    <li><code>$lt</code> → menor que (less than)</li>
+    <li><code>$gte</code> → mayor o igual que</li>
+    <li><code>$lte</code> → menor o igual que</li>
+    <li><code>$eq</code> → igual que</li>
+    <li><code>$ne</code> → distinto de</li>
+  </ul>
+
+  <p>Veamos un ejemplo práctico: buscar productos con <strong>precio mayor que 50</strong> y <strong>stock menor que 20</strong> (usando <code>$gt</code> y <code>$lt</code>):</p>
+
+  <pre><code>db.productos.find({
+  precio: { $gt: 50 },
+  stock: { $lt: 20 }
+}).pretty()</code></pre>
+
+  <p>Este filtro busca todos los productos cuyo precio sea superior a 50 y tengan menos de 20 unidades en stock.</p>
+  <p><strong>Resultado esperado:</strong> la <code>Sudadera Node</code>, porque cumple ambas condiciones (<em>precio: 55.0</em> y <em>stock: 15</em>).</p>
+
+  <h3>💡 Consejo profesional</h3>
+  <p>Para hacer consultas más claras, puedes combinar <strong>filtros y proyecciones</strong> al mismo tiempo.  
+  Por ejemplo, para mostrar solo el <em>nombre</em> y el <em>precio</em> de los productos caros:</p>
+
+  <pre><code>db.productos.find(
+  { precio: { $gt: 50 } },            // Filtro
+  { nombre: 1, precio: 1, _id: 0 }    // Proyección
+)</code></pre>
+
+  <p>Esto mostrará solo el nombre y el precio de los productos que cuestan más de 50, sin mostrar los demás campos.</p>
+
+  <div class="note" style="background:#e7f5ff;padding:1rem;border-left:4px solid #1e88e5;margin-top:1rem;">
+    <p><strong>✔️ En resumen:</strong></p>
+    <ul>
+      <li><code>find()</code> → sirve para leer documentos de una colección.</li>
+      <li>Primer parámetro → <strong>qué documentos</strong> quieres (filtro).</li>
+      <li>Segundo parámetro → <strong>qué campos</strong> mostrar (proyección).</li>
+      <li><code>.pretty()</code> → solo mejora la legibilidad en la consola, no cambia los datos.</li>
+    </ul>
+  </div>
+</section>
+<section class="card">
+  <h2>🔢 Operadores de comparación en MongoDB</h2>
+  <p>MongoDB permite realizar búsquedas muy precisas mediante <strong>operadores de comparación</strong>.  
+  Estos operadores siempre comienzan con el símbolo <code>$</code> y se colocan dentro del filtro del método <code>find()</code>.</p>
+
+  <h3>📘 Sintaxis general</h3>
+  <pre><code>db.coleccion.find({ campo: { operador: valor } })</code></pre>
+
+  <p>Por ejemplo, si quieres buscar los productos cuyo <code>precio</code> sea mayor que 50:</p>
+  <pre><code>db.productos.find({ precio: { $gt: 50 } })</code></pre>
+
+  <h3>📊 Tabla de operadores más usados</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <thead style="background:#f7f7f7;">
+      <tr>
+        <th style="border:1px solid #ddd;padding:8px;">Operador</th>
+        <th style="border:1px solid #ddd;padding:8px;">Significado</th>
+        <th style="border:1px solid #ddd;padding:8px;">Ejemplo</th>
+        <th style="border:1px solid #ddd;padding:8px;">Qué hace</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>$eq</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Igual a</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>{ precio: { $eq: 10 } }</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Devuelve documentos donde el precio sea exactamente 10</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>$ne</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Distinto de</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>{ categoria: { $ne: "ropa" } }</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Muestra productos que no sean de ropa</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>$gt</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Mayor que</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>{ precio: { $gt: 50 } }</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Encuentra los productos con precio superior a 50</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>$gte</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Mayor o igual que</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>{ stock: { $gte: 100 } }</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Busca productos con 100 unidades o más</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>$lt</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Menor que</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>{ precio: { $lt: 20 } }</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Muestra productos cuyo precio sea menor que 20</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>$lte</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Menor o igual que</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>{ stock: { $lte: 5 } }</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Devuelve productos con 5 unidades o menos</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>🧠 Ejemplo práctico combinado</h3>
+  <p>Buscar productos con <strong>precio mayor que 50</strong> y <strong>stock menor que 20</strong> (consulta AND implícita):</p>
+  <pre><code>db.productos.find({
+  precio: { $gt: 50 },
+  stock: { $lt: 20 }
+}).pretty()</code></pre>
+
+  <p>Esto devolverá productos que cumplan <u>ambas condiciones</u> simultáneamente.  
+  En nuestro caso, la <strong>“Sudadera Node”</strong> coincide porque tiene un precio de 55 y un stock de 15.</p>
+
+  <div class="note" style="background:#eefbf3;padding:1rem;border-left:4px solid #198754;margin-top:1rem;">
+    <p><strong>✔️ Consejo:</strong> Puedes combinar los operadores con <code>$and</code> o <code>$or</code> para consultas más complejas:</p>
+    <pre><code>// Buscar productos caros o sin stock
+db.productos.find({
+  $or: [
+    { precio: { $gt: 50 } },
+    { stock: { $lte: 0 } }
+  ]
+})</code></pre>
+    <p>Este ejemplo devuelve todos los productos que <em>cuestan más de 50</em> o <em>no tienen stock</em>.</p>
+  </div>
+
+  <div class="note" style="background:#fffbe6;padding:1rem;border-left:4px solid #ffb703;margin-top:1rem;">
+    <strong>💬 En resumen:</strong>
+    <ul>
+      <li>El primer parámetro de <code>find()</code> define las <strong>condiciones</strong> de búsqueda.</li>
+      <li>Los operadores comienzan con <code>$</code> y permiten filtrar por rangos o comparaciones.</li>
+      <li>Puedes combinarlos para crear consultas poderosas y precisas.</li>
+    </ul>
+  </div>
+</section>
+
+
+   <section class="card">
+  <h2>✏️ 5️⃣ Actualizar Datos (UPDATE)</h2>
+
+  <p>La operación <strong>UPDATE</strong> se usa para <strong>modificar documentos existentes</strong> en una colección.  
+  Puedes cambiar uno solo (<code>updateOne()</code>) o varios a la vez (<code>updateMany()</code>).</p>
+
+  <p>La sintaxis general es:</p>
+  <pre><code>db.coleccion.updateOne(filtro, actualizacion)
+db.coleccion.updateMany(filtro, actualizacion)</code></pre>
+
+  <ul>
+    <li><strong>filtro</strong> → indica qué documento(s) quieres modificar.</li>
+    <li><strong>actualización</strong> → usa operadores como <code>$set</code> o <code>$inc</code> para definir qué cambiar.</li>
+  </ul>
+
+  <h3>📘 Operadores más usados en UPDATE</h3>
+
+  <table style="width:100%;border-collapse:collapse;margin-top:1rem;">
+    <thead style="background:#f7f7f7;">
+      <tr>
+        <th style="border:1px solid #ddd;padding:8px;">Operador</th>
+        <th style="border:1px solid #ddd;padding:8px;">Significado</th>
+        <th style="border:1px solid #ddd;padding:8px;">Ejemplo</th>
+        <th style="border:1px solid #ddd;padding:8px;">Resultado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>$set</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Cambia el valor de un campo (o lo crea si no existe).</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>{ $set: { precio: 14.99 } }</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Actualiza el campo <code>precio</code> a 14.99.</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>$inc</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Incrementa o decrementa un número.</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>{ $inc: { stock: -2 } }</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Resta 2 unidades al campo <code>stock</code>.</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>$unset</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Elimina un campo del documento.</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>{ $unset: { descripcion: "" } }</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Borra el campo <code>descripcion</code>.</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>$rename</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Cambia el nombre de un campo.</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>{ $rename: { precio: "coste" } }</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Renombra el campo <code>precio</code> a <code>coste</code>.</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>$mul</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Multiplica un valor numérico.</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>{ $mul: { precio: 1.1 } }</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Aumenta el precio un 10 % (× 1.1).</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>$currentDate</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Actualiza un campo con la fecha actual.</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>{ $currentDate: { ultimaModificacion: true } }</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Guarda la fecha del último cambio.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>🧩 Ejemplos prácticos</h3>
+
+  <pre><code>// 1️⃣ Cambiar el precio de la Taza
+db.productos.updateOne(
+  { nombre: "Taza Code Master" },
+  { $set: { precio: 14.99 } }
+)
+
+// 2️⃣ Aumentar el stock de la Sudadera en +5
+db.productos.updateOne(
+  { nombre: "Sudadera Node" },
+  { $inc: { stock: 5 } }
+)
+
+// 3️⃣ Reducir el stock de todos los productos activos en -1
+db.productos.updateMany(
+  { activo: true },
+  { $inc: { stock: -1 } }
+)
+
+// 4️⃣ Eliminar la descripción de todos los productos inactivos
+db.productos.updateMany(
+  { activo: false },
+  { $unset: { descripcion: "" } }
+)
+
+// 5️⃣ Agregar o actualizar la fecha de última modificación
+db.productos.updateMany(
+  {},
+  { $currentDate: { ultimaModificacion: true } }
+)
+</code></pre>
+
+  <p>🔍 Comprueba los resultados después de cada actualización:</p>
+  <pre><code>db.productos.find().pretty()</code></pre>
+
+  <div class="note" style="background:#eefbf3;padding:1rem;border-left:4px solid #198754;margin-top:1rem;">
+    <p><strong>💡 Consejo:</strong>  
+    <ul>
+      <li>Si el filtro no encuentra coincidencias, no se modifica nada.</li>
+      <li>Los operadores de actualización <strong>siempre van dentro de un objeto con <code>$</code></strong>.</li>
+      <li>Puedes combinar varios operadores en la misma instrucción, por ejemplo:
+        <pre><code>{ $set: { activo: true }, $currentDate: { ultimaModificacion: true } }</code></pre>
+      </li>
+    </ul>
+    </p>
+  </div>
+</section>
+
+   <section class="card">
+  <h2>🗑️ 6️⃣ Borrar Datos (DELETE)</h2>
+
+  <p>La operación <strong>DELETE</strong> se usa para <strong>eliminar documentos</strong> de una colección.  
+  Es una acción <strong>permanente</strong>: una vez borrado un documento, no se puede recuperar desde MongoDB (a menos que tengas una copia de seguridad).</p>
+
+  <p>Los métodos más comunes son:</p>
+  <pre><code>db.coleccion.deleteOne(filtro)
+db.coleccion.deleteMany(filtro)</code></pre>
+
+  <ul>
+    <li><strong>filtro</strong> → indica qué documentos borrar.</li>
+    <li><code>deleteOne()</code> → elimina solo el <strong>primer documento</strong> que cumpla el filtro.</li>
+    <li><code>deleteMany()</code> → elimina <strong>todos</strong> los documentos que cumplan el filtro.</li>
+  </ul>
+
+  <h3>📘 Métodos de borrado más usados</h3>
+
+  <table style="width:100%;border-collapse:collapse;margin-top:1rem;">
+    <thead style="background:#f7f7f7;">
+      <tr>
+        <th style="border:1px solid #ddd;padding:8px;">Método</th>
+        <th style="border:1px solid #ddd;padding:8px;">Uso</th>
+        <th style="border:1px solid #ddd;padding:8px;">Ejemplo</th>
+        <th style="border:1px solid #ddd;padding:8px;">Resultado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>deleteOne()</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Borra solo el primer documento que coincida con el filtro.</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.deleteOne({ nombre: "Taza Code Master" })</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Elimina la primera “Taza Code Master” que encuentre.</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>deleteMany()</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Borra todos los documentos que cumplan el filtro.</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.deleteMany({ activo: false })</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Elimina todos los productos inactivos.</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><code>db.coleccion.drop()</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Elimina <strong>toda la colección completa</strong> (como borrar una tabla entera).</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.drop()</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Borra la colección <code>productos</code> y todo su contenido.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>🧩 Ejemplos prácticos</h3>
+
+  <pre><code>// 1️⃣ Borrar un solo producto por nombre
+db.productos.deleteOne({ nombre: "Taza Code Master" })
+
+// 2️⃣ Borrar todos los productos inactivos
+db.productos.deleteMany({ activo: false })
+
+// 3️⃣ Borrar todos los productos con stock = 0
+db.productos.deleteMany({ stock: 0 })
+
+// 4️⃣ Borrar toda la colección (⚠️ elimina todos los datos)
+db.productos.drop()
+</code></pre>
+
+  <h3>📊 Verificación después del borrado</h3>
+  <p>Para comprobar cuántos documentos siguen existiendo, usa:</p>
+  <pre><code>db.productos.countDocuments()</code></pre>
+
+  <p>O para verificar visualmente:</p>
+  <pre><code>db.productos.find().pretty()</code></pre>
+
+  <div class="note" style="background:#fff3cd;padding:1rem;border-left:4px solid #ffb703;margin-top:1rem;">
+    <p><strong>⚠️ Consejo del profesor:</strong></p>
+    <ul>
+      <li>Evita usar <code>deleteMany({})</code> sin un filtro, porque borrará <strong>toda la colección</strong>.</li>
+      <li>Siempre revisa antes con <code>find()</code> el conjunto de documentos que vas a eliminar.</li>
+      <li>En proyectos reales, suele usarse un campo lógico <code>activo: false</code> en lugar de eliminar los datos físicamente (borrado lógico).</li>
+    </ul>
+  </div>
+
+  <p>✅ Si seguiste todos los pasos del CRUD, deberías tener 3 productos activos en tu colección.</p>
+</section>
+
+
+    <section class="card">
+      <h2>🧠 7️⃣ Búsquedas Avanzadas</h2>
+      <p>MongoDB permite combinar operadores lógicos y de comparación para realizar consultas complejas.</p>
+
+      <h3>Buscar artículos caros y con poco stock</h3>
+      <pre><code>db.productos.find({
+  precio: { $gt: 50.00 },
+  stock: { $lt: 20 }
+}, 
+{ nombre: 1, stock: 1, _id: 0 }
+).pretty()</code></pre>
+      <p>Esto mostrará solo el nombre y el stock de los productos que cumplan ambas condiciones (AND implícito).</p>
+    </section>
+
+    
+
+    <section class="card">
+  <h2>🚀 7️⃣ Resumen General del CRUD en MongoDB Shell</h2>
+  <p>Ya dominas las cuatro operaciones básicas de cualquier base de datos:  
+  <strong>CRUD → Create · Read · Update · Delete</strong>.  
+  A continuación tienes un resumen claro con los comandos más usados, su función y ejemplos prácticos.</p>
+
+  <table style="width:100%;border-collapse:collapse;margin-top:1rem;">
+    <thead style="background:#f7f7f7;">
+      <tr>
+        <th style="border:1px solid #ddd;padding:8px;">🔤 Operación</th>
+        <th style="border:1px solid #ddd;padding:8px;">📘 Descripción</th>
+        <th style="border:1px solid #ddd;padding:8px;">💻 Comando MongoDB Shell</th>
+        <th style="border:1px solid #ddd;padding:8px;">🎯 Resultado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><strong>C</strong> — Create</td>
+        <td style="border:1px solid #ddd;padding:8px;">Inserta uno o varios documentos nuevos.</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.insertMany([{ nombre:"Taza", precio:12.5 }])</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Crea la colección si no existe y añade los documentos.</td>
+      </tr>
+
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><strong>R</strong> — Read</td>
+        <td style="border:1px solid #ddd;padding:8px;">Consulta los documentos guardados, con o sin filtros.</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.find({ categoria:"ropa" }, { nombre:1, _id:0 })</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Muestra los productos de la categoría “ropa” con solo el campo nombre.</td>
+      </tr>
+
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><strong>U</strong> — Update</td>
+        <td style="border:1px solid #ddd;padding:8px;">Modifica valores de uno o varios documentos existentes.</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.updateOne({ nombre:"Taza" }, { $inc:{ stock:5 } })</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Aumenta el stock del producto “Taza” en 5 unidades.</td>
+      </tr>
+
+      <tr>
+        <td style="border:1px solid #ddd;padding:8px;"><strong>D</strong> — Delete</td>
+        <td style="border:1px solid #ddd;padding:8px;">Elimina documentos según un filtro.</td>
+        <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.deleteMany({ activo:false })</code></td>
+        <td style="border:1px solid #ddd;padding:8px;">Borra todos los productos inactivos.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note" style="background:#eefbf3;padding:1rem;border-left:4px solid #198754;margin-top:1rem;">
+    <p><strong>💡 Consejo:</strong>  
+    <ul>
+      <li>Las operaciones CRUD se ejecutan directamente sobre la colección seleccionada (por ejemplo, <code>db.productos</code>).</li>
+      <li>MongoDB crea automáticamente la colección la primera vez que insertas un documento.</li>
+      <li>El orden más lógico para aprender es: <strong>Create → Read → Update → Delete</strong>.</li>
+    </ul>
+    </p>
+  </div>
+
+  <h3>🎓 Mini-repaso guiado</h3>
+  <ol>
+    <li>👉 Inserta 2 productos nuevos con <code>insertMany()</code>.</li>
+    <li>🔍 Búscalos con <code>find()</code> filtrando por categoría.</li>
+    <li>✏️ Cambia el precio de uno usando <code>$set</code>.</li>
+    <li>🗑️ Elimina los productos con <code>stock: 0</code>.</li>
+    <li>📊 Comprueba cuántos quedan con <code>countDocuments()</code>.</li>
+  </ol>
+
+  <div class="note" style="background:#fffbeb;padding:1rem;border-left:4px solid #f39c12;margin-top:1rem;">
+    <p><strong>🎯 Objetivo final:</strong> Dominar el CRUD básico en el Shell te permitirá entender con claridad  
+    cómo funcionará cada operación cuando más adelante las hagas desde Node.js con <strong>Mongoose</strong>.</p>
+  </div>
+</section>
+
+      <p>En el <strong>Tema 8</strong> aprenderás a hacer exactamente lo mismo, pero de forma profesional desde un proyecto con <strong>Node.js</strong> y <strong>Mongoose</strong>:</p>
+      <ul>
+        <li>Crear modelos (<code>models/Producto.js</code>).</li>
+        <li>Conectar a Atlas desde tu servidor.</li>
+        <li>Insertar, consultar, actualizar y borrar datos mediante rutas API.</li>
+      </ul>
+
+      <div class="note" style="background:#f0fdf4;padding:1rem;border-radius:8px;">
+        <strong>Recuerda:</strong> El Shell es la base teórica. Mongoose es la herramienta profesional.  
+        Si dominas los comandos que has aprendido hoy, dominarás Mongoose fácilmente.
+      </div>
+    </section>
+
+    <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="06-colecciones-documentos.html">⬅ Tema anterior</a>
+      <a class="btn btn-primary" href="08-crud-mongoose.html">Siguiente tema ➜</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Manual "Mongoo" — Tema 7: CRUD en el Mongo Shell · © 2025
+    </div>
+  </footer>
+</body>
+</html>

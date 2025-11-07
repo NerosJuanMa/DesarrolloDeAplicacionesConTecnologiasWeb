@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tema 1 — ¿Qué es una base de datos?</title>
+  <meta name="description" content="Introducción a bases de datos: definición, utilidad, tipos (SQL vs NoSQL), ejemplos, filas y columnas, ACID vs BASE, normalización, glosario, ejercicios y FAQs." />
+  <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header>
+    <div class="wrap hero">
+      <div>
+        <span class="badge" aria-label="Tema 1">Tema 1</span>
+        <h1>¿Qué es una base de datos?</h1>
+        <p class="subtitle">Manual didáctico : definición, utilidad, tipos, ejemplos, buenas prácticas y ejercicios — enfoque Full Stack.</p>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido" class="wrap">
+    <!-- Índice -->
+    <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="index.html">⬅ Volver al índice</a>
+      <a class="btn btn-primary" href="02-relacional-vs-no-relacional.html">Siguiente tema ➜</a>
+    </div>
+
+    <!-- 1 -->
+    <section id="que-es" class="card">
+      <h2>1️⃣ ¿Qué es una base de datos?</h2>
+      <p>Una base de datos (BBDD) es un conjunto organizado de información o datos estructurados que se almacenan en un sistema informático y que pueden consultarse, modificarse y gestionarse fácilmente.
+Su objetivo principal es guardar información de forma ordenada, segura y accesible, para que podamos buscarla, actualizarla o analizarla cuando la necesitemos.
+</p>
+      <p><strong>Ejemplo:</strong> en una red social, la base de datos guarda usuarios, publicaciones, comentarios y “likes”.</p>
+    </section>
+
+    <!-- 2 -->
+    <section id="para-que-sirve" class="card">
+      <h2>2️⃣ ¿Para qué sirve una base de datos?</h2>
+      <p>Para almacenar, organizar y gestionar información de manera eficiente: consultas, actualizaciones, eliminaciones, seguridad, relaciones y escalabilidad.</p>
+      <ul>
+        <li>Guardar información de forma segura y permanente.</li>
+        <li>Buscar y filtrar datos rápidamente.</li>
+        <li>Relacionar información entre distintos elementos.</li>
+        <li>Evitar duplicidad y errores.</li>
+        <li>Permitir que el proyecto crezca sin desorganizarse.</li>
+      </ul>
+    </section>
+
+    <!-- 3 -->
+    <section id="biblioteca" class="card">
+      <h2>📚 Analogía práctica: la biblioteca</h2>
+      <pre><code>Libros
+ ├─ id, titulo, autor_id, anio, isbn
+Autores
+ ├─ id, nombre, pais
+Prestamos
+ ├─ id, libro_id, usuario_id, fecha_salida, fecha_devolucion</code></pre>
+      <p><strong>Entidades</strong> (Libros, Autores, Usuarios) y <strong>relaciones</strong> (Préstamos conectan Usuario⇄Libro).</p>
+    </section>
+
+    <!-- 4 -->
+    <section id="fullstack" class="card">
+      <h2>3️⃣ ¿Qué aporta al desarrollo Full Stack?</h2>
+      <ul>
+        <li>Persistencia real de datos.</li>
+        <li>Backend sólido y conectable al frontend.</li>
+        <li>Escalabilidad y profesionalización del proyecto.</li>
+      </ul>
+    </section>
+
+    <!-- 5 -->
+    <section id="alternativas" class="card">
+      <h2>4️⃣ Alternativas a las BBDD</h2>
+      <ul>
+        <li>Archivos JSON/texto plano</li>
+        <li>Variables en memoria</li>
+        <li>Hojas de cálculo</li>
+        <li>APIs externas</li>
+      </ul>
+      <p>Útiles sólo al inicio o en proyectos pequeños porque no ofrecen la misma robustez y escalabilidad que una base de datos adecuada.</p>
+    </section>
+
+    <!-- 6 -->
+    <section id="tipos" class="card">
+      <h2>5️⃣ Tipos de bases de datos</h2>
+      <h3>Internas vs externas</h3>
+      <ul>
+        <li><strong>Internas (embebidas):</strong> p. ej. SQLite (un archivo, sin servidor).</li>
+        <li><strong>Externas (cliente-servidor):</strong> MySQL, PostgreSQL, MongoDB…</li>
+      </ul>
+      <h3>Relacionales vs No relacionales</h3>
+      <ul>
+        <li><strong>Relacionales (SQL):</strong> tablas, filas, columnas.</li>
+        <li><strong>No relacionales (NoSQL):</strong> documentos JSON, clave-valor, grafos o columnas anchas.</li>
+      </ul>
+    </section>
+
+    <!-- 7 -->
+    <section id="programas" class="card">
+      <h2>6️⃣ Programas más usados</h2>
+      <div class="table-responsive">
+        <table style="width:100%; border-collapse:collapse; text-align:left">
+          <thead>
+            <tr style="background:#f0fdf4">
+              <th>Tipo</th>
+              <th>Sistema</th>
+              <th>Características</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Relacional</td><td>MySQL</td><td>Gratuito y muy usado en web.</td></tr>
+            <tr><td>Relacional</td><td>PostgreSQL</td><td>Robusto y avanzado.</td></tr>
+            <tr><td>Interna</td><td>SQLite</td><td>Ligera; sin servidor.</td></tr>
+            <tr><td>NoSQL (documento)</td><td>MongoDB</td><td>Popular en Node.js.</td></tr>
+            <tr><td>NoSQL (documento)</td><td>Firestore</td><td>DBaaS “serverless”.</td></tr>
+            <tr><td>NoSQL (clave-valor)</td><td>Redis</td><td>Caché/colas; en memoria.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section id="filas-columnas" class="card">
+      <h2>7️⃣ Filas/Columnas (SQL) vs Documentos/Claves (NoSQL)</h2>
+
+      <h3>Relacional (SQL)</h3>
+      <ul>
+        <li><strong>Columnas</strong> = campos tipados.</li>
+        <li><strong>Filas</strong> = registros con misma estructura.</li>
+      </ul>
+      <div class="table-responsive" aria-label="Ejemplo de tabla relacional">
+        <table style="width:100%; border-collapse:collapse; text-align:left">
+          <caption class="sr-only">Tabla alumnos</caption>
+          <thead><tr style="background:#eef2ff"><th>id</th><th>nombre</th><th>edad</th><th>ciudad</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Ana López</td><td>20</td><td>Sevilla</td></tr>
+            <tr><td>2</td><td>Luis Díaz</td><td>22</td><td>Madrid</td></tr>
+            <tr><td>3</td><td>Marta Gil</td><td>21</td><td>Valencia</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>No relacional (Documentos)</h3>
+      <pre aria-label="Ejemplo MongoDB"><code>[
+  { "_id": 1, "nombre": "Ana López", "edad": 20, "ciudad": "Sevilla" },
+  { "_id": 2, "nombre": "Luis Díaz", "correo": "luis@example.com", "activo": true }
+]</code></pre>
+    </section>
+
+  <section id="acid-base" class="card">
+    <h2>⚖️ ACID vs BASE: Dos maneras de manejar la información 💾</h2>
+    <p>Imagina que una Base de Datos (BBDD) es como un sistema para guardar y gestionar información (dinero, fotos, posts). Hay dos filosofías principales sobre cómo debe hacerlo, dependiendo de lo que sea más importante:</p>
+
+    <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="padding: 15px; border: 1px solid #0056b3; border-radius: 8px;">
+            <h3>🛡️ ACID: ¡Máxima Seguridad! (Piensa en un Banco 🏦)</h3>
+            <p>Esta filosofía dice que la exactitud es lo más importante. Es mejor que el sistema se detenga un momento antes de permitir un error. Es muy estricta.</p>
+            <ul>
+                <li>Atomicidad: La operación es "todo o nada". Si transfieres dinero, o llega completo o se queda donde estaba. Nunca se pierde.</li>
+                <li>Consistencia: Mantiene las reglas. Si la cuenta no puede estar en números rojos, la BBDD no lo permite. Siempre ordenado.</li>
+                <li>Aislamiento: Las operaciones no se estorban. Si tú pagas y otra persona cobra a la vez, no hay confusión. No se mezclan.</li>
+                <li>Durabilidad: Una vez que se guarda algo, queda guardado para siempre, aunque se vaya la luz. Recuerdo perfecto.</li>
+            </ul>
+            <p style="font-weight: bold; color: #0056b3;">Resultado: Datos súper confiables, perfectos para sistemas críticos como la Banca.</p>
+        </div>
+        
+        <div style="padding: 15px; border: 1px solid #28a745; border-radius: 8px;">
+            <h3>🚀 BASE: ¡Máxima Velocidad! (Piensa en Twitter/X 🐦)</h3>
+            <p>Esta filosofía dice que lo más importante es que el sistema esté siempre disponible y sea muy rápido, incluso si hay pequeños retrasos en los datos.</p>
+            <ul>
+                <li>Básicamente Disponible: El sistema casi nunca falla. Aunque haya problemas, la web sigue funcionando. Siempre en línea.</li>
+                <li>Estado Suave (Soft State): Los datos pueden cambiar solos mientras viajan por el sistema. No son fijos en el segundo exacto.</li>
+                <li>Consistencia Eventual: Tarde o temprano, todos verán el mismo dato. Si publicas algo, tus amigos lo verán en unos segundos, no necesariamente al instante. Se arregla solo después.</li>
+            </ul>
+            <p style="font-weight: bold; color: #28a745;">Resultado: Sistema muy rápido y escalable, perfecto para sitios con mucho tráfico como Redes Sociales.</p>
+        </div>
+    </div>
+    
+    <p style="margin-top: 20px;">Conclusión: ¿Necesitas exactitud perfecta? Usa ACID. ¿Necesitas que nunca se caiga y sea muy rápido? Usa BASE.</p>
+</section>
+  <section id="normalizacion" class="card">
+    <h2>🧱 Normalización vs Desnormalización: ¿Cómo guardamos los datos?</h2>
+    <p>Una Base de Datos (BBDD) tiene que decidir si es más importante ahorrar espacio y evitar errores o si es más importante ser muy, muy rápida al leer la información.</p>
+
+    <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="padding: 15px; border: 1px solid #dc3545; border-radius: 8px;">
+            <h3>📐 Normalización (Ahorrar y Ordenar)</h3>
+            <p>Piensa en esto como una biblioteca muy organizada. Solo se guarda cada dato una sola vez. Esto se usa mucho en las BBDD SQL (Relacionales).</p>
+            <ul>
+                <li>¿Qué hace? Evita repetir información. Si tienes 100 alumnos de "Sevilla", la palabra "Sevilla" se guarda solo una vez en una tabla de "Ciudades" y los alumnos solo guardan el ID de esa ciudad.</li>
+                <li>Ventaja: Si "Sevilla" cambia de nombre, solo lo editas en un lugar. ¡Cero errores!</li>
+                <li>Desventaja: Para saber la ciudad de un alumno, la BBDD tiene que mirar dos tablas, lo que la hace un poco más lenta al leer.</li>
+            </ul>
+            <p style="font-weight: bold; color: #dc3545;">Objetivo Principal: Mínima Duplicidad y Máxima Integridad (Datos limpios).</p>
+        </div>
+        
+        <div style="padding: 15px; border: 1px solid #007bff; border-radius: 8px;">
+            <h3>📦 Desnormalización (Duplicar para Acelerar)</h3>
+            <p>Piensa en esto como una carpeta donde todo está junto. El mismo dato se puede repetir varias veces. Esto se usa mucho en las BBDD NoSQL.</p>
+            <ul>
+                <li>¿Qué hace? Duplica datos intencionalmente. Si 100 alumnos son de "Sevilla", la palabra "Sevilla" se escribe 100 veces en los registros de los alumnos.</li>
+                <li>Ventaja: Para saber la ciudad de un alumno, la BBDD no tiene que buscar en otra tabla; la lee directamente. ¡Es muy rápido!</li>
+                <li>Desventaja: Si "Sevilla" cambia de nombre, tienes que editar 100 registros. Hay más riesgo de que quede un error.</li>
+            </ul>
+            <p style="font-weight: bold; color: #007bff;">Objetivo Principal: Máxima Velocidad en Lectura y Escalabilidad (Sitios web muy grandes).</p>
+        </div>
+    </div>
+    
+   <section id="ejemplos" class="card">
+    <h2>9️⃣ Ejemplos Prácticos: ¡Manos a la Obra!</h2>
+    <p>Ahora que entendemos las filosofías (ACID y BASE), veamos cómo se traduce eso en el código de los dos tipos principales de bases de datos:</p>
+
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+
+        <div style="padding: 15px; border: 1px solid #dc3545; border-radius: 8px;">
+            <h3>SQL (MySQL/PostgreSQL) - El Estricto 📐</h3>
+            <p>Usan el lenguaje SQL (Structured Query Language). Aquí todo es en forma de tablas muy organizadas.</p>
+            <pre style="background-color: #f8d7da; padding: 10px; border-radius: 4px;"><code>CREATE TABLE alumnos (...)</code></pre>
+            <p style="margin-top: -10px;">Explicación: Esto es como crear una hoja de cálculo (tabla). Defines exactamente cuántas columnas tendrá, cómo se llamarán (nombre, edad, ciudad) y qué tipo de dato guardará cada una (solo números, solo texto, etc.).</p>
+
+            <pre style="background-color: #f8d7da; padding: 10px; border-radius: 4px;"><code>INSERT INTO alumnos (...) VALUES ('Ana López', 20, 'Sevilla');</code></pre>
+            <p style="margin-top: -10px;">Explicación: Agregas una nueva fila a la tabla, siguiendo el orden y los tipos de datos que definiste al inicio. Si intentas meter texto en el campo edad, ¡te dará un error! (Esto es parte de la Consistencia ACID).</p>
+
+            <pre style="background-color: #f8d7da; padding: 10px; border-radius: 4px;"><code>SELECT id, nombre, ciudad FROM alumnos WHERE edad >= 20;</code></pre>
+            <p style="margin-top: -10px;">Explicación: Haces una pregunta a la BBDD: "Tráeme el ID, el nombre y la ciudad de todos los alumnos que tengan 20 años o más".</p>
+        </div>
+
+        <div style="padding: 15px; border: 1px solid #007bff; border-radius: 8px;">
+            <h3>MongoDB - El Flexible 📦</h3>
+            <p>Es una BBDD NoSQL que guarda la información en formato de documentos (parecido a archivos JSON). Es más flexible.</p>
+
+            <pre style="background-color: #cfe2ff; padding: 10px; border-radius: 4px;"><code>db.alumnos.insertMany([ { nombre: "Ana López", edad: 20, ciudad: "Sevilla" }, 
+              { nombre: "Luis Díaz", correo: "luis@example.com" } ]);</code></pre>
+            <p style="margin-top: -10px;">Explicación: Agregas documentos a la "colección" (como si fuera una carpeta de archivos). Fíjate: ¡El documento de Ana tiene un campo 'ciudad', pero el de Luis tiene un campo 'correo' que Ana no tiene! Esta flexibilidad es clave en NoSQL.</p>
+
+            <pre style="background-color: #cfe2ff; padding: 10px; border-radius: 4px;"><code>db.alumnos.find({ edad: { $gte: 20 } }, { nombre: 1, ciudad: 1 });</code></pre>
+            <p style="margin-top: -10px;">Explicación: Busca todos los documentos de alumnos donde la edad sea mayor o igual a 20. Pídele que solo te muestre los campos 'nombre' y 'ciudad'.</p>
+
+            <pre style="background-color: #cfe2ff; padding: 10px; border-radius: 4px;"><code>db.alumnos.updateOne({ nombre: "Ana López" }, { $set: { ciudad: "Córdoba" } });</code></pre>
+            <p style="margin-top: -10px;">Explicación: Encuentra el documento de Ana López y actualiza su campo 'ciudad' a 'Córdoba'.</p>
+        </div>
+    </div>
+    
+    <p style="margin-top: 20px; font-style: italic;">Diferencia clave para el alumno nuevo: En SQL tienes que definir todo muy bien antes de empezar. En MongoDB/NoSQL puedes empezar a guardar información, aunque los documentos no sean exactamente iguales.</p>
+</section>
+    <!-- 14 -->
+    <section id="faq" class="card">
+      <h2>❓ Preguntas frecuentes (FAQ)</h2>
+      <details><summary>¿Puedo empezar con JSON y migrar después?</summary><p>Sí. Prototipa con JSON y migra a SQL/Mongo cuando crezca.</p></details>
+      <details><summary>¿SQL es “mejor” que NoSQL?</summary><p>Depende: SQL prioriza integridad; NoSQL flexibilidad y escalado.</p></details>
+      <details><summary>¿Qué elijo para mi primer CRUD?</summary><p>Para relaciones/consultas: SQL. Para iterar rápido: MongoDB.</p></details>
+    </section>
+
+    <!-- 15 -->
+    <section id="checklist" class="card">
+      <h2>✅ Checklist</h2>
+      <ul>
+        <li>Tabla/fila/columna vs colección/documento/clave.</li>
+        <li>Cuándo elegir SQL o NoSQL.</li>
+        <li>Consulta simple en SQL y en MongoDB.</li>
+        <li>ACID vs BASE.</li>
+        <li>Normalización vs desnormalización.</li>
+      </ul>
+    </section>
+
+    <!-- 16 -->
+    <section id="video-intro" class="card">
+      <h2>🎥 Vídeo recomendado: Introducción a BBDD</h2>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/knVwokXITGI?rel=0&modestbranding=1"
+          title="Introducción a Bases de Datos (YouTube)"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+      </div>
+      <p class="sr-only">
+        Si no puedes reproducirlo:
+        <a href="https://www.youtube.com/watch?v=knVwokXITGI" target="_blank" rel="noopener">Abrir en YouTube</a>
+      </p>
+    </section>
+
+    <!-- 17 -->
+    <section id="conclusion" class="card">
+      <h2>💬 Conclusión</h2>
+      <p>Las BBDD permiten guardar, consultar y gestionar información de forma eficiente. Dominar los fundamentos te prepara para comparar enfoques en el siguiente tema.</p>
+    </section>
+
+    <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="index.html">⬅ Volver al índice</a>
+      <a class="btn btn-primary" href="02-relacional-vs-no-relacional.html">Siguiente tema ➜</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Manual “Mongoo” — Tema 1 · © 2025
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tema 8 — CRUD con Mongoose en Node.js</title>
+  <meta name="description" content="Aprende a usar Mongoose en Node.js para conectarte a MongoDB y realizar operaciones CRUD profesionales con esquemas, modelos y controladores." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header>
+    <div class="wrap hero">
+      <div>
+        <span class="badge">Tema 8</span>
+        <h1>CRUD con Mongoose en Node.js</h1>
+        <p class="subtitle">Lleva tus conocimientos de MongoDB al siguiente nivel: crea, lee, actualiza y borra datos desde tu aplicación Node.js de forma profesional.</p>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido" class="wrap">
+
+    <section class="card">
+      <h2>🔍 1️⃣ ¿Qué es Mongoose?</h2>
+      <p><strong>Mongoose</strong> es una <strong>librería de Node.js</strong> que sirve para conectarse a MongoDB y trabajar con sus colecciones de forma más estructurada.</p>
+
+      <p>Proporciona una capa de abstracción llamada <strong>ODM (Object Data Modeling)</strong>, similar a un ORM pero para bases de datos NoSQL.</p>
+
+      <ul>
+        <li>📄 Permite definir <strong>modelos</strong> con campos, tipos de datos y validaciones.</li>
+        <li>🔐 Evita errores comunes (como insertar datos sin formato correcto).</li>
+        <li>⚙️ Facilita las operaciones CRUD con métodos sencillos.</li>
+        <li>📊 Se integra perfectamente con Express y otras herramientas backend.</li>
+      </ul>
+
+      <div class="note" style="background:#eefbf3;padding:1rem;border-left:4px solid #198754;">
+        <p><strong>Ejemplo mental:</strong>  
+        En Mongo Shell escribías <code>db.productos.insertOne(...)</code>.  
+        Con Mongoose harás lo mismo con JavaScript puro:</p>
+        <pre><code>const nuevo = new Producto({ nombre: "Taza JS", precio: 12.5 });
+await nuevo.save();</code></pre>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>⚙️ 2️⃣ Instalación y configuración básica</h2>
+      <p>Primero, asegúrate de tener tu proyecto Node.js inicializado (ya con <code>npm init -y</code> y <code>server.js</code>).</p>
+
+      <h3>Instalar Mongoose</h3>
+      <pre><code>npm install mongoose</code></pre>
+
+      <h3>Configurar conexión con MongoDB</h3>
+      <p>Dentro de tu archivo <code>server.js</code>, importa Mongoose y conecta usando las variables del archivo <code>.env</code>:</p>
+
+      <pre><code>import express from "express";
+import mongoose from "mongoose";
+
+const app = express();
+app.use(express.json());
+
+const uri = process.env.MONGO_URI;
+const user = process.env.MONGO_USER;
+const pass = process.env.MONGO_PASS;
+
+mongoose.connect(uri, { user, pass })
+  .then(() => console.log("✅ Conectado a MongoDB Atlas con Mongoose"))
+  .catch(err => console.error("❌ Error de conexión:", err));
+
+app.listen(3000, () => console.log("🚀 Servidor activo en http://localhost:3000"));
+</code></pre>
+
+      <div class="note" style="background:#fffbeb;padding:1rem;border-left:4px solid #f39c12;">
+        <p><strong>💡 Consejo:</strong>  
+        Mongoose administra automáticamente la conexión. Si la base de datos no existe, la crea al guardar el primer documento.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🏗️ 3️⃣ Creando un Modelo (Schema)</h2>
+      <p>En Mongoose, los datos se definen mediante <strong>esquemas</strong>.  
+      Un esquema indica qué campos tendrá cada documento, su tipo y posibles valores por defecto.</p>
+
+      <h3>📂 Archivo: <code>models/Producto.js</code></h3>
+      <pre><code>import mongoose from "mongoose";
+
+// Definición del esquema
+const productoSchema = new mongoose.Schema({
+  nombre:      { type: String, required: true, trim: true },
+  precio:      { type: Number, required: true, min: 0 },
+  stock:       { type: Number, default: 0 },
+  categoria:   { type: String, default: "general" },
+  activo:      { type: Boolean, default: true },
+  descripcion: { type: String }
+}, { timestamps: true });
+
+// Creación del modelo asociado a la colección 'productos'
+export default mongoose.model("Producto", productoSchema, "productos");
+</code></pre>
+
+      <div class="note" style="background:#eefbf3;padding:1rem;border-left:4px solid #198754;">
+        <p><strong>🧠 En resumen:</strong></p>
+        <ul>
+          <li>📦 <strong>Schema</strong> → define la estructura (campos, tipos, validaciones).</li>
+          <li>🔗 <strong>Model</strong> → se usa para ejecutar operaciones CRUD sobre la colección.</li>
+          <li>📅 La opción <code>{ timestamps: true }</code> añade automáticamente <code>createdAt</code> y <code>updatedAt</code>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>📥 4️⃣ Crear (Create)</h2>
+      <p>Para insertar un documento en la colección, usa el modelo y su método <code>create()</code> o <code>save()</code>.</p>
+
+      <pre><code>import Producto from "./models/Producto.js";
+
+// Método 1: usando .create()
+const nuevo = await Producto.create({
+  nombre: "Taza Node.js",
+  precio: 15.99,
+  stock: 30,
+  categoria: "accesorios"
+});
+
+// Método 2: usando .save()
+const prod = new Producto({
+  nombre: "Sudadera Mongoose",
+  precio: 45,
+  stock: 12,
+  categoria: "ropa"
+});
+await prod.save();
+
+console.log("✅ Productos insertados correctamente");
+</code></pre>
+
+      <div class="note" style="background:#fffbeb;padding:1rem;border-left:4px solid #f39c12;">
+        <p><strong>💡 Consejo:</strong>  
+        Si el esquema marca un campo como <code>required</code> y no lo envías, Mongoose no permitirá guardar el documento.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>👁️ 5️⃣ Leer (Read)</h2>
+      <p>Para obtener los datos guardados, usamos métodos como <code>find()</code>, <code>findOne()</code> o <code>findById()</code>.</p>
+
+      <pre><code>// Leer todos los productos
+const productos = await Producto.find();
+
+// Leer solo los activos
+const activos = await Producto.find({ activo: true });
+
+// Buscar uno por nombre
+const taza = await Producto.findOne({ nombre: "Taza Node.js" });
+
+// Buscar por ID
+const porId = await Producto.findById("654c2f0a4d0b8e2b5f9a02e1");
+
+console.log(productos);
+</code></pre>
+
+      <p>El método <code>find()</code> devuelve un array de documentos (aunque solo haya uno).</p>
+    </section>
+
+    <section class="card">
+      <h2>✏️ 6️⃣ Actualizar (Update)</h2>
+      <p>Mongoose permite modificar documentos existentes con métodos como:</p>
+
+      <ul>
+        <li><code>updateOne()</code> → actualiza el primero que cumpla la condición.</li>
+        <li><code>updateMany()</code> → actualiza todos los que cumplan la condición.</li>
+        <li><code>findByIdAndUpdate()</code> → busca por ID y actualiza directamente.</li>
+      </ul>
+
+      <pre><code>// Cambiar precio de un producto
+await Producto.updateOne(
+  { nombre: "Taza Node.js" },
+  { $set: { precio: 17.99 } }
+);
+
+// Aumentar stock de todos los de ropa
+await Producto.updateMany(
+  { categoria: "ropa" },
+  { $inc: { stock: 5 } }
+);
+</code></pre>
+
+      <p>También puedes devolver el documento actualizado con la opción <code>{ new: true }</code> en <code>findByIdAndUpdate()</code>.</p>
+    </section>
+
+    <section class="card">
+      <h2>🗑️ 7️⃣ Borrar (Delete)</h2>
+      <p>Eliminar documentos es tan sencillo como en el Shell, pero con métodos propios de Mongoose:</p>
+
+      <pre><code>// Eliminar un solo producto
+await Producto.deleteOne({ nombre: "Libreta Desarrollo" });
+
+// Eliminar varios inactivos
+await Producto.deleteMany({ activo: false });
+
+// Eliminar por ID
+await Producto.findByIdAndDelete("654c2f0a4d0b8e2b5f9a02e1");
+</code></pre>
+
+      <div class="note" style="background:#fff3cd;padding:1rem;border-left:4px solid #ffb703;">
+        <p>⚠️ <strong>Precaución:</strong>  
+        Igual que en el Shell, estas operaciones son permanentes.  
+        Si quieres desactivar productos sin borrarlos, usa un campo <code>activo: false</code>.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🎯 8️⃣ Resumen CRUD con Mongoose</h2>
+      <table style="width:100%;border-collapse:collapse;margin-top:1rem;">
+        <thead style="background:#f7f7f7;">
+          <tr>
+            <th style="border:1px solid #ddd;padding:8px;">Operación</th>
+            <th style="border:1px solid #ddd;padding:8px;">Método Mongoose</th>
+            <th style="border:1px solid #ddd;padding:8px;">Equivalente en Mongo Shell</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border:1px solid #ddd;padding:8px;">Create</td>
+            <td style="border:1px solid #ddd;padding:8px;"><code>Producto.create()</code></td>
+            <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.insertOne()</code></td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #ddd;padding:8px;">Read</td>
+            <td style="border:1px solid #ddd;padding:8px;"><code>Producto.find()</code></td>
+            <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.find()</code></td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #ddd;padding:8px;">Update</td>
+            <td style="border:1px solid #ddd;padding:8px;"><code>Producto.updateOne()</code></td>
+            <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.updateOne()</code></td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #ddd;padding:8px;">Delete</td>
+            <td style="border:1px solid #ddd;padding:8px;"><code>Producto.deleteOne()</code></td>
+            <td style="border:1px solid #ddd;padding:8px;"><code>db.productos.deleteOne()</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>🏁 9️⃣ Conclusión y siguiente paso</h2>
+      <p>Ahora ya sabes usar <strong>Mongoose</strong> para realizar operaciones CRUD directamente desde Node.js, de forma segura y estructurada.</p>
+      <ul>
+        <li>Has conectado tu aplicación al cluster de Atlas.</li>
+        <li>Has creado un modelo (<code>Producto</code>) con validaciones.</li>
+        <li>Has ejecutado las cuatro operaciones CRUD con métodos profesionales.</li>
+      </ul>
+      <p>En el siguiente tema, aprenderás a combinar Mongoose con <strong>Express</strong> para crear una API REST que permita enviar y recibir datos desde el navegador o Postman. 🚀</p>
+    </section>
+
+    <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="07-crud-shell.html">⬅ Tema anterior</a>
+      <a class="btn btn-primary" href="09-api-rest-mongoose.html">Siguiente tema ➜</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Manual "Mongoo" — Tema 8: CRUD con Mongoose · © 2025
+    </div>
+  </footer>
+</body>
+</html>
