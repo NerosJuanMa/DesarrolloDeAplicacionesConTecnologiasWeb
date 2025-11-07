@@ -1,0 +1,5 @@
+
+
+npm install mongodb
+
+mongodb+srv://nerosjuanma_db_user:Neros__1710@cluster0.h1icn2z.mongodb.net/?appName=Cluster0
