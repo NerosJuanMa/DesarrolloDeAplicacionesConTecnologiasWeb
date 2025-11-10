@@ -3,3 +3,84 @@
 npm install mongodb
 
 mongodb+srv://nerosjuanma_db_user:Neros__1710@cluster0.h1icn2z.mongodb.net/?appName=Cluster0
+
+---------------------------------- DIA 2 ----------------------------------
+
+-Desde el PowerShell ejecutamos: 
+
+mongosh "mongodb+srv://cluster0.h1icn2z.mongodb.net/" --apiVersion 1 --username nerosjuanma_db_user
+
+-Nos pide la contraseña: Neros__1710
+
+-------------------------------Metodos varios---------
+// cls para limpiar la consola de texto.
+
+// Con Find te enseña todos los documentos que contiene la colección (productos)
+	db.coleccion.find(filtro, proyeccion)
+	db.productos.find( {precio: { $gt: 5}}, {categoria: 1, nombre: 1, precio: 1, _id: 0}).sort({categoria:1})
+
+// Busca todos los productos donde el campo 'activo' sea true.
+	db.productos.find({ activo: true })	(true=1, false=0)
+
+	db.productos.find({}, { nombre: 1, precio: 1, _id: 0 })
+
+// Si dejas los paréntesis vacíos, muestra todos los documentos.
+	db.productos.find()
+
+// Precio MENOR o IGUAL que 20
+	db.productos.find({ precio: { $lte: 20 } })
+
+// Precio MAYOR que 30
+	db.productos.find({ precio: { $gt: 30 } })
+
+// Precio ENTRE 10 y 25
+	db.productos.find({ precio: { $gte: 10, $lte: 25 } })	
+
+// Orden ascendente por precio (1 = ascendente, -1 = descendente)
+	db.productos.find().sort({ precio: 1 })
+
+// Limitar resultados
+	db.productos.find().limit(5)
+
+// Saltar los primeros N documentos (paginación)
+	db.productos.find().sort({ precio: 1 }).skip(5).limit(5)
+
+// Contar todos los documentos
+	db.productos.countDocuments({})
+
+// Contar solo los activos
+	db.productos.countDocuments({ activo: true })
+
+// Contar los de una categoría concreta
+	db.productos.countDocuments({ categoria: "ropa" })
+
+//******Tip profesional: Combina find() con sort(), limit() y countDocuments() para inspeccionar grandes colecciones sin sobrecargar la consola ni el servidor.
+
+Encuentra los documentos que tengan en su nombre al menos una parte (camiseta)
+ 	db.productos.find(
+	...   { nombre: /^Camiseta/ },
+	...   { nombre: 1, precio: 1, _id: 0 }
+Devuelve:
+	[.. )
+  	{ nombre: 'Camiseta básica', precio: 9.99 },
+ 	{ nombre: 'Camiseta de vestir', precio: 15.5 }
+	]	
+si usamos la i, no diferencia entre mayusculas y minusculas:
+	db.productos.find({ nombre: /^camiseta/i })
+
+
+//ACTUALIZAR
+	db.coleccion.updateOne(filtro, { operador: { cambios } })
+	db.productos.updateOne(
+ 	 { nombre: "Taza JavaScript" },   // Filtro
+	 { $set: { precio: 10.00 } }      // Operador: cambia el precio a 10.00
+	)
+
+// Con Drop se eliminan las coleciones (tablas), NO los documentos (regitros):
+	db.almacen.drop()
+
+// Con Aggregate se agrupa para sacar un maximo o un minimo:
+
+ 	db.productos.aggregate([{ $group: { _id: null, maxPrecio: { $max: "$precio" } } }])
+	db.productos.aggregate([{ $group: { _id: null, minPrecio: { $min: "$precio" } } }])
+
