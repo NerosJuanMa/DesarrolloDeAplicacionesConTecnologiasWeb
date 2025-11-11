@@ -1,3 +1,7 @@
+https://chatgpt.com/canvas/shared/6913365a83608191b7cccdd0bb7c5833
+//enlace al chatGpt canvas con el almacen creado:
+
+thunderclient
 
 
 npm install mongodb
@@ -14,6 +18,27 @@ mongosh "mongodb+srv://cluster0.h1icn2z.mongodb.net/" --apiVersion 1 --username 
 
 -------------------------------Metodos varios---------
 // cls para limpiar la consola de texto.
+
+mongosh --version
+
+// Comprueba en qué base estás
+db
+// Muestra las bases de datos existentes
+show databases
+
+// Muestra las colecciones existentes
+show collections
+
+// Crea una nueva base si lo deseas
+use tienda
+
+// Inserta un documento de prueba
+db.productos.insertOne({ nombre: "Prueba Atlas", precio: 10.99, activo: true })
+
+// Comprueba que se ha guardado
+db.productos.find()
+
+
 
 // Con Find te enseña todos los documentos que contiene la colección (productos)
 	db.coleccion.find(filtro, proyeccion)
@@ -84,3 +109,23 @@ si usamos la i, no diferencia entre mayusculas y minusculas:
  	db.productos.aggregate([{ $group: { _id: null, maxPrecio: { $max: "$precio" } } }])
 	db.productos.aggregate([{ $group: { _id: null, minPrecio: { $min: "$precio" } } }])
 
+---------------------------------
+CATEGORIAS:
+menaje_cocina
+ropa_hombre
+ropa_mujer
+decoracion
+muebles
+libros
+cristaleria
+herramientas
+otros
+ARTICULOS:
+nombre
+imagen
+precio
+tamaño
+historia_procedencia
+disponibilidad
+estado
+color
