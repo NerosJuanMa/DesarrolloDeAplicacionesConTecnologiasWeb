@@ -1,8 +1,9 @@
 https://chatgpt.com/canvas/shared/6913365a83608191b7cccdd0bb7c5833
 //enlace al chatGpt canvas con el almacen creado:
 
-thunderclient
-
+thunderclient : para comprobar si funciona
+Matar el puerto:    -----IMPORTANTE ----
+npx kill-port 3000
 
 npm install mongodb
 
