@@ -1,8 +1,3 @@
-https://chatgpt.com/canvas/shared/6913365a83608191b7cccdd0bb7c5833
-//enlace al chatGpt canvas con el almacen creado:
-
-thunderclient : para comprobar si funciona
-Matar el puerto:    -----IMPORTANTE ----
 npx kill-port 3000
 
 npm install mongodb
@@ -19,27 +14,6 @@ mongosh "mongodb+srv://cluster0.h1icn2z.mongodb.net/" --apiVersion 1 --username 
 
 -------------------------------Metodos varios---------
 // cls para limpiar la consola de texto.
-
-mongosh --version
-
-// Comprueba en qué base estás
-db
-// Muestra las bases de datos existentes
-show databases
-
-// Muestra las colecciones existentes
-show collections
-
-// Crea una nueva base si lo deseas
-use tienda
-
-// Inserta un documento de prueba
-db.productos.insertOne({ nombre: "Prueba Atlas", precio: 10.99, activo: true })
-
-// Comprueba que se ha guardado
-db.productos.find()
-
-
 
 // Con Find te enseña todos los documentos que contiene la colección (productos)
 	db.coleccion.find(filtro, proyeccion)
@@ -82,10 +56,12 @@ db.productos.find()
 
 //******Tip profesional: Combina find() con sort(), limit() y countDocuments() para inspeccionar grandes colecciones sin sobrecargar la consola ni el servidor.
 
-Encuentra los documentos que tengan en su nombre al menos una parte (camiseta)
+Para seleccionar documentos cuyo nombre empiece por "Camiseta", puedes usar una expresión regular (regex) en MongoDB:
+	db.productos.find({ nombre: /^Camiseta/ })
+Encuentra los documentos que tengan en su nombre al menos una parte (Camiseta)
  	db.productos.find(
 	...   { nombre: /^Camiseta/ },
-	...   { nombre: 1, precio: 1, _id: 0 }
+	...   { nombre: 1, precio: 1, _id: 0 })
 Devuelve:
 	[.. )
   	{ nombre: 'Camiseta básica', precio: 9.99 },
@@ -102,31 +78,47 @@ si usamos la i, no diferencia entre mayusculas y minusculas:
 	 { $set: { precio: 10.00 } }      // Operador: cambia el precio a 10.00
 	)
 
-// Con Drop se eliminan las coleciones (tablas), NO los documentos (regitros):
-	db.almacen.drop()
+// INCREMENTA SUMA O RESTA CON VALOR EN NEGATIVO
+	db.productos.updateMany({categoria: 'ropa'},{$inc: {stock: 10}})
+
+// añade talla al final del array
+
+	 db.productos.updateMany({ nombre: /^/ },{ $push: { tallas: null } })
+
+	 db.productos.updateMany({ nombre: /^/ },{ $set: { tallas:['l','xs','xl'] } }) --reescribe con set
 
 // Con Aggregate se agrupa para sacar un maximo o un minimo:
 
  	db.productos.aggregate([{ $group: { _id: null, maxPrecio: { $max: "$precio" } } }])
 	db.productos.aggregate([{ $group: { _id: null, minPrecio: { $min: "$precio" } } }])
 
----------------------------------
-CATEGORIAS:
-menaje_cocina
-ropa_hombre
-ropa_mujer
-decoracion
-muebles
-libros
-cristaleria
-herramientas
-otros
-ARTICULOS:
-nombre
-imagen
-precio
-tamaño
-historia_procedencia
-disponibilidad
-estado
-color
+*****
+//Si el documento no existe, MongoDB puede crearlo automáticamente con la opción { upsert: true }
+
+	db.productos.updateOne(
+  { nombre: "Gorra Node" },
+  { $set: { precio: 14.5, stock: 25, categoria:"accesorios", activo:true } },
+  { upsert: true }
+)
+
+//Con replaceOne() sustituyes todo el documento por otro nuevo (se mantiene el mismo _id).
+
+	db.productos.replaceOne(
+  	{ nombre: "Pegatina CSS" },
+  	{ nombre: "Pegatina CSS", precio: 1.75, stock: 250, categoria:"accesorios", activo:true }
+	)
+
+//Borrar Documentos
+	db.coleccion.deleteOne(filtro)
+	db.coleccion.deleteMany(filtro)
+
+// Con Drop se eliminan las coleciones (tablas), NO los documentos (regitros):
+	db.almacen.drop()
+
+
+
+
+
+
+
+
