@@ -1,0 +1,47 @@
+PIENSA SOLUTIONS CONTRASEÑAS
+
+Pin Soporte:
+	28640522
+
+Recuerda que con estas credenciales accedes a la base de datos de tu WordPress. Es aconsejable su utilización sólo por usuarios avanzados. Cualquier cambio en la base de datos de tu WordPress podría alterar su correcto funcionamiento.
+
+
+Servidor / Host
+	database-5014805039.webspace-host.com
+
+Puerto
+	3306
+
+Base de datos
+	dbs12300330
+
+Nombre de usuario
+	dbu628986
+
+Contraseña
+	Neros1710
+La contraseña que estableciste para este usuario
+Versión
+	mariadb 10.11
+Descripción
+	Main user
+
+----------------------------------
+Usa estos datos en el programa FTP de tu preferencia o en el terminal para acceder usando SSH.
+
+Servidor / Host
+	access-5014805038.webspace-host.com
+Puerto
+	22
+
+Nombre de usuario
+a1282877
+
+Contraseña
+	Neros1710
+La contraseña que estableciste para esta cuenta
+
+Protocolo
+sFTP + SSH
+
+--------------------------------------------
