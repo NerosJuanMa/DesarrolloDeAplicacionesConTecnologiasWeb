@@ -7,10 +7,15 @@ SET
     activo = 0
 WHERE id_alumno = 3;
 SELECT * FROM alumnos;
+
 --    • Actualizar notas con condición: en la tabla matricula, aumenta en 1 punto la nota_final de todos los alumnos que tengan una nota inferior a 5 en alguna asignatura.
+select * from matricula WHERE nota < 5;
+SET SQL_SAFE_UPDATES = 0; -- Desactiva el modo seguro
 UPDATE matricula
-SET nota = nota + 1
+SET nota = (nota + 1)
 WHERE nota < 5;
+SET SQL_SAFE_UPDATES = 1; -- Activa el modo seguro
+select * from matricula WHERE nota < 5;
 
 --    • Revisa las normas de integridad que has definido y realiza una prueba de borrado sobre un registro “padre” que tenga registros “hijo” asociados (por ejemplo, borrar un profesor con asignaturas o un alumno con matrículas). Observa y explica qué ocurre en función de las opciones ON DELETE configuradas.
 DELETE FROM profesor
