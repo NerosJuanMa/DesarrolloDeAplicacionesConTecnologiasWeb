@@ -25,7 +25,7 @@ CREATE TABLE `asignaturas` (
   `id_asignatura` int unsigned auto_increment PRIMARY KEY,
   `nombre_asignatura` varchar(50) NOT NULL,
   `horas` int unsigned NOT NULL,
-  `fk_id_profe` int unsigned DEFAULT NULL,
+  `fk_id_profesor` int unsigned DEFAULT NULL,
   CONSTRAINT `fk_id_profesor`
 	  FOREIGN KEY (`fk_id_profesor`)
 	  REFERENCES `colegio`.`profesor` (`id_profesor`)
