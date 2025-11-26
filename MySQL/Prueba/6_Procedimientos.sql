@@ -76,5 +76,5 @@ CALL listar_alumnos_menores();
 CALL resumen_asignaturas();
 
 -- 3. Notas por alumno (ejemplo id_alumno = 3)
-CALL notas_por_alumno(1);
+CALL notas_por_alumno(4);
 
