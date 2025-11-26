@@ -21,11 +21,16 @@ SELECT
     COUNT(m.fk_id_asignatura) AS total_asignaturas,
     ROUND(AVG(m.nota), 2) AS nota_media
 FROM alumnos a
+
 JOIN matricula m
     ON a.id_alumno = m.fk_id_alumno
+    WHERE a.activo = 1
 GROUP BY a.id_alumno, a.nombre, a.apellido1, a.apellido2
 HAVING COUNT(m.fk_id_asignatura) > 0;
 
+
+SELECT *
+FROM vista_alumnos_nota_media;
 
 SELECT *
 FROM vista_alumnos_nota_media
@@ -55,3 +60,13 @@ FROM asignaturas asig
 LEFT JOIN profesor p
     ON asig.fk_id_profesor = p.id_profesor;
 
+SELECT * 
+FROM vista_asignaturas_profesor;
+
+SELECT
+    tipo_profesor,
+    COUNT(nombre_asignatura) AS numero_de_asignaturas
+FROM
+    vista_asignaturas_profesor
+GROUP BY
+    tipo_profesor;
