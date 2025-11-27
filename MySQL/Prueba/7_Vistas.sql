@@ -35,7 +35,7 @@ FROM vista_alumnos_nota_media;
 SELECT *
 FROM vista_alumnos_nota_media
 WHERE nota_media >= 7
-  AND total_asignaturas >= 3;
+AND total_asignaturas >= 3;
 
 
 --    • Vista 2: Vista de asignaturas con información del profesor
@@ -48,8 +48,7 @@ WHERE nota_media >= 7
     -- • La vista debe unir asignaturas con profesores.
     -- • Debe mostrar todas las asignaturas, incluso aquellas sin alumnos matriculados.
 	-- • El nombre del profesor debe aparecer formateado con CONCAT.
-	-- A partir de la vista vista_asignaturas_profesor, muestra cuántas asignaturas imparte cada tipo de profesor (TITULAR, INTERINO, SUSTITUTO).
-    
+	
 CREATE OR REPLACE VIEW vista_asignaturas_profesor AS
 SELECT
     asig.nombre_asignatura,
@@ -62,7 +61,8 @@ LEFT JOIN profesor p
 
 SELECT * 
 FROM vista_asignaturas_profesor;
-
+-- A partir de la vista vista_asignaturas_profesor, muestra cuántas asignaturas imparte cada tipo de profesor (TITULAR, INTERINO, SUSTITUTO).
+    
 SELECT
     tipo_profesor,
     COUNT(nombre_asignatura) AS numero_de_asignaturas

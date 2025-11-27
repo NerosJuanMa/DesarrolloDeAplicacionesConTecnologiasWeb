@@ -15,14 +15,14 @@ FROM profesor
 ORDER BY id_profesor
 LIMIT 3;
 
--- 4. De la tabla matricula, mostrar campos renombrados y literal “Excelente” si nota > 9
+-- 4. De la tabla matricula, mostrar campos renombrados y literal “Excelente” si nota >= 9
 SELECT 
     fk_id_alumno AS alumno,
     fk_id_asignatura AS asignatura,
     nota AS calificacion,
     'Excelente' AS valoracion
 FROM matricula
-WHERE nota > 9;
+WHERE nota >= 9;
 
 -- 5. Mostrar alumnos que cumplan al menos una de estas condiciones:
 
@@ -33,6 +33,7 @@ SELECT *
 FROM alumnos
 WHERE activo = 1
    OR fecha_nacimiento > '2005-12-31';
+   
 
 -- 6. De la tabla matricula, mostrar columnas calculadas
 
