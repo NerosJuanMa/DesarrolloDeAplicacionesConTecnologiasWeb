@@ -1,8 +1,10 @@
+CREATE DATABASE  IF NOT EXISTS `cursos` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `cursos`;
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: cursos
+-- Host: localhost    Database: cursos
 -- ------------------------------------------------------
--- Server version	8.0.44
+-- Server version	5.5.5-10.4.32-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,34 +18,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `apuntes`
+-- Dumping events for database 'cursos'
 --
 
-DROP TABLE IF EXISTS `apuntes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `apuntes` (
-  `id_apunte` int NOT NULL AUTO_INCREMENT,
-  `id_curso` int DEFAULT NULL COMMENT 'FK cursos',
-  `modulo` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `unidad_formativa` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `tema` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `pdf` longblob,
-  `resumen` text COLLATE utf8mb4_general_ci,
-  PRIMARY KEY (`id_apunte`),
-  KEY `fk_id_curso_idx` (`id_curso`),
-  CONSTRAINT `fk_id_curso` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
 --
--- Dumping data for table `apuntes`
+-- Dumping routines for database 'cursos'
 --
-
-LOCK TABLES `apuntes` WRITE;
-/*!40000 ALTER TABLE `apuntes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `apuntes` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -54,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-21 13:35:00
+-- Dump completed on 2025-11-28 15:34:54

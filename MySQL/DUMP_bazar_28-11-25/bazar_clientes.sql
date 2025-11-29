@@ -1,8 +1,10 @@
+CREATE DATABASE  IF NOT EXISTS `bazar` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `bazar`;
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: cursos
+-- Host: localhost    Database: bazar
 -- ------------------------------------------------------
--- Server version	8.0.44
+-- Server version	5.5.5-10.4.32-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,32 +18,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `practicas`
+-- Table structure for table `clientes`
 --
 
-DROP TABLE IF EXISTS `practicas`;
+DROP TABLE IF EXISTS `clientes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `practicas` (
-  `id_practica` int NOT NULL AUTO_INCREMENT,
-  `id_empresa` int NOT NULL COMMENT 'ForenKey de empresas',
-  `duracion` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `feed-back` text COLLATE utf8mb4_general_ci,
-  `aptitudes_adquiridas` text COLLATE utf8mb4_general_ci,
-  `observaciones` text COLLATE utf8mb4_general_ci,
-  PRIMARY KEY (`id_practica`),
-  KEY `fk_id_empresa_idx` (`id_empresa`),
-  CONSTRAINT `fk_id_empresa` FOREIGN KEY (`id_empresa`) REFERENCES `empresas` (`id_empresa`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `clientes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `creado_en` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `practicas`
+-- Dumping data for table `clientes`
 --
 
-LOCK TABLES `practicas` WRITE;
-/*!40000 ALTER TABLE `practicas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `practicas` ENABLE KEYS */;
+LOCK TABLES `clientes` WRITE;
+/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+INSERT INTO `clientes` VALUES (1,'Juan Pérez','test@example.com','$2a$10$N9qo8uLOickgx2ZMRZoMye.JfVK7fCQpNpCPq9QdoW6lQk1K6kMSO','2025-11-28 12:54:36'),(2,'Ana García','ana@example.com','$2a$10$N9qo8uLOickgx2ZMRZoMye.JfVK7fCQpNpCPq9QdoW6lQk1K6kMSO','2025-11-28 12:54:36'),(3,'Carlos López','carlos@example.com','$2a$10$N9qo8uLOickgx2ZMRZoMye.JfVK7fCQpNpCPq9QdoW6lQk1K6kMSO','2025-11-28 12:54:36');
+/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-21 13:35:00
+-- Dump completed on 2025-11-28 15:35:23
