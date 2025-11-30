@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efecto Scroll CSS</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 300vh; /* Altura alta para permitir scroll */
+            background: linear-gradient(to bottom, #000, #333);
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .scroll-text {
+            font-size: 4rem;
+            color: white;
+            font-weight: bold;
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+            transition: none; /* Sin transiciones para animación fluida con scroll */
+            position: absolute;
+        }
+
+        /* Animación basada en scroll usando perspective y transform */
+        .scroll-section {
+            perspective: 1000px;
+            height: 100vh;
+        }
+
+        .scroll-text {
+            will-change: transform;
+        }
+
+        /* Clase para activar la animación al scroll (usa contenedor padre para trigger) */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px) scale(0.5);
+        }
+
+        /* Aquí va la magia: usa @supports para scroll-timeline si el navegador lo soporta (Chrome 115+) */
+        @supports (scroll-timeline: --scroll) {
+            .scroll-text {
+                animation: none;
+                scroll-timeline: --scroll linear;
+                animation-timeline: --scroll;
+                animation-range: entry 0% / end 100%;
+                animation-duration: 1s;
+                animation-fill-mode: both;
+            }
+
+            .scroll-text {
+                animation: fade-in-scale linear both;
+            }
+
+            @keyframes fade-in-scale {
+                from {
+                    opacity: 0;
+                    transform: scale(0.5) rotate(-10deg);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(2) rotate(0deg);
+                }
+            }
+
+            /* Para el contenedor, define el scroll-timeline */
+            body {
+                scroll-timeline: --scroll inline;
+            }
+        }
+
+        /* Fallback para navegadores sin soporte (animación simple con scroll manual) */
+        @supports not (scroll-timeline: --scroll) {
+            .scroll-text {
+                transition: all 0.1s ease-out;
+            }
+
+            body {
+                scroll-timeline: --scroll inline
+                /* Fallback: usa JS invisible o clases, pero como es puro CSS, es limitado */
+            }
+        }
+
+        /* Contenido de relleno para scroll */
+        .filler {
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container scroll-section">
+        <h1 class="scroll-text animate-on-scroll">¡Texto que se transforma al scroll!</h1>
+    </div>
+    <div class="filler">Sigue scrolleando...</div>
+    <div class="filler">Más abajo...</div>
+    <div class="filler">¡Fin!</div>
+</body>
+</html>
