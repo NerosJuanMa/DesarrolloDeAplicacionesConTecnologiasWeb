@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📅 DÍA 1: Introducción a MongoDB - Curso MongoDB</title>
+    <link rel="stylesheet" href="../recursos/mongodb-theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav-breadcrumb {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: var(--mongodb-shadow-light);
+        }
+
+        .nav-breadcrumb a {
+            color: var(--mongodb-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .nav-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .hero-day {
+            background: var(--mongodb-gradient-primary);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .hero-day h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .hero-day p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .summary-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .summary-card {
+            background: var(--mongodb-gray-light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--mongodb-green);
+        }
+
+        .summary-card h3 {
+            color: var(--mongodb-forest);
+            margin-bottom: 15px;
+        }
+
+        .summary-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-card li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .summary-card li::before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
+        .modules-section {
+            margin-bottom: 30px;
+        }
+
+        .module {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .module-header {
+            background: var(--mongodb-green);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .module-header:hover {
+            background: var(--mongodb-dark-green);
+        }
+
+        .module-header h3 {
+            font-size: 1.3em;
+        }
+
+        .module-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .schedule-table th {
+            background: var(--mongodb-gradient-primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .schedule-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .schedule-table tr:nth-child(even) {
+            background-color: var(--mongodb-gray-light);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            background: var(--mongodb-green);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            background: var(--mongodb-dark-green);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--mongodb-green);
+            border: 2px solid var(--mongodb-green);
+        }
+
+        .btn-secondary:hover {
+            background: var(--mongodb-green);
+            color: white;
+        }
+
+        .requirements-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: var(--mongodb-gray-light);
+            border-radius: 5px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .progress-tracker {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .progress-bar {
+            background: var(--mongodb-gray-light);
+            height: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--mongodb-gradient-primary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .navigation-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .arrow.expanded {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .hero-day h1 {
+                font-size: 2em;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .navigation-footer {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <div class="nav-breadcrumb">
+            <a href="../index.html">🏠 Inicio</a> → <span>📅 Día 1: Introducción a MongoDB</span>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero-day">
+            <h1>📅 DÍA 1: Introducción a MongoDB</h1>
+            <p>🍃 De JSON a MongoDB - Descubre el poder de las bases de datos NoSQL</p>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <h3 style="color: var(--mongodb-forest); margin-bottom: 10px;">📊 Progreso del Día 1</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="dayProgress"></div>
+            </div>
+            <p><span id="progressText">0% completado</span> - <span id="progressModule">Preparándose para comenzar</span></p>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2 style="color: var(--mongodb-forest); text-align: center; margin-bottom: 20px;">
+                🎯 Resumen del Día 1
+            </h2>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>🏁 Objetivos</h3>
+                    <ul>
+                        <li>Entender limitaciones de archivos JSON</li>
+                        <li>Instalar y configurar MongoDB</li>
+                        <li>Realizar primera migración de datos</li>
+                        <li>Crear operaciones CRUD básicas</li>
+                    </ul>
+                </div>
+                <div class="summary-card">
+                    <h3>🛠️ Herramientas</h3>
+                    <ul>
+                        <li>MongoDB Community Server</li>
+                        <li>MongoDB Compass (GUI)</li>
+                        <li>MongoDB Shell (mongosh)</li>
+                        <li>VS Code con extensiones</li>
+                    </ul>
+                </div>
+                <div class="summary-card">
+                    <h3>📈 Resultados</h3>
+                    <ul>
+                        <li>Base de datos musicaDB creada</li>
+                        <li>Colección canciones con datos</li>
+                        <li>CRUD básico funcionando</li>
+                        <li>Consultas básicas dominadas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Schedule -->
+        <div class="summary-section">
+            <h2 style="color: var(--mongodb-forest); margin-bottom: 20px;">📋 Agenda Detallada</h2>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Hora</th>
+                        <th>Actividad</th>
+                        <th>Duración</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>9:00 - 9:15</td>
+                        <td>🌅 Bienvenida y objetivos</td>
+                        <td>15 min</td>
+                        <td><input type="checkbox" class="progress-check"> Completado</td>
+                    </tr>
+                    <tr>
+                        <td>9:15 - 10:00</td>
+                        <td>📖 Teoría: JSON vs MongoDB</td>
+                        <td>45 min</td>
+                        <td><input type="checkbox" class="progress-check"> Completado</td>
+                    </tr>
+                    <tr>
+                        <td>10:00 - 10:15</td>
+                        <td>☕ Descanso</td>
+                        <td>15 min</td>
+                        <td><input type="checkbox" class="progress-check"> Completado</td>
+                    </tr>
+                    <tr>
+                        <td>10:15 - 11:30</td>
+                        <td>🔧 Instalación MongoDB</td>
+                        <td>75 min</td>
+                        <td><input type="checkbox" class="progress-check"> Completado</td>
+                    </tr>
+                    <tr>
+                        <td>11:30 - 11:45</td>
+                        <td>☕ Descanso</td>
+                        <td>15 min</td>
+                        <td><input type="checkbox" class="progress-check"> Completado</td>
+                    </tr>
+                    <tr>
+                        <td>11:45 - 12:30</td>
+                        <td>📊 MongoDB Compass</td>
+                        <td>45 min</td>
+                        <td><input type="checkbox" class="progress-check"> Completado</td>
+                    </tr>
+                    <tr>
+                        <td>12:30 - 13:30</td>
+                        <td>🍽️ Almuerzo</td>
+                        <td>60 min</td>
+                        <td><input type="checkbox" class="progress-check"> Completado</td>
+                    </tr>
+                    <tr>
+                        <td>13:30 - 14:15</td>
+                        <td>💻 MongoDB Shell</td>
+                        <td>45 min</td>
+                        <td><input type="checkbox" class="progress-check"> Completado</td>
+                    </tr>
+                    <tr>
+                        <td>14:15 - 14:30</td>
+                        <td>☕ Descanso</td>
+                        <td>15 min</td>
+                        <td><input type="checkbox" class="progress-check"> Completado</td>
+                    </tr>
+                    <tr>
+                        <td>14:30 - 15:45</td>
+                        <td>🎵 Migración práctica</td>
+                        <td>75 min</td>
+                        <td><input type="checkbox" class="progress-check"> Completado</td>
+                    </tr>
+                    <tr>
+                        <td>15:45 - 16:00</td>
+                        <td>📝 Recap y tareas</td>
+                        <td>15 min</td>
+                        <td><input type="checkbox" class="progress-check"> Completado</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Modules -->
+        <div class="modules-section">
+            <h2 style="color: var(--mongodb-forest); margin-bottom: 20px;">📚 Módulos del Día</h2>
+
+            <!-- Módulo 1 -->
+            <div class="module">
+                <div class="module-header" onclick="toggleModule(1)">
+                    <h3>🏁 Módulo 1: JSON vs MongoDB (9:00 - 10:30)</h3>
+                    <span class="arrow" id="arrow1">▼</span>
+                </div>
+                <div class="module-content" id="module1">
+                    <h4>📖 Teoría: Limitaciones de los archivos JSON</h4>
+                    <p>En este módulo exploraremos por qué los archivos JSON, aunque útiles para prototipos, tienen limitaciones importantes:</p>
+                    <ul>
+                        <li><strong>Concurrencia:</strong> Múltiples usuarios no pueden modificar el mismo archivo simultáneamente</li>
+                        <li><strong>Performance:</strong> Leer archivos completos para consultas simples</li>
+                        <li><strong>Escalabilidad:</strong> Problemas de memoria con archivos grandes</li>
+                        <li><strong>Consultas Complejas:</strong> Dificultad para filtros y búsquedas avanzadas</li>
+                    </ul>
+                    
+                    <h4>🎵 Práctica: Análisis de nuestro archivo de canciones</h4>
+                    <p>Trabajaremos con un archivo JSON de ejemplo que contiene información de canciones y identificaremos sus limitaciones.</p>
+                    
+                    <div class="action-buttons">
+                        <a href="ejercicios/ejercicios-basicos.html" class="btn-action">📝 Ir a Ejercicios</a>
+                        <a href="material/teoria-mongodb.html" class="btn-action btn-secondary">📚 Material Teórico</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 2 -->
+            <div class="module">
+                <div class="module-header" onclick="toggleModule(2)">
+                    <h3>🔧 Módulo 2: Instalación y Configuración (10:30 - 12:00)</h3>
+                    <span class="arrow" id="arrow2">▼</span>
+                </div>
+                <div class="module-content" id="module2">
+                    <h4>📦 Instalación de MongoDB Community Server</h4>
+                    <p>Guía paso a paso para instalar MongoDB en Windows:</p>
+                    <ol>
+                        <li>Descargar desde mongodb.com</li>
+                        <li>Ejecutar instalador MSI</li>
+                        <li>Configurar como servicio de Windows</li>
+                        <li>Instalar MongoDB Compass</li>
+                    </ol>
+                    
+                    <h4>⚙️ Configuración de Variables de Entorno</h4>
+                    <p>Configuraremos el PATH para poder usar MongoDB desde cualquier terminal.</p>
+                    
+                    <div class="action-buttons">
+                        <a href="../recursos/guia-instalacion.html" class="btn-action">🔧 Guía de Instalación</a>
+                        <a href="#" onclick="checkInstallation()" class="btn-action btn-secondary">✅ Verificar Instalación</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 3 -->
+            <div class="module">
+                <div class="module-header" onclick="toggleModule(3)">
+                    <h3>📊 Módulo 3: MongoDB Compass y Shell (13:00 - 14:30)</h3>
+                    <span class="arrow" id="arrow3">▼</span>
+                </div>
+                <div class="module-content" id="module3">
+                    <h4>🖱️ MongoDB Compass - Interfaz Gráfica</h4>
+                    <p>Aprenderemos a usar MongoDB Compass para:</p>
+                    <ul>
+                        <li>Conectar a la base de datos</li>
+                        <li>Explorar colecciones visualmente</li>
+                        <li>Crear y modificar documentos</li>
+                        <li>Realizar consultas con filtros</li>
+                    </ul>
+                    
+                    <h4>💻 MongoDB Shell - Línea de Comandos</h4>
+                    <p>Dominaremos los comandos básicos del shell:</p>
+                    <ul>
+                        <li><code>show dbs</code> - Ver bases de datos</li>
+                        <li><code>use musicaDB</code> - Seleccionar base de datos</li>
+                        <li><code>show collections</code> - Ver colecciones</li>
+                        <li><code>db.canciones.find()</code> - Consultar documentos</li>
+                    </ul>
+                    
+                    <div class="action-buttons">
+                        <a href="#" onclick="openCompass()" class="btn-action">🖥️ Abrir MongoDB Compass</a>
+                        <a href="#" onclick="openShell()" class="btn-action btn-secondary">💻 Abrir MongoDB Shell</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 4 -->
+            <div class="module">
+                <div class="module-header" onclick="toggleModule(4)">
+                    <h3>🎵 Módulo 4: Primera Migración (14:30 - 16:00)</h3>
+                    <span class="arrow" id="arrow4">▼</span>
+                </div>
+                <div class="module-content" id="module4">
+                    <h4>📤 Migración del JSON a MongoDB</h4>
+                    <p>Proceso completo de migración:</p>
+                    <ol>
+                        <li>Cargar datos desde canciones.json</li>
+                        <li>Transformar formato para MongoDB</li>
+                        <li>Insertar en colección canciones</li>
+                        <li>Verificar migración exitosa</li>
+                    </ol>
+                    
+                    <h4>📝 Operaciones CRUD Básicas</h4>
+                    <p>Implementaremos las cuatro operaciones fundamentales:</p>
+                    <ul>
+                        <li><strong>Create:</strong> <code>insertOne()</code>, <code>insertMany()</code></li>
+                        <li><strong>Read:</strong> <code>find()</code>, <code>findOne()</code></li>
+                        <li><strong>Update:</strong> <code>updateOne()</code>, <code>updateMany()</code></li>
+                        <li><strong>Delete:</strong> <code>deleteOne()</code>, <code>deleteMany()</code></li>
+                    </ul>
+                    
+                    <div class="action-buttons">
+                        <a href="#" onclick="runMigration()" class="btn-action">🚀 Ejecutar Migración</a>
+                        <a href="ejercicios/migracion.js" class="btn-action btn-secondary" download>📥 Descargar Script</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prerequisites -->
+        <div class="requirements-section">
+            <h3 style="color: var(--mongodb-forest); margin-bottom: 15px;">🛠️ Verificación de Requisitos</h3>
+            <div class="checklist">
+                <div class="checklist-item">
+                    <input type="checkbox" id="req1">
+                    <label for="req1">Node.js instalado</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="req2">
+                    <label for="req2">MongoDB Server funcionando</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="req3">
+                    <label for="req3">MongoDB Compass instalado</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="req4">
+                    <label for="req4">VS Code configurado</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="req5">
+                    <label for="req5">Archivo canciones.json descargado</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="req6">
+                    <label for="req6">Terminal disponible</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Footer -->
+        <div class="navigation-footer">
+            <a href="../index.html" class="btn-action btn-secondary">← Volver al Inicio</a>
+            <div>
+                <button onclick="markDayComplete()" class="btn-action" id="completeBtn">✅ Marcar Día 1 Completo</button>
+            </div>
+            <a href="../dia2-crud-avanzado-mongodb/index.html" class="btn-action">Continuar al Día 2 →</a>
+        </div>
+    </div>
+
+    <script>
+        // Toggle module content
+        function toggleModule(moduleNum) {
+            const content = document.getElementById(`module${moduleNum}`);
+            const arrow = document.getElementById(`arrow${moduleNum}`);
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                arrow.classList.remove('expanded');
+            } else {
+                content.classList.add('active');
+                arrow.classList.add('expanded');
+            }
+        }
+
+        // Progress tracking
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.progress-check');
+            const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            const percentage = Math.round((completed / total) * 100);
+            
+            document.getElementById('dayProgress').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = percentage + '% completado';
+            
+            if (percentage === 100) {
+                document.getElementById('progressModule').textContent = '¡Día 1 completado!';
+                document.getElementById('completeBtn').textContent = '🎉 ¡Día 1 Completado!';
+            } else {
+                document.getElementById('progressModule').textContent = `${completed}/${total} actividades completadas`;
+            }
+        }
+
+        // Event listeners for progress checkboxes
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.progress-check');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateProgress);
+            });
+
+            // Load saved progress
+            loadProgress();
+        });
+
+        // Save and load progress
+        function saveProgress() {
+            const checkboxes = document.querySelectorAll('.progress-check');
+            const progress = Array.from(checkboxes).map(cb => cb.checked);
+            localStorage.setItem('day1Progress', JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('day1Progress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                const checkboxes = document.querySelectorAll('.progress-check');
+                progress.forEach((checked, index) => {
+                    if (checkboxes[index]) {
+                        checkboxes[index].checked = checked;
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        // Action functions
+        function checkInstallation() {
+            alert('Para verificar la instalación:\n\n1. Abrir Command Prompt\n2. Ejecutar: mongod --version\n3. Ejecutar: mongosh --version\n4. Verificar que MongoDB Compass se abra correctamente');
+        }
+
+        function openCompass() {
+            alert('Para abrir MongoDB Compass:\n\n1. Buscar "MongoDB Compass" en el menú inicio\n2. O ejecutar desde la línea de comandos\n3. Conectar a: mongodb://localhost:27017');
+        }
+
+        function openShell() {
+            alert('Para abrir MongoDB Shell:\n\n1. Abrir Command Prompt\n2. Ejecutar: mongosh\n3. Deberías ver la conexión a mongodb://127.0.0.1:27017');
+        }
+
+        function runMigration() {
+            alert('Para ejecutar la migración:\n\n1. Navegar a la carpeta del curso\n2. Ejecutar: node dia1-introduccion-mongodb/ejercicios/migracion.js\n3. Verificar los resultados en MongoDB Compass');
+        }
+
+        function markDayComplete() {
+            const checkboxes = document.querySelectorAll('.progress-check');
+            checkboxes.forEach(cb => cb.checked = true);
+            updateProgress();
+            
+            localStorage.setItem('day1Complete', 'true');
+            alert('🎉 ¡Felicidades! Has completado el Día 1.\n\nYa puedes continuar al Día 2: CRUD Avanzado en MongoDB');
+        }
+
+        // Auto-save progress
+        setInterval(saveProgress, 5000);
+    </script>
+</body>
+</html>

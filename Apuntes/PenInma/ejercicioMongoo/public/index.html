@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎵 Ejercicio MongoDB - Gestión de Canciones</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 📋 Header -->
+        <header class="header">
+            <h1>🎵 Gestor de Canciones con MongoDB</h1>
+            <p class="subtitle">Ejercicio práctico: De JSON a Base de Datos</p>
+        </header>
+
+        <!-- 📊 Panel de Estado -->
+        <div class="status-panel">
+            <div class="status-item">
+                <span class="status-label">Estado de la BD:</span>
+                <span id="dbStatus" class="status-value">🔄 Verificando...</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Total de canciones:</span>
+                <span id="totalCanciones" class="status-value">-</span>
+            </div>
+        </div>
+
+        <!-- 🔍 Sección de Búsqueda -->
+        <section class="search-section">
+            <h2>🔍 Buscar Canciones</h2>
+            <div class="search-controls">
+                <button id="btnVerTodas" class="btn btn-primary">📋 Ver Todas</button>
+                <div class="search-group">
+                    <input type="text" id="inputBuscarArtista" placeholder="Buscar por artista...">
+                    <button id="btnBuscarArtista" class="btn btn-secondary">🔍 Buscar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ➕ Formulario para Agregar Canción -->
+        <section class="form-section">
+            <h2>➕ Agregar Nueva Canción</h2>
+            <form id="formNuevaCancion" class="cancion-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="titulo">📝 Título *</label>
+                        <input type="text" id="titulo" name="titulo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artista">👨‍🎤 Artista *</label>
+                        <input type="text" id="artista" name="artista" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="album">💿 Álbum</label>
+                        <input type="text" id="album" name="album">
+                    </div>
+                    <div class="form-group">
+                        <label for="año">📅 Año</label>
+                        <input type="number" id="año" name="año" min="1900" max="2025">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="genero">🎵 Género</label>
+                        <select id="genero" name="genero">
+                            <option value="">Seleccionar género</option>
+                            <option value="Rock">Rock</option>
+                            <option value="Pop">Pop</option>
+                            <option value="Jazz">Jazz</option>
+                            <option value="Blues">Blues</option>
+                            <option value="Clásica">Clásica</option>
+                            <option value="Reggaeton">Reggaeton</option>
+                            <option value="Hip-hop">Hip-hop</option>
+                            <option value="Electrónica">Electrónica</option>
+                            <option value="Country">Country</option>
+                            <option value="Folk">Folk</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="duracion">⏱️ Duración (mm:ss)</label>
+                        <input type="text" id="duracion" name="duracion" placeholder="3:45" pattern="[0-9]{1,2}:[0-5][0-9]">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-success">✅ Agregar Canción</button>
+            </form>
+        </section>
+
+        <!-- 📊 Resultados -->
+        <section class="results-section">
+            <h2 id="resultadosTitle">📊 Resultados</h2>
+            <div id="loading" class="loading" style="display: none;">🔄 Cargando...</div>
+            <div id="resultados" class="resultados-container"></div>
+        </section>
+
+        <!-- 📝 Manual Rápido -->
+        <section class="manual-section">
+            <details>
+                <summary>📚 Manual Rápido - Conceptos Aprendidos</summary>
+                <div class="manual-content">
+                    <h3>🔄 De JSON a MongoDB</h3>
+                    <div class="comparison">
+                        <div class="comparison-item">
+                            <h4>📄 Antes (JSON)</h4>
+                            <ul>
+                                <li>Datos en archivo estático</li>
+                                <li>fs.readFileSync()</li>
+                                <li>Modificar array y escribir archivo</li>
+                                <li>Sin validaciones automáticas</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-item">
+                            <h4>🗄️ Ahora (MongoDB)</h4>
+                            <ul>
+                                <li>Datos en base de datos dinámica</li>
+                                <li>Modelo.find(), .save(), etc.</li>
+                                <li>Operaciones CRUD directas</li>
+                                <li>Validaciones con Schema</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3>🔑 Conceptos Clave</h3>
+                    <ul>
+                        <li><strong>Schema:</strong> Define la estructura de los documentos</li>
+                        <li><strong>Modelo:</strong> Interfaz para interactuar con la colección</li>
+                        <li><strong>CRUD:</strong> Create, Read, Update, Delete</li>
+                        <li><strong>Mongoose:</strong> ODM que facilita el trabajo con MongoDB</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

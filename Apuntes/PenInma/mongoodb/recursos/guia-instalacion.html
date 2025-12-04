@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛠️ Guía de Instalación - Curso MongoDB</title>
+    <link rel="stylesheet" href="mongodb-theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav-breadcrumb {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: var(--mongodb-shadow-light);
+        }
+
+        .nav-breadcrumb a {
+            color: var(--mongodb-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .nav-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            background: var(--mongodb-gradient-primary);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .installation-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: var(--mongodb-gray-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--mongodb-green);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+        }
+
+        .checklist-item.completed {
+            background: #e8f5e8;
+            border-left-color: var(--mongodb-forest);
+        }
+
+        .step-section {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .step-header {
+            background: var(--mongodb-green);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .step-header:hover {
+            background: var(--mongodb-dark-green);
+        }
+
+        .step-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+
+        .code-block .comment {
+            color: #68d391;
+        }
+
+        .download-button {
+            background: var(--mongodb-green);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .download-button:hover {
+            background: var(--mongodb-dark-green);
+            transform: translateY(-2px);
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .progress-tracker {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--mongodb-shadow-heavy);
+            z-index: 1000;
+            min-width: 250px;
+        }
+
+        .progress-bar {
+            background: var(--mongodb-gray-light);
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--mongodb-gradient-primary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .progress-tracker {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <div class="nav-breadcrumb">
+            <a href="../index.html">🏠 Inicio</a> → <span>🛠️ Guía de Instalación</span>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>🛠️ Guía de Instalación</h1>
+            <p>Todo lo necesario para el curso de MongoDB de 3 días</p>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <h4 style="color: var(--mongodb-forest); margin-bottom: 10px;">📊 Progreso de Instalación</h4>
+            <div class="progress-bar">
+                <div class="progress-fill" id="installProgress"></div>
+            </div>
+            <p id="progressText">0% completado</p>
+        </div>
+
+        <!-- Prerequisites Checklist -->
+        <div class="installation-section">
+            <h2 style="color: var(--mongodb-forest); margin-bottom: 20px;">📋 Lista de Verificación Previa</h2>
+            <div class="checklist-item">
+                <input type="checkbox" id="req1" onchange="updateProgress()">
+                <label for="req1"><strong>Windows 10/11 (64-bit)</strong> - Sistema operativo compatible</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="req2" onchange="updateProgress()">
+                <label for="req2"><strong>Conexión a internet estable</strong> - Para descargas</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="req3" onchange="updateProgress()">
+                <label for="req3"><strong>Mínimo 8GB RAM</strong> - Recomendado para performance</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="req4" onchange="updateProgress()">
+                <label for="req4"><strong>5GB de espacio libre</strong> - Para todas las herramientas</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="req5" onchange="updateProgress()">
+                <label for="req5"><strong>Permisos de administrador</strong> - Para instalar software</label>
+            </div>
+        </div>
+
+        <!-- Installation Steps -->
+        
+        <!-- Node.js Installation -->
+        <div class="step-section">
+            <div class="step-header" onclick="toggleStep(1)">
+                <h3>🚀 Paso 1: Instalación de Node.js</h3>
+                <span id="arrow1">▼</span>
+            </div>
+            <div class="step-content" id="step1">
+                <h4>📥 Descargar Node.js</h4>
+                <p>Node.js es esencial para ejecutar JavaScript en el servidor y manejar las dependencias del proyecto.</p>
+                
+                <div class="info-box">
+                    <strong>💡 Recomendación:</strong> Siempre descarga la versión LTS (Long Term Support) para mayor estabilidad.
+                </div>
+
+                <a href="https://nodejs.org/" target="_blank" class="download-button">📥 Descargar Node.js LTS</a>
+
+                <h4>⚙️ Proceso de Instalación</h4>
+                <ol>
+                    <li>Ejecutar el instalador <code>.msi</code> descargado</li>
+                    <li>Seguir el asistente de instalación (configuración por defecto está bien)</li>
+                    <li>✅ Asegurarse de que "Add to PATH" esté marcado</li>
+                    <li>Reiniciar el sistema si es necesario</li>
+                </ol>
+
+                <h4>🔍 Verificar Instalación</h4>
+                <div class="code-block">
+<span class="comment"># Abrir Command Prompt y verificar</span>
+node --version
+npm --version
+
+<span class="comment"># Resultado esperado:</span>
+v18.17.0 (o superior)
+9.6.7 (o superior)
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="nodejs" onchange="updateProgress()">
+                    <label for="nodejs">✅ Node.js instalado y verificado</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- MongoDB Installation -->
+        <div class="step-section">
+            <div class="step-header" onclick="toggleStep(2)">
+                <h3>🍃 Paso 2: Instalación de MongoDB</h3>
+                <span id="arrow2">▼</span>
+            </div>
+            <div class="step-content" id="step2">
+                <h4>📥 Descargar MongoDB Community Server</h4>
+                <p>MongoDB Community Server es la versión gratuita y completa de MongoDB.</p>
+
+                <div class="warning-box">
+                    <strong>⚠️ Importante:</strong> Asegúrate de seleccionar la versión correcta para Windows 64-bit.
+                </div>
+
+                <a href="https://www.mongodb.com/try/download/community" target="_blank" class="download-button">📥 Descargar MongoDB Community</a>
+
+                <h4>⚙️ Configuración de Descarga</h4>
+                <ul>
+                    <li><strong>Version:</strong> 7.0.x (Current)</li>
+                    <li><strong>Platform:</strong> Windows</li>
+                    <li><strong>Package:</strong> msi</li>
+                </ul>
+
+                <h4>🔧 Proceso de Instalación</h4>
+                <ol>
+                    <li>Ejecutar <code>mongodb-windows-x86_64-7.0.x.msi</code></li>
+                    <li>Seleccionar <strong>"Complete"</strong> installation</li>
+                    <li>✅ <strong>"Install MongoDB as a Service"</strong></li>
+                    <li>✅ <strong>"Run service as Network Service user"</strong></li>
+                    <li>✅ <strong>"Install MongoDB Compass"</strong> (GUI)</li>
+                    <li>Completar instalación</li>
+                </ol>
+
+                <h4>📁 Crear Directorios de Datos</h4>
+                <div class="code-block">
+<span class="comment"># Abrir Command Prompt como Administrador</span>
+mkdir C:\data\db
+mkdir C:\data\log
+                </div>
+
+                <h4>🔍 Verificar Instalación</h4>
+                <div class="code-block">
+<span class="comment"># Verificar MongoDB Server</span>
+mongod --version
+
+<span class="comment"># Verificar MongoDB Shell</span>
+mongosh --version
+
+<span class="comment"># Verificar servicio</span>
+net start | findstr MongoDB
+                </div>
+
+                <div class="success-box">
+                    Si ves la versión de MongoDB y el servicio está corriendo, ¡la instalación fue exitosa!
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="mongodb" onchange="updateProgress()">
+                    <label for="mongodb">✅ MongoDB Server instalado y corriendo</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="compass" onchange="updateProgress()">
+                    <label for="compass">✅ MongoDB Compass instalado</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- MySQL Installation -->
+        <div class="step-section">
+            <div class="step-header" onclick="toggleStep(3)">
+                <h3>🗄️ Paso 3: Instalación de MySQL (Para Día 3)</h3>
+                <span id="arrow3">▼</span>
+            </div>
+            <div class="step-content" id="step3">
+                <h4>📥 Descargar MySQL Community Server</h4>
+                <p>MySQL se usará en el Día 3 para la migración y sistemas híbridos.</p>
+
+                <a href="https://dev.mysql.com/downloads/mysql/" target="_blank" class="download-button">📥 Descargar MySQL Community</a>
+
+                <h4>⚙️ Proceso de Instalación</h4>
+                <ol>
+                    <li>Ejecutar el instalador MSI</li>
+                    <li>Seleccionar <strong>"Developer Default"</strong></li>
+                    <li>Configurar <strong>Root Password</strong> (¡anótala!)</li>
+                    <li>Crear usuario para desarrollo</li>
+                    <li>✅ Instalar como servicio de Windows</li>
+                </ol>
+
+                <h4>🔍 Verificar MySQL</h4>
+                <div class="code-block">
+<span class="comment"># Verificar versión</span>
+mysql --version
+
+<span class="comment"># Conectar a MySQL</span>
+mysql -u root -p
+                </div>
+
+                <div class="info-box">
+                    <strong>💡 Nota:</strong> MySQL Workbench se instala automáticamente y te dará una interfaz gráfica similar a MongoDB Compass.
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="mysql" onchange="updateProgress()">
+                    <label for="mysql">✅ MySQL Server instalado</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="workbench" onchange="updateProgress()">
+                    <label for="workbench">✅ MySQL Workbench instalado</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- VS Code Installation -->
+        <div class="step-section">
+            <div class="step-header" onclick="toggleStep(4)">
+                <h3>👨‍💻 Paso 4: Editor de Código (Recomendado)</h3>
+                <span id="arrow4">▼</span>
+            </div>
+            <div class="step-content" id="step4">
+                <h4>📥 Visual Studio Code</h4>
+                <p>VS Code es el editor recomendado con excelente soporte para MongoDB y desarrollo web.</p>
+
+                <a href="https://code.visualstudio.com/" target="_blank" class="download-button">📥 Descargar VS Code</a>
+
+                <h4>🔌 Extensiones Recomendadas</h4>
+                <div class="code-block">
+<span class="comment"># Extensiones esenciales para el curso:</span>
+
+- MongoDB for VS Code
+- MySQL (by Jun Han)
+- JavaScript (ES6) code snippets
+- Prettier - Code formatter
+- GitLens
+- Thunder Client (para testing APIs)
+                </div>
+
+                <h4>⚙️ Configuración MongoDB Extension</h4>
+                <ol>
+                    <li>Instalar <strong>"MongoDB for VS Code"</strong></li>
+                    <li>Conectar a <code>mongodb://localhost:27017</code></li>
+                    <li>Explorar bases de datos desde el panel lateral</li>
+                </ol>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="vscode" onchange="updateProgress()">
+                    <label for="vscode">✅ VS Code instalado con extensiones</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Setup -->
+        <div class="step-section">
+            <div class="step-header" onclick="toggleStep(5)">
+                <h3>📦 Paso 5: Configuración del Proyecto</h3>
+                <span id="arrow5">▼</span>
+            </div>
+            <div class="step-content" id="step5">
+                <h4>📁 Crear Carpeta de Trabajo</h4>
+                <div class="code-block">
+mkdir C:\curso-mongodb
+cd C:\curso-mongodb
+                </div>
+
+                <h4>🌐 Dependencias Globales</h4>
+                <div class="code-block">
+<span class="comment"># Instalar herramientas globales útiles</span>
+npm install -g nodemon
+npm install -g json-server
+npm install -g http-server
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="workspace" onchange="updateProgress()">
+                    <label for="workspace">✅ Carpeta de trabajo creada</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="globals" onchange="updateProgress()">
+                    <label for="globals">✅ Dependencias globales instaladas</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Tests -->
+        <div class="step-section">
+            <div class="step-header" onclick="toggleStep(6)">
+                <h3>✅ Paso 6: Verificación Final</h3>
+                <span id="arrow6">▼</span>
+            </div>
+            <div class="step-content" id="step6">
+                <h4>🧪 Test MongoDB</h4>
+                <div class="code-block">
+<span class="comment"># Conectar a MongoDB</span>
+mongosh
+
+<span class="comment"># Crear base de datos de prueba</span>
+use testDB
+db.test.insertOne({nombre: "Curso MongoDB", fecha: new Date()})
+db.test.find()
+
+<span class="comment"># Salir</span>
+exit
+                </div>
+
+                <h4>🧪 Test MySQL</h4>
+                <div class="code-block">
+<span class="comment"># Conectar a MySQL</span>
+mysql -u root -p
+
+<span class="comment"># Crear base de datos de prueba</span>
+CREATE DATABASE testDB;
+USE testDB;
+CREATE TABLE test (id INT PRIMARY KEY, nombre VARCHAR(50));
+INSERT INTO test VALUES (1, 'Curso MongoDB');
+SELECT * FROM test;
+
+<span class="comment"># Salir</span>
+exit
+                </div>
+
+                <h4>🧪 Test Node.js</h4>
+                <div class="code-block">
+<span class="comment"># Crear archivo de prueba</span>
+echo console.log("Node.js funcionando!"); > test.js
+
+<span class="comment"># Ejecutar</span>
+node test.js
+
+<span class="comment"># Resultado esperado: Node.js funcionando!</span>
+                </div>
+
+                <div class="success-box">
+                    <strong>🎉 ¡Perfecto!</strong> Si todos los tests funcionan, estás listo para comenzar el curso.
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="testmongo" onchange="updateProgress()">
+                    <label for="testmongo">✅ Test MongoDB exitoso</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="testmysql" onchange="updateProgress()">
+                    <label for="testmysql">✅ Test MySQL exitoso</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="testnode" onchange="updateProgress()">
+                    <label for="testnode">✅ Test Node.js exitoso</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="installation-section">
+            <h2 style="color: var(--mongodb-forest); margin-bottom: 20px;">🔧 Solución de Problemas</h2>
+            
+            <h4>MongoDB no inicia</h4>
+            <div class="code-block">
+<span class="comment"># Verificar estado del servicio</span>
+sc query MongoDB
+
+<span class="comment"># Iniciar manualmente</span>
+net start MongoDB
+            </div>
+
+            <h4>MySQL no conecta</h4>
+            <div class="code-block">
+<span class="comment"># Verificar servicio MySQL</span>
+net start | findstr MySQL
+
+<span class="comment"># Iniciar si está parado</span>
+net start MySQL80
+            </div>
+
+            <h4>Node.js no reconocido</h4>
+            <p>1. Reiniciar Command Prompt después de la instalación</p>
+            <p>2. Verificar que Node.js esté en el PATH</p>
+            <p>3. Reinstalar Node.js si es necesario</p>
+        </div>
+
+        <!-- Navigation Footer -->
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="../index.html" class="download-button">🏠 Volver al Inicio</a>
+            <button onclick="markInstallationComplete()" class="download-button" style="background: var(--mongodb-forest);">🎉 Instalación Completa</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleStep(stepNum) {
+            const content = document.getElementById(`step${stepNum}`);
+            const arrow = document.getElementById(`arrow${stepNum}`);
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                arrow.textContent = '▼';
+            } else {
+                content.classList.add('active');
+                arrow.textContent = '▲';
+            }
+        }
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            const percentage = Math.round((completed / total) * 100);
+            
+            document.getElementById('installProgress').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `${percentage}% completado (${completed}/${total})`;
+            
+            // Save progress
+            saveProgress();
+            
+            // Mark completed items
+            checkboxes.forEach(cb => {
+                const item = cb.closest('.checklist-item');
+                if (cb.checked) {
+                    item.classList.add('completed');
+                } else {
+                    item.classList.remove('completed');
+                }
+            });
+        }
+
+        function markInstallationComplete() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = true);
+            updateProgress();
+            
+            alert('🎉 ¡Instalación Completa!\n\nTodas las herramientas están configuradas correctamente.\n¡Ya puedes comenzar el curso de MongoDB!');
+        }
+
+        function saveProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const progress = Array.from(checkboxes).map(cb => ({
+                id: cb.id,
+                checked: cb.checked
+            }));
+            localStorage.setItem('installationProgress', JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('installationProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                progress.forEach(item => {
+                    const checkbox = document.getElementById(item.id);
+                    if (checkbox) {
+                        checkbox.checked = item.checked;
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        // Load progress on page load
+        document.addEventListener('DOMContentLoaded', loadProgress);
+    </script>
+</body>
+</html>

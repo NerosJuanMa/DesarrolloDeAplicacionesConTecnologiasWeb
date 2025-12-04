@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "titulo": "Bohemian Rhapsody",
+    "artista": "Queen",
+    "album": "A Night at the Opera",
+    "duracion": 355,
+    "genero": "Rock",
+    "año": 1975,
+    "reproducciones": 1500000,
+    "favorito": true,
+    "fecha_agregada": "2024-01-15"
+  },
+  {
+    "id": 2,
+    "titulo": "Hotel California",
+    "artista": "Eagles",
+    "album": "Hotel California",
+    "duracion": 391,
+    "genero": "Rock",
+    "año": 1976,
+    "reproducciones": 1200000,
+    "favorito": true,
+    "fecha_agregada": "2024-01-16"
+  },
+  {
+    "id": 3,
+    "titulo": "Imagine",
+    "artista": "John Lennon",
+    "album": "Imagine",
+    "duracion": 183,
+    "genero": "Rock",
+    "año": 1971,
+    "reproducciones": 980000,
+    "favorito": false,
+    "fecha_agregada": "2024-01-17"
+  },
+  {
+    "id": 4,
+    "titulo": "Billie Jean",
+    "artista": "Michael Jackson",
+    "album": "Thriller",
+    "duracion": 294,
+    "genero": "Pop",
+    "año": 1982,
+    "reproducciones": 2100000,
+    "favorito": true,
+    "fecha_agregada": "2024-01-18"
+  },
+  {
+    "id": 5,
+    "titulo": "Like a Rolling Stone",
+    "artista": "Bob Dylan",
+    "album": "Highway 61 Revisited",
+    "duracion": 369,
+    "genero": "Folk Rock",
+    "año": 1965,
+    "reproducciones": 750000,
+    "favorito": false,
+    "fecha_agregada": "2024-01-19"
+  },
+  {
+    "id": 6,
+    "titulo": "Smells Like Teen Spirit",
+    "artista": "Nirvana",
+    "album": "Nevermind",
+    "duracion": 301,
+    "genero": "Grunge",
+    "año": 1991,
+    "reproducciones": 1800000,
+    "favorito": true,
+    "fecha_agregada": "2024-01-20"
+  },
+  {
+    "id": 7,
+    "titulo": "What's Going On",
+    "artista": "Marvin Gaye",
+    "album": "What's Going On",
+    "duracion": 233,
+    "genero": "Soul",
+    "año": 1971,
+    "reproducciones": 650000,
+    "favorito": false,
+    "fecha_agregada": "2024-01-21"
+  },
+  {
+    "id": 8,
+    "titulo": "Purple Haze",
+    "artista": "Jimi Hendrix",
+    "album": "Are You Experienced",
+    "duracion": 170,
+    "genero": "Rock",
+    "año": 1967,
+    "reproducciones": 890000,
+    "favorito": true,
+    "fecha_agregada": "2024-01-22"
+  },
+  {
+    "id": 9,
+    "titulo": "Born to Run",
+    "artista": "Bruce Springsteen",
+    "album": "Born to Run",
+    "duracion": 270,
+    "genero": "Rock",
+    "año": 1975,
+    "reproducciones": 720000,
+    "favorito": false,
+    "fecha_agregada": "2024-01-23"
+  },
+  {
+    "id": 10,
+    "titulo": "Good Vibrations",
+    "artista": "The Beach Boys",
+    "album": "Pet Sounds",
+    "duracion": 219,
+    "genero": "Pop",
+    "año": 1966,
+    "reproducciones": 540000,
+    "favorito": true,
+    "fecha_agregada": "2024-01-24"
+  }
+]

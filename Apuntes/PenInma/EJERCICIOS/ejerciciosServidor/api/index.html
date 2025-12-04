@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Front ↔ Back: fetch JSON</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; }
+    .card { padding: 1rem; border: 1px solid #e5e7eb; border-radius: 12px; }
+    pre { background: #f7f7f7; padding: .75rem; border-radius: 8px; overflow: auto; }
+    button { padding: .5rem .8rem; border-radius: 10px; border: 1px solid #d0d7ff; cursor: pointer; margin-right: .5rem; }
+    button:hover { background: #f0f4ff; }
+  </style>
+</head>
+<body>
+  <h1>Front → Back (fetch)</h1>
+
+  <div class="card">
+    <p><strong>Acción:</strong> pedir al back <code>/api/saludo</code> y <code>/api/hora</code> y pintar el JSON.</p>
+    <button id="btnSaludo">Cargar saludo</button>
+    <button id="btnHora">Cargar hora</button>
+
+    <h3>Salida saludo</h3>
+    <pre id="outSaludo">// ...</pre>
+
+    <h3>Salida hora</h3>
+    <pre id="outHora">// ...</pre>
+  </div>
+
+  <script>
+    // 1) Dónde está nuestro backend:
+    const BASE_URL = 'http://localhost:3000';
+
+    // 2) Helper reutilizable: pide JSON y lo devuelve como objeto
+    async function getJSON(path) {
+      const resp = await fetch(BASE_URL + path);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json(); // texto JSON → objeto JS
+    }
+
+    // 3) Botones y salidas
+    const btnSaludo = document.getElementById('btnSaludo');
+    const btnHora   = document.getElementById('btnHora');
+    const outSaludo = document.getElementById('outSaludo');
+    const outHora   = document.getElementById('outHora');
+
+    btnSaludo.addEventListener('click', async () => {
+      outSaludo.textContent = 'Cargando...';
+      try {
+        const data = await getJSON('/api/saludo');
+        outSaludo.textContent = JSON.stringify(data, null, 2); // objeto → texto bonito
+        console.log('Saludo:', data);
+      } catch (err) {
+        outSaludo.textContent = 'Error: ' + err.message;
+        console.error(err);
+      }
+    });
+
+    btnHora.addEventListener('click', async () => {
+      outHora.textContent = 'Cargando...';
+      try {
+        const data = await getJSON('/api/hora');
+        outHora.textContent = JSON.stringify(data, null, 2);
+        console.log('Hora:', data);
+      } catch (err) {
+        outHora.textContent = 'Error: ' + err.message;
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+:root {
+  --color-primary: #0ea324;
+  --color-secondary: #341374;
+  --color-bg: #fff8f2;
+  --color-text: #2b2b2b;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.intro {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  background: #fff0e5;
+  padding: 1rem;
+  border-left: 6px solid var(--color-primary);
+  border-radius: 8px;
+}
+
+.botonera {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+button {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: var(--color-secondary);
+}
+
+.explicacion {
+  background: #fff0e5;
+  padding: 1.5rem;
+  border-left: 6px solid var(--color-primary);
+  border-radius: 12px;
+  margin-top: 2.5rem;
+  line-height: 1.7;
+}
+
+.explicacion h2 {
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+
+.resultado {
+  background: #1e1e1e;
+  color: #f8f8f2;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  overflow-x: auto;
+  font-family: "Fira Code", monospace;
+  white-space: pre-wrap;
+}

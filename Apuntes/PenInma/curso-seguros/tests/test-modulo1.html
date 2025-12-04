@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Módulo 1 - Curso de Seguros</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>📝 Test de Evaluación</h1>
+            <p class="subtitle">Módulo 1: El Contrato, la Póliza de Seguros y Bases Técnicas</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">🏠 Inicio</a></li>
+                <li><a href="../modulos/modulo1-1.html">📚 Volver al Módulo</a></li>
+                <li><a href="test-modulo1.html" class="active">📝 Test Módulo 1</a></li>
+                <li><a href="test-modulo2.html">📝 Test Módulo 2</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="main-content fade-in">
+            <h1>📝 Test de Evaluación - Módulo 1</h1>
+            
+            <div class="highlight">
+                <h2>ℹ️ Instrucciones</h2>
+                <ul>
+                    <li><strong>Duración:</strong> No hay límite de tiempo</li>
+                    <li><strong>Preguntas:</strong> 10 preguntas tipo test</li>
+                    <li><strong>Puntuación mínima:</strong> 70% para aprobar</li>
+                    <li><strong>Intentos:</strong> Puedes repetir el test las veces que quieras</li>
+                    <li><strong>Navegación:</strong> Puedes volver a preguntas anteriores</li>
+                </ul>
+            </div>
+
+            <div class="test-container">
+                <div id="test-content">
+                    <div class="test-intro">
+                        <h2>¿Estás listo para comenzar?</h2>
+                        <p>Este test evaluará tus conocimientos sobre:</p>
+                        <ul>
+                            <li>📋 Elaboración de productos de seguros</li>
+                            <li>📜 La póliza de seguros y sus elementos</li>
+                            <li>🧮 Bases técnicas y tarificación</li>
+                            <li>📄 Documentación en la contratación</li>
+                            <li>💰 Suma asegurada y conceptos relacionados</li>
+                        </ul>
+                        
+                        <div style="text-align: center; margin-top: 30px;">
+                            <button class="btn btn-success" onclick="startTest()" style="font-size: 1.2rem; padding: 15px 35px;">
+                                🚀 Comenzar Test
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-tips">
+                <h3>💡 Consejos para el test</h3>
+                <div class="card-grid">
+                    <div class="card">
+                        <h4>📖 Repasa el contenido</h4>
+                        <p>Asegúrate de haber leído todos los temas del módulo antes de hacer el test.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🎯 Lee con atención</h4>
+                        <p>Lee cuidadosamente cada pregunta y todas las opciones antes de responder.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🤔 Piensa antes de responder</h4>
+                        <p>Tómate tu tiempo para reflexionar. No hay prisa.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🔄 Revisa tus respuestas</h4>
+                        <p>Al final del test podrás revisar todas tus respuestas antes de enviar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Curso de Seguros - Test de Evaluación Módulo 1</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Preguntas del test del Módulo 1
+        const testModule1Questions = [
+            {
+                question: "¿Cuál es la primera fase en la elaboración de un producto de seguros?",
+                options: [
+                    "Desarrollo actuarial y técnico",
+                    "Identificación de la necesidad del mercado",
+                    "Proceso regulatorio",
+                    "Lanzamiento al mercado"
+                ],
+                correct: 1,
+                explanation: "La identificación de la necesidad del mercado es el punto de partida para desarrollar cualquier producto de seguros."
+            },
+            {
+                question: "¿Qué documento materializa el contrato de seguro?",
+                options: [
+                    "La solicitud de seguro",
+                    "Las condiciones generales",
+                    "La póliza de seguros",
+                    "El certificado de seguro"
+                ],
+                correct: 2,
+                explanation: "La póliza de seguros es el documento que materializa y da forma legal al contrato de seguro."
+            },
+            {
+                question: "¿Cuál es la función principal de las bases técnicas?",
+                options: [
+                    "Establecer las coberturas del seguro",
+                    "Determinar las primas y cálculos actuariales",
+                    "Regular las exclusiones del seguro",
+                    "Definir los procedimientos de siniestros"
+                ],
+                correct: 1,
+                explanation: "Las bases técnicas contienen los cálculos actuariales y metodologías para determinar las primas técnicas."
+            },
+            {
+                question: "¿Qué representa la suma asegurada?",
+                options: [
+                    "La prima total a pagar",
+                    "El valor real del bien asegurado",
+                    "El límite máximo de indemnización",
+                    "La franquicia aplicable al seguro"
+                ],
+                correct: 2,
+                explanation: "La suma asegurada es el límite máximo que pagará la aseguradora en caso de siniestro."
+            },
+            {
+                question: "¿Cuál de estos NO es un principio fundamental del contrato de seguro?",
+                options: [
+                    "Principio de buena fe",
+                    "Principio de indemnización", 
+                    "Principio de subrogación",
+                    "Principio de beneficio garantizado"
+                ],
+                correct: 3,
+                explanation: "El principio de beneficio garantizado no existe en seguros. Los principios fundamentales son buena fe, indemnización y subrogación."
+            },
+            {
+                question: "¿Qué porcentaje corresponde al Impuesto sobre Primas de Seguros (IPS) general?",
+                options: [
+                    "4%",
+                    "6%",
+                    "8%",
+                    "10%"
+                ],
+                correct: 1,
+                explanation: "El IPS general es del 6% para la mayoría de seguros generales, mientras que seguros de vida y salud tienen 0%."
+            },
+            {
+                question: "¿Cuál es la diferencia entre tomador y asegurado?",
+                options: [
+                    "No hay diferencia, son lo mismo",
+                    "El tomador contrata, el asegurado es quien tiene el interés",
+                    "El asegurado paga, el tomador recibe la indemnización",
+                    "Solo se diferencian en seguros de vida"
+                ],
+                correct: 1,
+                explanation: "El tomador es quien contrata y paga el seguro, mientras que el asegurado es quien tiene el interés asegurado."
+            },
+            {
+                question: "¿Qué incluye la prima comercial además de la prima pura?",
+                options: [
+                    "Solo los impuestos",
+                    "Solo los gastos de gestión",
+                    "Recargos por gastos, margen de beneficio e impuestos",
+                    "Únicamente el margen de beneficio"
+                ],
+                correct: 2,
+                explanation: "La prima comercial incluye la prima pura más todos los recargos: gastos, margen de beneficio e impuestos."
+            },
+            {
+                question: "¿Cuál es el órgano supervisor de seguros en España?",
+                options: [
+                    "Banco de España",
+                    "CNMV",
+                    "DGSFP (Dirección General de Seguros y Fondos de Pensiones)",
+                    "Ministerio de Hacienda"
+                ],
+                correct: 2,
+                explanation: "La DGSFP es el órgano especializado en la supervisión y control del sector asegurador español."
+            },
+            {
+                question: "¿Qué documento es específico para seguros de vida y salud?",
+                options: [
+                    "Solicitud de seguro",
+                    "Cuestionario de salud",
+                    "Condiciones particulares",
+                    "Certificado médico"
+                ],
+                correct: 1,
+                explanation: "El cuestionario de salud es específico para seguros de personas (vida y salud) y recoge información médica relevante."
+            }
+        ];
+
+        function startTest() {
+            curso.initializeTest(testModule1Questions);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar el test para el módulo 1
+            curso.currentModule = 1;
+        });
+    </script>
+</body>
+</html>

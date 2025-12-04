@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "nombre": "Ruta de las Cascadas del Huéznar",
+    "zona": "Sierra Norte de Sevilla",
+    "descripcion": "Recorrido que atraviesa bosques sombreados y finaliza en las preciosas cascadas del río Huéznar."
+  },
+  {
+    "id": 2,
+    "nombre": "Ruta del Cerro del Hierro",
+    "zona": "Sierra Norte de Sevilla",
+    "descripcion": "Antiguo complejo minero transformado en paraje natural; sendero con formaciones kársticas, miradores y paisaje geológico singular."
+  },
+  {
+    "id": 3,
+    "nombre": "Ruta al Pico El Terril",
+    "zona": "Sierra Sur de Sevilla",
+    "descripcion": "Subida al punto más alto de la provincia de Sevilla; vistas panorámicas, desnivel moderado y naturaleza diversa."
+  }
+  
+]

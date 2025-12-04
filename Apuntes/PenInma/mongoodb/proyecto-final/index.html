@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Proyecto Final - Sistema de Gestión Musical</title>
+    <link rel="stylesheet" href="mongodb-theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav-breadcrumb {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: var(--mongodb-shadow-light);
+        }
+
+        .nav-breadcrumb a {
+            color: var(--mongodb-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .nav-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #4DB33D 0%, #005A9C 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .progress-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .progress-bar {
+            background: var(--mongodb-gray-light);
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--mongodb-green), var(--mongodb-dark-green));
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .phase-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--mongodb-shadow-medium);
+            border-left: 5px solid var(--mongodb-green);
+            transition: transform 0.3s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .phase-card.completed {
+            border-left-color: #22c55e;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e6fffa 100%);
+        }
+
+        .phase-card.in-progress {
+            border-left-color: #f59e0b;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .phase-status {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .phase-status.completed {
+            background: #22c55e;
+        }
+
+        .phase-status.in-progress {
+            background: #f59e0b;
+        }
+
+        .phase-status.pending {
+            background: var(--mongodb-gray);
+        }
+
+        .tasks-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .task-item {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .task-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--mongodb-green);
+            border-radius: 3px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .task-checkbox.checked {
+            background: var(--mongodb-green);
+            color: white;
+        }
+
+        .task-text {
+            flex: 1;
+        }
+
+        .task-text.completed {
+            text-decoration: line-through;
+            color: var(--mongodb-gray);
+        }
+
+        .code-snippet {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--mongodb-green);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .copy-button:hover {
+            background: var(--mongodb-dark-green);
+        }
+
+        .architecture-diagram {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: var(--mongodb-shadow-medium);
+            text-align: center;
+        }
+
+        .diagram-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .diagram-component {
+            background: var(--mongodb-green);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .diagram-arrow {
+            font-size: 1.5em;
+            color: var(--mongodb-green);
+            font-weight: bold;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--mongodb-shadow-light);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .resource-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: var(--mongodb-green);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--mongodb-dark-green);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            border-color: #17a2b8;
+            color: #0c5460;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border-color: #ffc107;
+            color: #856404;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        @media (max-width: 768px) {
+            .phase-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .diagram-flow {
+                flex-direction: column;
+            }
+            
+            .diagram-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <div class="nav-breadcrumb">
+            <a href="../index.html">🏠 Inicio</a> → <span>🚀 Proyecto Final - Sistema de Gestión Musical</span>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>🚀 Proyecto Final</h1>
+            <p>Sistema de Gestión Musical Completo</p>
+            <p style="font-style: italic; opacity: 0.9;">De JSON a MongoDB y MySQL - Un viaje completo</p>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-container">
+            <h3 style="color: var(--mongodb-forest); margin-bottom: 15px;">📊 Progreso del Proyecto</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <p id="progressText" style="text-align: center; margin-top: 10px; font-weight: 600;">0% completado</p>
+        </div>
+
+        <!-- Architecture Overview -->
+        <div class="architecture-diagram">
+            <h3 style="color: var(--mongodb-forest); margin-bottom: 20px;">🏗️ Arquitectura del Sistema</h3>
+            <div class="diagram-flow">
+                <div class="diagram-component">📄 JSON Files</div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-component">🍃 MongoDB</div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-component">🗄️ MySQL</div>
+                <div class="diagram-arrow">→</div>
+                <div class="diagram-component">🌐 Web App</div>
+            </div>
+            <p style="color: var(--mongodb-gray); margin-top: 15px;">
+                <em>Evolución del almacenamiento de datos: Desde archivos JSON hasta bases de datos relacionales</em>
+            </p>
+        </div>
+
+        <!-- Project Phases -->
+        <div class="phase-grid">
+            
+            <!-- Phase 1: Setup -->
+            <div class="phase-card" id="phase1">
+                <div class="phase-header">
+                    <div class="phase-status pending" id="status1">1</div>
+                    <h3>🔧 Fase 1: Configuración Inicial</h3>
+                </div>
+                <p>Preparación del entorno de desarrollo y estructura del proyecto.</p>
+                <ul class="tasks-list" id="tasks1">
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Instalar Node.js y npm</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Instalar MongoDB y MongoDB Compass</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Instalar MySQL y MySQL Workbench</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Crear estructura de carpetas del proyecto</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Inicializar proyecto npm</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 2: JSON to MongoDB -->
+            <div class="phase-card" id="phase2">
+                <div class="phase-header">
+                    <div class="phase-status pending" id="status2">2</div>
+                    <h3>🍃 Fase 2: Migración JSON → MongoDB</h3>
+                </div>
+                <p>Convertir datos de archivos JSON a MongoDB con validaciones.</p>
+                <ul class="tasks-list" id="tasks2">
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Crear base de datos MongoDB</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Diseñar esquema de documentos</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Script de migración JSON → MongoDB</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Validar datos migrados</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Implementar operaciones CRUD</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 3: MongoDB API -->
+            <div class="phase-card" id="phase3">
+                <div class="phase-header">
+                    <div class="phase-status pending" id="status3">3</div>
+                    <h3>🌐 Fase 3: API REST con MongoDB</h3>
+                </div>
+                <p>Crear API REST completa usando Express.js y MongoDB.</p>
+                <ul class="tasks-list" id="tasks3">
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Configurar Express.js</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Implementar rutas CRUD</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Agregar validación de datos</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Implementar búsquedas avanzadas</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Testear API con Postman</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 4: Migration to MySQL -->
+            <div class="phase-card" id="phase4">
+                <div class="phase-header">
+                    <div class="phase-status pending" id="status4">4</div>
+                    <h3>🗄️ Fase 4: Migración a MySQL</h3>
+                </div>
+                <p>Diseño relacional y migración de datos MongoDB → MySQL.</p>
+                <ul class="tasks-list" id="tasks4">
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Diseñar esquema relacional</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Crear tablas en MySQL</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Script migración MongoDB → MySQL</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Actualizar API para MySQL</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Implementar transacciones</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 5: Frontend -->
+            <div class="phase-card" id="phase5">
+                <div class="phase-header">
+                    <div class="phase-status pending" id="status5">5</div>
+                    <h3>💻 Fase 5: Interfaz Web</h3>
+                </div>
+                <p>Crear interfaz web completa para gestión musical.</p>
+                <ul class="tasks-list" id="tasks5">
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Diseñar interfaz de usuario</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Implementar formularios CRUD</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Conectar frontend con API</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Implementar búsqueda y filtros</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Agregar responsive design</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 6: Deployment -->
+            <div class="phase-card" id="phase6">
+                <div class="phase-header">
+                    <div class="phase-status pending" id="status6">6</div>
+                    <h3>🚀 Fase 6: Despliegue y Optimización</h3>
+                </div>
+                <p>Preparar aplicación para producción y optimizar rendimiento.</p>
+                <ul class="tasks-list" id="tasks6">
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Configurar variables de entorno</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Implementar manejo de errores</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Agregar logging</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Optimizar consultas de base de datos</span>
+                    </li>
+                    <li class="task-item" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <span class="task-text">Documentar proyecto completo</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Code Templates Section -->
+        <div style="background: white; border-radius: 10px; padding: 30px; margin: 30px 0; box-shadow: var(--mongodb-shadow-medium);">
+            <h3 style="color: var(--mongodb-forest); margin-bottom: 20px;">📝 Plantillas de Código</h3>
+            
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: var(--mongodb-green);">🍃 Conexión MongoDB</h4>
+                <div class="code-snippet">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span style="color: #68d391;">// conexion-mongodb.js</span>
+<span style="color: #fbb6ce;">const</span> { MongoClient } = require(<span style="color: #90cdf4;">'mongodb'</span>);
+
+<span style="color: #fbb6ce;">const</span> uri = <span style="color: #90cdf4;">'mongodb://localhost:27017'</span>;
+<span style="color: #fbb6ce;">const</span> client = <span style="color: #fbb6ce;">new</span> MongoClient(uri);
+
+<span style="color: #fbb6ce;">async function</span> connectToMongo() {
+  <span style="color: #fbb6ce;">try</span> {
+    <span style="color: #fbb6ce;">await</span> client.connect();
+    console.log(<span style="color: #90cdf4;">'✅ Conectado a MongoDB'</span>);
+    <span style="color: #fbb6ce;">return</span> client.db(<span style="color: #90cdf4;">'musicaDB'</span>);
+  } <span style="color: #fbb6ce;">catch</span> (error) {
+    console.error(<span style="color: #90cdf4;">'❌ Error conectando a MongoDB:'</span>, error);
+  }
+}
+
+module.exports = { connectToMongo };
+                </div>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: #005A9C;">🗄️ Conexión MySQL</h4>
+                <div class="code-snippet">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span style="color: #68d391;">// conexion-mysql.js</span>
+<span style="color: #fbb6ce;">const</span> mysql = require(<span style="color: #90cdf4;">'mysql2/promise'</span>);
+
+<span style="color: #fbb6ce;">const</span> config = {
+  host: <span style="color: #90cdf4;">'localhost'</span>,
+  user: <span style="color: #90cdf4;">'root'</span>,
+  password: <span style="color: #90cdf4;">'tu_password'</span>,
+  database: <span style="color: #90cdf4;">'musicaDB'</span>
+};
+
+<span style="color: #fbb6ce;">async function</span> connectToMySQL() {
+  <span style="color: #fbb6ce;">try</span> {
+    <span style="color: #fbb6ce;">const</span> connection = <span style="color: #fbb6ce;">await</span> mysql.createConnection(config);
+    console.log(<span style="color: #90cdf4;">'✅ Conectado a MySQL'</span>);
+    <span style="color: #fbb6ce;">return</span> connection;
+  } <span style="color: #fbb6ce;">catch</span> (error) {
+    console.error(<span style="color: #90cdf4;">'❌ Error conectando a MySQL:'</span>, error);
+  }
+}
+
+module.exports = { connectToMySQL };
+                </div>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: var(--mongodb-green);">🌐 API Express Básica</h4>
+                <div class="code-snippet">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span style="color: #68d391;">// server.js</span>
+<span style="color: #fbb6ce;">const</span> express = require(<span style="color: #90cdf4;">'express'</span>);
+<span style="color: #fbb6ce;">const</span> cors = require(<span style="color: #90cdf4;">'cors'</span>);
+<span style="color: #fbb6ce;">const</span> { connectToMongo } = require(<span style="color: #90cdf4;">'./conexion-mongodb'</span>);
+
+<span style="color: #fbb6ce;">const</span> app = express();
+<span style="color: #fbb6ce;">const</span> PORT = process.env.PORT || 3000;
+
+<span style="color: #68d391;">// Middlewares</span>
+app.use(cors());
+app.use(express.json());
+
+<span style="color: #68d391;">// Rutas</span>
+app.get(<span style="color: #90cdf4;">'/api/canciones'</span>, <span style="color: #fbb6ce;">async</span> (req, res) => {
+  <span style="color: #fbb6ce;">try</span> {
+    <span style="color: #fbb6ce;">const</span> db = <span style="color: #fbb6ce;">await</span> connectToMongo();
+    <span style="color: #fbb6ce;">const</span> canciones = <span style="color: #fbb6ce;">await</span> db.collection(<span style="color: #90cdf4;">'canciones'</span>).find().toArray();
+    res.json(canciones);
+  } <span style="color: #fbb6ce;">catch</span> (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(<span style="color: #90cdf4;">`🚀 Servidor corriendo en puerto ${PORT}`</span>);
+});
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Section -->
+        <div style="background: white; border-radius: 10px; padding: 30px; margin: 30px 0; box-shadow: var(--mongodb-shadow-medium);">
+            <h3 style="color: var(--mongodb-forest); margin-bottom: 20px;">📚 Recursos Adicionales</h3>
+            
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">📖</div>
+                    <h4>Documentación</h4>
+                    <p>Guías y referencias técnicas</p>
+                    <a href="../recursos/cheat-sheet.html" class="btn-primary">Ver Cheat Sheet</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">🔧</div>
+                    <h4>Instalación</h4>
+                    <p>Guía paso a paso de instalación</p>
+                    <a href="../recursos/guia-instalacion.html" class="btn-primary">Guía de Instalación</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">💾</div>
+                    <h4>Scripts</h4>
+                    <p>Scripts de migración y utilidades</p>
+                    <button class="btn-secondary" onclick="downloadScripts()">Descargar Scripts</button>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">🎯</div>
+                    <h4>Ejemplos</h4>
+                    <p>Código de ejemplo y plantillas</p>
+                    <button class="btn-secondary" onclick="viewExamples()">Ver Ejemplos</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts Section -->
+        <div class="alert alert-info">
+            <strong>💡 Tip:</strong> Guarda tu progreso regularmente. Cada tarea completada se almacena automáticamente en tu navegador.
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>⚠️ Importante:</strong> Asegúrate de tener todas las herramientas instaladas antes de comenzar cada fase del proyecto.
+        </div>
+
+        <div class="alert alert-success">
+            <strong>🎉 Meta:</strong> Al completar este proyecto, habrás dominado la migración entre diferentes sistemas de bases de datos y la creación de APIs completas.
+        </div>
+
+        <!-- Navigation Footer -->
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="../index.html" class="btn-primary">🏠 Volver al Inicio</a>
+            <a href="../recursos/cheat-sheet.html" class="btn-secondary">📚 Cheat Sheet</a>
+            <button class="btn-primary" onclick="exportProgress()">💾 Exportar Progreso</button>
+            <button class="btn-secondary" onclick="resetProgress()">🔄 Reiniciar Progreso</button>
+        </div>
+    </div>
+
+    <script>
+        // Progress tracking system
+        let projectProgress = JSON.parse(localStorage.getItem('projectProgress')) || {};
+
+        function toggleTask(taskElement) {
+            const checkbox = taskElement.querySelector('.task-checkbox');
+            const taskText = taskElement.querySelector('.task-text');
+            const taskId = taskElement.innerHTML;
+            
+            if (checkbox.classList.contains('checked')) {
+                checkbox.classList.remove('checked');
+                checkbox.textContent = '';
+                taskText.classList.remove('completed');
+                delete projectProgress[taskId];
+            } else {
+                checkbox.classList.add('checked');
+                checkbox.textContent = '✓';
+                taskText.classList.add('completed');
+                projectProgress[taskId] = true;
+            }
+            
+            updatePhaseStatus();
+            updateProgressBar();
+            saveProgress();
+        }
+
+        function updatePhaseStatus() {
+            for (let i = 1; i <= 6; i++) {
+                const phaseCard = document.getElementById(`phase${i}`);
+                const phaseStatus = document.getElementById(`status${i}`);
+                const tasks = document.querySelectorAll(`#tasks${i} .task-item`);
+                
+                let completedTasks = 0;
+                tasks.forEach(task => {
+                    if (task.querySelector('.task-checkbox').classList.contains('checked')) {
+                        completedTasks++;
+                    }
+                });
+                
+                const totalTasks = tasks.length;
+                const completionRatio = completedTasks / totalTasks;
+                
+                if (completionRatio === 1) {
+                    phaseCard.className = 'phase-card completed';
+                    phaseStatus.className = 'phase-status completed';
+                    phaseStatus.textContent = '✓';
+                } else if (completionRatio > 0) {
+                    phaseCard.className = 'phase-card in-progress';
+                    phaseStatus.className = 'phase-status in-progress';
+                    phaseStatus.textContent = i;
+                } else {
+                    phaseCard.className = 'phase-card';
+                    phaseStatus.className = 'phase-status pending';
+                    phaseStatus.textContent = i;
+                }
+            }
+        }
+
+        function updateProgressBar() {
+            const allTasks = document.querySelectorAll('.task-item');
+            const completedTasks = document.querySelectorAll('.task-checkbox.checked');
+            
+            const progressPercentage = (completedTasks.length / allTasks.length) * 100;
+            
+            document.getElementById('progressFill').style.width = progressPercentage + '%';
+            document.getElementById('progressText').textContent = Math.round(progressPercentage) + '% completado';
+        }
+
+        function saveProgress() {
+            localStorage.setItem('projectProgress', JSON.stringify(projectProgress));
+        }
+
+        function loadProgress() {
+            Object.keys(projectProgress).forEach(taskId => {
+                const taskElements = document.querySelectorAll('.task-item');
+                taskElements.forEach(task => {
+                    if (task.innerHTML === taskId && projectProgress[taskId]) {
+                        const checkbox = task.querySelector('.task-checkbox');
+                        const taskText = task.querySelector('.task-text');
+                        checkbox.classList.add('checked');
+                        checkbox.textContent = '✓';
+                        taskText.classList.add('completed');
+                    }
+                });
+            });
+            updatePhaseStatus();
+            updateProgressBar();
+        }
+
+        function copyCode(button) {
+            const codeBlock = button.parentElement;
+            const code = codeBlock.innerText.replace('📋 Copiar', '').trim();
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '✅ Copiado';
+                setTimeout(() => {
+                    button.textContent = '📋 Copiar';
+                }, 2000);
+            });
+        }
+
+        function exportProgress() {
+            const data = {
+                projectProgress: projectProgress,
+                exportDate: new Date().toISOString(),
+                totalProgress: Math.round((Object.keys(projectProgress).length / document.querySelectorAll('.task-item').length) * 100)
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'progreso-proyecto-musical.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function resetProgress() {
+            if (confirm('¿Estás seguro de que quieres reiniciar todo el progreso?')) {
+                localStorage.removeItem('projectProgress');
+                projectProgress = {};
+                location.reload();
+            }
+        }
+
+        function downloadScripts() {
+            alert('🚧 Función en desarrollo. Los scripts estarán disponibles en la próxima versión.');
+        }
+
+        function viewExamples() {
+            alert('🚧 Función en desarrollo. Los ejemplos estarán disponibles en la próxima versión.');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+        });
+    </script>
+</body>
+</html>

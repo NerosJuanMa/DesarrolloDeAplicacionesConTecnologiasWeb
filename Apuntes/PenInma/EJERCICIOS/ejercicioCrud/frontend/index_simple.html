@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📚 Biblioteca Personal</title>
+  <link rel="stylesheet" href="styles_simple.css">
+</head>
+<body>
+  <header class="header">
+    <h1>📚 Biblioteca Personal</h1>
+  </header>
+
+  <main class="container">
+    <!-- Formulario para añadir libros -->
+    <section class="section-form">
+      <form id="form-libro" class="card form">
+        <h2>Añadir Nuevo Libro</h2>
+        <input id="titulo" placeholder="Título *" required>
+        <input id="autor" placeholder="Autor *" required>
+        <input id="anio" placeholder="Año (opcional)" type="number" min="0">
+        <button type="submit">➕ Añadir libro</button>
+        <p id="msg" class="msg"></p>
+      </form>
+    </section>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <button id="recargar">🔁 Recargar</button>
+    </div>
+
+    <!-- Lista de libros -->
+    <section class="section-list">
+      <div id="grid" class="grid">
+        <p class="empty">Cargando libros...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Biblioteca Personal - CRUD con Express y Vanilla JS</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

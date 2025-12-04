@@ -1,0 +1,19 @@
+*{box-sizing:border-box;font-family:system-ui,Segoe UI,Roboto,Arial}
+body{background:#f5f7fb;color:#222;margin:0;padding:20px}
+.container{max-width:900px;margin:0 auto;background:#fff;padding:20px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.08)}
+header h1{margin:0;font-size:1.6rem}
+.formulario-seccion{margin-top:16px}
+.campo{margin:10px 0}
+.campo label{display:block;margin-bottom:6px;color:#555}
+.campo input{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px}
+.botones-formulario{margin-top:12px}
+.botones-formulario button{padding:10px 14px;border-radius:6px;border:0;background:#4ecdc4;color:#fff}
+.lista-seccion{margin-top:20px}
+.reserva-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee}
+.mensaje{padding:10px;border-radius:6px;margin-top:12px}
+.mensaje.error{background:#ffecec;color:#611}
+.mensaje.exito{background:#e6ffef;color:#084}
+.oculto{display:none}
+.loading{padding:10px;background:#f3f4f6;border-radius:6px}
+.modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center}
+.modal-contenido{background:#fff;padding:20px;border-radius:8px}

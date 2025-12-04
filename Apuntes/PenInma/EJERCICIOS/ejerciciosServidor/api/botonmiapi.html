@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mi API con varios botones</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2rem;
+      text-align: center;
+    }
+    button {
+      padding: 0.6rem 1rem;
+      margin: 0.4rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #c10c97;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #4dc170;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1.5rem;
+      display: inline-block;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <h1>📡 Probando la API desde HTML</h1>
+  <p>Haz clic en un botón para pedir datos al servidor Node.js:</p>
+
+  <button id="btnSaludo">Obtener saludo</button>
+  <button id="btnDia">Obtener mensaje del día</button>
+  <button id="btnNombre">Obtener autor</button>
+
+  <pre id="resultado">Esperando respuesta...</pre>
+
+  <script>
+    const resultado = document.getElementById('resultado');
+
+    // Función para pedir datos con fetch (sin async/await)
+    function pedir(ruta) {
+      resultado.textContent = '⏳ Cargando...';
+      fetch('http://localhost:3000' + ruta)
+        .then(res => res.json()) // convertir la respuesta a JSON
+        .then(data => {
+          resultado.textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+          resultado.textContent = '❌ Error al conectar con la API';
+          console.error(error);
+        });
+    }
+
+    // Asignar los eventos a cada botón
+    document.getElementById('btnSaludo').addEventListener('click', () => pedir('/api/saludo'));
+    document.getElementById('btnDia').addEventListener('click', () => pedir('/api/dia'));
+    document.getElementById('btnNombre').addEventListener('click', () => pedir('/api/nombre'));
+  </script>
+</body>
+</html>

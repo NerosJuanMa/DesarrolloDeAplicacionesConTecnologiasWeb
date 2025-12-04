@@ -1,0 +1,57 @@
+{
+  "name": "curso-mongodb-3-dias",
+  "version": "1.0.0",
+  "description": "Curso intensivo de MongoDB de 3 días - De JSON a MongoDB y MySQL",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "setup:mongodb": "node scripts/setup-mongodb.js",
+    "setup:mysql": "node scripts/setup-mysql.js",
+    "migrate:json-to-mongo": "node dia1-introduccion-mongodb/ejercicios/migracion.js",
+    "seed:sample-data": "node scripts/seed-data.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mongodb",
+    "mysql",
+    "nodejs",
+    "express",
+    "mongoose",
+    "sequelize",
+    "curso",
+    "tutorial",
+    "database",
+    "nosql",
+    "sql"
+  ],
+  "author": "Instructor MongoDB Course",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.5.0",
+    "mysql2": "^3.6.0",
+    "sequelize": "^6.32.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "sequelize-cli": "^6.6.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tu-usuario/curso-mongodb-3-dias.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tu-usuario/curso-mongodb-3-dias/issues"
+  },
+  "homepage": "https://github.com/tu-usuario/curso-mongodb-3-dias#readme"
+}

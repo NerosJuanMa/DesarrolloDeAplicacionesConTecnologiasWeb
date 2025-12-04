@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi primer front conectado con Express</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>🌐 Conexión Front + Servidor Express</h1>
+
+    <p class="intro">
+      Este ejercicio demuestra cómo nuestro frontend (HTML + JS) puede comunicarse con un
+      servidor Express en Node.js para intercambiar datos reales mediante <code>fetch()</code>.
+      ¡Hemos dado el salto de Node “puro” a Express!
+    </p>
+
+    <div class="botonera">
+      <button id="boton-info">📘 Obtener info</button>
+      <button id="boton-inicio">🏠 Ir al inicio</button>
+      <button id="boton-contacto">📧 Contacto</button>
+      <button id="boton-tienda"> Página que no existe</button>
+      
+    </div>
+
+    <pre id="resultado" class="resultado"></pre>
+
+    <section class="explicacion">
+  <h2>📘 Mis avances con Express</h2>
+  <p>
+    En este ejercicio he dado el salto a <strong>Express</strong>, un framework que
+    simplifica enormemente la creación de servidores en Node.js.  
+    A partir de ahora puedo definir rutas de forma clara y organizada, sin tener que
+    manejar manualmente los objetos <code>req</code> y <code>res</code>.
+  </p>
+  <p>
+    Mi servidor (<code>servidor.js</code>) incluye varias rutas: 
+    <code>/</code>, <code>/info</code>, <code>/tienda</code> y 
+    <code>/contacto</code>. Cada una devuelve un tipo de respuesta distinta:
+    texto o JSON según el caso.
+  </p>
+  <p>
+    Desde el <strong>frontend</strong> (<code>index.html</code>), utilizo 
+    <code>fetch()</code> para comunicarme con el servidor y mostrar los datos 
+    en pantalla. Si la respuesta es JSON, la convierto con 
+    <code>.json()</code>; si es texto o HTML, la muestro directamente en el 
+    contenedor correspondiente.
+  </p>
+  <p>
+    Además, he aprendido a usar el middleware <strong>CORS</strong> para 
+    permitir peticiones desde el navegador, y a crear botones accesibles que 
+    invocan cada ruta del backend.
+  </p>
+  <p>
+    Este ejercicio marca un paso importante en mi formación: ahora comprendo 
+    cómo se conectan el lado del cliente y el lado del servidor en una 
+    arquitectura web moderna.  
+    <strong>¡Mi primer proyecto Express completo!</strong> 🚀
+  </p>
+</section>
+
+  </main>
+
+  <script>
+    // Elementos
+    const resultado = document.getElementById("resultado");
+
+    // Botón principal: /info
+    document.getElementById("boton-info").addEventListener("click", async () => {
+      try {
+        const res = await fetch("http://localhost:3000/info");
+        if (!res.ok) throw new Error("Error en la respuesta del servidor");
+        const data = await res.json();
+        resultado.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        resultado.textContent = "❌ Error: " + error.message;
+      }
+    });
+
+    // Otras rutas
+    document.getElementById("boton-inicio").addEventListener("click", async () => {
+      const res = await fetch("http://localhost:3000/");
+      resultado.textContent = await res.text();
+    });
+
+    document.getElementById("boton-tienda").addEventListener("click", async () => {
+      const res = await fetch("http://localhost:3000/hola");
+      resultado.textContent = await res.text();
+    });
+
+    document.getElementById("boton-contacto").addEventListener("click", async () => {
+      const res = await fetch("http://localhost:3000/contacto");
+      resultado.innerHTML = await res.text(); // contacto viene como HTML
+    });
+  </script>
+</body>
+</html>

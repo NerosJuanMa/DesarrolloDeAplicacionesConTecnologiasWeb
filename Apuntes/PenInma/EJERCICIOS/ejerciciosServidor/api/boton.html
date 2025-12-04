@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ejemplo fetch básico</title>
+  </head>
+  <body>
+    <h1>Ejemplo: fetch desde el navegador</h1>
+    <button id="boton">Cargar saludo</button>
+
+    <p id="resultado"></p>
+
+    <script>
+      // Cuando el usuario hace clic en el botón
+      document.getElementById("boton").addEventListener("click", () => {
+        // 1️⃣ Hacemos la petición al servidor
+        fetch("http://localhost:3000/api/saludo")
+          // 2️⃣ Convertimos la respuesta a JSON
+          .then((res) => res.json())
+          // 3️⃣ Mostramos los datos en la página
+          .then((data) => {
+            document.getElementById("resultado").textContent =
+              data.mensaje + " — " + data.curso;
+          })
+          // 4️⃣ Capturamos errores (por si el servidor no responde)
+          .catch((err) => console.error("Error:", err));
+      });
+    </script>
+  </body>
+</html>

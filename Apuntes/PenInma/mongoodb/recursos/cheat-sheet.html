@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Cheat Sheet - MongoDB & MySQL</title>
+    <link rel="stylesheet" href="mongodb-theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav-breadcrumb {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: var(--mongodb-shadow-light);
+        }
+
+        .nav-breadcrumb a {
+            color: var(--mongodb-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .nav-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #4DB33D 0%, #005A9C 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .db-tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
+            box-shadow: var(--mongodb-shadow-medium);
+            margin-bottom: 0;
+        }
+
+        .db-tab {
+            flex: 1;
+            padding: 20px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1.1em;
+        }
+
+        .mongodb-tab {
+            background: var(--mongodb-green);
+            color: white;
+        }
+
+        .mongodb-tab.active {
+            background: var(--mongodb-dark-green);
+        }
+
+        .mysql-tab {
+            background: #005A9C;
+            color: white;
+        }
+
+        .mysql-tab.active {
+            background: #0071CE;
+        }
+
+        .tab-content {
+            background: white;
+            border-radius: 0 0 10px 10px;
+            box-shadow: var(--mongodb-shadow-medium);
+            padding: 30px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .command-section {
+            margin-bottom: 30px;
+            background: var(--mongodb-gray-light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--mongodb-green);
+        }
+
+        .mysql-section {
+            border-left-color: #005A9C;
+        }
+
+        .command-section h3 {
+            color: var(--mongodb-forest);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .mysql-section h3 {
+            color: #005A9C;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .code-example .comment {
+            color: #68d391;
+        }
+
+        .code-example .keyword {
+            color: #fbb6ce;
+        }
+
+        .code-example .string {
+            color: #90cdf4;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--mongodb-green);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .copy-button:hover {
+            background: var(--mongodb-dark-green);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--mongodb-green);
+            border-radius: 8px;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--mongodb-dark-green);
+        }
+
+        .quick-nav {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .quick-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .quick-nav-item {
+            background: var(--mongodb-green);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .quick-nav-item:hover {
+            background: var(--mongodb-dark-green);
+        }
+
+        .equivalence-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .equivalence-table th {
+            background: var(--mongodb-gradient-primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .equivalence-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        .equivalence-table tr:nth-child(even) {
+            background-color: var(--mongodb-gray-light);
+        }
+
+        .system-commands {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .db-tabs {
+                flex-direction: column;
+            }
+
+            .quick-nav-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .equivalence-table {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <div class="nav-breadcrumb">
+            <a href="../index.html">🏠 Inicio</a> → <span>📚 Cheat Sheet - MongoDB & MySQL</span>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>📚 Cheat Sheet</h1>
+            <p>Referencia rápida de comandos MongoDB y MySQL</p>
+        </div>
+
+        <!-- Search Box -->
+        <input type="text" class="search-box" id="searchBox" placeholder="🔍 Buscar comandos... (ej: 'find', 'SELECT', 'insert')">
+
+        <!-- Quick Navigation -->
+        <div class="quick-nav">
+            <h3 style="color: var(--mongodb-forest); margin-bottom: 15px;">🚀 Navegación Rápida</h3>
+            <div class="quick-nav-grid">
+                <a href="#mongodb-basic" class="quick-nav-item">🍃 MongoDB Básico</a>
+                <a href="#mongodb-crud" class="quick-nav-item">📝 CRUD MongoDB</a>
+                <a href="#mongodb-advanced" class="quick-nav-item">🔍 Consultas Avanzadas</a>
+                <a href="#mysql-basic" class="quick-nav-item">🗄️ MySQL Básico</a>
+                <a href="#mysql-crud" class="quick-nav-item">📊 CRUD MySQL</a>
+                <a href="#equivalences" class="quick-nav-item">🔄 Equivalencias</a>
+            </div>
+        </div>
+
+        <!-- Database Tabs -->
+        <div class="db-tabs">
+            <button class="db-tab mongodb-tab active" onclick="switchTab('mongodb')">🍃 MongoDB</button>
+            <button class="db-tab mysql-tab" onclick="switchTab('mysql')">🗄️ MySQL</button>
+        </div>
+
+        <!-- MongoDB Content -->
+        <div class="tab-content active" id="mongodb-content">
+            
+            <!-- MongoDB Basic Commands -->
+            <div class="command-section" id="mongodb-basic">
+                <h3>🔧 Comandos Básicos de MongoDB</h3>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">// Conectar a MongoDB</span>
+mongosh
+
+<span class="comment">// Mostrar bases de datos</span>
+show dbs
+
+<span class="comment">// Usar/crear base de datos</span>
+use musicaDB
+
+<span class="comment">// Mostrar colecciones</span>
+show collections
+
+<span class="comment">// Mostrar base de datos actual</span>
+db
+
+<span class="comment">// Estadísticas de la base de datos</span>
+db.stats()
+
+<span class="comment">// Ayuda</span>
+help
+                </div>
+            </div>
+
+            <!-- MongoDB CRUD -->
+            <div class="command-section" id="mongodb-crud">
+                <h3>📝 Operaciones CRUD en MongoDB</h3>
+                
+                <h4>➕ CREATE (Insertar)</h4>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">// Insertar un documento</span>
+db.canciones.insertOne({
+  titulo: <span class="string">"Bohemian Rhapsody"</span>,
+  artista: <span class="string">"Queen"</span>,
+  duracion: 355
+})
+
+<span class="comment">// Insertar múltiples documentos</span>
+db.canciones.insertMany([
+  {titulo: <span class="string">"Song 1"</span>, artista: <span class="string">"Artist 1"</span>},
+  {titulo: <span class="string">"Song 2"</span>, artista: <span class="string">"Artist 2"</span>}
+])
+                </div>
+
+                <h4>🔍 READ (Consultar)</h4>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">// Encontrar todos los documentos</span>
+db.canciones.find()
+
+<span class="comment">// Encontrar con filtro</span>
+db.canciones.find({artista: <span class="string">"Queen"</span>})
+
+<span class="comment">// Encontrar uno</span>
+db.canciones.findOne({titulo: <span class="string">"Bohemian Rhapsody"</span>})
+
+<span class="comment">// Proyección (seleccionar campos)</span>
+db.canciones.find({}, {titulo: 1, artista: 1, _id: 0})
+
+<span class="comment">// Limitr resultados</span>
+db.canciones.find().limit(5)
+
+<span class="comment">// Ordenar</span>
+db.canciones.find().sort({año: 1})      <span class="comment">// ascendente</span>
+db.canciones.find().sort({año: -1})     <span class="comment">// descendente</span>
+                </div>
+
+                <h4>🔄 UPDATE (Actualizar)</h4>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">// Actualizar un documento</span>
+db.canciones.updateOne(
+  {titulo: <span class="string">"Bohemian Rhapsody"</span>},
+  {$set: {favorito: true}}
+)
+
+<span class="comment">// Actualizar múltiples documentos</span>
+db.canciones.updateMany(
+  {genero: <span class="string">"Rock"</span>},
+  {$set: {categoria: <span class="string">"Clásico"</span>}}
+)
+
+<span class="comment">// Incrementar valor</span>
+db.canciones.updateOne(
+  {titulo: <span class="string">"Bohemian Rhapsody"</span>},
+  {$inc: {reproducciones: 1}}
+)
+                </div>
+
+                <h4>❌ DELETE (Eliminar)</h4>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">// Eliminar un documento</span>
+db.canciones.deleteOne({titulo: <span class="string">"Song to Delete"</span>})
+
+<span class="comment">// Eliminar múltiples documentos</span>
+db.canciones.deleteMany({año: {$lt: 1960}})
+
+<span class="comment">// Eliminar todos los documentos</span>
+db.canciones.deleteMany({})
+                </div>
+            </div>
+
+            <!-- MongoDB Advanced -->
+            <div class="command-section" id="mongodb-advanced">
+                <h3>🔍 Consultas Avanzadas</h3>
+                
+                <h4>🎯 Operadores de Consulta</h4>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">// Comparación</span>
+db.canciones.find({duracion: {$gt: 300}})        <span class="comment">// mayor que</span>
+db.canciones.find({año: {$gte: 1970}})           <span class="comment">// mayor o igual</span>
+db.canciones.find({año: {$lt: 1980}})            <span class="comment">// menor que</span>
+db.canciones.find({genero: {$ne: <span class="string">"Pop"</span>}})        <span class="comment">// no igual</span>
+
+<span class="comment">// Arrays</span>
+db.canciones.find({genero: {$in: [<span class="string">"Rock"</span>, <span class="string">"Pop"</span>]}})
+db.canciones.find({genero: {$nin: [<span class="string">"Jazz"</span>, <span class="string">"Blues"</span>]}})
+
+<span class="comment">// Expresiones regulares</span>
+db.canciones.find({titulo: {$regex: /queen/i}})
+                </div>
+
+                <h4>📈 Agregaciones</h4>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">// Contar por grupo</span>
+db.canciones.aggregate([
+  {$group: {_id: <span class="string">"$genero"</span>, total: {$sum: 1}}}
+])
+
+<span class="comment">// Promedio</span>
+db.canciones.aggregate([
+  {$group: {_id: null, promedio: {$avg: <span class="string">"$duracion"</span>}}}
+])
+
+<span class="comment">// Pipeline completo</span>
+db.canciones.aggregate([
+  {$match: {año: {$gte: 1970}}},
+  {$group: {_id: <span class="string">"$genero"</span>, total: {$sum: 1}}},
+  {$sort: {total: -1}}
+])
+                </div>
+
+                <h4>🔍 Índices</h4>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">// Crear índice simple</span>
+db.canciones.createIndex({artista: 1})
+
+<span class="comment">// Crear índice compuesto</span>
+db.canciones.createIndex({genero: 1, año: -1})
+
+<span class="comment">// Índice de texto</span>
+db.canciones.createIndex({titulo: <span class="string">"text"</span>, artista: <span class="string">"text"</span>})
+
+<span class="comment">// Ver índices</span>
+db.canciones.getIndexes()
+
+<span class="comment">// Eliminar índice</span>
+db.canciones.dropIndex({artista: 1})
+                </div>
+            </div>
+        </div>
+
+        <!-- MySQL Content -->
+        <div class="tab-content" id="mysql-content">
+            
+            <!-- MySQL Basic Commands -->
+            <div class="command-section mysql-section" id="mysql-basic">
+                <h3>🔧 Comandos Básicos de MySQL</h3>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">-- Conectar a MySQL</span>
+mysql -u root -p
+
+<span class="comment">-- Mostrar bases de datos</span>
+<span class="keyword">SHOW DATABASES</span>;
+
+<span class="comment">-- Usar base de datos</span>
+<span class="keyword">USE</span> musicaDB;
+
+<span class="comment">-- Mostrar tablas</span>
+<span class="keyword">SHOW TABLES</span>;
+
+<span class="comment">-- Describir tabla</span>
+<span class="keyword">DESCRIBE</span> canciones;
+
+<span class="comment">-- Ver usuario actual</span>
+<span class="keyword">SELECT USER</span>();
+                </div>
+            </div>
+
+            <!-- MySQL CRUD -->
+            <div class="command-section mysql-section" id="mysql-crud">
+                <h3>📊 Operaciones CRUD en MySQL</h3>
+                
+                <h4>➕ CREATE (Insertar)</h4>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">-- Crear tabla</span>
+<span class="keyword">CREATE TABLE</span> canciones (
+    id <span class="keyword">INT PRIMARY KEY AUTO_INCREMENT</span>,
+    titulo <span class="keyword">VARCHAR</span>(100) <span class="keyword">NOT NULL</span>,
+    artista <span class="keyword">VARCHAR</span>(100),
+    duracion <span class="keyword">INT</span>
+);
+
+<span class="comment">-- Insertar un registro</span>
+<span class="keyword">INSERT INTO</span> canciones (titulo, artista, duracion)
+<span class="keyword">VALUES</span> (<span class="string">'Bohemian Rhapsody'</span>, <span class="string">'Queen'</span>, 355);
+
+<span class="comment">-- Insertar múltiples registros</span>
+<span class="keyword">INSERT INTO</span> canciones (titulo, artista, duracion) <span class="keyword">VALUES</span>
+(<span class="string">'Hotel California'</span>, <span class="string">'Eagles'</span>, 391),
+(<span class="string">'Imagine'</span>, <span class="string">'John Lennon'</span>, 183);
+                </div>
+
+                <h4>🔍 READ (Consultar)</h4>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">-- Seleccionar todo</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> canciones;
+
+<span class="comment">-- Seleccionar columnas específicas</span>
+<span class="keyword">SELECT</span> titulo, artista <span class="keyword">FROM</span> canciones;
+
+<span class="comment">-- Con condición</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> canciones <span class="keyword">WHERE</span> artista = <span class="string">'Queen'</span>;
+
+<span class="comment">-- Ordenar</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> canciones <span class="keyword">ORDER BY</span> año <span class="keyword">ASC</span>;
+
+<span class="comment">-- Limitar resultados</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> canciones <span class="keyword">LIMIT</span> 5;
+
+<span class="comment">-- Contar registros</span>
+<span class="keyword">SELECT COUNT</span>(*) <span class="keyword">FROM</span> canciones;
+                </div>
+
+                <h4>🔄 UPDATE (Actualizar)</h4>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">-- Actualizar un registro</span>
+<span class="keyword">UPDATE</span> canciones 
+<span class="keyword">SET</span> genero = <span class="string">'Rock'</span> 
+<span class="keyword">WHERE</span> artista = <span class="string">'Queen'</span>;
+
+<span class="comment">-- Actualizar múltiples campos</span>
+<span class="keyword">UPDATE</span> canciones 
+<span class="keyword">SET</span> genero = <span class="string">'Rock'</span>, favorito = <span class="keyword">TRUE</span> 
+<span class="keyword">WHERE</span> año <span class="keyword">BETWEEN</span> 1970 <span class="keyword">AND</span> 1980;
+
+<span class="comment">-- Incrementar valor</span>
+<span class="keyword">UPDATE</span> canciones 
+<span class="keyword">SET</span> reproducciones = reproducciones + 1 
+<span class="keyword">WHERE</span> titulo = <span class="string">'Bohemian Rhapsody'</span>;
+                </div>
+
+                <h4>❌ DELETE (Eliminar)</h4>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">-- Eliminar registro específico</span>
+<span class="keyword">DELETE FROM</span> canciones <span class="keyword">WHERE</span> id = 1;
+
+<span class="comment">-- Eliminar con condición</span>
+<span class="keyword">DELETE FROM</span> canciones <span class="keyword">WHERE</span> año < 1960;
+
+<span class="comment">-- Eliminar todos los registros</span>
+<span class="keyword">DELETE FROM</span> canciones;
+
+<span class="comment">-- Truncar tabla (más rápido)</span>
+<span class="keyword">TRUNCATE TABLE</span> canciones;
+                </div>
+            </div>
+
+            <!-- MySQL Advanced -->
+            <div class="command-section mysql-section">
+                <h3>🔗 JOINs y Consultas Avanzadas</h3>
+                <div class="code-example">
+                    <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment">-- INNER JOIN</span>
+<span class="keyword">SELECT</span> c.titulo, a.nombre <span class="keyword">as</span> artista
+<span class="keyword">FROM</span> canciones c
+<span class="keyword">INNER JOIN</span> artistas a <span class="keyword">ON</span> c.artista_id = a.id;
+
+<span class="comment">-- LEFT JOIN</span>
+<span class="keyword">SELECT</span> c.titulo, a.nombre <span class="keyword">as</span> artista
+<span class="keyword">FROM</span> canciones c
+<span class="keyword">LEFT JOIN</span> artistas a <span class="keyword">ON</span> c.artista_id = a.id;
+
+<span class="comment">-- Agrupar con HAVING</span>
+<span class="keyword">SELECT</span> genero, <span class="keyword">COUNT</span>(*) <span class="keyword">as</span> total
+<span class="keyword">FROM</span> canciones
+<span class="keyword">GROUP BY</span> genero
+<span class="keyword">HAVING COUNT</span>(*) > 5;
+                </div>
+            </div>
+        </div>
+
+        <!-- Equivalences Table -->
+        <div class="command-section" id="equivalences">
+            <h3>🔄 Equivalencias MongoDB ↔ MySQL</h3>
+            <table class="equivalence-table">
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>🍃 MongoDB</th>
+                        <th>🗄️ MySQL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Base de datos</strong></td>
+                        <td><code>database</code></td>
+                        <td><code>database</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tabla/Colección</strong></td>
+                        <td><code>collection</code></td>
+                        <td><code>table</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fila/Documento</strong></td>
+                        <td><code>document</code></td>
+                        <td><code>row</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Columna/Campo</strong></td>
+                        <td><code>field</code></td>
+                        <td><code>column</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>ID único</strong></td>
+                        <td><code>_id</code></td>
+                        <td><code>PRIMARY KEY</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Insertar</strong></td>
+                        <td><code>insertOne()</code></td>
+                        <td><code>INSERT INTO</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Consultar</strong></td>
+                        <td><code>find()</code></td>
+                        <td><code>SELECT</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Actualizar</strong></td>
+                        <td><code>updateOne()</code></td>
+                        <td><code>UPDATE</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Eliminar</strong></td>
+                        <td><code>deleteOne()</code></td>
+                        <td><code>DELETE</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- System Commands -->
+        <div class="system-commands">
+            <h3 style="color: var(--mongodb-forest); margin-bottom: 15px;">🔧 Comandos de Sistema</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4 style="color: var(--mongodb-green);">🍃 MongoDB</h4>
+                    <div class="code-example">
+                        <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment"># Iniciar MongoDB</span>
+net start MongoDB
+
+<span class="comment"># Detener MongoDB</span>
+net stop MongoDB
+
+<span class="comment"># Conectar al shell</span>
+mongosh
+
+<span class="comment"># Backup</span>
+mongodump --db musicaDB --out ./backup
+
+<span class="comment"># Restore</span>
+mongorestore --db musicaDB ./backup/musicaDB
+                    </div>
+                </div>
+                <div>
+                    <h4 style="color: #005A9C;">🗄️ MySQL</h4>
+                    <div class="code-example">
+                        <button class="copy-button" onclick="copyCode(this)">📋 Copiar</button>
+<span class="comment"># Iniciar MySQL</span>
+net start MySQL80
+
+<span class="comment"># Detener MySQL</span>
+net stop MySQL80
+
+<span class="comment"># Conectar</span>
+mysql -u root -p
+
+<span class="comment"># Backup</span>
+mysqldump -u root -p musicaDB > backup.sql
+
+<span class="comment"># Restore</span>
+mysql -u root -p musicaDB < backup.sql
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Footer -->
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="../index.html" style="background: var(--mongodb-green); color: white; padding: 15px 30px; border: none; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-block; margin: 10px;">🏠 Volver al Inicio</a>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.db-tab').forEach(tabBtn => {
+                tabBtn.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tab + '-content').classList.add('active');
+            
+            // Mark selected tab as active
+            if (tab === 'mongodb') {
+                document.querySelector('.mongodb-tab').classList.add('active');
+            } else {
+                document.querySelector('.mysql-tab').classList.add('active');
+            }
+        }
+
+        function copyCode(button) {
+            const codeBlock = button.parentElement;
+            const code = codeBlock.innerText.replace('📋 Copiar', '').trim();
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '✅ Copiado';
+                setTimeout(() => {
+                    button.textContent = '📋 Copiar';
+                }, 2000);
+            });
+        }
+
+        function searchCommands() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const sections = document.querySelectorAll('.command-section');
+            
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                if (text.includes(searchTerm) || searchTerm === '') {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        }
+
+        // Add search functionality
+        document.getElementById('searchBox').addEventListener('input', searchCommands);
+
+        // Smooth scroll for quick nav
+        document.querySelectorAll('.quick-nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

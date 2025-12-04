@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📅 DÍA 3: Migración a MySQL - Curso MongoDB</title>
+    <link rel="stylesheet" href="../recursos/mongodb-theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav-breadcrumb {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: var(--mongodb-shadow-light);
+        }
+
+        .nav-breadcrumb a {
+            color: var(--mongodb-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .nav-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .hero-day {
+            background: linear-gradient(135deg, #4DB33D 0%, #005A9C 50%, #FFB81C 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .hero-day h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .hero-day p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .comparison-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .db-card {
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .db-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .mongodb-card {
+            background: linear-gradient(135deg, #4DB33D 0%, #3F9A2F 100%);
+            color: white;
+        }
+
+        .mysql-card {
+            background: linear-gradient(135deg, #005A9C 0%, #0071CE 100%);
+            color: white;
+        }
+
+        .db-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .db-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .db-card li {
+            margin: 8px 0;
+            padding: 5px 0;
+        }
+
+        .db-card li::before {
+            content: "✅ ";
+            margin-right: 8px;
+        }
+
+        .modules-section {
+            margin-bottom: 30px;
+        }
+
+        .module {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .module-header {
+            background: var(--mongodb-green);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .module-header:hover {
+            background: var(--mongodb-dark-green);
+        }
+
+        .module-header h3 {
+            font-size: 1.3em;
+        }
+
+        .module-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        .architecture-diagram {
+            background: #f8f9fa;
+            border: 2px solid var(--mongodb-green);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .flow-step {
+            display: inline-block;
+            background: var(--mongodb-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin: 5px;
+            font-weight: 600;
+        }
+
+        .flow-arrow {
+            font-size: 1.5em;
+            color: var(--mongodb-green);
+            margin: 0 10px;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+
+        .code-example .comment {
+            color: #68d391;
+        }
+
+        .code-example .sql {
+            color: #fbb6ce;
+        }
+
+        .migration-steps {
+            background: var(--mongodb-gray-light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--mongodb-green);
+        }
+
+        .migration-steps ol {
+            margin-left: 20px;
+        }
+
+        .migration-steps li {
+            margin: 10px 0;
+            padding: 5px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            background: var(--mongodb-green);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            background: var(--mongodb-dark-green);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--mongodb-green);
+            border: 2px solid var(--mongodb-green);
+        }
+
+        .btn-secondary:hover {
+            background: var(--mongodb-green);
+            color: white;
+        }
+
+        .btn-mysql {
+            background: #005A9C;
+        }
+
+        .btn-mysql:hover {
+            background: #0071CE;
+        }
+
+        .progress-tracker {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .progress-bar {
+            background: var(--mongodb-gray-light);
+            height: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #4DB33D 0%, #005A9C 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .navigation-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: var(--mongodb-shadow-medium);
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .arrow.expanded {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .hero-day h1 {
+                font-size: 2em;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .navigation-footer {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .architecture-diagram {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <div class="nav-breadcrumb">
+            <a href="../index.html">🏠 Inicio</a> → <span>📅 Día 3: Migración a MySQL y Proyecto Final</span>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero-day">
+            <h1>📅 DÍA 3: Migración a MySQL</h1>
+            <p>🔄 De NoSQL a SQL: Migración Completa - Dominando ambos mundos</p>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <h3 style="color: var(--mongodb-forest); margin-bottom: 10px;">📊 Progreso del Día 3</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="dayProgress"></div>
+            </div>
+            <p><span id="progressText">0% completado</span> - <span id="progressModule">Preparado para migración híbrida</span></p>
+        </div>
+
+        <!-- Comparison Section -->
+        <div class="comparison-section">
+            <h2 style="color: var(--mongodb-forest); text-align: center; margin-bottom: 30px;">
+                ⚖️ MongoDB vs MySQL: La Comparativa Definitiva
+            </h2>
+            <div class="comparison-grid">
+                <div class="db-card mongodb-card">
+                    <h3>🍃 MongoDB (NoSQL)</h3>
+                    <h4>Mejor para:</h4>
+                    <ul>
+                        <li>Datos flexibles y cambiantes</li>
+                        <li>Desarrollo rápido e iterativo</li>
+                        <li>Escalabilidad horizontal</li>
+                        <li>Análisis de big data</li>
+                        <li>Aplicaciones en tiempo real</li>
+                        <li>Prototipado ágil</li>
+                    </ul>
+                </div>
+                <div class="db-card mysql-card">
+                    <h3>🗄️ MySQL (SQL)</h3>
+                    <h4>Mejor para:</h4>
+                    <ul>
+                        <li>Datos estructurados y consistentes</li>
+                        <li>Transacciones complejas</li>
+                        <li>Reportes y análisis</li>
+                        <li>Sistemas financieros</li>
+                        <li>Aplicaciones empresariales</li>
+                        <li>Cumplimiento normativo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Architecture Diagram -->
+        <div class="comparison-section">
+            <h2 style="color: var(--mongodb-forest); text-align: center; margin-bottom: 20px;">
+                🏗️ Arquitectura del Sistema Híbrido
+            </h2>
+            <div class="architecture-diagram">
+                <div style="margin-bottom: 20px;">
+                    <span class="flow-step">Frontend (React/JS)</span>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <span class="flow-arrow">↓</span>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <span class="flow-step">API Gateway (Express.js)</span>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <span class="flow-arrow">↙</span>
+                    <span class="flow-arrow">↘</span>
+                </div>
+                <div>
+                    <span class="flow-step">🍃 MongoDB Service</span>
+                    <span class="flow-step">🗄️ MySQL Service</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modules -->
+        <div class="modules-section">
+            <h2 style="color: var(--mongodb-forest); margin-bottom: 20px;">📚 Módulos del Día</h2>
+
+            <!-- Módulo 1 -->
+            <div class="module">
+                <div class="module-header" onclick="toggleModule(1)">
+                    <h3>🔄 Módulo 1: MongoDB vs MySQL - Comparativa (9:00 - 10:30)</h3>
+                    <span class="arrow" id="arrow1">▼</span>
+                </div>
+                <div class="module-content" id="module1">
+                    <h4>🎯 Filosofías de Base de Datos</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                        <div>
+                            <h5 style="color: var(--mongodb-green);">📄 NoSQL (MongoDB)</h5>
+                            <ul>
+                                <li><strong>Esquema flexible:</strong> Sin estructura fija</li>
+                                <li><strong>Escalabilidad horizontal:</strong> Distribuir datos</li>
+                                <li><strong>Documentos JSON:</strong> Datos naturalmente anidados</li>
+                                <li><strong>Eventual consistency:</strong> Performance > consistencia</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 style="color: #005A9C;">🗄️ SQL (MySQL)</h5>
+                            <ul>
+                                <li><strong>Esquema rígido:</strong> Estructura definida</li>
+                                <li><strong>Escalabilidad vertical:</strong> Mejorar hardware</li>
+                                <li><strong>Tablas relacionales:</strong> Datos normalizados</li>
+                                <li><strong>ACID compliance:</strong> Consistencia garantizada</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h4>📊 Casos de Uso Prácticos</h4>
+                    <div class="migration-steps">
+                        <h5>🍃 Usa MongoDB cuando:</h5>
+                        <ul>
+                            <li>Los datos cambian frecuentemente de estructura</li>
+                            <li>Necesitas análisis en tiempo real</li>
+                            <li>Trabajas con datos no estructurados</li>
+                            <li>Requieres escalabilidad masiva</li>
+                        </ul>
+                        
+                        <h5 style="margin-top: 15px;">🗄️ Usa MySQL cuando:</h5>
+                        <ul>
+                            <li>Los datos tienen relaciones complejas</li>
+                            <li>Necesitas transacciones garantizadas</li>
+                            <li>Trabajas con reportes y análisis</li>
+                            <li>Requieres cumplimiento normativo</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <a href="#" onclick="comparePerformance()" class="btn-action">📈 Comparar Performance</a>
+                        <a href="#" onclick="designDecision()" class="btn-action btn-secondary">🤔 Herramienta de Decisión</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 2 -->
+            <div class="module">
+                <div class="module-header" onclick="toggleModule(2)">
+                    <h3>🏗️ Módulo 2: Diseño de Esquemas Relacionales (10:30 - 12:00)</h3>
+                    <span class="arrow" id="arrow2">▼</span>
+                </div>
+                <div class="module-content" id="module2">
+                    <h4>📋 De Documentos a Tablas</h4>
+                    <p>Proceso de normalización desde MongoDB hacia MySQL:</p>
+                    
+                    <div class="code-example">
+<span class="comment">-- Documento MongoDB original</span>
+{
+  "titulo": "Bohemian Rhapsody",
+  "artista": {
+    "nombre": "Queen",
+    "pais": "Reino Unido"
+  },
+  "album": {
+    "titulo": "A Night at the Opera",
+    "año": 1975
+  }
+}
+
+<span class="comment">-- Tablas MySQL normalizadas</span>
+<span class="sql">CREATE TABLE</span> artistas (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(100) NOT NULL,
+  pais VARCHAR(50)
+);
+
+<span class="sql">CREATE TABLE</span> albumes (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  titulo VARCHAR(150) NOT NULL,
+  año INT,
+  artista_id INT,
+  <span class="sql">FOREIGN KEY</span> (artista_id) <span class="sql">REFERENCES</span> artistas(id)
+);
+
+<span class="sql">CREATE TABLE</span> canciones (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  titulo VARCHAR(150) NOT NULL,
+  duracion INT,
+  album_id INT,
+  <span class="sql">FOREIGN KEY</span> (album_id) <span class="sql">REFERENCES</span> albumes(id)
+);
+                    </div>
+
+                    <h4>🔗 Tipos de Relaciones</h4>
+                    <div class="migration-steps">
+                        <ol>
+                            <li><strong>Uno a Uno (1:1):</strong> Usuario ↔ Perfil</li>
+                            <li><strong>Uno a Muchos (1:N):</strong> Artista → Canciones</li>
+                            <li><strong>Muchos a Muchos (N:M):</strong> Canciones ↔ Géneros</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <a href="#" onclick="designSchema()" class="btn-action">🏗️ Diseñar Esquema</a>
+                        <a href="#" onclick="normalizeData()" class="btn-action btn-secondary">📊 Normalizar Datos</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 3 -->
+            <div class="module">
+                <div class="module-header" onclick="toggleModule(3)">
+                    <h3>📤 Módulo 3: Migración de Datos (13:00 - 14:30)</h3>
+                    <span class="arrow" id="arrow3">▼</span>
+                </div>
+                <div class="module-content" id="module3">
+                    <h4>🔄 Proceso ETL (Extract, Transform, Load)</h4>
+                    <div class="migration-steps">
+                        <h5>1. 📤 EXTRACT (Extraer de MongoDB)</h5>
+                        <div class="code-example">
+<span class="comment">// Extraer datos de MongoDB</span>
+const canciones = await db.collection('canciones').find({}).toArray();
+const artistasUnicos = [...new Set(canciones.map(c => c.artista))];
+                        </div>
+
+                        <h5>2. 🔄 TRANSFORM (Transformar datos)</h5>
+                        <div class="code-example">
+<span class="comment">// Transformar estructura</span>
+const artistas = artistasUnicos.map((nombre, index) => ({
+  id: index + 1,
+  nombre: nombre,
+  pais: 'Por determinar'
+}));
+
+const cancionesSQL = canciones.map(cancion => ({
+  titulo: cancion.titulo,
+  duracion: cancion.duracion,
+  artista_id: artistas.find(a => a.nombre === cancion.artista).id
+}));
+                        </div>
+
+                        <h5>3. 📥 LOAD (Cargar en MySQL)</h5>
+                        <div class="code-example">
+<span class="comment">-- Insertar en MySQL</span>
+<span class="sql">INSERT INTO</span> artistas (nombre, pais) 
+<span class="sql">VALUES</span> ('Queen', 'Reino Unido');
+
+<span class="sql">INSERT INTO</span> canciones (titulo, duracion, artista_id)
+<span class="sql">VALUES</span> ('Bohemian Rhapsody', 355, 1);
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <a href="#" onclick="runMigration()" class="btn-action">🚀 Ejecutar Migración</a>
+                        <a href="#" onclick="validateMigration()" class="btn-action btn-secondary">✅ Validar Datos</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 4 -->
+            <div class="module">
+                <div class="module-header" onclick="toggleModule(4)">
+                    <h3>🎯 Módulo 4: Proyecto Final Integrado (14:30 - 16:00)</h3>
+                    <span class="arrow" id="arrow4">▼</span>
+                </div>
+                <div class="module-content" id="module4">
+                    <h4>🔗 Sistema Híbrido MongoDB + MySQL</h4>
+                    <p>Construiremos un sistema que aprovecha las fortalezas de ambas bases de datos:</p>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                        <div style="background: var(--mongodb-gray-light); padding: 15px; border-radius: 8px;">
+                            <h5 style="color: var(--mongodb-green);">🍃 MongoDB maneja:</h5>
+                            <ul>
+                                <li>Logs de reproducción en tiempo real</li>
+                                <li>Preferencias de usuario</li>
+                                <li>Análisis de búsquedas</li>
+                                <li>Metadatos flexibles</li>
+                                <li>Caché de sesiones</li>
+                            </ul>
+                        </div>
+                        <div style="background: #e3f2fd; padding: 15px; border-radius: 8px;">
+                            <h5 style="color: #005A9C;">🗄️ MySQL maneja:</h5>
+                            <ul>
+                                <li>Catálogo de artistas y álbumes</li>
+                                <li>Transacciones de compra</li>
+                                <li>Datos de usuarios críticos</li>
+                                <li>Reportes financieros</li>
+                                <li>Auditoría y compliance</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h4>⚡ API Unificada</h4>
+                    <div class="code-example">
+<span class="comment">// Endpoint híbrido - obtener dashboard del usuario</span>
+app.get('/api/dashboard/:userId', async (req, res) => {
+  <span class="comment">// Datos del usuario (MySQL)</span>
+  const userData = await mysqlService.getUser(req.params.userId);
+  
+  <span class="comment">// Preferencias (MongoDB)</span>
+  const preferences = await mongoService.getUserPreferences(req.params.userId);
+  
+  <span class="comment">// Actividad reciente (MongoDB)</span>
+  const activity = await mongoService.getRecentActivity(req.params.userId);
+  
+  <span class="comment">// Compras (MySQL)</span>
+  const purchases = await mysqlService.getPurchases(req.params.userId);
+  
+  res.json({ userData, preferences, activity, purchases });
+});
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <a href="../proyecto-final/index.html" class="btn-action">🏆 Ver Proyecto Final</a>
+                        <a href="#" onclick="createHybridAPI()" class="btn-action btn-mysql">🔗 Crear API Híbrida</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Installation Requirements -->
+        <div class="comparison-section">
+            <h3 style="color: var(--mongodb-forest); margin-bottom: 15px;">📦 Instalación MySQL</h3>
+            <div class="code-example">
+<span class="comment"># Descargar MySQL Community Server</span>
+https://dev.mysql.com/downloads/mysql/
+
+<span class="comment"># Instalar dependencias Node.js</span>
+npm install mysql2 sequelize
+npm install --save-dev sequelize-cli
+
+<span class="comment"># Verificar instalación</span>
+mysql --version
+mysql -u root -p
+            </div>
+        </div>
+
+        <!-- Navigation Footer -->
+        <div class="navigation-footer">
+            <a href="../dia2-crud-avanzado-mongodb/index.html" class="btn-action btn-secondary">← Volver al Día 2</a>
+            <div>
+                <button onclick="markCourseComplete()" class="btn-action" id="completeBtn">🎉 Completar Curso</button>
+            </div>
+            <a href="../proyecto-final/index.html" class="btn-action">Ver Proyecto Final 🏆</a>
+        </div>
+    </div>
+
+    <script>
+        // Toggle module content
+        function toggleModule(moduleNum) {
+            const content = document.getElementById(`module${moduleNum}`);
+            const arrow = document.getElementById(`arrow${moduleNum}`);
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                arrow.classList.remove('expanded');
+            } else {
+                content.classList.add('active');
+                arrow.classList.add('expanded');
+            }
+        }
+
+        // Progress tracking
+        function updateProgress() {
+            const modules = document.querySelectorAll('.module-content.active').length;
+            const total = 4;
+            const percentage = Math.round((modules / total) * 100);
+            
+            document.getElementById('dayProgress').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = percentage + '% completado';
+            
+            if (percentage === 100) {
+                document.getElementById('progressModule').textContent = '¡Curso completado!';
+                document.getElementById('completeBtn').textContent = '🎉 ¡Curso Completado!';
+            } else {
+                document.getElementById('progressModule').textContent = `${modules}/${total} módulos explorados`;
+            }
+        }
+
+        // Module tracking
+        document.addEventListener('DOMContentLoaded', function() {
+            const moduleHeaders = document.querySelectorAll('.module-header');
+            moduleHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    setTimeout(updateProgress, 100);
+                });
+            });
+
+            // Load saved progress
+            loadProgress();
+        });
+
+        // Action functions
+        function comparePerformance() {
+            alert('Comparación de Performance:\n\n🍃 MongoDB:\n- Lecturas: Muy rápidas\n- Escrituras: Muy rápidas\n- Joins: No nativos\n- Escalabilidad: Horizontal\n\n🗄️ MySQL:\n- Lecturas: Rápidas con índices\n- Escrituras: Buenas\n- Joins: Optimizados\n- Escalabilidad: Vertical\n\n¡La elección depende del caso de uso!');
+        }
+
+        function designDecision() {
+            alert('Herramienta de Decisión:\n\n¿Tu aplicación necesita?\n\n✅ Transacciones ACID → MySQL\n✅ Esquemas flexibles → MongoDB\n✅ Análisis en tiempo real → MongoDB\n✅ Reportes complejos → MySQL\n✅ Escalabilidad masiva → MongoDB\n✅ Datos relacionales → MySQL\n\n¿Por qué no ambos? 🤔');
+        }
+
+        function designSchema() {
+            alert('Diseño de Esquema MySQL:\n\n1. Identificar entidades principales\n2. Definir relaciones entre tablas\n3. Normalizar hasta 3NF\n4. Crear índices apropiados\n5. Definir claves foráneas\n\n¡Un buen diseño es la base del éxito!');
+        }
+
+        function normalizeData() {
+            alert('Proceso de Normalización:\n\n1NF: Eliminar grupos repetitivos\n2NF: Eliminar dependencias parciales\n3NF: Eliminar dependencias transitivas\n\nObjeto: Reducir redundancia y mantener integridad');
+        }
+
+        function runMigration() {
+            alert('Ejecutando Migración ETL:\n\n📤 Extrayendo datos de MongoDB...\n🔄 Transformando estructura...\n📥 Cargando en MySQL...\n✅ Validando integridad...\n\n¡Migración completa! Verifica los datos en MySQL Workbench.');
+        }
+
+        function validateMigration() {
+            alert('Validación de Migración:\n\n✅ Verificar conteo de registros\n✅ Comprobar integridad referencial\n✅ Validar tipos de datos\n✅ Probar consultas básicas\n✅ Verificar performance\n\n¡Migración exitosa!');
+        }
+
+        function createHybridAPI() {
+            alert('Creando API Híbrida:\n\n1. Configurar conexiones duales\n2. Implementar servicios especializados\n3. Crear endpoints unificados\n4. Manejar sincronización de datos\n5. Implementar fallbacks\n\n¡El poder de ambos mundos en una API!');
+        }
+
+        function markCourseComplete() {
+            // Mark all modules as completed
+            const modules = document.querySelectorAll('.module-content');
+            modules.forEach(module => module.classList.add('active'));
+            updateProgress();
+            
+            localStorage.setItem('courseComplete', 'true');
+            localStorage.setItem('day3Complete', 'true');
+            
+            alert('🎉🎉🎉 ¡FELICIDADES! 🎉🎉🎉\n\nHas completado exitosamente el Curso MongoDB de 3 días!\n\n🏆 Logros desbloqueados:\n✅ Migración de JSON a MongoDB\n✅ CRUD avanzado y agregaciones\n✅ Desarrollo de APIs con Express\n✅ Migración a MySQL\n✅ Sistema híbrido funcional\n\n¡Ahora eres un experto en bases de datos modernas!');
+        }
+
+        // Save and load progress
+        function saveProgress() {
+            const activeModules = Array.from(document.querySelectorAll('.module-content.active')).map(module => module.id);
+            localStorage.setItem('day3Progress', JSON.stringify(activeModules));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('day3Progress');
+            if (saved) {
+                const activeModules = JSON.parse(saved);
+                activeModules.forEach(moduleId => {
+                    const module = document.getElementById(moduleId);
+                    if (module) {
+                        module.classList.add('active');
+                        const arrow = document.getElementById(moduleId.replace('module', 'arrow'));
+                        if (arrow) arrow.classList.add('expanded');
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        // Auto-save progress
+        setInterval(saveProgress, 5000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+
+    * /Estilos generales */
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+    
+    
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #d0edd0;
+      color: #f1f5f9;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: #187a2d;
+    }
+
+/* ===== SECCIÓN PORTFOLIO ===== */
+.portfolio-showcase {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: 2rem 0;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.portfolio-container {
+  padding: 2.5rem;
+  color: white;
+}
+
+.portfolio-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.portfolio-header h2 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.portfolio-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  font-style: italic;
+}
+
+.logros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.logro-card {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logro-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.logro-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.logro-card h3 {
+  color: #facc15;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.logro-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.logro-card ul li {
+  padding: 0.3rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+  line-height: 1.4;
+}
+
+.logro-card ul li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #4ade80;
+  font-weight: bold;
+}
+
+.tech-stack {
+  text-align: center;
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+}
+
+.tech-stack h3 {
+  color: #facc15;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+.tech-badge {
+  background: rgba(255,255,255,0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.tech-badge:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.05);
+}
+
+.tech-badge.html { border-left: 4px solid #e34f26; }
+.tech-badge.css { border-left: 4px solid #1572b6; }
+.tech-badge.js { border-left: 4px solid #f7df1e; }
+.tech-badge.node { border-left: 4px solid #339933; }
+.tech-badge.express { border-left: 4px solid #000000; }
+.tech-badge.api { border-left: 4px solid #ff6b6b; }
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .portfolio-container {
+    padding: 1.5rem;
+  }
+  
+  .portfolio-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .logros-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .tech-badges {
+    gap: 0.5rem;
+  }
+  
+  .tech-badge {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+    .senderos-lista {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .sendero-card {
+      background-color: #187a2d;
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease;
+    }
+    .sendero-card:hover {
+      transform: scale(1.03);
+    }
+    .sendero-card h3 {
+      margin: 0;
+      color: #facc15;
+    }
+    .sendero-card p {
+      margin: 0.3rem 0;
+    }
+  /*ESTILO DE FORMULARIO*/
+  
+.formulario-seccion {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.formulario-seccion h2 {
+    color: #1b9339;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+.campo {
+    margin-bottom: 20px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+}
+
+.campo input,
+.campo select,
+.campoDescripcion textarea {
+  box-sizing: border-box;
+  max-width: 100%;
+  display: block;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 12px 16px;
+     border: 6px solid var(--color-primary, #187a2d);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.campo input:focus,
+.campo select:focus {
+    outline: none;
+    border-color: #21d861;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.campoDescripcion {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.campoDescripcion label {
+  font-weight: 600;
+  color: var(--color-secondary, #212121);
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+
+.campoDescripcion textarea {
+  padding: 1rem;
+  border: 6px solid var(--color-primary, #187a2d);
+  border-radius: 12px;
+  font-size: 1rem;
+  line-height: 1.5;
+  resize: vertical;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  background-color: #fffaf8;
+  color: var(--color-secondary, #212121);
+}
+
+/* Reduce el tamaño de la imagen central y la centra */
+.imagen-central img {
+  width: 80%;        /* o 70% si la quieres más pequeña */
+  max-width: 600px;  /* límite máximo en pantallas grandes */
+  height: auto;
+  border-radius: 10px;
+  display: block;     /* permite centrar con margin */
+  margin: 0 auto;     /* centra horizontalmente */
+}
+
+.separador {
+  height: 30px; /* Ajusta la altura según sea necesario */
+}
+/* Texto placeholder */
+.campoDescripcion textarea::placeholder {
+  color: #949492;
+  font-style: italic;
+}
+
+
+
+
+.botones-formulario {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+/* ===== BOTONES ===== */
+button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#btn-guardar {
+    background: linear-gradient(135deg, #57e86a 80%, #4b8140 20%);
+    color: white;
+    flex: 1;
+}
+
+#btn-guardar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(80, 187, 153, 0.4);
+}
+
+#btn-cancelar {
+    background: #6c757d;
+    color: white;
+    flex: 0 0 auto;
+}
+
+#btn-cancelar:hover {
+    background: #5a6268;
+}
+
+.btn-accion {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+    margin: 0 10px 10px 0;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.btn-accion:hover {
+    background: #667eea;
+    color: white;
+}
+
+/* Botón EDITAR en amarillo (como el título) */
+.btn-editar {
+    background: #facc15;
+    color: #187a2d;
+    border: 2px solid #facc15;
+    margin: 0 5px 5px 0;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.btn-editar:hover {
+    background: #e6b800;
+    border-color: #e6b800;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(250, 204, 21, 0.4);
+}
+
+/* Botón BORRAR en rojo */
+.btn-borrar {
+    background: #dc2626;
+    color: white;
+    border: 2px solid #dc2626;
+    margin: 0 5px 5px 0;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.btn-borrar:hover {
+    background: #b91c1c;
+    border-color: #b91c1c;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(220, 38, 38, 0.4);
+}

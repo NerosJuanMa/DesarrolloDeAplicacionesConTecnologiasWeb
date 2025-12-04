@@ -1,0 +1,330 @@
+/* 🍃 MongoDB Brand Colors - CSS Variables */
+
+:root {
+  /* Colores principales de MongoDB */
+  --mongodb-green: #4DB33D;
+  --mongodb-dark-green: #3F9A2F;
+  --mongodb-forest: #2E7D23;
+  --mongodb-leaf: #6CC24A;
+  --mongodb-lime: #8BC34A;
+  
+  /* Colores complementarios */
+  --mongodb-white: #FFFFFF;
+  --mongodb-gray-light: #F5F5F5;
+  --mongodb-gray: #E0E0E0;
+  --mongodb-gray-medium: #BDBDBD;
+  --mongodb-gray-dark: #757575;
+  --mongodb-black: #333333;
+  
+  /* Colores de acento */
+  --mongodb-blue: #1976D2;
+  --mongodb-orange: #FF9800;
+  --mongodb-red: #F44336;
+  --mongodb-yellow: #FFB81C;
+  
+  /* Gradientes de marca */
+  --mongodb-gradient-primary: linear-gradient(135deg, #4DB33D 0%, #3F9A2F 50%, #2E7D23 100%);
+  --mongodb-gradient-secondary: linear-gradient(135deg, #6CC24A 0%, #4DB33D 50%, #3F9A2F 100%);
+  --mongodb-gradient-dark: linear-gradient(135deg, #3F9A2F 0%, #2E7D23 100%);
+  
+  /* Sombras */
+  --mongodb-shadow-light: 0 2px 4px rgba(77, 179, 61, 0.1);
+  --mongodb-shadow-medium: 0 4px 8px rgba(77, 179, 61, 0.2);
+  --mongodb-shadow-heavy: 0 8px 16px rgba(77, 179, 61, 0.3);
+}
+
+/* Clases de utilidad con colores MongoDB */
+
+/* Backgrounds */
+.bg-mongodb { background-color: var(--mongodb-green); }
+.bg-mongodb-dark { background-color: var(--mongodb-dark-green); }
+.bg-mongodb-forest { background-color: var(--mongodb-forest); }
+.bg-mongodb-leaf { background-color: var(--mongodb-leaf); }
+.bg-mongodb-gradient { background: var(--mongodb-gradient-primary); }
+
+/* Text colors */
+.text-mongodb { color: var(--mongodb-green); }
+.text-mongodb-dark { color: var(--mongodb-dark-green); }
+.text-mongodb-forest { color: var(--mongodb-forest); }
+.text-white { color: var(--mongodb-white); }
+
+/* Borders */
+.border-mongodb { border-color: var(--mongodb-green); }
+.border-mongodb-dark { border-color: var(--mongodb-dark-green); }
+
+/* Buttons */
+.btn-mongodb {
+  background-color: var(--mongodb-green);
+  color: var(--mongodb-white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-mongodb:hover {
+  background-color: var(--mongodb-dark-green);
+}
+
+.btn-mongodb-outline {
+  background-color: transparent;
+  color: var(--mongodb-green);
+  border: 2px solid var(--mongodb-green);
+  padding: 8px 18px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-mongodb-outline:hover {
+  background-color: var(--mongodb-green);
+  color: var(--mongodb-white);
+}
+
+/* Cards */
+.card-mongodb {
+  background: var(--mongodb-white);
+  border-radius: 10px;
+  box-shadow: var(--mongodb-shadow-medium);
+  border-left: 4px solid var(--mongodb-green);
+  padding: 20px;
+  margin: 10px 0;
+}
+
+.card-mongodb-header {
+  background: var(--mongodb-gradient-primary);
+  color: var(--mongodb-white);
+  padding: 15px 20px;
+  border-radius: 10px 10px 0 0;
+  margin: -20px -20px 20px -20px;
+}
+
+/* Headers */
+.header-mongodb {
+  background: var(--mongodb-gradient-primary);
+  color: var(--mongodb-white);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.header-mongodb h1,
+.header-mongodb h2,
+.header-mongodb h3 {
+  margin: 0;
+}
+
+/* Alerts */
+.alert-success {
+  background-color: #E8F5E8;
+  color: var(--mongodb-forest);
+  border: 1px solid var(--mongodb-green);
+  border-radius: 5px;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.alert-info {
+  background-color: #E3F2FD;
+  color: var(--mongodb-blue);
+  border: 1px solid var(--mongodb-blue);
+  border-radius: 5px;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.alert-warning {
+  background-color: #FFF3E0;
+  color: #E65100;
+  border: 1px solid var(--mongodb-orange);
+  border-radius: 5px;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.alert-error {
+  background-color: #FFEBEE;
+  color: #C62828;
+  border: 1px solid var(--mongodb-red);
+  border-radius: 5px;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+/* Code blocks */
+.code-mongodb {
+  background-color: var(--mongodb-gray-light);
+  border: 1px solid var(--mongodb-gray);
+  border-left: 4px solid var(--mongodb-green);
+  border-radius: 5px;
+  padding: 15px;
+  font-family: 'Courier New', monospace;
+  overflow-x: auto;
+}
+
+/* Navigation */
+.nav-mongodb {
+  background: var(--mongodb-gradient-primary);
+  padding: 10px 0;
+}
+
+.nav-mongodb a {
+  color: var(--mongodb-white);
+  text-decoration: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-mongodb a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Progress bars */
+.progress-mongodb {
+  background-color: var(--mongodb-gray-light);
+  border-radius: 10px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.progress-mongodb-bar {
+  background: var(--mongodb-gradient-primary);
+  height: 100%;
+  transition: width 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mongodb-white);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* Tables */
+.table-mongodb {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.table-mongodb th {
+  background: var(--mongodb-gradient-primary);
+  color: var(--mongodb-white);
+  padding: 12px;
+  text-align: left;
+}
+
+.table-mongodb td {
+  padding: 12px;
+  border-bottom: 1px solid var(--mongodb-gray);
+}
+
+.table-mongodb tr:nth-child(even) {
+  background-color: var(--mongodb-gray-light);
+}
+
+.table-mongodb tr:hover {
+  background-color: rgba(77, 179, 61, 0.1);
+}
+
+/* Forms */
+.form-mongodb {
+  background: var(--mongodb-white);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: var(--mongodb-shadow-medium);
+}
+
+.form-group-mongodb {
+  margin-bottom: 20px;
+}
+
+.form-group-mongodb label {
+  color: var(--mongodb-forest);
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form-group-mongodb input,
+.form-group-mongodb select,
+.form-group-mongodb textarea {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid var(--mongodb-gray);
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group-mongodb input:focus,
+.form-group-mongodb select:focus,
+.form-group-mongodb textarea:focus {
+  outline: none;
+  border-color: var(--mongodb-green);
+}
+
+/* Badges */
+.badge-mongodb {
+  background-color: var(--mongodb-green);
+  color: var(--mongodb-white);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-mongodb-outline {
+  background-color: transparent;
+  color: var(--mongodb-green);
+  border: 1px solid var(--mongodb-green);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Animations */
+@keyframes mongodb-pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.mongodb-pulse {
+  animation: mongodb-pulse 2s infinite;
+}
+
+@keyframes mongodb-bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+.mongodb-bounce {
+  animation: mongodb-bounce 1s infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-mongodb {
+    padding: 15px;
+    margin: 15px 0;
+  }
+  
+  .card-mongodb {
+    padding: 15px;
+    margin: 15px 0;
+  }
+  
+  .btn-mongodb,
+  .btn-mongodb-outline {
+    width: 100%;
+    margin: 5px 0;
+  }
+}

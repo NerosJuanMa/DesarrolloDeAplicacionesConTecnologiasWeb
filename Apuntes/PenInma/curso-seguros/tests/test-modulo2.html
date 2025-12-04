@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Módulo 2 - Curso de Seguros</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>📝 Test de Evaluación</h1>
+            <p class="subtitle">Módulo 2: Tarificación y Coberturas</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">🏠 Inicio</a></li>
+                <li><a href="../modulos/modulo2-1.html">📚 Volver al Módulo</a></li>
+                <li><a href="test-modulo1.html">📝 Test Módulo 1</a></li>
+                <li><a href="test-modulo2.html" class="active">📝 Test Módulo 2</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="main-content fade-in">
+            <h1>📝 Test de Evaluación - Módulo 2</h1>
+            
+            <div class="highlight">
+                <h2>ℹ️ Instrucciones</h2>
+                <ul>
+                    <li><strong>Duración:</strong> No hay límite de tiempo</li>
+                    <li><strong>Preguntas:</strong> 8 preguntas tipo test</li>
+                    <li><strong>Puntuación mínima:</strong> 70% para aprobar</li>
+                    <li><strong>Intentos:</strong> Puedes repetir el test las veces que quieras</li>
+                    <li><strong>Navegación:</strong> Puedes volver a preguntas anteriores</li>
+                </ul>
+            </div>
+
+            <div class="test-container">
+                <div id="test-content">
+                    <div class="test-intro">
+                        <h2>¿Estás listo para comenzar?</h2>
+                        <p>Este test evaluará tus conocimientos sobre:</p>
+                        <ul>
+                            <li>🔥 Seguros de incendios: coberturas y exclusiones</li>
+                            <li>📊 Factores de riesgo y tarificación en incendios</li>
+                            <li>🥷 Seguros de robo: coberturas y exclusiones</li>
+                            <li>🔍 Factores de riesgo y tarificación en robo</li>
+                            <li>🪟 Seguros de cristales: aspectos específicos</li>
+                        </ul>
+                        
+                        <div style="text-align: center; margin-top: 30px;">
+                            <button class="btn btn-success" onclick="startTest()" style="font-size: 1.2rem; padding: 15px 35px;">
+                                🚀 Comenzar Test
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Curso de Seguros - Test de Evaluación Módulo 2</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Preguntas del test del Módulo 2
+        const testModule2Questions = [
+            {
+                question: "En el seguro de incendios, ¿cuál es una cobertura básica?",
+                options: [
+                    "Daños por agua únicamente",
+                    "Robo con fuerza en las cosas",
+                    "Incendio con llama y explosión",
+                    "Responsabilidad civil general"
+                ],
+                correct: 2,
+                explanation: "El incendio con llama y explosión son coberturas básicas del seguro de incendios."
+            },
+            {
+                question: "¿Qué factor NO influye en la tarificación del seguro de robo?",
+                options: [
+                    "Ubicación geográfica del inmueble",
+                    "Sistemas de seguridad instalados",
+                    "Color de las paredes interiores",
+                    "Valor de los bienes a asegurar"
+                ],
+                correct: 2,
+                explanation: "El color de las paredes no es un factor de riesgo relevante para el seguro de robo."
+            },
+            {
+                question: "¿Cuál de estos daños está EXCLUIDO en un seguro de incendios básico?",
+                options: [
+                    "Daños por humo de incendio cubierto",
+                    "Combustión espontánea de materias orgánicas",
+                    "Caída de rayo sobre el edificio",
+                    "Explosión de caldera doméstica"
+                ],
+                correct: 1,
+                explanation: "La combustión espontánea está típicamente excluida por ser un proceso natural sin llama."
+            },
+            {
+                question: "En el seguro de robo, ¿qué modalidad cubre la sustracción completa del vehículo?",
+                options: [
+                    "Robo parcial",
+                    "Robo total",
+                    "Robo de accesorios",
+                    "Hurto simple"
+                ],
+                correct: 1,
+                explanation: "El robo total cubre la sustracción completa del vehículo asegurado."
+            },
+            {
+                question: "¿Cuál es la característica principal del seguro de cristales?",
+                options: [
+                    "Solo cubre roturas por accidente",
+                    "Incluye marcos y estructuras metálicas",
+                    "Normalmente se contrata sin franquicia",
+                    "Cubre únicamente el parabrisas del coche"
+                ],
+                correct: 2,
+                explanation: "Los seguros de cristales habitualmente se contratan sin franquicia por ser siniestros de bajo importe."
+            },
+            {
+                question: "¿Qué elemento aumenta el riesgo de incendio en una vivienda?",
+                options: [
+                    "Instalación eléctrica antigua",
+                    "Techos altos",
+                    "Ventanas grandes",
+                    "Suelos de mármol"
+                ],
+                correct: 0,
+                explanation: "Las instalaciones eléctricas antiguas tienen mayor riesgo de cortocircuitos que pueden causar incendios."
+            },
+            {
+                question: "En el seguro de robo, ¿cuándo se considera que hay 'robo con fuerza'?",
+                options: [
+                    "Cuando se usan armas",
+                    "Cuando se rompen cerraduras o se fuerzan accesos",
+                    "Cuando se amenaza a las personas",
+                    "Cuando ocurre de noche"
+                ],
+                correct: 1,
+                explanation: "El robo con fuerza requiere forzar cerraduras, romper cristales o accesos para entrar."
+            },
+            {
+                question: "¿Cuál es la suma asegurada típica para continente en una vivienda media?",
+                options: [
+                    "200-400 €/m²",
+                    "500-700 €/m²", 
+                    "800-1.200 €/m²",
+                    "1.500-2.000 €/m²"
+                ],
+                correct: 2,
+                explanation: "La suma asegurada típica para continente oscila entre 800-1.200 €/m² según calidades y zona."
+            }
+        ];
+
+        function startTest() {
+            curso.initializeTest(testModule2Questions);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar el test para el módulo 2
+            curso.currentModule = 2;
+        });
+    </script>
+</body>
+</html>

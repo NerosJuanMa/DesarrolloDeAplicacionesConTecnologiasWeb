@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🦉Listado de senderos </title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+</head>
+<body>
+  <h1>🦉🌳Listado de senderos 🍀🍀</h1>
+  
+  
+  
+  <div class="senderos-lista" id="senderosList"></div>
+   <div class="separador"></div>
+  <div class="imagen-central">
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2VuZGVyb3N8ZW58MHx8MHx8fDA%3D&w=1000&q=80" alt="Imagen de sendero" />
+  </div>
+   <div class="separador"></div>
+
+<section class="formulario-seccion">
+  <!-- Título del formulario -->
+  <h2 id="titulo-formulario">🌳¿Conoces algún sendero que quieras compartir?</h2>
+
+  <!-- Formulario de senderos -->
+  <form id="formulario-sendero">
+    <!-- CAMPO: NOMBRE DEL SENDERO -->
+    <div class="campo">
+      <label for="nombre">🏞️ Nombre del sendero:</label>
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        required
+        placeholder="Ejemplo: Sendero del Río Verde"
+        maxlength="100">
+    </div>
+
+    <!-- CAMPO: ZONA -->
+    <div class="campo">
+      <label for="zona">📍 Zona o ubicación:</label>
+      <input
+        type="text"
+        id="zona"
+        name="zona"
+        required
+        placeholder="Ejemplo: Sierra de Aracena"
+        maxlength="100">
+    </div>
+
+    <!-- CAMPO: DESCRIPCIÓN -->
+    <div class="campoDescripcion">
+      <label for="descripcion">📝 Descripción del sendero:</label>
+      <textarea
+        id="descripcion"
+        name="descripcion"
+        required
+        placeholder="Ejemplo: Ruta circular con vistas al valle, ideal para familias."
+        maxlength="1200"
+        rows="4"></textarea>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="botones-formulario">
+      <button type="submit" id="btn-guardar">💾 Guardar sendero</button>
+    
+    </div>
+  </form>
+</section>
+
+<!-- SECCIÓN PORTFOLIO - Logros como Full Stack Developer -->
+  <section class="portfolio-showcase">
+    <div class="portfolio-container">
+      <div class="portfolio-header">
+        <h2>💻 Ejercicio CRUD sobre archivo JSON</h2>
+        <p class="portfolio-subtitle">Aplicación CRUD completa desarrollada desde cero</p>
+      </div>
+      
+      <div class="logros-grid">
+        <div class="logro-card frontend">
+          <div class="logro-icon">🎨</div>
+          <h3>Frontend Responsivo</h3>
+          <ul>
+            <li>HTML5 semántico y accesible</li>
+            <li>CSS3 con Grid Layout y Flexbox</li>
+            <li>JavaScript ES6+ vanilla</li>
+            <li>Interfaz intuitiva y responsive</li>
+          </ul>
+        </div>
+        
+        <div class="logro-card backend">
+          <div class="logro-icon">⚙️</div>
+          <h3>Backend Robusto</h3>
+          <ul>
+            <li>API REST con Express.js</li>
+            <li>CRUD completo (Create, Read, Update, Delete)</li>
+            <li>Persistencia de datos en JSON</li>
+            <li>Manejo de errores y validaciones</li>
+          </ul>
+        </div>
+        
+        <div class="logro-card architecture">
+          <div class="logro-icon">🏗️</div>
+          <h3>Arquitectura Limpia</h3>
+          <ul>
+            <li>Separación Frontend/Backend</li>
+            <li>Comunicación por API HTTP</li>
+            <li>Código modular y mantenible</li>
+            <li>Documentación clara y didáctica</li>
+          </ul>
+        </div>
+        
+        <div class="logro-card features">
+          <div class="logro-icon">✨</div>
+          <h3>Funcionalidades Avanzadas</h3>
+          <ul>
+            <li>Formularios dinámicos con validación</li>
+            <li>Edición inline de registros</li>
+            <li>Confirmaciones y feedback visual</li>
+            <li>Scroll automático y UX optimizada</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="tech-stack">
+        <h3>🛠️ Stack Tecnológico</h3>
+        <div class="tech-badges">
+          <span class="tech-badge html">HTML5</span>
+          <span class="tech-badge css">CSS3</span>
+          <span class="tech-badge js">JavaScript</span>
+          <span class="tech-badge node">Node.js</span>
+          <span class="tech-badge express">Express.js</span>
+          <span class="tech-badge api">REST API</span>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,285 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+section {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+h1 {
+  color: #667eea;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+/* FORMULARIOS */
+.form-card {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+form input, .form-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border 0.3s;
+}
+
+form input:focus, .form-card input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #5568d3;
+}
+
+/* PRODUCTOS */
+.productos-list {
+  display: grid;
+  gap: 15px;
+}
+
+.producto-card {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+.producto-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.producto-info {
+  flex: 1;
+}
+
+.producto-info h4 {
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.producto-info p {
+  color: #666;
+  font-size: 14px;
+}
+
+.precio {
+  color: #667eea;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.producto-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.producto-actions button {
+  width: auto;
+  padding: 8px 15px;
+  font-size: 14px;
+}
+
+.btn-add {
+  background: #28a745;
+}
+
+.btn-add:hover {
+  background: #218838;
+}
+
+.btn-edit {
+  background: #ffc107;
+}
+
+.btn-edit:hover {
+  background: #e0a800;
+}
+
+.btn-delete {
+  background: #dc3545;
+}
+
+.btn-delete:hover {
+  background: #c82333;
+}
+
+/* CARRITO */
+.carrito {
+  min-height: 100px;
+  margin-bottom: 15px;
+}
+
+.empty-message {
+  color: #999;
+  text-align: center;
+  padding: 30px;
+}
+
+.carrito-item {
+  background: white;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.carrito-item-info {
+  flex: 1;
+}
+
+.carrito-item-info strong {
+  color: #333;
+}
+
+.carrito-item-info span {
+  color: #666;
+  font-size: 14px;
+}
+
+.carrito-item button {
+  width: auto;
+  padding: 5px 10px;
+  font-size: 12px;
+  background: #dc3545;
+}
+
+.total {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: right;
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #667eea;
+}
+
+.btn-pedido {
+  background: #28a745;
+}
+
+.btn-pedido:hover {
+  background: #218838;
+}
+
+/* PEDIDOS */
+.pedidos-list {
+  display: grid;
+  gap: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.pedido-card {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 4px solid #667eea;
+}
+
+.pedido-card h4 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.pedido-card p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.pedido-productos {
+  margin: 10px 0;
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+}
+
+.pedido-productos li {
+  margin-left: 20px;
+  color: #555;
+  font-size: 13px;
+}
+
+.estado {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.estado.pendiente {
+  background: #ffc107;
+  color: #333;
+}
+
+.estado.completado {
+  background: #28a745;
+  color: white;
+}
+
+.estado.cancelado {
+  background: #dc3545;
+  color: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}

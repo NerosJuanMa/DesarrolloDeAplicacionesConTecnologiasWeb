@@ -1,0 +1,93 @@
+:root{
+  /* Paleta lila */
+  --color-primary:   #6D3EB4; /* lila intenso */
+  --color-primary-800:#4B2A87; /* hover/activo accesible */
+  --color-secondary: #9B7AE1; /* acento suave */
+  --bg:              #FCFAFF; /* fondo general */
+  --panel:           #FFFFFF; /* tarjetas/paneles */
+  --text:            #1F1C2E; /* texto principal (oscuro) */
+  --muted:           #6b6b7a; /* texto secundario */
+  --border:          #E8E3F6; /* bordes suaves */
+  --tint-50:         #F7F3FF; /* hover tabla */
+  --tint-100:        #F3EEFF; /* fondos suaves */
+}
+
+*{ box-sizing:border-box; }
+body{
+  margin:0; font-family: Inter, system-ui, Arial, sans-serif;
+  background:var(--bg); color:var(--text);
+}
+.container{
+  max-width: 980px; margin: 3rem auto; padding: 1.5rem;
+  background:var(--panel); border-radius: 16px; box-shadow: 0 5px 30px rgba(29, 18, 61, .08);
+}
+h1{ margin-top:0; color:var(--color-primary); text-align:center; }
+
+.intro{
+  background:var(--tint-100); border-left:6px solid var(--color-primary);
+  padding:1rem; border-radius:10px; line-height:1.7; margin-bottom:2rem;
+}
+
+.panel{ border:1px solid var(--border); border-radius:12px; padding:1rem; margin-bottom:1.5rem; }
+.header-row{ display:flex; align-items:center; justify-content:space-between; }
+
+.grid{
+  display:grid; gap:1rem; grid-template-columns: repeat(3, 1fr);
+}
+label{ display:flex; flex-direction:column; gap:.4rem; font-size:.95rem; }
+input{
+  padding:.7rem .9rem; border:1px solid var(--border); border-radius:8px; background:#fff;
+}
+
+.actions{ margin-top:1rem; display:flex; gap:.8rem; }
+
+button{
+  background:var(--color-primary); color:white; border:none;
+  padding:.7rem 1.1rem; border-radius:10px; cursor:pointer; font-weight:600;
+  transition: transform .02s ease, background .2s ease, box-shadow .2s ease;
+}
+button:hover{ background:var(--color-primary-800); }
+button:active{ transform: translateY(1px); }
+button:focus-visible{
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+button.ghost{
+  background:transparent; color:var(--color-primary); border:1px solid var(--color-primary);
+}
+button.ghost:hover{ background:var(--tint-50); }
+
+.tabla{ width:100%; border-collapse:collapse; margin-top:1rem; }
+.tabla th, .tabla td{ border-bottom:1px solid var(--border); padding:.7rem; text-align:left; }
+.tabla tbody tr:hover{ background:var(--tint-50); }
+
+.acciones{ display:flex; gap:.5rem; }
+.btn-small{
+  padding:.45rem .7rem; border-radius:8px; font-size:.9rem;
+}
+.btn-danger{
+  background:#9B1C1C; /* tono borgoña para encajar con lila */
+}
+.btn-danger:hover{ background:#7C1616; }
+
+.estado{ color:var(--muted); margin-top:.8rem; }
+
+/* 📌 Cuadro de explicación para tus avances */
+.explicacion{
+  margin-top:2rem; padding:1.1rem 1.2rem;
+  background: linear-gradient(180deg, var(--tint-100), #ffffff);
+  border: 1px solid var(--border);
+  border-left: 6px solid var(--color-secondary);
+  border-radius: 12px;
+  line-height: 1.7;
+}
+.explicacion h2{
+  margin:0 0 .5rem 0; color:var(--color-primary);
+  font-size:1.1rem;
+}
+.explicacion p{ margin:.4rem 0; }
+
+/* Responsive */
+@media (max-width: 800px){
+  .grid{ grid-template-columns: 1fr; }
+}

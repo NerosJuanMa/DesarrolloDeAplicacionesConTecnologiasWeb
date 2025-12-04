@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "titulo": "Bohemian Rhapsody",
+    "artista": "Queen",
+    "album": "A Night at the Opera",
+    "año": 1975,
+    "genero": "Rock",
+    "duracion": "5:55"
+  },
+  {
+    "id": 2,
+    "titulo": "Hotel California",
+    "artista": "Eagles",
+    "album": "Hotel California",
+    "año": 1976,
+    "genero": "Rock",
+    "duracion": "6:30"
+  },
+  {
+    "id": 3,
+    "titulo": "Imagine",
+    "artista": "John Lennon",
+    "album": "Imagine",
+    "año": 1971,
+    "genero": "Rock",
+    "duracion": "3:07"
+  },
+  {
+    "id": 4,
+    "titulo": "Billie Jean",
+    "artista": "Michael Jackson",
+    "album": "Thriller",
+    "año": 1983,
+    "genero": "Pop",
+    "duracion": "4:54"
+  },
+  {
+    "id": 5,
+    "titulo": "Shape of You",
+    "artista": "Ed Sheeran",
+    "album": "÷ (Divide)",
+    "año": 2017,
+    "genero": "Pop",
+    "duracion": "3:53"
+  }
+]

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍃 Curso MongoDB - 3 Días Intensivos</title>
+    <link rel="stylesheet" href="recursos/mongodb-theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            background: var(--mongodb-gradient-primary);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--mongodb-shadow-heavy);
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .course-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--mongodb-shadow-medium);
+            border-left: 5px solid var(--mongodb-green);
+        }
+
+        .info-card h3 {
+            color: var(--mongodb-forest);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-card li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .info-card li::before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
+        .days-navigation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .day-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--mongodb-shadow-medium);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--mongodb-shadow-heavy);
+        }
+
+        .day-header {
+            background: var(--mongodb-gradient-primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .day-header h2 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .day-content {
+            padding: 20px;
+        }
+
+        .day-content h3 {
+            color: var(--mongodb-forest);
+            margin-bottom: 15px;
+        }
+
+        .day-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .day-content li {
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #666;
+        }
+
+        .day-content li::before {
+            content: "🎯";
+            position: absolute;
+            left: 0;
+        }
+
+        .btn-day {
+            background: var(--mongodb-green);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-day:hover {
+            background: var(--mongodb-dark-green);
+        }
+
+        .resources-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--mongodb-shadow-medium);
+            margin-bottom: 30px;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .resource-item {
+            background: var(--mongodb-gray-light);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--mongodb-green);
+            transition: background-color 0.3s ease;
+        }
+
+        .resource-item:hover {
+            background: rgba(77, 179, 61, 0.1);
+        }
+
+        .resource-item h4 {
+            color: var(--mongodb-forest);
+            margin-bottom: 8px;
+        }
+
+        .resource-item p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            text-align: center;
+            background: var(--mongodb-forest);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .progress-bar {
+            background: var(--mongodb-gray-light);
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--mongodb-gradient-primary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .course-info,
+            .days-navigation {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>🍃 Curso MongoDB</h1>
+            <p>De JSON a Bases de Datos Profesionales</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="courseProgress"></div>
+            </div>
+            <p><strong>3 Días Intensivos</strong> • MongoDB + MySQL • Proyecto Final</p>
+        </div>
+
+        <!-- Course Information -->
+        <div class="course-info">
+            <div class="info-card">
+                <h3>🎯 Objetivos del Curso</h3>
+                <ul>
+                    <li>Migrar de archivos JSON a MongoDB</li>
+                    <li>Dominar operaciones CRUD avanzadas</li>
+                    <li>Implementar relaciones y agregaciones</li>
+                    <li>Crear aplicaciones web con bases de datos</li>
+                    <li>Migrar datos a MySQL</li>
+                    <li>Desarrollar sistemas híbridos</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>🛠️ Tecnologías</h3>
+                <ul>
+                    <li>MongoDB Community Server</li>
+                    <li>MongoDB Compass (GUI)</li>
+                    <li>MySQL Server + Workbench</li>
+                    <li>Node.js + Express.js</li>
+                    <li>Mongoose (ODM)</li>
+                    <li>Sequelize (ORM)</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>👥 Audiencia</h3>
+                <ul>
+                    <li>Desarrolladores con experiencia en JSON</li>
+                    <li>Conocimientos básicos de JavaScript</li>
+                    <li>Experiencia con CRUD básico</li>
+                    <li>Conceptos de APIs REST</li>
+                    <li>Node.js instalado</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Days Navigation -->
+        <div class="days-navigation">
+            <!-- Día 1 -->
+            <div class="day-card" onclick="openDay(1)">
+                <div class="day-header">
+                    <h2>📅 DÍA 1</h2>
+                    <p>Introducción a MongoDB</p>
+                </div>
+                <div class="day-content">
+                    <h3>🍃 De JSON a MongoDB</h3>
+                    <ul>
+                        <li>Comparación JSON vs MongoDB</li>
+                        <li>Instalación y configuración</li>
+                        <li>MongoDB Compass y Shell</li>
+                        <li>Primera migración de datos</li>
+                        <li>Operaciones CRUD básicas</li>
+                    </ul>
+                    <button class="btn-day">Comenzar Día 1</button>
+                </div>
+            </div>
+
+            <!-- Día 2 -->
+            <div class="day-card" onclick="openDay(2)">
+                <div class="day-header">
+                    <h2>📅 DÍA 2</h2>
+                    <p>CRUD Avanzado</p>
+                </div>
+                <div class="day-content">
+                    <h3>🚀 Operaciones Avanzadas</h3>
+                    <ul>
+                        <li>Consultas complejas y filtros</li>
+                        <li>Pipeline de agregación</li>
+                        <li>Relaciones entre documentos</li>
+                        <li>Aplicación web con Express</li>
+                        <li>API REST completa</li>
+                    </ul>
+                    <button class="btn-day">Continuar con Día 2</button>
+                </div>
+            </div>
+
+            <!-- Día 3 -->
+            <div class="day-card" onclick="openDay(3)">
+                <div class="day-header">
+                    <h2>📅 DÍA 3</h2>
+                    <p>Migración a MySQL</p>
+                </div>
+                <div class="day-content">
+                    <h3>🔄 MongoDB + MySQL</h3>
+                    <ul>
+                        <li>Comparativa NoSQL vs SQL</li>
+                        <li>Diseño de esquemas relacionales</li>
+                        <li>Migración de datos</li>
+                        <li>Sistema híbrido</li>
+                        <li>Proyecto final integrado</li>
+                    </ul>
+                    <button class="btn-day">Finalizar con Día 3</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Section -->
+        <div class="resources-section">
+            <h2 style="color: var(--mongodb-forest); text-align: center; margin-bottom: 20px;">
+                📚 Recursos del Curso
+            </h2>
+            <div class="resources-grid">
+                <div class="resource-item" onclick="openResource('instalacion')">
+                    <h4>🔧 Guía de Instalación</h4>
+                    <p>Paso a paso para instalar MongoDB, MySQL y herramientas</p>
+                </div>
+                <div class="resource-item" onclick="openResource('cheatsheet')">
+                    <h4>📖 Cheat Sheet</h4>
+                    <p>Comandos de referencia rápida para MongoDB y MySQL</p>
+                </div>
+                <div class="resource-item" onclick="openResource('proyecto')">
+                    <h4>🏆 Proyecto Final</h4>
+                    <p>Sistema híbrido completo con ambas bases de datos</p>
+                </div>
+                <div class="resource-item" onclick="openResource('css')">
+                    <h4>🎨 Estilos MongoDB</h4>
+                    <p>CSS con la paleta de colores oficial de MongoDB</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>🍃 Curso MongoDB Intensivo</strong></p>
+            <p>Del archivo JSON a sistemas de bases de datos profesionales</p>
+            <p>© 2024 - Curso de 3 días con proyecto práctico</p>
+        </div>
+    </div>
+
+    <script>
+        // Funciones de navegación
+        function openDay(day) {
+            const urls = {
+                1: 'dia1-introduccion-mongodb/index.html',
+                2: 'dia2-crud-avanzado-mongodb/index.html', 
+                3: 'dia3-migracion-mysql/index.html'
+            };
+            
+            window.location.href = urls[day];
+        }
+
+        function openResource(resource) {
+            const urls = {
+                'instalacion': 'recursos/guia-instalacion.html',
+                'cheatsheet': 'recursos/cheat-sheet.html',
+                'proyecto': 'proyecto-final/index.html',
+                'css': 'recursos/mongodb-theme.css'
+            };
+            
+            if (resource === 'css') {
+                // Para archivos CSS, abrir en nueva pestaña
+                window.open(urls[resource], '_blank');
+            } else {
+                window.location.href = urls[resource];
+            }
+        }
+
+        // Simular progreso del curso
+        function updateProgress() {
+            const progress = document.getElementById('courseProgress');
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                } else {
+                    width += 2;
+                    progress.style.width = width + '%';
+                }
+            }, 50);
+        }
+
+        // Animaciones al cargar
+        window.addEventListener('load', () => {
+            updateProgress();
+            
+            // Animar cards
+            const cards = document.querySelectorAll('.day-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.5s ease';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
+        });
+
+        // Efectos de hover mejorados
+        document.querySelectorAll('.day-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

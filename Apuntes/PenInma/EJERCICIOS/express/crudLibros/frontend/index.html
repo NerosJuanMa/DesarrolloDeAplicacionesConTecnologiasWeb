@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>📚 CRUD Libros (Express + JSON)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>📚 CRUD de Libros</h1>
+    <p class="intro">
+      Front conectado a una API Express que guarda los datos en un archivo JSON.
+      Puedes <strong>crear</strong>, <strong>listar</strong>, <strong>editar</strong> y <strong>borrar</strong> libros.
+    </p>
+
+    <section class="panel">
+      <h2 id="form-title">➕ Añadir libro</h2>
+      <form id="form-libro" autocomplete="off">
+        <input type="hidden" id="id" />
+        <div class="grid">
+          <label>
+            Título
+            <input id="titulo" required placeholder="Ej. El Principito" />
+          </label>
+          <label>
+            Autor
+            <input id="autor" required placeholder="Ej. Antoine de Saint-Exupéry" />
+          </label>
+          <label>
+            Año
+            <input id="anio" type="number" placeholder="Ej. 1943" />
+          </label>
+        </div>
+        <div class="actions">
+          <button type="submit" id="btn-guardar">Guardar</button>
+          <button type="button" id="btn-cancelar" class="ghost" hidden>Cancelar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="header-row">
+        <h2>📃 Listado</h2>
+        <button id="btn-recargar" class="ghost">↻ Recargar</button>
+      </div>
+      <table class="tabla" aria-label="Listado de libros">
+        <thead>
+          <tr>
+            <th style="width:60px">ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th style="width:120px">Año</th>
+            <th style="width:180px">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <p id="estado" class="estado" aria-live="polite">Listo.</p>
+    </section>
+    <section class="explicacion" aria-labelledby="avances-title">
+  <h2 id="avances-title">🚀 Mi avance hacia el desarrollo Full Stack</h2>
+
+  <p>
+    Este proyecto representa un paso decisivo en mi formación como <strong>desarrolladora web full stack</strong>.
+    Por primera vez he creado una aplicación completa que conecta un <strong>frontend</strong> (HTML, CSS y JavaScript)
+    con un <strong>backend</strong> desarrollado con <strong>Node.js y Express</strong>.
+  </p>
+
+  <p>
+    En el lado del servidor he aprendido a <strong>estructurar una API RESTful</strong>, gestionando las rutas y métodos HTTP 
+    (<code>GET</code>, <code>POST</code>, <code>PUT</code> y <code>DELETE</code>) para implementar un CRUD funcional
+    que permite crear, leer, actualizar y eliminar libros.  
+    Además, he configurado <strong>middlewares</strong> para interpretar JSON y habilitar <strong>CORS</strong>, 
+    comprendiendo la importancia de la comunicación entre diferentes orígenes.
+  </p>
+
+  <p>
+    La persistencia de los datos se realiza mediante un archivo <code>libros.json</code> que actúa como una base de datos local.
+    Gracias a ello, he podido interiorizar cómo se almacenan los datos del lado del servidor y cómo mantener su integridad
+    durante las operaciones de escritura y lectura. Este conocimiento será fundamental cuando dé el salto a 
+    <strong>bases de datos reales</strong> como MySQL o MongoDB.
+  </p>
+
+  <p>
+    En la parte del cliente he trabajado con <strong>fetch()</strong> para consumir los endpoints del backend,
+    aprendiendo a manejar las promesas, gestionar los estados de carga y mostrar la información en una tabla dinámica.
+    También he diseñado un <strong>formulario accesible</strong> que permite añadir o modificar registros en tiempo real, 
+    reforzando mi comprensión de cómo interactúan los datos entre el cliente y el servidor.
+  </p>
+
+  <p>
+    Desde el punto de vista visual y de experiencia de usuario, he aplicado una <strong>paleta lila y blanca</strong> 
+    que aporta armonía y claridad, cuidando los detalles de diseño, legibilidad y accesibilidad (contraste, foco visible, 
+    estructura semántica, etc.). Estos principios son esenciales en el desarrollo front-end profesional.
+  </p>
+
+  <p>
+    Este ejercicio no solo me ha permitido consolidar los conocimientos adquiridos en módulos anteriores 
+    (HTML, CSS, JavaScript y fundamentos de Node.js), sino que me ha enseñado a pensar de forma estructurada, 
+    entendiendo la <strong>arquitectura cliente-servidor</strong> como un todo.  
+    Ahora soy capaz de desarrollar una aplicación completa desde cero, comprender el flujo de datos y anticipar los posibles errores.
+  </p>
+
+  <p>
+    En resumen, esta práctica marca el inicio de mi camino hacia el desarrollo full stack: 
+    he aprendido a comunicar dos mundos —el del frontend y el del backend— y a crear aplicaciones dinámicas, escalables y mantenibles.
+    A partir de aquí, mi siguiente meta es integrar una base de datos real y profundizar en la autenticación y seguridad de las APIs.
+  </p>
+
+  <p style="margin-top:1rem; font-weight:600; color:var(--color-primary)">
+    💡 Este proyecto simboliza mi evolución de estudiante a creadora: ya no consumo APIs, las construyo.
+  </p>
+</section>
+
+  </main>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>

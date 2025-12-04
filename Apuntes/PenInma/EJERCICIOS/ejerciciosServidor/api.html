@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PokeAPI → Mi Web</title>
+  <style>
+    :root{
+      --primary:#E44D26; /* HTML orange que te gusta */
+      --primary-2:#F16529;
+      --bg:#fff;
+      --text:#222;
+      --muted:#666;
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      margin:0; background:var(--bg); color:var(--text);
+    }
+    header{
+      background:linear-gradient(90deg,var(--primary),var(--primary-2));
+      color:#fff; padding:18px 20px;
+    }
+    main{max-width:900px; margin:24px auto; padding:0 16px}
+    form{
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+      background:#f7f7f7; padding:12px; border-radius:var(--radius);
+      border:1px solid #eee;
+    }
+    input{
+      flex:1 1 280px; padding:10px 12px; font-size:1rem;
+      border:1px solid #ddd; border-radius:10px;
+    }
+    button{
+      padding:10px 16px; border:0; border-radius:999px;
+      background:var(--primary); color:#fff; cursor:pointer; font-weight:600;
+    }
+    button:hover{filter:brightness(0.95)}
+    .status{margin:10px 0; color:var(--muted); min-height:1.2em}
+    .grid{
+      margin-top:18px;
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;
+    }
+    .card{
+      border:1px solid #eee; border-radius:var(--radius); padding:14px;
+      box-shadow:0 4px 14px rgba(0,0,0,.06); background:#fff;
+    }
+    .card h2{margin:.2rem 0 .6rem 0}
+    .meta{font-size:.95rem; color:var(--muted)}
+    .types{margin-top:8px; display:flex; gap:8px; flex-wrap:wrap}
+    .chip{
+      padding:4px 8px; border-radius:999px; background:#f1f1f1; font-size:.9rem;
+      border:1px solid #e7e7e7;
+    }
+    img{max-width:100%; height:auto; display:block; margin:10px auto}
+    .error{color:#b00020; font-weight:600}
+    .sr-only{position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pokédex mínima (PokeAPI)</h1>
+    <p class="sr-only">Escribe el nombre o ID de un Pokémon y pulsa buscar</p>
+  </header>
+
+  <main>
+    <form id="form" aria-describedby="ayuda">
+      <label for="q"><strong>Pokémon</strong></label>
+      <input id="q" name="q" type="text" placeholder="p. ej., pikachu o 25" required aria-describedby="ayuda" />
+      <button type="submit">Buscar</button>
+      <div id="ayuda" class="meta">Consejo: acepta nombre o ID numérico.</div>
+    </form>
+
+    <div class="status" id="status" aria-live="polite"></div>
+    <div class="grid" id="results"></div>
+  </main>
+
+  <script>
+    // Utilidad: capitalizar
+    function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    // Render de una tarjeta de Pokémon
+    function renderPokemon(data){
+      const img = (
+        data.sprites?.other?.['official-artwork']?.front_default
+        || data.sprites?.front_default
+        || ''
+      );
+
+      const types = (data.types || []).map(t => `<span class="chip">${cap(t.type.name)}</span>`).join('');
+
+      return `
+        <article class="card" tabindex="0" aria-label="Carta de ${cap(data.name)}">
+          <img alt="Imagen de ${cap(data.name)}" src="${img}" />
+          <h2>${cap(data.name)} <span class="meta">#${data.id}</span></h2>
+          <div class="types">${types}</div>
+          <p class="meta">Altura: ${data.height} | Peso: ${data.weight}</p>
+        </article>
+      `;
+    }
+
+    const form = document.getElementById('form');
+    const q = document.getElementById('q');
+    const statusEl = document.getElementById('status');
+    const results = document.getElementById('results');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const value = q.value.trim().toLowerCase();
+      if(!value){ return; }
+
+      statusEl.textContent = 'Buscando...';
+      results.innerHTML = '';
+
+      // 1) fetch → 2) comprobar respuesta → 3) to JSON → 4) pintar → 5) capturar errores
+      fetch('https://pokeapi.co/api/v2/pokemon/' + encodeURIComponent(value))
+        .then(function(res){
+          if(!res.ok){ throw new Error('No encontrado (' + res.status + ')'); }
+          return res.json();
+        })
+        .then(function(data){
+          statusEl.textContent = 'Listo ✅';
+          results.innerHTML = renderPokemon(data);
+        })
+        .catch(function(err){
+          statusEl.innerHTML = '<span class="error">Error: ' + err.message + '</span>';
+          // Opcional: conservar el último valor buscado
+          q.focus();
+          q.select();
+        });
+    });
+
+    // UX: foco en el input al cargar
+    q.focus();
+  </script>
+</body>
+</html>

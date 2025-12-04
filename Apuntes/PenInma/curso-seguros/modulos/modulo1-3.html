@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.3 Bases técnicas y tarifas - Curso de Seguros</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>📋 Curso de Seguros</h1>
+            <p class="subtitle">Módulo 1: El Contrato, la Póliza de Seguros y Bases Técnicas</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">🏠 Inicio</a></li>
+                <li><a href="modulo1-1.html">1.1 Elaboración</a></li>
+                <li><a href="modulo1-2.html">1.2 Póliza</a></li>
+                <li><a href="modulo1-3.html" class="active">1.3 Bases Técnicas</a></li>
+                <li><a href="modulo1-4.html">1.4 Documentos</a></li>
+                <li><a href="../tests/test-modulo1.html">📝 Test</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="main-content fade-in">
+            <h1>1.3 Bases técnicas y tarifas</h1>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 30%"></div>
+            </div>
+            <p class="progress-text">Tema 3 de 9 - Módulo 1</p>
+
+            <div class="highlight">
+                <h2>📋 Objetivos de aprendizaje</h2>
+                <ul>
+                    <li>Comprender qué son las bases técnicas y su importancia</li>
+                    <li>Conocer los elementos que componen una tarifa de seguros</li>
+                    <li>Analizar el proceso de cálculo actuarial de primas</li>
+                    <li>Entender los diferentes tipos de tarifas existentes</li>
+                </ul>
+            </div>
+
+            <h2>🔍 Definición y concepto</h2>
+            <p>Las <strong>bases técnicas</strong> constituyen el fundamento matemático y actuarial que sustenta todo producto de seguros. Incluyen las metodologías, datos estadísticos, hipótesis y cálculos necesarios para determinar las primas técnicas.</p>
+
+            <div class="card">
+                <h3>🎯 Finalidad de las bases técnicas</h3>
+                <ul>
+                    <li><strong>Equilibrio técnico:</strong> Asegurar que los ingresos cubran los gastos</li>
+                    <li><strong>Solvencia:</strong> Garantizar la capacidad de pago de siniestros</li>
+                    <li><strong>Competitividad:</strong> Ofrecer precios atractivos en el mercado</li>
+                    <li><strong>Transparencia:</strong> Proporcionar justificación de las tarifas</li>
+                </ul>
+            </div>
+
+            <h2>🧮 Componentes de las bases técnicas</h2>
+
+            <h3>1. 📊 Datos estadísticos</h3>
+            <div class="card">
+                <h4>Fuentes de información</h4>
+                <ul>
+                    <li><strong>Histórico propio:</strong> Experiencia de la compañía</li>
+                    <li><strong>Datos sectoriales:</strong> Estadísticas del mercado asegurador</li>
+                    <li><strong>Organismos oficiales:</strong> INE, DGT, etc.</li>
+                    <li><strong>Estudios especializados:</strong> Consultoras actuariales</li>
+                </ul>
+
+                <h4>Tipos de datos</h4>
+                <ul>
+                    <li><strong>Frecuencia de siniestros:</strong> Número de siniestros por unidad de riesgo</li>
+                    <li><strong>Coste medio:</strong> Importe promedio de los siniestros</li>
+                    <li><strong>Distribución temporal:</strong> Estacionalidad de los siniestros</li>
+                    <li><strong>Factores de riesgo:</strong> Variables que influyen en la siniestralidad</li>
+                </ul>
+            </div>
+
+            <h3>2. 🔬 Hipótesis actuariales</h3>
+            <div class="card">
+                <h4>Hipótesis demográficas</h4>
+                <ul>
+                    <li><strong>Tablas de mortalidad:</strong> En seguros de vida</li>
+                    <li><strong>Tablas de morbilidad:</strong> En seguros de salud</li>
+                    <li><strong>Tablas de invalidez:</strong> En seguros de accidentes</li>
+                    <li><strong>Evolución demográfica:</strong> Tendencias de población</li>
+                </ul>
+
+                <h4>Hipótesis económicas</h4>
+                <ul>
+                    <li><strong>Tipo de interés técnico:</strong> Rentabilidad esperada de inversiones</li>
+                    <li><strong>Inflación:</strong> Evolución prevista de precios</li>
+                    <li><strong>Evolución salarial:</strong> Para seguros laborales</li>
+                    <li><strong>Costes médicos:</strong> En seguros de salud</li>
+                </ul>
+            </div>
+
+            <h3>3. 📈 Modelos matemáticos</h3>
+            <div class="card">
+                <h4>Distribuciones de probabilidad</h4>
+                <ul>
+                    <li><strong>Distribución de Poisson:</strong> Para frecuencia de siniestros</li>
+                    <li><strong>Distribución lognormal:</strong> Para importes de siniestros</li>
+                    <li><strong>Distribución gamma:</strong> Para modelar colas pesadas</li>
+                    <li><strong>Distribuciones compuestas:</strong> Combinación de varias</li>
+                </ul>
+
+                <h4>Técnicas estadísticas</h4>
+                <ul>
+                    <li><strong>Regresión lineal:</strong> Relación entre variables</li>
+                    <li><strong>Análisis de supervivencia:</strong> En seguros de vida</li>
+                    <li><strong>Modelos GLM:</strong> Modelos lineales generalizados</li>
+                    <li><strong>Machine Learning:</strong> Técnicas avanzadas de predicción</li>
+                </ul>
+            </div>
+
+            <h2>💰 Estructura de la prima</h2>
+
+            <h3>1. 🎯 Prima pura o neta</h3>
+            <div class="card">
+                <p><strong>Definición:</strong> Es la cantidad estrictamente necesaria para hacer frente a los siniestros esperados.</p>
+                
+                <h4>Cálculo básico</h4>
+                <p><strong>Prima Pura = Frecuencia × Coste Medio</strong></p>
+                
+                <h4>Componentes</h4>
+                <ul>
+                    <li><strong>Siniestralidad esperada:</strong> Coste previsto de siniestros</li>
+                    <li><strong>Provisiones técnicas:</strong> Reservas para siniestros pendientes</li>
+                    <li><strong>Margen de seguridad:</strong> Para desviaciones estadísticas</li>
+                </ul>
+
+                <h4>Ejemplo práctico</h4>
+                <div class="highlight">
+                    <p><strong>Seguro de hogar:</strong></p>
+                    <ul>
+                        <li>Frecuencia de siniestros: 5% anual</li>
+                        <li>Coste medio por siniestro: 2.000€</li>
+                        <li>Prima pura = 0,05 × 2.000€ = 100€</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>2. 📊 Recargos</h3>
+            <div class="card">
+                <h4>Gastos de adquisición</h4>
+                <ul>
+                    <li><strong>Comisiones:</strong> Agentes, corredores, bancos</li>
+                    <li><strong>Publicidad:</strong> Campañas de marketing</li>
+                    <li><strong>Gastos comerciales:</strong> Red de ventas</li>
+                    <li><strong>Gastos de emisión:</strong> Procesamiento de pólizas</li>
+                </ul>
+
+                <h4>Gastos de administración</h4>
+                <ul>
+                    <li><strong>Gastos de gestión:</strong> Personal, sistemas, oficinas</li>
+                    <li><strong>Gastos de siniestros:</strong> Peritos, abogados, tramitación</li>
+                    <li><strong>Gastos financieros:</strong> Gestión de inversiones</li>
+                    <li><strong>Gastos generales:</strong> Dirección, contabilidad, auditoría</li>
+                </ul>
+
+                <h4>Margen de beneficio</h4>
+                <ul>
+                    <li><strong>Rentabilidad objetivo:</strong> Retorno para accionistas</li>
+                    <li><strong>Margen de solvencia:</strong> Capital adicional de seguridad</li>
+                    <li><strong>Reservas de estabilización:</strong> Para ejercicios adversos</li>
+                </ul>
+            </div>
+
+            <h3>3. 🏛️ Impuestos y tasas</h3>
+            <div class="card">
+                <h4>Impuesto sobre Primas de Seguros (IPS)</h4>
+                <ul>
+                    <li><strong>Tipo general:</strong> 6% (seguros generales)</li>
+                    <li><strong>Tipo reducido:</strong> 0% (seguros de vida, salud, etc.)</li>
+                    <li><strong>Base imponible:</strong> Prima sin impuestos</li>
+                </ul>
+
+                <h4>Otras cargas</h4>
+                <ul>
+                    <li><strong>Consorcio de Compensación:</strong> Recargo para riesgos extraordinarios</li>
+                    <li><strong>Fondo de Garantía:</strong> En algunos ramos específicos</li>
+                    <li><strong>Tasas administrativas:</strong> Colegios profesionales</li>
+                </ul>
+            </div>
+
+            <h2>📋 Tipos de tarifas</h2>
+
+            <h3>1. 📊 Tarifas por clases de riesgo</h3>
+            <div class="card">
+                <h4>Segmentación básica</h4>
+                <ul>
+                    <li><strong>Criterios geográficos:</strong> Provincia, población, código postal</li>
+                    <li><strong>Criterios demográficos:</strong> Edad, sexo, estado civil</li>
+                    <li><strong>Criterios profesionales:</strong> Actividad, experiencia</li>
+                    <li><strong>Criterios del riesgo:</strong> Tipo de bien, valor, uso</li>
+                </ul>
+
+                <h4>Ejemplo: Seguro de automóvil</h4>
+                <ul>
+                    <li><strong>Edad del conductor:</strong> Menos de 25 años (+50%)</li>
+                    <li><strong>Zona geográfica:</strong> Madrid centro (+30%)</li>
+                    <li><strong>Potencia del vehículo:</strong> Más de 120 CV (+25%)</li>
+                    <li><strong>Años de carné:</strong> Menos de 2 años (+40%)</li>
+                </ul>
+            </div>
+
+            <h3>2. 🎯 Tarifas individualizadas</h3>
+            <div class="card">
+                <h4>Bonus-Malus</h4>
+                <ul>
+                    <li><strong>Sistema de bonificaciones</strong> por ausencia de siniestros</li>
+                    <li><strong>Penalizaciones</strong> por siniestralidad elevada</li>
+                    <li><strong>Escala progresiva</strong> de descuentos/recargos</li>
+                </ul>
+
+                <h4>Scoring</h4>
+                <ul>
+                    <li><strong>Puntuación individualizada</strong> del riesgo</li>
+                    <li><strong>Múltiples variables</strong> combinadas</li>
+                    <li><strong>Modelos predictivos</strong> avanzados</li>
+                </ul>
+            </div>
+
+            <h3>3. 💼 Tarifas para grandes riesgos</h3>
+            <div class="card">
+                <h4>Características</h4>
+                <ul>
+                    <li><strong>Suscripción individual:</strong> Análisis caso por caso</li>
+                    <li><strong>Información detallada:</strong> Auditorías de riesgo</li>
+                    <li><strong>Negociación directa:</strong> Condiciones específicas</li>
+                    <li><strong>Experiencia propia:</strong> Historial del cliente</li>
+                </ul>
+
+                <h4>Proceso de tarificación</h4>
+                <ul>
+                    <li><strong>Evaluación técnica:</strong> Inspección del riesgo</li>
+                    <li><strong>Análisis financiero:</strong> Solvencia del cliente</li>
+                    <li><strong>Estudios específicos:</strong> Modelización ad hoc</li>
+                    <li><strong>Propuesta comercial:</strong> Oferta personalizada</li>
+                </ul>
+            </div>
+
+            <h2>🔧 Proceso de elaboración de tarifas</h2>
+
+            <h3>1. 📊 Análisis de datos</h3>
+            <div class="card">
+                <h4>Recopilación de información</h4>
+                <ul>
+                    <li><strong>Datos históricos:</strong> Mínimo 3-5 años</li>
+                    <li><strong>Credibilidad estadística:</strong> Volumen suficiente</li>
+                    <li><strong>Homogeneidad:</strong> Condiciones comparables</li>
+                    <li><strong>Actualidad:</strong> Relevancia temporal</li>
+                </ul>
+
+                <h4>Tratamiento de datos</h4>
+                <ul>
+                    <li><strong>Depuración:</strong> Eliminación de outliers</li>
+                    <li><strong>Desarrollo:</strong> Proyección de siniestros pendientes</li>
+                    <li><strong>Ajuste por inflación:</strong> Actualización de valores</li>
+                    <li><strong>Tendencia:</strong> Evolución temporal</li>
+                </ul>
+            </div>
+
+            <h3>2. 🧮 Modelización actuarial</h3>
+            <div class="card">
+                <h4>Selección del modelo</h4>
+                <ul>
+                    <li><strong>Tipo de distribución:</strong> Ajuste estadístico</li>
+                    <li><strong>Variables explicativas:</strong> Factores de riesgo</li>
+                    <li><strong>Interacciones:</strong> Relaciones entre variables</li>
+                    <li><strong>Validación:</strong> Pruebas de bondad</li>
+                </ul>
+
+                <h4>Calibración</h4>
+                <ul>
+                    <li><strong>Estimación de parámetros:</strong> Máxima verosimilitud</li>
+                    <li><strong>Tests estadísticos:</strong> Significatividad</li>
+                    <li><strong>Validación cruzada:</strong> Robustez del modelo</li>
+                    <li><strong>Análisis de residuos:</strong> Calidad del ajuste</li>
+                </ul>
+            </div>
+
+            <h3>3. 🎯 Implementación</h3>
+            <div class="card">
+                <h4>Consideraciones comerciales</h4>
+                <ul>
+                    <li><strong>Competitividad:</strong> Comparación con mercado</li>
+                    <li><strong>Aceptación:</strong> Impacto en clientes actuales</li>
+                    <li><strong>Simplicidad:</strong> Facilidad de aplicación</li>
+                    <li><strong>Comunicación:</strong> Explicación de cambios</li>
+                </ul>
+
+                <h4>Seguimiento y control</h4>
+                <ul>
+                    <li><strong>Monitoreo continuo:</strong> Evolución de resultados</li>
+                    <li><strong>Alertas tempranas:</strong> Desviaciones significativas</li>
+                    <li><strong>Ajustes periódicos:</strong> Actualización de tarifas</li>
+                    <li><strong>Reporting:</strong> Informes de seguimiento</li>
+                </ul>
+            </div>
+
+            <h2>🔍 Caso práctico: Tarifa de seguro de vida</h2>
+            <div class="card">
+                <h3>Situación</h3>
+                <p>Desarrollo de una tarifa para un seguro de vida temporal para hombres de 30 años.</p>
+
+                <h3>Datos base</h3>
+                <ul>
+                    <li><strong>Tabla de mortalidad:</strong> PERMF-2000P</li>
+                    <li><strong>Tipo de interés técnico:</strong> 1,5% anual</li>
+                    <li><strong>Gastos de gestión:</strong> 8% de la prima</li>
+                    <li><strong>Margen de seguridad:</strong> 10%</li>
+                </ul>
+
+                <h3>Cálculo</h3>
+                <ol>
+                    <li><strong>Prima pura:</strong> Basada en probabilidad de fallecimiento</li>
+                    <li><strong>Valor actual actuarial:</strong> Descontado al tipo técnico</li>
+                    <li><strong>Recargos por gastos:</strong> 8% adicional</li>
+                    <li><strong>Margen de seguridad:</strong> 10% sobre total</li>
+                </ol>
+
+                <h3>Resultado</h3>
+                <p>Prima anual por 100.000€ de capital: <strong>150€</strong></p>
+            </div>
+
+            <h2>📚 Conceptos clave para recordar</h2>
+            <div class="highlight">
+                <ul>
+                    <li><strong>🧮 Bases técnicas:</strong> Fundamento actuarial del producto</li>
+                    <li><strong>💰 Prima pura:</strong> Coste estricto de la cobertura</li>
+                    <li><strong>📊 Recargos:</strong> Gastos y margen de la aseguradora</li>
+                    <li><strong>🎯 Segmentación:</strong> Diferenciación por factores de riesgo</li>
+                    <li><strong>🔄 Actualización:</strong> Revisión periódica necesaria</li>
+                </ul>
+            </div>
+
+            <div class="navigation-buttons">
+                <a href="modulo1-2.html" class="btn btn-primary">⬅️ Anterior: 1.2 La póliza</a>
+                <a href="modulo1-4.html" class="btn btn-success">Siguiente: 1.4 Documentos ➡️</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Curso de Seguros - Módulo 1.3 Bases técnicas y tarifas</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            curso.currentModule = 1;
+            curso.currentTopic = 3;
+            curso.markTopicComplete(1, 3);
+            curso.highlightTerms();
+        });
+    </script>
+</body>
+</html>

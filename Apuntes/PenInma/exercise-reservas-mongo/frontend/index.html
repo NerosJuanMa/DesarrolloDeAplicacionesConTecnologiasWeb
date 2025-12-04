@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reservas - Ejercicio MongoDB</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Reservas de Entradas - Ejercicio MongoDB</h1>
+      <p>Aprende a usar MongoDB con Express paso a paso</p>
+    </header>
+
+    <div id="mensaje" class="mensaje oculto"></div>
+
+    <section class="formulario-seccion">
+      <h2 id="titulo-formulario">➕ Crear Nueva Reserva</h2>
+      <form id="formulario-reserva">
+        <div class="campo">
+          <label for="nombre">Nombre:</label>
+          <input id="nombre" required maxlength="100">
+        </div>
+        <div class="campo">
+          <label for="email">Email:</label>
+          <input id="email" type="email" required>
+        </div>
+        <div class="campo">
+          <label for="asientos">Asientos:</label>
+          <input id="asientos" type="number" min="1" max="10" required>
+        </div>
+        <div class="campo">
+          <label for="fecha">Fecha (YYYY-MM-DD):</label>
+          <input id="fecha" required placeholder="2025-12-31">
+        </div>
+
+        <div class="botones-formulario">
+          <button id="btn-guardar" type="submit">💾 Guardar Reserva</button>
+          <button id="btn-cancelar" type="button" class="oculto">❌ Cancelar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="acciones">
+      <button id="btn-cargar">🔄 Cargar Reservas</button>
+    </section>
+
+    <section class="lista-seccion">
+      <h2>📋 Reservas</h2>
+      <div id="loading" class="loading oculto">🔄 Cargando...</div>
+      <div id="lista-reservas"></div>
+    </section>
+
+    <section class="estadisticas">
+      <div>
+        <span id="total-reservas">0</span>
+        <span>Total Reservas</span>
+      </div>
+    </section>
+  </div>
+
+  <div id="modal-confirmar" class="modal oculto">
+    <div class="modal-contenido">
+      <h3>⚠️ Confirmar</h3>
+      <p id="mensaje-confirmacion"></p>
+      <button id="btn-confirmar-eliminar">🗑️ Sí</button>
+      <button id="btn-cancelar-eliminar">❌ No</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
