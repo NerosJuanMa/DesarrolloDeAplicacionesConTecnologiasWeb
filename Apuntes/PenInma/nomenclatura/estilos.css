@@ -1,0 +1,395 @@
+/* ================================
+   🎨 Variables de color base
+   ================================ */
+:root {
+  --color-principal: #E44D26;           /* naranja HTML */
+  --color-principal-oscuro: #c53f20;
+  --color-secundario: #F16529;          /* naranja más claro */
+  --color-fondo: #ffffff;
+  --color-fondo-suave: #fff7f3;
+  --color-texto: #222222;
+  --color-texto-suave: #555555;
+  --color-texto-inverso: #ffffff;
+  --color-borde-suave: #ffd4bf;
+  --color-sombra-suave: rgba(0, 0, 0, 0.05);
+  --color-resaltado: #ffe1c9;
+}
+
+/* ================================
+   🧱 Reset básico
+   ================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #fcfcfc;
+  color: var(--color-texto);
+  line-height: 1.5;
+}
+
+/* ================================
+   🔗 Enlace para saltar contenido
+   ================================ */
+.enlace-saltar {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-principal);
+  color: var(--color-texto-inverso);
+  text-decoration: none;
+  z-index: 999;
+}
+
+.enlace-saltar:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+/* ================================
+   🧭 Cabecera y navegación
+   ================================ */
+.cabecera {
+  background: linear-gradient(90deg, var(--color-principal), var(--color-secundario));
+  color: var(--color-texto-inverso);
+  padding: 1.5rem 0;
+  box-shadow: 0 2px 6px var(--color-sombra-suave);
+}
+
+.contenedor {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.cabecera-titulo {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.cabecera-subtitulo {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.navegacion-principal {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.enlace-navegacion {
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: var(--color-texto-inverso);
+}
+
+.enlace-navegacion:hover,
+.enlace-navegacion:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ================================
+   📄 Contenido principal
+   ================================ */
+.contenido-principal {
+  padding: 2rem 0 3rem;
+}
+
+.seccion {
+  margin-bottom: 2rem;
+}
+
+/* Tarjetas de contenido */
+.tarjeta {
+  background-color: var(--color-fondo);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 10px var(--color-sombra-suave);
+  border: 1px solid var(--color-borde-suave);
+}
+
+.tarjeta-encabezado {
+  margin-bottom: 0.75rem;
+}
+
+.tarjeta-titulo {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--color-principal-oscuro);
+}
+
+.tarjeta-subtitulo {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  color: var(--color-texto-suave);
+}
+
+.tarjeta-cuerpo p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.lista-simple {
+  padding-left: 1.2rem;
+  margin: 0.5rem 0 0.5rem;
+}
+
+.lista-simple li + li {
+  margin-top: 0.25rem;
+}
+
+/* ================================
+   📊 Tablas
+   ================================ */
+.contenedor-tabla {
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.tabla-datos {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background-color: var(--color-fondo);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--color-borde-suave);
+}
+
+.tabla-datos thead {
+  background-color: var(--color-principal);
+  color: var(--color-texto-inverso);
+}
+
+.tabla-datos th,
+.tabla-datos td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ffe1c9;
+}
+
+.tabla-datos th {
+  font-weight: 600;
+}
+
+.tabla-datos tbody tr:nth-child(even) {
+  background-color: var(--color-fondo-suave);
+}
+
+.tabla-datos tbody tr:hover {
+  background-color: var(--color-resaltado);
+}
+
+.tabla-datos--compacta th,
+.tabla-datos--compacta td {
+  padding: 0.45rem 0.6rem;
+}
+
+/* ================================
+   🏷️ Etiquetas y resaltados
+   ================================ */
+.etiqueta-codigo {
+  font-family: "Fira Code", "Consolas", monospace;
+  background-color: var(--color-fondo-suave);
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.35rem;
+  font-size: 0.9rem;
+  border: 1px solid #ffe1c9;
+}
+
+.texto-resaltado {
+  background-color: var(--color-resaltado);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+}
+
+/* Bloques de código */
+.bloque-codigo {
+  font-family: "Fira Code", "Consolas", monospace;
+  background-color: #1e1e1e;
+  color: #f7f7f7;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+
+/* ================================
+   ⚠️ Notas y avisos
+   ================================ */
+.nota {
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  background-color: var(--color-fondo-suave);
+  border-left: 4px solid var(--color-secundario);
+}
+
+.nota-importante {
+  background-color: #fff3e0;
+  border-left-color: var(--color-principal);
+  font-weight: 500;
+}
+
+/* ================================
+   🔘 Botones
+   ================================ */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: #ffffff;
+  color: var(--color-principal-oscuro);
+}
+
+.boton-primario {
+  background: linear-gradient(90deg, var(--color-principal), var(--color-secundario));
+  color: var(--color-texto-inverso);
+  border-color: transparent;
+}
+
+.boton-primario:hover,
+.boton-primario:focus {
+  background: linear-gradient(90deg, var(--color-principal-oscuro), var(--color-principal));
+}
+
+.boton-secundario {
+  border-color: var(--color-principal);
+  color: var(--color-principal-oscuro);
+}
+
+.boton-secundario:hover,
+.boton-secundario:focus {
+  background-color: var(--color-fondo-suave);
+}
+
+/* ================================
+   🧷 Utilidades de espaciado
+   ================================ */
+.espacio-arriba {
+  margin-top: 1.5rem;
+}
+
+.espacio-abajo {
+  margin-bottom: 1.5rem;
+}
+
+/* ================================
+   📱 Diseño responsive
+   ================================ */
+@media (min-width: 768px) {
+  .cabecera-contenido {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .tarjetas-en-fila {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+/* ================================
+   ✨ Accesibilidad básica
+   ================================ */
+a,
+button,
+.boton {
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+a:focus-visible,
+button:focus-visible,
+.boton:focus-visible {
+  outline: 2px solid var(--color-principal-oscuro);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+/* ============================
+   🔻 PIE DE PÁGINA
+   ============================ */
+
+.pie {
+  background-color: #E44D26; /* naranja HTML5 */
+  color: #ffffff;
+  padding: 2rem 0;
+  margin-top: 3rem;
+  text-align: center;
+  border-top: 6px solid #F16529; /* tono más claro */
+}
+
+.pie .contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pie-imagen {
+  max-height: 60px;
+  width: auto;
+  filter: drop-shadow(0 3px 4px rgba(0,0,0,0.2));
+}
+
+.pie p,
+.pie span {
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.pie a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.pie a:hover {
+  color: #ffe6d5;
+}
+
+/* Responsive: en pantallas grandes alinea horizontal */
+@media (min-width: 768px) {
+  .pie .contenedor {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

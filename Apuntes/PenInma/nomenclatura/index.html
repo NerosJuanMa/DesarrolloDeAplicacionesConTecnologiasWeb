@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nomenclaturas en Desarrollo Web</title>
+  <link rel="stylesheet" href="estilos.css" />
+</head>
+
+<body>
+
+  <!-- Enlace de accesibilidad -->
+  <a href="#contenido" class="enlace-saltar">Saltar al contenido</a>
+
+  <!-- =========================================
+       🔶 CABECERA CON LOGO Y NAVEGACIÓN
+       ========================================= -->
+  <header class="cabecera">
+    <div class="contenedor cabecera-contenido">
+
+      <!-- Logo -->
+      <div class="cabecera-logo">
+        <img src="logo.png" alt="Logo del curso" class="logo" style="max-height: 70px;">
+      </div>
+
+      <!-- Títulos -->
+      <div class="cabecera-texto">
+        <h1 class="cabecera-titulo">Guía de Nomenclaturas</h1>
+        <p class="cabecera-subtitulo">Curso de Desarrollo Web – Backend &amp; Frontend</p>
+      </div>
+
+    </div>
+
+    <!-- Barra de navegación -->
+   <nav class="navegacion-principal contenedor">
+  <a href="#intro" class="enlace-navegacion">Introducción</a>
+  <a href="#importancia" class="enlace-navegacion">Importancia</a>
+  <a href="#carpetas" class="enlace-navegacion">Carpetas y Archivos</a>
+  <a href="#objetos" class="enlace-navegacion">Objetos</a>
+  <a href="#mongoose" class="enlace-navegacion">Modelos Mongoose</a>
+  <a href="#mysql" class="enlace-navegacion">MySQL</a>
+  <a href="#react" class="enlace-navegacion">React</a> 
+  <a href="#tabla" class="enlace-navegacion">Tabla Comparativa</a>
+   <a href="#mvc" class="enlace-navegacion">Proyecto MVC</a>
+</nav>
+
+  </header>
+
+  <!-- =========================================
+       🔸 CONTENIDO PRINCIPAL
+       ========================================= -->
+  <main id="contenido" class="contenido-principal contenedor">
+
+    <!-- 🔸 INTRODUCCIÓN -->
+    <section class="card" id="intro">
+      <h2>Nomenclaturas en Desarrollo Web: Introducción</h2>
+      <p>
+        En programación profesional, elegir bien el nombre de las cosas es tan
+        importante como que el código funcione. Una buena nomenclatura ayuda a que
+        todos los miembros del equipo hablen el mismo idioma, facilita la lectura,
+        reduce errores y hace que los proyectos sean más fáciles de mantener.
+      </p>
+
+      <p>
+        En este curso trabajamos con varias tecnologías:
+        <strong>JavaScript, Node.js, Express, MongoDB/Mongoose, React y MySQL</strong>.
+        Cada una utiliza convenciones de escritura que debemos respetar para evitar
+        confusiones y asegurar que nuestro código sea profesional.
+      </p>
+
+      <p>
+        Esta guía recoge todas las normas esenciales que usaremos en el aula:
+      </p>
+
+      <ul>
+        <li>Cómo nombrar carpetas y archivos.</li>
+        <li>Cómo nombrar variables, constantes y funciones.</li>
+        <li>Cuándo usar mayúsculas y cuándo minúsculas.</li>
+        <li>Nomenclatura de objetos y modelos en Mongoose.</li>
+        <li>Nombres recomendados para tablas y columnas en MySQL.</li>
+        <li>Nombres de componentes, hooks y servicios en React.</li>
+        <li>Estructura recomendada para un backend y un frontend reales.</li>
+      </ul>
+
+      <p>
+        El objetivo es unificar criterios para que todos los alumnos desarrollen
+        proyectos coherentes, ordenados y fáciles de entender. A partir de aquí,
+        construiremos una tabla comparativa completa de todas las nomenclaturas
+        del curso.
+      </p>
+    </section>
+
+    <!-- 🔸 IMPORTANCIA -->
+    <section class="card" id="importancia">
+      <h2>¿Por qué es importante una buena nomenclatura?</h2>
+      <p>
+        Una nomenclatura adecuada no solo mejora la legibilidad del código, sino
+        que también facilita la colaboración entre desarrolladores. Cuando todos
+        siguen las mismas reglas para nombrar variables, funciones y archivos,
+        se reduce la curva de aprendizaje para nuevos miembros del equipo y se
+        minimizan los errores causados por malentendidos.
+      </p>
+
+      <p>
+        Además, una buena nomenclatura contribuye a la mantenibilidad del código.
+        Proyectos bien nombrados son más fáciles de actualizar y escalar, ya que
+        los desarrolladores pueden entender rápidamente la estructura y el propósito
+        de cada componente.
+      </p>
+
+      <p>
+        En resumen, invertir tiempo en definir y seguir una nomenclatura clara y
+        consistente es fundamental para el éxito de cualquier proyecto de desarrollo
+        web.
+      </p>
+    </section>
+
+    <!-- 🔸 CARPETAS Y ARCHIVOS -->
+    <section class="card" id="carpetas">
+      <h2>Nomenclatura para carpetas y archivos</h2>
+      <p>
+        En nuestros proyectos usaremos principalmente el estilo
+        <strong>kebab-case</strong> para archivos y, en muchos casos, para nombres
+        de utilidades y servicios.
+      </p>
+      <ul>
+        <li>Todo en <strong>minúsculas</strong>.</li>
+        <li>Palabras separadas con <strong>guiones (-)</strong>.</li>
+        <li>Sin espacios, sin mayúsculas y sin guiones bajos.</li>
+      </ul>
+
+      <p>Ejemplos recomendados:</p>
+      <ul>
+        <li><code class="etiqueta-codigo">productos.routes.js</code></li>
+        <li><code class="etiqueta-codigo">usuarios.controller.js</code></li>
+        <li><code class="etiqueta-codigo">configuracion-api.js</code></li>
+        <li><code class="etiqueta-codigo">controllers/</code>, <code class="etiqueta-codigo">models/</code>, <code class="etiqueta-codigo">routes/</code></li>
+      </ul>
+
+      <p class="nota">
+        Para profundizar, consulta la sección
+        <a href="#kebab">¿Qué es kebab-case?</a>, donde verás más ejemplos de
+        nombres correctos e incorrectos.
+      </p>
+    </section>
+
+    <!-- 🔸 OBJETOS -->
+    <section class="card" id="objetos">
+      <h2>Nomenclatura para objetos (datos)</h2>
+      <p>
+        Llamamos <strong>objeto</strong> a los datos concretos que manejamos en el
+        código (lo que guardamos en la base de datos, lo que recibimos por <code class="etiqueta-codigo">req.body</code>, etc.).
+      </p>
+      <ul>
+        <li>Usamos <strong>camelCase</strong> para los nombres de objetos.</li>
+        <li>Empiezan en <strong>minúscula</strong>.</li>
+        <li>Su nombre debe describir <em>qué representa</em> el dato.</li>
+      </ul>
+
+      <div class="contenedor-tabla">
+        <table class="tabla-datos tabla-datos--compacta">
+          <thead>
+            <tr>
+              <th>Correcto</th>
+              <th>Incorrecto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code class="etiqueta-codigo">const usuario = &#123; nombre: "Ana" &#125;</code></td>
+              <td><code class="etiqueta-codigo">const Usuario = &#123; nombre: "Ana" &#125;</code></td>
+            </tr>
+            <tr>
+              <td><code class="etiqueta-codigo">const pedido = new Pedido()</code></td>
+              <td><code class="etiqueta-codigo">const Pedido = new Pedido()</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="nota">
+        <strong>Regla clave:</strong> si es un dato concreto (un usuario, un pedido,
+        un producto), empieza siempre por minúscula.
+      </p>
+    </section>
+
+    <!-- 🔸 MODELOS MONGOOSE -->
+    <section class="card" id="mongoose">
+      <h2>Nomenclatura para modelos en Mongoose</h2>
+      <p>
+        En Mongoose distinguimos claramente entre <strong>esquema</strong>,
+        <strong>modelo</strong> y <strong>documentos</strong>.
+      </p>
+
+      <ul>
+        <li>
+          El <strong>esquema</strong> suele nombrarse en <code class="etiqueta-codigo">camelCase</code>:
+          <code class="etiqueta-codigo">productoSchema</code>.
+        </li>
+        <li>
+          El <strong>modelo</strong> se nombra en <strong>PascalCase</strong> y en
+          singular: <code class="etiqueta-codigo">Producto</code>,
+          <code class="etiqueta-codigo">Pedido</code>, <code class="etiqueta-codigo">Usuario</code>.
+        </li>
+        <li>
+          Los <strong>documentos</strong> (instancias) se guardan en variables
+          en <code class="etiqueta-codigo">camelCase</code>:
+          <code class="etiqueta-codigo">const producto = new Producto(...)</code>.
+        </li>
+      </ul>
+
+      <div class="bloque-codigo">
+<pre><code>const productoSchema = new mongoose.Schema(&#123;
+  nombre: String,
+  precio: Number
+&#125;);
+
+// Modelo (clase / tipo)
+const Producto = mongoose.model("Producto", productoSchema);
+
+// Documento (objeto / dato concreto)
+const producto = new Producto(&#123;
+  nombre: "Camiseta React",
+  precio: 19.99
+&#125;);</code></pre>
+      </div>
+
+      <p class="nota nota-importante">
+        <strong>Idea clave:</strong> el modelo (<code class="etiqueta-codigo">Producto</code>)
+        sirve para <em>crear</em> productos; la variable
+        (<code class="etiqueta-codigo">producto</code>) es un producto concreto.
+      </p>
+    </section>
+
+    <!-- 🔸 MYSQL -->
+    <section class="card" id="mysql">
+      <h2>Nomenclatura en MySQL / MariaDB</h2>
+      <p>
+        En bases de datos relacionales usaremos el estilo
+        <strong>snake_case</strong>:
+      </p>
+      <ul>
+        <li>Tablas en plural: <code class="etiqueta-codigo">usuarios</code>, <code class="etiqueta-codigo">productos</code>, <code class="etiqueta-codigo">detalle_pedidos</code>.</li>
+        <li>Columnas con nombres claros: <code class="etiqueta-codigo">usuario_id</code>, <code class="etiqueta-codigo">precio_total</code>, <code class="etiqueta-codigo">creado_en</code>.</li>
+        <li>Clave primaria corta y coherente: <code class="etiqueta-codigo">id</code> o <code class="etiqueta-codigo">usuario_id</code>, pero siempre igual en todo el proyecto.</li>
+      </ul>
+
+      <div class="bloque-codigo">
+<pre><code>CREATE TABLE usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  creado_en DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE pedidos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  usuario_id INT NOT NULL,
+  total DECIMAL(10,2) NOT NULL,
+  estado ENUM('pendiente','completado','cancelado') DEFAULT 'pendiente',
+  creado_en DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);</code></pre>
+      </div>
+    </section>
+
+  <!-- 🔸 REACT -->
+<section class="card" id="react">
+  <h2>Nomenclatura en React</h2>
+
+  <p>
+    React organiza el código mediante <strong>componentes</strong>, que son piezas
+    reutilizables de interfaz, y mediante <strong>páginas</strong> cuando usamos 
+    un sistema de rutas (React Router).  
+    Cada elemento tiene su propia convención de nombres para mantener un código limpio y profesional.
+  </p>
+
+  <h3>1) Componentes en React</h3>
+  <p>
+    Los componentes representan elementos visuales reutilizables.  
+    Siempre se nombran en <strong>PascalCase</strong> (mayúscula inicial y cada palabra también).
+  </p>
+
+  <ul class="lista-simple">
+    <li><code class="etiqueta-codigo">Navbar</code></li>
+    <li><code class="etiqueta-codigo">ProductoCard</code></li>
+    <li><code class="etiqueta-codigo">ProductosList</code></li>
+    <li><code class="etiqueta-codigo">BotonPrimario</code></li>
+  </ul>
+
+  <p>❌ Incorrecto:</p>
+  <ul class="lista-simple">
+    <li><code class="etiqueta-codigo">navbar</code></li>
+    <li><code class="etiqueta-codigo">producto-card</code></li>
+    <li><code class="etiqueta-codigo">productos_list</code></li>
+  </ul>
+
+  <div class="bloque-codigo">
+<pre><code>function ProductoCard(&#123; producto &#125;) &#123;
+  return &lt;article&gt;&#123;producto.nombre&#125;&lt;/article&gt;;
+&#125;
+
+export default ProductoCard;</code></pre>
+  </div>
+
+
+  <h3>2) Hooks personalizados</h3>
+  <p>
+    Los hooks son funciones que comienzan SIEMPRE por
+    <strong>use</strong> y que encapsulan lógica reutilizable.
+  </p>
+
+  <p>Correcto:</p>
+  <ul class="lista-simple">
+    <li><code class="etiqueta-codigo">useProductos()</code></li>
+    <li><code class="etiqueta-codigo">useAuth()</code></li>
+    <li><code class="etiqueta-codigo">useFormulario()</code></li>
+  </ul>
+
+  <p>Incorrecto:</p>
+  <ul class="lista-simple">
+    <li><code class="etiqueta-codigo">getProductos()</code></li>
+    <li><code class="etiqueta-codigo">productosHook()</code></li>
+  </ul>
+
+  <div class="bloque-codigo">
+<pre><code>function useProductos() &#123;
+  const [productos, setProductos] = useState([]);
+
+  useEffect(() => &#123;
+    fetch("/api/productos")
+      .then(res => res.json())
+      .then(data => setProductos(data));
+  &#125;, []);
+
+  return &#123; productos, setProductos &#125;;
+&#125;
+
+export default useProductos;</code></pre>
+  </div>
+
+
+  <h3>3) Páginas en React (cuando usamos React Router)</h3>
+  <p>
+    Una <strong>página</strong> en React es un componente que representa
+    una vista completa asociada a una ruta.  
+    Se guarda en <strong>src/pages/</strong> y se nombra usando PascalCase 
+    terminado en <code class="etiqueta-codigo">Page</code>.
+  </p>
+
+  <p>Correcto:</p>
+  <ul class="lista-simple">
+    <li><code class="etiqueta-codigo">HomePage.jsx</code></li>
+    <li><code class="etiqueta-codigo">ProductosPage.jsx</code></li>
+    <li><code class="etiqueta-codigo">LoginPage.jsx</code></li>
+    <li><code class="etiqueta-codigo">DashboardPage.jsx</code></li>
+  </ul>
+
+  <p>Incorrecto:</p>
+  <ul class="lista-simple">
+    <li><code class="etiqueta-codigo">home.jsx</code></li>
+    <li><code class="etiqueta-codigo">productos-page.js</code></li>
+    <li><code class="etiqueta-codigo">PaginaProductos.jsx</code></li>
+  </ul>
+
+  <div class="bloque-codigo">
+<pre><code>// src/pages/ProductosPage.jsx
+function ProductosPage() &#123;
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;Listado de productos&lt;/h1&gt;
+    &lt;/main&gt;
+  );
+&#125;
+
+export default ProductosPage;</code></pre>
+  </div>
+
+
+  <h3>4) Servicios / API en React</h3>
+  <p>
+    Las funciones que hacen peticiones al backend se guardan en
+    <strong>src/services/</strong> y se nombran en
+    <strong>kebab-case</strong> o camelCase según el archivo.
+  </p>
+
+  <p>Archivos recomendados:</p>
+  <ul class="lista-simple">
+    <li><code class="etiqueta-codigo">productos.service.js</code></li>
+    <li><code class="etiqueta-codigo">auth.service.js</code></li>
+  </ul>
+
+  <p>Funciones dentro del archivo (camelCase):</p>
+  <ul class="lista-simple">
+    <li><code class="etiqueta-codigo">obtenerProductos()</code></li>
+    <li><code class="etiqueta-codigo">loginUsuario()</code></li>
+  </ul>
+
+  <div class="bloque-codigo">
+<pre><code>// src/services/productos.service.js
+export async function obtenerProductos() &#123;
+  const res = await fetch("http://localhost:3000/api/productos");
+  return res.json();
+&#125;</code></pre>
+  </div>
+
+
+  <h3>5) Estilos en React</h3>
+  <p>
+    Si usas CSS , los archivos suelen ir en minúsculas:
+  </p>
+
+  <ul class="lista-simple">
+    <li><code class="etiqueta-codigo">app.css</code></li>
+    <li><code class="etiqueta-codigo">productos-page.css</code></li>
+  </ul>
+
+  
+
+
+  <h3>6) Estructura recomendada de un proyecto React</h3>
+
+  <div class="bloque-codigo">
+<pre><code>src/
+  components/
+    Navbar.jsx
+    ProductoCard.jsx
+    BotonPrimario.jsx
+
+  pages/
+    HomePage.jsx
+    ProductosPage.jsx
+    LoginPage.jsx
+
+  hooks/
+    useProductos.js
+    useAuth.js
+
+  services/
+    productos.service.js
+    auth.service.js
+
+  styles/
+    variables.css
+    global.css
+
+  App.jsx
+  main.jsx</code></pre>
+      </div>
+
+  <p class="nota nota-importante">
+    <strong>Regla clave en React:</strong><br>
+    <em>Componentes y páginas</em> → PascalCase<br>
+    <em>Hooks</em> → empiezan por <code class="etiqueta-codigo">use</code><br>
+    <em>Servicios y archivos</em> → kebab-case o camelCase según tipo<br>
+  </p>
+
+</section>
+
+
+    <!-- 🔸 TABLA COMPARATIVA DE NOMENCLATURAS -->
+    <section class="card" id="tabla">
+      <h2>Tabla comparativa de nomenclaturas</h2>
+      <p>
+        En esta tabla resumimos las convenciones que utilizaremos en el curso para nombrar 
+        variables, funciones, objetos, modelos, carpetas, archivos y otros elementos clave 
+        en nuestros proyectos de desarrollo web.
+      </p>
+
+      <div class="contenedor-tabla">
+        <table class="tabla-datos tabla-datos--compacta">
+          <thead>
+            <tr>
+              <th>Elemento</th>
+              <th>Tecnología / Contexto</th>
+              <th>Nomenclatura recomendada</th>
+              <th>Ejemplos correctos</th>
+              <th>Errores típicos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Variables y constantes -->
+            <tr>
+              <td>Variables</td>
+              <td>JavaScript / Node / React</td>
+              <td><strong>camelCase</strong>, minúscula inicial, nombre descriptivo.</td>
+              <td>
+                <code class="etiqueta-codigo">precioTotal</code><br>
+                <code class="etiqueta-codigo">numeroProductos</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">a</code>,
+                <code class="etiqueta-codigo">datos</code>,
+                <code class="etiqueta-codigo">Lista</code>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Constantes</td>
+              <td>JavaScript / Configuración</td>
+              <td><strong>MAYÚSCULAS_CON_GUIONES</strong> cuando son constantes globales.</td>
+              <td>
+                <code class="etiqueta-codigo">MAX_INTENTOS</code><br>
+                <code class="etiqueta-codigo">API_BASE_URL</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">MaxIntentos</code>,
+                <code class="etiqueta-codigo">url</code>
+              </td>
+            </tr>
+
+            <!-- Funciones y métodos -->
+            <tr>
+              <td>Funciones / métodos</td>
+              <td>JavaScript / Node / React</td>
+              <td><strong>Verbo + complemento</strong> en camelCase.</td>
+              <td>
+                <code class="etiqueta-codigo">calcularTotalPedido()</code><br>
+                <code class="etiqueta-codigo">obtenerProductos()</code><br>
+                <code class="etiqueta-codigo">validarEmail()</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">haceCosas()</code>,
+                <code class="etiqueta-codigo">funcion1()</code>
+              </td>
+            </tr>
+
+            <!-- Objetos -->
+            <tr>
+              <td>Objetos (instancias)</td>
+              <td>JS / Node / Respuestas de BD</td>
+              <td><strong>camelCase</strong>, minúscula inicial. Representan datos concretos.</td>
+              <td>
+                <code class="etiqueta-codigo">const usuario = &#123;...&#125;</code><br>
+                <code class="etiqueta-codigo">const pedido = new Pedido()</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">const Usuario = &#123;...&#125;</code>
+                (parece clase/modelo)
+              </td>
+            </tr>
+
+            <!-- Modelos / clases -->
+            <tr>
+              <td>Modelos / clases</td>
+              <td>JavaScript / Mongoose</td>
+              <td><strong>PascalCase</strong>, singular. Representan tipos.</td>
+              <td>
+                <code class="etiqueta-codigo">class Usuario &#123;...&#125;</code><br>
+                <code class="etiqueta-codigo">const Producto = mongoose.model("Producto", schema)</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">class usuario &#123;...&#125;</code>,
+                <code class="etiqueta-codigo">const productos = mongoose.model(...)</code>
+              </td>
+            </tr>
+
+            <!-- Componentes React -->
+            <tr>
+              <td>Componentes</td>
+              <td>React</td>
+              <td><strong>PascalCase</strong>, nombre de “pieza visual”.</td>
+              <td>
+                <code class="etiqueta-codigo">function ProductoCard() &#123;...&#125;</code><br>
+                <code class="etiqueta-codigo">&lt;ProductoCard /&gt;</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">productoCard</code>,
+                <code class="etiqueta-codigo">card_producto</code>
+              </td>
+            </tr>
+
+            <!-- Hooks -->
+            <tr>
+              <td>Hooks</td>
+              <td>React</td>
+              <td>Empiezan siempre por <strong>use</strong> + nombre.</td>
+              <td>
+                <code class="etiqueta-codigo">useProductos()</code><br>
+                <code class="etiqueta-codigo">useAuth()</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">getProductos()</code>,
+                <code class="etiqueta-codigo">productosHook()</code>
+              </td>
+            </tr>
+
+            <!-- Archivos y carpetas -->
+            <tr>
+              <td>Archivos y carpetas</td>
+              <td>Node / Express / React</td>
+              <td>
+                <strong>kebab-case</strong> (minúsculas y guiones).
+                Ideal para archivos, utilidades, servicios y carpetas.
+              </td>
+              <td>
+                <code class="etiqueta-codigo">productos.routes.js</code><br>
+                <code class="etiqueta-codigo">usuarios.controller.js</code><br>
+                <code class="etiqueta-codigo">configuracion-api.js</code><br>
+                <code class="etiqueta-codigo">controllers/</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">ProductosRoutes.js</code><br>
+                <code class="etiqueta-codigo">productos_Routes.js</code><br>
+                <code class="etiqueta-codigo">ConfigApi.js</code><br>
+                <code class="etiqueta-codigo">MisControladores/</code>
+              </td>
+            </tr>
+
+            <!-- Tablas MySQL -->
+            <tr>
+              <td>Tablas</td>
+              <td>MySQL / MariaDB</td>
+              <td><strong>snake_case</strong>, plural.</td>
+              <td>
+                <code class="etiqueta-codigo">usuarios</code><br>
+                <code class="etiqueta-codigo">productos</code><br>
+                <code class="etiqueta-codigo">detalle_pedidos</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">Usuario</code>,
+                <code class="etiqueta-codigo">TablaProductos</code>
+              </td>
+            </tr>
+
+            <!-- Columnas MySQL -->
+            <tr>
+              <td>Columnas</td>
+              <td>MySQL / MariaDB</td>
+              <td><strong>snake_case</strong>, nombre claro.</td>
+              <td>
+                <code class="etiqueta-codigo">id</code><br>
+                <code class="etiqueta-codigo">usuario_id</code><br>
+                <code class="etiqueta-codigo">precio_total</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">IdUsuario</code>,
+                <code class="etiqueta-codigo">precioTotal</code>
+              </td>
+            </tr>
+
+            <!-- Rutas API -->
+            <tr>
+              <td>Rutas API</td>
+              <td>Express / REST</td>
+              <td>Prefijo <code class="etiqueta-codigo">/api</code> + recurso en plural.</td>
+              <td>
+                <code class="etiqueta-codigo">GET /api/productos</code><br>
+                <code class="etiqueta-codigo">POST /api/pedidos</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">/api/crearProducto</code>,
+                <code class="etiqueta-codigo">/api/listarProductos</code>
+              </td>
+            </tr>
+
+            <!-- Git -->
+            <tr>
+              <td>Ramas Git</td>
+              <td>Control de versiones</td>
+              <td><strong>tipo/descripcion-corta</strong> en minúsculas.</td>
+              <td>
+                <code class="etiqueta-codigo">feature/crud-productos</code><br>
+                <code class="etiqueta-codigo">fix/validacion-precio</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">ramaNueva</code>,
+                <code class="etiqueta-codigo">cosas</code>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Commits Git</td>
+              <td>Control de versiones</td>
+              <td>Verbo en presente + qué se ha hecho.</td>
+              <td>
+                <code class="etiqueta-codigo">"Añade modelo Producto"</code><br>
+                <code class="etiqueta-codigo">"Corrige ruta POST /api/pedidos"</code>
+              </td>
+              <td>
+                <code class="etiqueta-codigo">"update"</code>,
+                <code class="etiqueta-codigo">"cambios varios"</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="nota nota-importante">
+        <strong>Idea clave:</strong> lo importante no es solo que el código funcione, sino que 
+        cualquiera del equipo pueda leerlo y entenderlo rápidamente gracias a una nomenclatura 
+        clara y consistente.
+      </p>
+    </section>
+    <!-- 🔸 PROYECTO MVC -->
+<section class="card" id="mvc">
+  <h2>Estructura de un proyecto MVC (Node + Express)</h2>
+
+  <p>
+    En este curso organizaremos el backend siguiendo el patrón 
+    <strong>MVC</strong>:
+  </p>
+
+  <ul class="lista-simple">
+    <li><strong>M</strong> de <strong>Modelo</strong>: la capa que habla con la base de datos.</li>
+    <li><strong>V</strong> de <strong>Vista</strong>: lo que ve el usuario (HTML, React, plantillas...).</li>
+    <li><strong>C</strong> de <strong>Controlador</strong>: la lógica que conecta modelos y vistas.</li>
+  </ul>
+
+  <p>
+    En proyectos con API + React, el backend se encarga de 
+    <strong>Modelos</strong> y <strong>Controladores</strong>, y el frontend React actúa 
+    como <strong>Vista</strong>.
+  </p>
+
+  <h3>1) Estructura básica de carpetas (backend)</h3>
+
+  <p>Ejemplo de proyecto Node + Express organizado en MVC:</p>
+
+  <div class="bloque-codigo">
+<pre><code>backend/
+  src/
+    config/
+      db.js               # configuración de la base de datos
+      env.js              # lectura de variables de entorno
+
+    models/
+      producto.model.js   # modelo Producto (Mongoose / Sequelize / etc.)
+      pedido.model.js
+      usuario.model.js
+
+    controllers/
+      productos.controller.js
+      pedidos.controller.js
+      usuarios.controller.js
+
+    routes/
+      productos.routes.js
+      pedidos.routes.js
+      usuarios.routes.js
+
+    middlewares/
+      auth.middleware.js
+      error.middleware.js
+
+    utils/
+      formatear-fecha.js
+      calcular-total.js
+
+    app.js                 # configuración de la app Express
+    server.js              # arranque del servidor
+
+  public/                  # archivos estáticos (imágenes, CSS, JS)
+  package.json
+  .env
+</code></pre>
+  </div>
+
+  <h3>2) Relación entre carpetas y el patrón MVC</h3>
+
+  <ul class="lista-simple">
+    <li>
+      <strong>models/</strong> → <em>Modelo</em> (M).
+      Aquí definimos los esquemas y modelos que hablan con la base de datos.
+      <br>
+      Ejemplos:
+      <code class="etiqueta-codigo">Producto</code>,
+      <code class="etiqueta-codigo">Pedido</code>,
+      <code class="etiqueta-codigo">Usuario</code>.
+    </li>
+    <li>
+      <strong>controllers/</strong> → <em>Controlador</em> (C).
+      Aquí va la lógica de cada recurso: qué pasa cuando se llama a
+      <code class="etiqueta-codigo">GET /api/productos</code> o
+      <code class="etiqueta-codigo">POST /api/pedidos</code>.
+    </li>
+    <li>
+      <strong>routes/</strong> → <em>Enrutador</em>.
+      No forma parte estricta de MVC clásico, pero en Express usamos rutas para
+      conectar las URLs con los controladores.
+    </li>
+    <li>
+      <strong>views/</strong> (cuando existe) → <em>Vista</em> (V).
+      Si usamos plantillas HTML (EJS, Handlebars...) aquí irían las vistas.
+      En nuestro curso, muchas veces la vista será la aplicación React.
+    </li>
+  </ul>
+
+  <h3>3) Nomenclatura en un proyecto MVC</h3>
+
+  <p>Aplicamos las mismas reglas de nombres que en el resto del manual:</p>
+
+  <ul class="lista-simple">
+    <li>
+      Carpetas:
+      <code class="etiqueta-codigo">models/</code>,
+      <code class="etiqueta-codigo">controllers/</code>,
+      <code class="etiqueta-codigo">routes/</code>,
+      <code class="etiqueta-codigo">middlewares/</code> (minúsculas, plural).
+    </li>
+    <li>
+      Archivos de modelos:
+      <code class="etiqueta-codigo">producto.model.js</code>,
+      <code class="etiqueta-codigo">pedido.model.js</code>
+      (kebab-case + <code class="etiqueta-codigo">.model.js</code>).
+    </li>
+    <li>
+      Archivos de controladores:
+      <code class="etiqueta-codigo">productos.controller.js</code>,
+      <code class="etiqueta-codigo">pedidos.controller.js</code>.
+    </li>
+    <li>
+      Archivos de rutas:
+      <code class="etiqueta-codigo">productos.routes.js</code>,
+      <code class="etiqueta-codigo">usuarios.routes.js</code>.
+    </li>
+    <li>
+      Modelos Mongoose en código:
+      <code class="etiqueta-codigo">Producto</code>,
+      <code class="etiqueta-codigo">Pedido</code> (PascalCase, singular).
+    </li>
+  </ul>
+
+  <p class="nota nota-importante">
+    <strong>Idea clave del MVC:</strong><br>
+    Cada carpeta tiene una responsabilidad clara. 
+    <br>
+    Esto hace que el proyecto sea más fácil de entender, mantener y ampliar.
+  </p>
+</section>
+
+
+    <!-- 🔸 KEBAB-CASE -->
+    <section class="card" id="kebab">
+      <h2>¿Qué es kebab-case?</h2>
+
+      <p>
+        El estilo <strong>kebab-case</strong> es una convención muy usada para nombrar 
+        <strong>archivos y carpetas</strong> en desarrollo web. Se caracteriza por:
+      </p>
+
+      <ul>
+        <li>Usar solo <strong>minúsculas</strong>.</li>
+        <li>Separar palabras con <strong>guiones (-)</strong>.</li>
+        <li>No usar espacios, guiones bajos ni mayúsculas.</li>
+      </ul>
+
+      <div class="contenedor-tabla">
+        <table class="tabla-datos tabla-datos--compacta">
+          <thead>
+            <tr>
+              <th>Correcto (kebab-case)</th>
+              <th>Incorrecto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code class="etiqueta-codigo">productos.routes.js</code></td>
+              <td><code class="etiqueta-codigo">ProductosRoutes.js</code></td>
+            </tr>
+            <tr>
+              <td><code class="etiqueta-codigo">usuarios.controller.js</code></td>
+              <td><code class="etiqueta-codigo">usuarios_Controller.js</code></td>
+            </tr>
+            <tr>
+              <td><code class="etiqueta-codigo">validar-datos.js</code></td>
+              <td><code class="etiqueta-codigo">validarDatos.js</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="nota">
+        <strong>Regla rápida:</strong><br>
+        Usa <strong>kebab-case</strong> siempre para archivos y carpetas, excepto cuando nombres 
+        modelos, clases o componentes (que usan PascalCase).
+      </p>
+    </section>
+
+  </main>
+
+  <!-- =========================================
+       🔻 PIE DE PÁGINA CON IMAGEN
+       ========================================= -->
+  <footer class="pie">
+    <div class="contenedor">
+      @2025 Desarrollo Web - Todos los derechos reservados. Inma Contreras
+      <img src="pie.png" alt="Imagen del pie de página" class="pie-imagen" style="max-height: 80px;">
+    </div>
+  </footer>
+
+</body>
+
+</html>
