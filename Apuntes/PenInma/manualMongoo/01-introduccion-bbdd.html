@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tema 1 — ¿Qué es una base de datos?</title>
+  <meta name="description" content="Introducción a bases de datos: definición, utilidad, tipos (SQL vs NoSQL), ejemplos, filas/columnas vs documentos, ACID vs BASE, normalización, glosario, ejercicios y FAQs." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- NAV superior -->
+  <nav class="main-nav" role="navigation" aria-label="Menú principal">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="brand">📗 Manual Mongoo</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="01-introduccion-bbdd.html" aria-current="page">Tema 1</a></li>
+        <li><a href="02-relacional-vs-no-relacional.html">Tema 2</a></li>
+        <li><a href="03-mongoo-vs-mysql.html">Tema 3</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- CABECERA -->
+  <header>
+    <div class="wrap hero hero--compact" role="banner">
+      <div class="hero-content">
+        <span class="kicker">Tema 1</span>
+        <h1>¿Qué es una base de datos?</h1>
+        <p class="subtitle">
+          Manual didáctico: definición, utilidad, tipos, ejemplos, buenas prácticas y ejercicios — enfoque Full Stack.
+        </p>
+      </div>
+      <img src="logo.png" alt="Logo/ilustración del tema" class="hero-illus" loading="lazy">
+    </div>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main id="contenido" class="wrap" role="main">
+
+    <div class="cta" style="margin-top:1rem">
+      <a class="btn btn-outline" href="index.html">⬅ Volver al índice</a>
+      <a class="btn btn-primary" href="02-relacional-vs-no-relacional.html">Siguiente tema ➜</a>
+    </div>
+
+     <!-- 🧾 CONTENIDO PRINCIPAL -->
+  <main id="contenido" class="wrap" role="main">
+    <section id="intro" class="card">
+      <h2 class="section-title">¿Qué es este manual?</h2>
+      <p class="lead">Es una introducción a <strong>“Mongoo”</strong> (base de datos no relacional orientada a documentos). El objetivo es que comprendas los fundamentos de las bases de datos <strong>relacionales</strong> y <strong>no relacionales</strong> y sepas aplicar ambos enfoques en desarrollo web.</p>
+    </section>
+
+    <!-- 🧩 NUEVA SECCIÓN EXPLICATIVA -->
+    <section id="conceptos" class="card" style="margin-top:1rem">
+      <h2 class="section-title">📚 Base de datos vs. Gestor de base de datos</h2>
+      <p class="lead">
+        Aunque a menudo se confunden, <strong>una base de datos</strong> y un <strong>gestor de base de datos</strong> no son lo mismo. Entender esta diferencia es clave antes de empezar a trabajar con <em>MySQL</em> o <em>MongoDB</em>.
+      </p>
+
+      <article class="friendly-box" style="margin-top:1rem">
+        <h3>🧠 Base de datos</h3>
+        <p>
+          Es el <strong>conjunto estructurado de información</strong> que almacenamos para que pueda ser consultada o modificada. 
+          Piensa en ella como una <em>biblioteca digital</em>: las estanterías serían las <em>tablas</em> o <em>colecciones</em>, y los libros serían los <em>registros</em> o <em>documentos</em>.
+        </p>
+        <p>
+          Su función es <strong>guardar los datos</strong> de forma organizada, coherente y accesible. 
+          Puede estar guardada en un servidor local o en la nube (como en MongoDB Atlas).
+        </p>
+      </article>
+
+      <article class="friendly-box" style="margin-top:1rem">
+        <h3>⚙️ Gestor de base de datos (SGBD)</h3>
+        <p>
+          Es el <strong>programa o sistema</strong> que permite crear, modificar, consultar y administrar la base de datos.
+          Es decir, el gestor es la <em>herramienta que maneja</em> el contenido de la base de datos.
+        </p>
+        <ul>
+          <li><strong>Ejemplos relacionales:</strong> MySQL, PostgreSQL, SQLite.</li>
+          <li><strong>Ejemplos no relacionales (NoSQL):</strong> MongoDB, CouchDB, Firebase.</li>
+        </ul>
+        <p>
+          Sin un gestor, los datos serían simples archivos difíciles de manipular. 
+          El SGBD proporciona <strong>lenguajes de consulta</strong> (como SQL o las consultas de MongoDB) y <strong>seguridad</strong> en el acceso.
+        </p>
+      </article>
+
+     <article class="card resumen" style="margin-top:1rem">
+  <h3 class="section-title">📊 Resumen comparativo</h3>
+
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Concepto</th>
+          <th>Función principal</th>
+          <th>Ejemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Base de datos</strong></td>
+          <td>Contiene los datos organizados.</td>
+          <td>Biblioteca con fichas de usuarios o productos.</td>
+        </tr>
+        <tr>
+          <td><strong>Gestor de base de datos</strong></td>
+          <td>Administra y controla el acceso a esos datos.</td>
+          <td>MySQL, MongoDB, Oracle, SQLite.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</article>
+
+    </section>
+
+    <section id="objetivos" class="grid cols-3" style="margin-top:1rem">
+      <div class="card" style="grid-column:1/-1">
+        <h2 class="section-title">Objetivos de aprendizaje</h2>
+        <ul class="objetivos">
+          <li>Comprender el concepto de <strong>base de datos</strong>.</li>
+          <li>Distinguir entre modelos <strong>relacionales</strong> y <strong>NoSQL</strong>.</li>
+          <li>Aprender los fundamentos de <strong>“Mongoo”</strong> y su relación con MySQL.</li>
+          <li>Instalar el entorno y crear la primera colección de datos.</li>
+          <li>Aplicar operaciones CRUD con ejemplos didácticos.</li>
+          <li>Desarrollar un mini-proyecto final comparando MongoDB y MySQL.</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- 3. Analogía biblioteca -->
+    <section id="biblioteca" class="card">
+      <h2>📚 Analogía práctica: la biblioteca</h2>
+      <pre><code>Libros
+ ├─ id, titulo, autor_id, anio, isbn
+Autores
+ ├─ id, nombre, pais
+Usuarios
+ ├─ id, nombre, email
+Prestamos
+ ├─ id, libro_id, usuario_id, fecha_salida, fecha_devolucion</code></pre>
+      <p>
+        <strong>Entidades</strong> (Libros, Autores, Usuarios) y <strong>relaciones</strong> (Préstamos conectan Usuario⇄Libro).
+        En SQL lo modelamos con tablas; en MongoDB podemos representarlo con documentos anidados o referencias.
+      </p>
+    </section>
+
+    <!-- 4. Aporte Full Stack -->
+    <section id="fullstack" class="card">
+      <h2>3️⃣ ¿Qué aporta al desarrollo Full Stack?</h2>
+      <ul>
+        <li><strong>Persistencia real</strong> de datos en producción.</li>
+        <li><strong>Backend sólido</strong> (API/servicios) que conversa con el frontend.</li>
+        <li><strong>Escalabilidad</strong> y profesionalización del proyecto.</li>
+      </ul>
+    </section>
+
+    <!-- 5. Alternativas -->
+    <section id="alternativas" class="card">
+      <h2>4️⃣ Alternativas a las BBDD</h2>
+      <ul>
+        <li>Archivos JSON / texto plano.</li>
+        <li>Variables en memoria (se pierden al reiniciar).</li>
+        <li>Hojas de cálculo.</li>
+        <li>APIs externas como “fuente de datos”.</li>
+      </ul>
+      <p class="lead">Útiles para prototipos o proyectos pequeños, pero no sustituyen a una BBDD en robustez, seguridad y escalabilidad.</p>
+    </section>
+
+    <!-- 6. Tipos de BBDD -->
+    <section id="tipos" class="card">
+      <h2>5️⃣ Tipos de bases de datos</h2>
+
+      <h3>Internas vs Externas</h3>
+      <ul>
+        <li><strong>Internas (embebidas):</strong> p. ej. SQLite (un solo archivo, sin servidor).</li>
+        <li><strong>Externas (cliente-servidor):</strong> MySQL, PostgreSQL, MongoDB…</li>
+      </ul>
+
+      <h3>Relacionales vs No relacionales</h3>
+      <ul>
+        <li><strong>Relacionales (SQL):</strong> tablas, filas y columnas con tipos rígidos.</li>
+        <li><strong>No relacionales (NoSQL):</strong> documentos (JSON), clave-valor, grafos o columnas anchas.</li>
+      </ul>
+    </section>
+
+    <!-- 7. Programas más usados -->
+    <section id="programas" class="card">
+      <h2>6️⃣ Programas más usados</h2>
+      <table class="table" aria-label="Sistemas de bases de datos más usados">
+        <thead>
+          <tr><th>Tipo</th><th>Sistema</th><th>Características</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Relacional</td><td>MySQL</td><td>Gratuito y muy usado en web.</td></tr>
+          <tr><td>Relacional</td><td>PostgreSQL</td><td>Robusto y avanzado.</td></tr>
+          <tr><td>Interna</td><td>SQLite</td><td>Ligera; sin servidor.</td></tr>
+          <tr><td>NoSQL (documento)</td><td>MongoDB</td><td>Popular en Node.js; flexible.</td></tr>
+          <tr><td>NoSQL (documento)</td><td>Firestore</td><td>DBaaS “serverless”.</td></tr>
+          <tr><td>NoSQL (clave-valor)</td><td>Redis</td><td>Caché/colas; en memoria.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 8. SQL vs Documentos -->
+    <section id="filas-columnas" class="card">
+      <h2>7️⃣ Filas/Columnas (SQL) vs Documentos/Claves (NoSQL)</h2>
+
+      <h3>Relacional (SQL)</h3>
+      <ul>
+        <li><strong>Columnas</strong> = campos tipados.</li>
+        <li><strong>Filas</strong> = registros con la misma estructura.</li>
+      </ul>
+
+      <table class="table" aria-label="Ejemplo de tabla relacional: alumnos">
+        <caption class="sr-only">Tabla de ejemplo con alumnos</caption>
+        <thead><tr><th>id</th><th>nombre</th><th>edad</th><th>ciudad</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Ana López</td><td>20</td><td>Sevilla</td></tr>
+          <tr><td>2</td><td>Luis Díaz</td><td>22</td><td>Madrid</td></tr>
+          <tr><td>3</td><td>Marta Gil</td><td>21</td><td>Valencia</td></tr>
+        </tbody>
+      </table>
+
+      <h3>No relacional (Documentos)</h3>
+      <pre aria-label="Ejemplo MongoDB"><code>[
+  { "_id": 1, "nombre": "Ana López", "edad": 20, "ciudad": "Sevilla" },
+  { "_id": 2, "nombre": "Luis Díaz", "correo": "luis@example.com", "activo": true }
+]</code></pre>
+      <div class="callout info">
+        <strong>Observa:</strong> los documentos pueden tener <em>campos diferentes</em> entre sí. Esta flexibilidad agiliza el desarrollo,
+        pero exige buenas prácticas de validación.
+      </div>
+    </section>
+
+    <!-- 9. ACID vs BASE -->
+    <section id="acid-base" class="card">
+      <h2>⚖️ ACID vs BASE: dos enfoques</h2>
+      <p>Dos filosofías para gestionar datos según la prioridad del sistema.</p>
+
+      <div class="grid-2">
+        <div class="callout info">
+          <h3>🛡️ ACID (banca, transacciones críticas)</h3>
+          <ul>
+            <li><strong>Atomicidad</strong>: todo o nada.</li>
+            <li><strong>Consistencia</strong>: reglas siempre válidas.</li>
+            <li><strong>Aislamiento</strong>: operaciones no se interfieren.</li>
+            <li><strong>Durabilidad</strong>: lo confirmado persiste.</li>
+          </ul>
+          <p><strong>Resultado:</strong> máxima fiabilidad. Ideal para operaciones monetarias, inventarios estrictos, etc.</p>
+        </div>
+
+        <div class="callout success">
+          <h3>🚀 BASE (alta disponibilidad y escala)</h3>
+          <ul>
+            <li><strong>Básicamente disponible</strong>: el sistema rara vez cae.</li>
+            <li><strong>Estado suave</strong>: los datos pueden cambiar “en tránsito”.</li>
+            <li><strong>Consistencia eventual</strong>: todo converge tras unos segundos.</li>
+          </ul>
+          <p><strong>Resultado:</strong> gran rendimiento y escalabilidad. Ideal para redes sociales, streaming, IoT.</p>
+        </div>
+      </div>
+      <p class="lead">Conclusión: ¿Necesitas exactitud perfecta? prioriza ACID. ¿Prioridad rendimiento/escala? adopta BASE.</p>
+    </section>
+
+    <!-- 10. Normalización -->
+    <section id="normalizacion" class="card">
+      <h2>🧱 Normalización vs Desnormalización</h2>
+      <p>Elegimos entre <strong>evitar duplicidad</strong> (normalizar) o <strong>acelerar lecturas</strong> (desnormalizar).</p>
+
+      <div class="grid-2">
+        <div class="callout warn">
+          <h3>📐 Normalización (SQL)</h3>
+          <ul>
+            <li>Cada dato se guarda <em>una sola vez</em> (menos errores).</li>
+            <li>Actualizar un dato afecta a todas las consultas.</li>
+            <li>Lecturas más lentas por <em>joins</em> entre tablas.</li>
+          </ul>
+        </div>
+        <div class="callout info">
+          <h3>📦 Desnormalización (NoSQL)</h3>
+          <ul>
+            <li>Se duplican datos <em>a propósito</em> para leer más rápido.</li>
+            <li>Actualizaciones más costosas (varios documentos).</li>
+            <li>Rendimiento de lectura alto con menos “joins”.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Ejemplos SQL vs Mongo -->
+    <section id="ejemplos" class="card">
+      <h2>9️⃣ Ejemplos prácticos: SQL vs Mongo</h2>
+
+      <div class="grid-2">
+        <div>
+          <h3>SQL (MySQL/PostgreSQL)</h3>
+          <pre><code>-- Crear tabla
+CREATE TABLE alumnos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  edad INT,
+  ciudad VARCHAR(80)
+);
+
+-- Insertar
+INSERT INTO alumnos (nombre, edad, ciudad)
+VALUES ('Ana López', 20, 'Sevilla');
+
+-- Consultar
+SELECT id, nombre, ciudad
+FROM alumnos
+WHERE edad &gt;= 20;</code></pre>
+        </div>
+
+        <div>
+          <h3>MongoDB (documentos)</h3>
+          <pre><code>// Insertar varios
+db.alumnos.insertMany([
+  { nombre: "Ana López", edad: 20, ciudad: "Sevilla" },
+  { nombre: "Luis Díaz", correo: "luis@example.com" }
+]);
+
+// Consultar (filtro y proyección)
+db.alumnos.find(
+  { edad: { $gte: 20 } },
+  { nombre: 1, ciudad: 1 }
+);
+
+// Actualizar
+db.alumnos.updateOne(
+  { nombre: "Ana López" },
+  { $set: { ciudad: "Córdoba" } }
+);</code></pre>
+        </div>
+      </div>
+
+      <p class="lead"><em>Diferencia clave:</em> en SQL defines el esquema antes de guardar; en Mongo puedes empezar flexible y validar con el tiempo.</p>
+    </section>
+
+    <!-- 12. FAQ -->
+    <section id="faq" class="card">
+      <h2>❓ Preguntas frecuentes (FAQ)</h2>
+      <details>
+        <summary>¿Puedo empezar con JSON y migrar después?</summary>
+        <p>Sí. Prototipa con JSON y migra a SQL/Mongo cuando el proyecto crezca.</p>
+      </details>
+      <details>
+        <summary>¿SQL es “mejor” que NoSQL?</summary>
+        <p>Depende del caso de uso: SQL prioriza integridad; NoSQL prioriza flexibilidad y escalado.</p>
+      </details>
+      <details>
+        <summary>¿Qué elijo para mi primer CRUD?</summary>
+        <p>Si hay relaciones/consultas complejas, SQL. Para iterar rápido con front-end JS, Mongo es excelente.</p>
+      </details>
+    </section>
+
+    <!-- 13. Checklist -->
+    <section id="checklist" class="card">
+      <h2>✅ Checklist</h2>
+      <ul>
+        <li>Tabla/fila/columna vs colección/documento/clave.</li>
+        <li>Cuándo elegir SQL o NoSQL.</li>
+        <li>Consulta simple en SQL y en MongoDB.</li>
+        <li>ACID vs BASE.</li>
+        <li>Normalización vs desnormalización.</li>
+      </ul>
+    </section>
+
+    <!-- 14. Vídeo -->
+    <section id="video-intro" class="card">
+      <h2>🎥 Vídeo recomendado: Introducción a BBDD</h2>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/knVwokXITGI?rel=0&modestbranding=1"
+          title="Introducción a Bases de Datos (YouTube)"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+      </div>
+      <p class="sr-only">
+        Si no puedes reproducirlo:
+        <a href="https://www.youtube.com/watch?v=knVwokXITGI" target="_blank" rel="noopener">Abrir en YouTube</a>
+      </p>
+    </section>
+
+    <!-- 15. Mini-quiz autocorregible -->
+    <section id="quiz" class="card">
+      <h2>🧪 Mini-quiz</h2>
+
+      <form class="quiz" id="quizForm">
+        <div class="q">
+          <h4>1) ¿Qué opción describe mejor a una BBDD?</h4>
+          <label><input type="radio" name="q1" value="a"> Conjunto organizado de datos con reglas de gestión</label><br>
+          <label><input type="radio" name="q1" value="b"> Un archivo de texto con muchas líneas</label>
+        </div>
+
+        <div class="q">
+          <h4>2) En MongoDB es común…</h4>
+          <label><input type="radio" name="q2" value="a"> Definir el esquema rígido antes de insertar</label><br>
+          <label><input type="radio" name="q2" value="b"> Permitir documentos con campos distintos</label>
+        </div>
+
+        <div class="q">
+          <h4>3) ACID prioriza…</h4>
+          <label><input type="radio" name="q3" value="a"> Disponibilidad por encima de consistencia</label><br>
+          <label><input type="radio" name="q3" value="b"> Integridad estricta de los datos</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Corregir</button>
+        <div id="quizResult" class="result"></div>
+      </form>
+    </section>
+
+    <!-- 16. Conclusión -->
+    <section id="conclusion" class="card">
+      <h2>💬 Conclusión</h2>
+      <p>
+        Las BBDD permiten guardar, consultar y gestionar información de forma eficiente. Dominar los fundamentos te prepara
+        para comparar enfoques en el <a href="02-relacional-vs-no-relacional.html">Tema 2 (Relacional vs No relacional)</a>.
+      </p>
+    </section>
+
+    <div class="cta" style="margin-top:1rem">
+      <a class="btn btn-outline" href="index.html">⬅ Volver al índice</a>
+      <a class="btn btn-primary" href="02-relacional-vs-no-relacional.html">Siguiente tema ➜</a>
+    </div>
+  </main>
+
+  <!-- PIE -->
+  <footer role="contentinfo">
+    <img src="pie.png" alt="Decoración del pie del manual" class="footer-img" loading="lazy">
+    <div class="wrap">
+      Manual “Mongoo” · @Inma Contreras · © 2025
+    </div>
+  </footer>
+
+  <!-- JS del mini-quiz -->
+  <script>
+    (function(){
+      const form = document.getElementById('quizForm');
+      const res = document.getElementById('quizResult');
+      if(!form) return;
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        const correct = { q1:'a', q2:'b', q3:'b' };
+        let score = 0, total = Object.keys(correct).length;
+
+        for (const k in correct) {
+          const val = (form.querySelector('input[name="'+k+'"]:checked')||{}).value;
+          if (val === correct[k]) score++;
+        }
+        res.textContent = `Resultado: ${score} / ${total}`;
+        res.className = 'result ' + (score===total ? 'callout success' : 'callout info');
+        res.style.padding = '0.6rem 0.8rem';
+        res.style.borderRadius = '0.5rem';
+      });
+    })();
+  </script>
+</body>
+</html>

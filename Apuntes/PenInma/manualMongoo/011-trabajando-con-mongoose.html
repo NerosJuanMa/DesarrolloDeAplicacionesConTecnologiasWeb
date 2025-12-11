@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tema 11 — Trabajando con Mongoose</title>
+  <meta name="description" content="Lección completa y progresiva para crear un proyecto Node.js con Mongoose: .env, .gitignore, conexión, modelo/esquema, semillas y CRUD." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header role="banner">
+    <div class="wrap hero hero--compact">
+      <div class="hero-content">
+        <span class="kicker">Tema 11 · Mongoose</span>
+        <h1>Trabajando con Mongoose.</h1>
+        <p class="subtitle">De “entender MongoDB” a “programar con MongoDB”:  esquema, modelo, seed y CRUD.</p>
+      </div>
+      <img src="logo.png" alt="Ilustración Mongoose + MongoDB" class="hero-illus" loading="lazy">
+    </div>
+  </header>
+
+<body>
+  
+<div class="cta" style="margin-top:2rem">
+    <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+    <a class="btn btn-primary" href="12-relaciones.html">Siguiente tema ➜</a>
+  </div>
+  <main id="contenido" class="wrap" role="main">
+   
+    <section class="card" id="puente-modelo-controlador" aria-labelledby="modelo-controlador-titulo">
+      <h2 id="modelo-controlador-titulo">🔗 Empezamos a trabajar en nuestro CRUD</h2>
+      <p>
+        En la <strong>Lección 10</strong> definimos el <em>Schema</em> y creamos el <em>Model</em> que conecta con la colección
+        <code>productos</code>. Aquí, el <em>controlador</em> utiliza ese modelo para implementar el CRUD completo.
+      </p>
+
+      <div class="callout info">
+        <strong>Recordatorio (Lección 10):</strong>
+        <pre><code>// src/models/Producto.js
+import mongoose from 'mongoose';
+
+// Definimos el esquema
+const productoSchema = new mongoose.Schema({
+  nombre: { type: String, required: true, trim: true }, // índice simple
+  precio: { type: Number, required: true, min: 0 },
+  stock:  { type: Number, default: 0, min: 0 },
+  activo: { type: Boolean, default: true },
+  imagen: { type: String }
+}, { timestamps: true });
+
+
+
+// Creamos el modelo
+const Producto = mongoose.model('Producto', productoSchema);
+
+export default Producto;
+</code></pre>
+      </div>
+
+      <h3>🧠 Cómo se relacionan</h3>
+      <ul>
+        <li><strong>Schema:</strong> define <em>qué</em> campos existen y <em>cómo</em> (tipo, <code>required</code>, <code>min</code>, <code>default</code>, <code>trim</code>…)</li>
+        <li><strong>Model:</strong> expone métodos como <code>.create()</code>, <code>.find()</code>, <code>.findById()</code>, <code>.findByIdAndUpdate()</code>, <code>.findByIdAndDelete()</code></li>
+        <li><strong>Controlador:</strong> recibe la petición HTTP, llama al <em>Model</em> y devuelve la respuesta JSON (con códigos HTTP correctos)</li>
+      </ul>
+
+      <div class="callout success">
+        <strong>Cadena completa:</strong> <code>HTTP → Controlador → Modelo (valida con Schema) → MongoDB → Modelo → Controlador → JSON</code>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- 🧱 Requisitos previos                                 -->
+    <!-- ===================================================== -->
+    <section class="card" id="requisitos">
+      <h2>🧱 Requisitos previos</h2>
+      <ul>
+        <li>Conexión a MongoDB operativa (<code>connectDB()</code>) con <code>MONGO_URI</code> y <code>MONGODB_DB</code> en <code>.env</code></li>
+        <li>Middleware de JSON en Express: <code>app.use(express.json())</code></li>
+        <li>Modelo <code>Producto</code> funcionando (ver arriba)</li>
+        <li>Rutas montadas en <code>/api/productos</code></li>
+      </ul>
+    </section>
+    <!-- 🌉 Por qué trabajamos en el Controller -->
+<article class="card">
+  <h2>🔗 Del Esquema/Modelo (Lección 10) al Controlador (Lección 11)</h2>
+  <h3>¿Por qué el CRUD se implementa en el <em>Controller</em>?</h3>
+  <p>
+    En una API con Express + Mongoose seguimos una separación de responsabilidades (similar a MVC). Ahora vamos a trabajar en el archivo 
+    controlador que es el que se comunica con los datos a través del modelo.
+  </p>
+
+  <div class="table-wrapper">
+    <table class="table table-compact" aria-label="Arquitectura MVC simplificada">
+      <thead>
+        <tr>
+          <th>Capa</th>
+          <th>Qué hace</th>
+          <th>Ejemplo en nuestro proyecto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Rutas</strong></td>
+          <td>Reciben la URL y delegan en el controlador.</td>
+          <td><code>src/routes/productos.routes.js</code> → <code>r.post('/', ctrl.crearProducto)</code></td>
+        </tr>
+        <tr>
+          <td><strong>Controller</strong></td>
+          <td>Orquesta el flujo de la petición: valida lo básico, invoca al modelo y construye la respuesta HTTP (códigos, JSON).</td>
+          <td><code>src/controllers/productosController.js</code> (lo que implementamos aquí)</td>
+        </tr>
+        <tr>
+          <td><strong>Modelo</strong></td>
+          <td>Define el <em>Schema</em> (tipos y reglas) y expone métodos de acceso a datos.</td>
+          <td><code>src/models/Producto.js</code> → <code>Producto.create/find/findById...</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout success">
+    <strong>Beneficios:</strong> código más limpio y mantenible, validaciones consistentes (el <em>Schema</em> se aplica siempre), respuestas HTTP correctas (<code>201</code>, <code>400</code>, <code>404</code>, <code>409</code>, <code>500</code>), y facilidad para testear cada capa por separado.
+  </div>
+
+  <h4>📂 Dónde vamos a editar</h4>
+  <ul>
+    <li><code>src/controllers/productosController.js</code> — aquí escribirás los métodos del CRUD (Create, Read, Update, Delete).</li>
+    <li><code>src/routes/productos.routes.js</code> — ya debería apuntar a cada método del controlador.</li>
+    <li><code>src/models/Producto.js</code> — ya creado en la Lección 10; sus validaciones se aplican automáticamente.</li>
+  </ul>
+
+  <div class="callout warn">
+    <strong>Importante:</strong> el <em>Controller</em> <u>no</u> define la estructura de datos (eso es del <em>Schema</em>), ni gestiona la conexión (eso es de <code>config/db.js</code>). Su rol es coordinar: leer la petición, invocar al modelo y responder.
+  </div>
+
+  <pre><code>// Flujo resumido
+// Cliente → (HTTP) → Rutas → Controller → Modelo (valida con Schema) → MongoDB
+//                                               ↓
+//                                      Respuesta JSON + códigos HTTP
+</code></pre>
+</article>
+
+
+    <!-- ===================================================== -->
+    <!-- 🛠️ CRUD paso a paso                                   -->
+    <!-- ===================================================== -->
+    <section class="card" id="crud-paso-a-paso">
+      <h2>🛠️ CRUD paso a paso con Mongoose</h2>
+
+      <!-- CREATE -->
+      <article class="card">
+        <h3>1) Crear — <code>POST /api/productos</code></h3>
+        <p>Inserta un producto nuevo. Validamos lo mínimo (<code>nombre</code> y <code>precio</code>) y devolvemos el documento creado junto con la cabecera <code>Location</code>.</p>
+        <p>La cabecera location indica la URL del nuevo recurso creado.</p>
+        <pre><code>// POST /api/productos - Crear
+  async crearProducto(req, res) {
+    try {
+      const producto = await Producto.create(req.body);//validamos segun el esquema
+      res.status(201).json({ status: 'ok', data: producto });
+    } catch (error) {
+      console.error(error);
+      res.status(400).json({ status: 'error', message: error.message });
+    }
+  }
+</code></pre>
+        
+
+  <pre><code>res.status(201)
+   .location(`/api/productos/${doc._id}`)
+   .json({ status: 'ok', data: doc });
+</code></pre>
+
+  <h3>🧱 Paso a paso</h3>
+
+  <table class="table table-compact">
+    <thead>
+      <tr>
+        <th>Parte del código</th>
+        <th>Qué hace</th>
+        <th>Por qué se usa</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>res.status(201)</code></td>
+        <td>Devuelve el código HTTP <strong>201 Created</strong>.</td>
+        <td>Indica que el servidor ha creado un nuevo recurso correctamente.</td>
+      </tr>
+      <tr>
+        <td><code>.location(`/api/productos/${doc._id}`)</code></td>
+        <td>Añade una cabecera HTTP <code>Location</code> con la ruta del nuevo producto.</td>
+        <td>Permite al cliente saber <em>dónde acceder</em> al recurso recién creado.</td>
+      </tr>
+      <tr>
+        <td><code>.json({ status: 'ok', data: doc })</code></td>
+        <td>Envía al cliente el documento completo creado en formato JSON.</td>
+        <td>Permite mostrar o reutilizar los datos inmediatamente en el frontend.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>📘 Ejemplo completo del controlador</h3>
+
+  <pre><code>
+    import Producto from '../models/Producto.js'; // ← importa el modelo
+    
+    async crearProducto(req, res) {
+  try {
+    const doc = await Producto.create(req.body);
+    res.status(201)
+       .location(`/api/productos/${doc._id}`)
+       .json({ status: 'ok', data: doc });
+  } catch (error) {
+    res.status(500).json({ status: 'error', mensaje: 'Error al crear el producto' });
+  }
+}</code></pre>
+
+  <h3>🔍 Qué envía el servidor al cliente</h3>
+
+  <pre><code>HTTP/1.1 201 Created
+Location: /api/productos/6732e0f9c21eab4e36bdf5a9
+Content-Type: application/json
+</code></pre>
+
+  <pre><code>{
+  "status": "ok",
+  "data": {
+    "_id": "6732e0f9c21eab4e36bdf5a9",
+    "nombre": "Taza JavaScript",
+    "precio": 12.50,
+    "stock": 8,
+    "activo": true
+  }
+}</code></pre>
+
+  <div class="callout success">
+    ✅ <strong>En resumen:</strong>
+    <ul>
+      <li><code>201 Created</code> → el recurso se creó correctamente.</li>
+      <li><code>Location</code> → indica dónde se encuentra el nuevo recurso.</li>
+      <li><code>JSON</code> → devuelve los datos recién creados.</li>
+    </ul>
+    <p>De esta forma tu API sigue las <strong>buenas prácticas REST</strong> y cualquier cliente sabrá cómo interactuar con tus recursos.</p>
+  </div>
+
+  <h3>🧠 Explicación técnica</h3>
+  <ul>
+    <li><strong><code>doc</code></strong> → es el documento recién creado en MongoDB (objeto Mongoose).</li>
+    <li><strong><code>doc._id</code></strong> → el identificador único generado automáticamente por MongoDB.</li>
+    <li><strong><code>Location</code></strong> → parte del estándar HTTP 1.1 (RFC 7231) para respuestas 201.</li>
+  </ul>
+
+  <div class="callout tip">
+    💬 <strong>Truco didáctico:</strong>  
+    Piensa que el servidor dice literalmente:
+    <blockquote>
+      “✅ He creado tu producto y lo guardé en la base de datos.<br>
+      🗂️ Puedes encontrarlo ahora en <code>/api/productos/ID</code>.”
+    </blockquote>
+  </div>
+
+  <div class="callout info">
+    💡 <strong>Curiosidad:</strong>  
+    Esta estructura es la misma que usan las APIs profesionales (por ejemplo, GitHub o Stripe)  
+    para indicar al cliente la dirección exacta de un nuevo recurso.
+  </div>
+</section>
+<section class="card">
+  <h2>🧪 ¿Cuándo se validan los datos en Mongoose?</h2>
+
+  <p>
+    Cuando usamos Mongoose, definimos un <strong>Schema</strong> con tipos y reglas 
+    (required, min, maxlength, enum, etc.).  
+    Pero… <strong>¿cuándo se comprueban realmente esas reglas?</strong>  
+    La validación ocurre automáticamente <strong>dentro del modelo</strong>, en el momento en que intentas
+    <em>guardar</em> o <em>crear</em> un documento.
+  </p>
+
+  <div class="callout info">
+    <strong>Idea clave:</strong>
+    Tú no llamas a ninguna función <code>validate()</code> manualmente.  
+    Mongoose valida los datos automáticamente cuando usas métodos como 
+    <code>create()</code> o <code>save()</code>.
+  </div>
+
+  <h3 style="margin-top:1rem;">1️⃣ Ejemplo básico: <code>Producto.create()</code></h3>
+
+  <p>Imagina este esquema:</p>
+
+  <pre><code>// 📄 src/models/Producto.js
+const productoSchema = new mongoose.Schema({
+  nombre: { type: String, required: true, trim: true, index: true },
+  precio: { type: Number, required: true, min: 0 },
+  stock:  { type: Number, default: 0, min: 0 },
+  activo: { type: Boolean, default: true },
+  imagen: { type: String }
+}, { timestamps: true });
+
+const Producto = mongoose.model("Producto", productoSchema);
+</code></pre>
+
+  <p>Y este controlador:</p>
+
+  <pre><code>// POST /api/productos - Crear
+async function crearProducto(req, res) {
+  try {
+    const producto = await Producto.create(req.body);
+    res.status(201).json({ status: "ok", data: producto });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ status: "error", message: error.message });
+  }
+}
+</code></pre>
+
+  <p>
+    Cuando llamas a <code>Producto.create(req.body)</code>, Mongoose hace internamente dos pasos:
+  </p>
+
+  <pre><code>const doc = new Producto(req.body);  // 1️⃣ Aplica el Schema y valida
+await doc.save();                    // 2️⃣ Si todo está bien, guarda en MongoDB
+</code></pre>
+
+  <ul>
+    <li>Si los datos <strong>cumplen</strong> el Schema → el documento se guarda.</li>
+    <li>Si los datos <strong>NO cumplen</strong> el Schema → lanza un <code>ValidationError</code> y entra en el <code>catch</code>.</li>
+  </ul>
+
+  <div class="callout warn" style="margin-top:1rem;">
+    <strong>Ejemplo de error:</strong>
+    Si el <code>precio</code> es negativo o falta el <code>nombre</code>, Mongoose no guarda nada
+    y lanza un error de validación.
+  </div>
+
+  <h3 style="margin-top:1rem;">2️⃣ ¿Qué comprueba exactamente la validación?</h3>
+
+  <p>Mongoose revisa los datos que llegan en <code>req.body</code> y los compara con el Schema:</p>
+
+  <ul>
+    <li>¿Está el campo <code>nombre</code> si es <code>required: true</code>?</li>
+    <li>¿Es <code>precio</code> un número? ¿Es mayor o igual que 0 (<code>min: 0</code>)?</li>
+    <li>¿Es <code>stock</code> un número? ¿Es mayor o igual que 0?</li>
+    <li>¿Coinciden los tipos (String, Number, Boolean...)?</li>
+    <li>¿Se cumplen otras reglas como <code>enum</code>, <code>maxlength</code>, etc.?</li>
+  </ul>
+
+  <p>
+    Si alguna regla falla, Mongoose recoge todos los fallos y los lanza como un 
+    <code>ValidationError</code>, que tú capturas en el <code>catch</code> y devuelves
+    al cliente.
+  </p>
+
+  <h3 style="margin-top:1rem;">3️⃣ ¿Qué pasa con <code>new Producto()</code> y <code>save()</code>?</h3>
+
+  <p>
+    Otra forma de crear documentos es esta:
+  </p>
+
+  <pre><code>const producto = new Producto(req.body);  // Aquí ya se aplica el Schema
+await producto.save();                    // Aquí se dispara la validación y el guardado
+</code></pre>
+
+  <p>
+    La idea es la misma: <strong>al guardar</strong> (save) es cuando Mongoose valida según el Schema.
+  </p>
+
+  <div class="callout success" style="margin-top:1rem;">
+    <strong>Qué debes recordar:</strong>
+    <ul>
+      <li>El Schema NO almacena datos, define <em>reglas y estructura</em>.</li>
+      <li>El Modelo (Producto) aplica esas reglas cuando creas o guardas.</li>
+      <li>La validación pasa siempre antes de que los datos lleguen a MongoDB.</li>
+    </ul>
+  </div>
+
+  <h3 style="margin-top:1rem;">4️⃣ ¿Y al actualizar? <code>runValidators: true</code></h3>
+
+  <p>
+    Con operaciones de actualización como <code>findByIdAndUpdate()</code> o 
+    <code>updateOne()</code>, por defecto Mongoose <strong>no valida</strong> todos los campos.
+  </p>
+
+  <p>
+    Si quieres que también se apliquen las reglas del Schema al actualizar, debes activar
+    la opción <code>runValidators</code>:
+  </p>
+
+  <pre><code>// PUT /api/productos/:id - Actualizar con validación
+async function actualizarProducto(req, res) {
+  try {
+    const productoActualizado = await Producto.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,          // devuelve el documento ya actualizado
+        runValidators: true // ✅ aplica validaciones del Schema al actualizar
+      }
+    );
+
+    if (!productoActualizado) {
+      return res.status(404).json({ status: "error", message: "Producto no encontrado" });
+    }
+
+    res.json({ status: "ok", data: productoActualizado });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ status: "error", message: error.message });
+  }
+}
+</code></pre>
+
+  <p>
+    De esta forma, si alguien intenta poner un <code>precio</code> negativo o borrar un campo 
+    obligatorio en una actualización, Mongoose volverá a lanzar un <code>ValidationError</code>.
+  </p>
+
+  <div class="callout info" style="margin-top:1rem;">
+    <strong>Resumen de validación:</strong>
+    <ul>
+      <li>Definimos las reglas en el <strong>Schema</strong>.</li>
+      <li>El <strong>Modelo</strong> aplica esas reglas al <strong>crear o guardar</strong> documentos.</li>
+      <li><code>create()</code> y <code>save()</code> siempre validan.</li>
+    
+    </ul>
+  </div>
+</section>
+
+
+      <!-- 🧪 PRÁCTICA: Crear producto con Thunder Client -->
+
+<article class="card">
+  <h4>🧪 Prueba práctica en Thunder Client — <code>POST /api/productos</code></h4>
+  <p>
+    Vamos a probar el método <strong>crearProducto()</strong> desde <strong>Thunder Client</strong>, 
+    que insertará un nuevo documento en la colección <code>productos</code>.
+  </p>
+
+  <ol>
+    <li>Abre <strong>Thunder Client</strong> (extensión de VS Code).</li>
+    <li>Crea una nueva pestaña y selecciona el método <code>POST</code>.</li>
+    <li>En la URL escribe:<br>
+      <code>http://localhost:3000/api/productos</code></li>
+    <li>En la pestaña <strong>Headers</strong>, añade:<br>
+      <code>Content-Type : application/json</code></li>
+    <li>En la pestaña <strong>Body</strong>, selecciona <code>JSON</code> e introduce este ejemplo:</li>
+  </ol>
+
+  <pre><code>{
+  "nombre": "Camiseta Mongo",
+  "precio": 19.99,
+  "stock": 30,
+  "activo": true,
+  "imagen": "https://picsum.photos/400/400?random=12"
+}</code></pre>
+
+  <p>
+    Los campos <code>nombre</code> y <code>precio</code> son <strong>obligatorios</strong>.  
+    <code>stock</code>, <code>activo</code> e <code>imagen</code> son opcionales 
+    (el esquema define valores por defecto).
+  </p>
+
+  <div class="callout success">
+    <strong>Respuesta esperada (201 Created):</strong>
+    <pre><code>{
+  "status": "ok",
+  "data": {
+    "_id": "673b92ff12e89a4f7e9a143c",
+    "nombre": "Camiseta Mongo",
+    "precio": 19.99,
+    "stock": 30,
+    "activo": true,
+    "imagen": "https://picsum.photos/400/400?random=12",
+    "createdAt": "2025-11-09T21:45:18.123Z",
+    "updatedAt": "2025-11-09T21:45:18.123Z",
+    "__v": 0
+  }
+}</code></pre>
+  </div>
+</article>
+<article class="card">
+  <h4>📋 Análisis de la respuesta</h4>
+    <p>En los encabezados de respuesta verás:<br>
+      <code>Location: /api/productos/673b92ff12e89a4f7e9a143c</code></p>
+  </div>
+
+  <div class="callout warn">
+    <strong>Errores posibles:</strong>
+    <ul>
+      <li><code>400</code> → Falta <code>nombre</code> o <code>precio</code>.</li>
+      <li><code>400</code> → Valor no válido según el esquema (p. ej. precio negativo).</li>
+      <li><code>409</code> → Producto duplicado si hay un índice único.</li>
+      <li><code>500</code> → Error interno (problemas de conexión u otro fallo).</li>
+    </ul>
+  </div>
+
+  <div class="callout tip">
+    <strong>Verifica el resultado:</strong>  
+    Abre tu <em>MongoDB Atlas → Data Explorer → Base de datos “tienda” → colección “productos”</em>  
+    y pulsa <em>Refresh</em> para ver el nuevo documento insertado.
+  </div>
+</article>
+
+
+      <!-- READ LISTADO -->
+       <!-- ===================================================== -->
+<!-- 👀 READ: Leer productos paso a paso (Lección 11)       -->
+<!-- ===================================================== -->
+<section class="card" id="read">
+  <h2>👀 READ — Leer productos desde MongoDB (paso a paso)</h2>
+  <p>
+    En esta parte del CRUD aprenderás a <strong>leer datos</strong> con Mongoose. Lo haremos en 3 pasos:
+  </p>
+  <ol>
+    <li>Leer <strong>todos</strong> los productos</li>
+    <li>Leer <strong>uno</strong> por su <code>_id</code></li>
+    <li>Leer con <strong>filtros</strong>, <strong>orden</strong> y <strong>paginación</strong></li>
+  </ol>
+
+  <div class="callout info">
+    <strong>Requisitos previos:</strong>
+    <ul>
+      <li>Modelo <code>Producto</code> en <code>src/models/Producto.js</code></li>
+      <li>Router montado en <code>src/app.js</code> con <code>app.use('/api/productos', productosRoutes)</code></li>
+      <li><code>express.json()</code> cargado para recibir JSON</li>
+    </ul>
+  </div>
+
+  <!-- ================================================= -->
+  <!-- A) LEER TODOS LOS PRODUCTOS                       -->
+  <!-- ================================================= -->
+  <article class="card">
+    <h3>A) Leer todos — <code>GET /api/productos</code></h3>
+    <p>Devuelve todos los documentos de la colección <code>productos</code>.</p>
+
+    <pre><code>// 📄 src/controllers/productosController.js
+async listarProductos(req, res) {
+  try {
+    // 1) Buscar todos los productos (sin filtros)
+    const productos = await Producto.find({});   // ← consulta a MongoDB
+
+    // 2) Responder con JSON
+    res.json({ status: 'ok', data: productos });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: 'Error al listar productos' });
+  }
+}
+</code></pre>
+
+    <div class="callout tip">
+      <strong>Ruta correspondiente:</strong>
+      <pre><code>// 📄 src/routes/productos.routes.js
+route.get('/', productosController.listarProductos);
+</code></pre>
+    </div>
+
+    <div class="callout success">
+      <strong>Prueba en Thunder Client:</strong><br>
+      <code>GET http://localhost:3000/api/productos</code>
+    </div>
+  </article>
+
+  <!-- ================================================= -->
+  <!-- B) LEER UNO POR ID                                -->
+  <!-- ================================================= -->
+  <article class="card">
+    <h3>B) Leer uno por ID — <code>GET /api/productos/:id</code></h3>
+    <p>Cuando conoces el <code>_id</code> puedes pedir solo ese documento.</p>
+
+    <pre><code>
+  // GET /api/productos/:id - Obtener un producto por su ID
+async obtenerProducto(req, res) {
+  try {
+
+    // 1️⃣ Extraemos el ID que llega por la URL (ruta dinámica: /api/productos/:id)
+    //    Ejemplo de URL: /api/productos/67abc1230d91f89c3a7e1021
+    //    req.params.id contiene ese valor.
+    const producto = await Producto.findById(req.params.id);
+
+    // 2️⃣ Si no existe un documento con ese ID → devolvemos 404 (no encontrado)
+    if (!producto) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Producto no encontrado'
+      });
+    }
+
+    // 3️⃣ Si todo va bien → enviamos el producto encontrado
+    res.json({
+      status: 'ok',
+      data: producto
+    });
+
+  } catch (error) {
+
+    // 4️⃣ Errores inesperados (por ejemplo un ID mal formado: "1234" en vez de un ObjectId)
+    console.error(error);
+
+    res.status(500).json({
+      status: 'error',
+      message: 'Error al obtener producto'
+    });
+  }
+}
+
+</code></pre>
+
+    <div class="callout tip">
+      <strong>Ruta correspondiente:</strong>
+      <pre><code>// 📄 src/routes/productos.routes.js
+route.get('/:id', productosController.obtenerProducto);
+</code></pre>
+    </div>
+
+    <div class="callout success">
+      <strong>Prueba en Thunder Client:</strong><br>
+      1) Crea un producto (POST) y copia su <code>_id</code><br>
+      2) <code>GET http://localhost:3000/api/productos/&lt;PEGAR_ID_AQUI&gt;</code>
+    </div>
+  </article>
+
+  <!-- ================================================= -->
+  <!-- C) LEER CON FILTROS + ORDEN + PAGINACIÓN          -->
+  <!-- ================================================= 
+  <article class="card">
+    <h3>C) Leer con filtros, orden y paginación — <code>GET /api/productos</code></h3>
+    <p>Misma ruta que A), pero ahora interpretamos parámetros en la URL.</p>
+
+    <div class="table-wrapper">
+      <table class="table table-compact" aria-label="Parámetros de búsqueda">
+        <thead>
+          <tr><th>Parámetro</th><th>Ejemplo</th><th>Qué hace</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>q</code></td><td><code>?q=camis</code></td><td>Busca por nombre (parcial, sin may/min).</td></tr>
+          <tr><td><code>activo</code></td><td><code>?activo=true</code></td><td>Filtra por estado.</td></tr>
+          <tr><td><code>minPrecio</code></td><td><code>?minPrecio=10</code></td><td>Precio ≥ 10.</td></tr>
+          <tr><td><code>maxPrecio</code></td><td><code>?maxPrecio=50</code></td><td>Precio ≤ 50.</td></tr>
+          <tr><td><code>sort</code></td><td><code>?sort=-precio,nombre</code></td><td>Orden múltiple (desc/asc).</td></tr>
+          <tr><td><code>page</code></td><td><code>?page=2</code></td><td>Página (empieza en 1).</td></tr>
+          <tr><td><code>limit</code></td><td><code>?limit=5</code></td><td>Elementos por página (defecto 10).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <pre><code>// 📄 src/controllers/productosController.js
+async listarProductos(req, res) {
+  try {
+    // 1) Leemos parámetros opcionales de la URL
+    const { q, activo, minPrecio, maxPrecio, page = 1, limit = 10, sort } = req.query;
+
+    // 2) Construimos el filtro dinámico
+    const filter = {};
+    if (q) filter.nombre = { $regex: q, $options: 'i' };   // 'i' → ignora may/min
+    if (activo !== undefined) filter.activo = (activo === 'true');
+    if (minPrecio || maxPrecio) {
+      filter.precio = {};
+      if (minPrecio) filter.precio.$gte = Number(minPrecio); // ≥
+      if (maxPrecio) filter.precio.$lte = Number(maxPrecio); // ≤
+    }
+
+    // 3) Calculamos paginación
+    const skip = (Number(page) - 1) * Number(limit);
+
+    // 4) Calculamos orden
+    //    p.ej. sort="-precio,nombre" → { precio:-1, nombre:1 }
+    const order = sort
+      ? sort.split(',').reduce((acc, field) => {
+          const f = field.trim();
+          acc[f.replace('-', '')] = f.startsWith('-') ? -1 : 1;
+          return acc;
+        }, {})
+      : { createdAt: -1 };
+
+    // 5) Consultamos datos y total en paralelo (más rápido)
+    const [items, total] = await Promise.all([
+      Producto.find(filter).sort(order).skip(skip).limit(Number(limit)),
+      Producto.countDocuments(filter)
+    ]);
+
+    // 6) Respondemos con datos + metadatos de paginación
+    res.json({
+      status: 'ok',
+      meta: {
+        page: Number(page),
+        limit: Number(limit),
+        total,
+        pages: Math.ceil(total / Number(limit))
+      },
+      data: items
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: 'Error en listarProductos' });
+  }
+}
+</code></pre>
+
+    <div class="callout tip">
+      <strong>Ruta correspondiente:</strong>
+      <pre><code>// 📄 src/routes/productos.routes.js
+route.get('/', productosController.listarProductos);  // ahora acepta ?q=&activo=&...
+</code></pre>
+    </div>
+
+    <div class="callout success">
+      <strong>Prueba en Thunder Client:</strong><br>
+      • <code>GET http://localhost:3000/api/productos</code><br>
+      • <code>GET http://localhost:3000/api/productos?q=camis</code><br>
+      • <code>GET http://localhost:3000/api/productos?minPrecio=10&amp;maxPrecio=30</code><br>
+      • <code>GET http://localhost:3000/api/productos?activo=true&amp;limit=5&amp;page=2</code><br>
+      • <code>GET http://localhost:3000/api/productos?sort=-precio,nombre</code>
+    </div>
+  </article>
+  <!-- ===================================================== -->
+<!-- 🎚️ Filtros por rango de precio -->
+<!-- ===================================================== 
+<article class="card" id="filtros-precio">
+  <h3>🎚️ Filtros por rango de precio — <code>?minPrecio=&amp;maxPrecio=</code></h3>
+  <p>
+    También puedes filtrar los productos según su rango de precios.
+    Los parámetros <code>minPrecio</code> y <code>maxPrecio</code> son opcionales:
+  </p>
+
+  <div class="table-wrapper">
+    <table class="table table-compact" aria-label="Ejemplos de rango de precios">
+      <thead><tr><th>Consulta</th><th>Qué devuelve</th></tr></thead>
+      <tbody>
+        <tr><td><code>?minPrecio=10</code></td><td>Productos con precio <strong>≥ 10 €</strong></td></tr>
+        <tr><td><code>?maxPrecio=50</code></td><td>Productos con precio <strong>≤ 50 €</strong></td></tr>
+        <tr><td><code>?minPrecio=10&amp;maxPrecio=50</code></td><td>Productos <strong>entre 10 € y 50 €</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <pre><code>// Fragmento del controlador
+if (minPrecio || maxPrecio) {
+  filter.precio = {};
+  if (minPrecio) filter.precio.$gte = Number(minPrecio); // mayor o igual que
+  if (maxPrecio) filter.precio.$lte = Number(maxPrecio); // menor o igual que
+}
+</code></pre>
+
+  <div class="callout success">
+    <strong>Prueba en Thunder Client:</strong><br>
+    <code>GET http://localhost:3000/api/productos?minPrecio=10&amp;maxPrecio=50</code><br>
+    <em>→ Devuelve todos los productos con precio entre 10 € y 50 €.</em>
+  </div>
+</article>
+
+
+  
+
+    <div class="callout tip">
+      <strong>Ruta correspondiente (declarar antes que <code>/:id</code>):</strong>
+      <pre><code>// 📄 src/routes/productos.routes.js
+route.get('/buscar', productosController.buscarPorCampos);
+</code></pre>
+    </div>
+
+    <div class="callout success">
+      <strong>Prueba en Thunder Client:</strong><br>
+      • <code>GET http://localhost:3000/api/productos/buscar?nombre=camis</code><br>
+      • <code>GET http://localhost:3000/api/productos/buscar?activo=true</code><br>
+      • <code>GET http://localhost:3000/api/productos/buscar?nombre=camiseta&amp;activo=true</code>
+    </div>
+  </article>
+
+  <!-- ===================================================== -->
+<!-- 🔗 Combinar filtros: nombre + activo + precio + orden -->
+<!-- ===================================================== 
+<article class="card" id="filtros-combinados">
+  <h3>🔗 Combinar filtros — <code>?q=</code> + <code>?activo=</code> + <code>?minPrecio=</code> + <code>?maxPrecio=</code> + <code>?sort=</code> + <code>?page=&amp;limit=</code></h3>
+  <p>
+    Puedes usar varios filtros a la vez. Por ejemplo: <strong>buscar por nombre</strong>, dejar solo los <strong>activos</strong>,
+    acotar un <strong>rango de precios</strong>, <strong>ordenar</strong> por un campo y además <strong>paginar</strong>.
+  </p>
+
+  <div class="table-wrapper">
+    <table class="table table-compact" aria-label="Ejemplos de filtros combinados">
+      <thead>
+        <tr><th>Objetivo</th><th>Ejemplo (Thunder Client)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Nombre contiene “camis”, solo activos</td>
+          <td><code>GET http://localhost:3000/api/productos?q=camis&amp;activo=true</code></td>
+        </tr>
+        <tr>
+          <td>Entre 10€ y 50€, orden por precio desc</td>
+          <td><code>GET http://localhost:3000/api/productos?minPrecio=10&amp;maxPrecio=50&amp;sort=-precio</code></td>
+        </tr>
+        <tr>
+          <td>Nombre “suda”, activos, página 2 de 5</td>
+          <td><code>GET http://localhost:3000/api/productos?q=suda&amp;activo=true&amp;page=2&amp;limit=5</code></td>
+        </tr>
+        <tr>
+          <td>Orden múltiple: precio desc, nombre asc</td>
+          <td><code>GET http://localhost:3000/api/productos?sort=-precio,nombre</code></td>
+        </tr>
+        <tr>
+          <td>Todo junto: nombre, activo, rango y orden</td>
+          <td><code>GET http://localhost:3000/api/productos?q=camis&amp;activo=true&amp;minPrecio=10&amp;maxPrecio=50&amp;sort=-precio</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <details class="card">
+    <summary><strong>Cómo lo hace el controlador (recordatorio)</strong></summary>
+    <pre><code>// 📄 src/controllers/productosController.js (fragmento de listarProductos)
+const { q, activo, minPrecio, maxPrecio, page = 1, limit = 10, sort } = req.query;
+
+const filter = {};
+if (q) filter.nombre = { $regex: q, $options: 'i' }; // texto parcial sin may/min
+if (activo !== undefined) filter.activo = (activo === 'true'); // "true"/"false" → boolean
+
+if (minPrecio || maxPrecio) {
+  filter.precio = {};
+  if (minPrecio) filter.precio.$gte = Number(minPrecio); // ≥
+  if (maxPrecio) filter.precio.$lte = Number(maxPrecio); // ≤
+}
+
+// Paginación
+const skip = (Number(page) - 1) * Number(limit);
+
+// Orden (p.ej. "-precio,nombre" → { precio: -1, nombre: 1 })
+const order = sort
+  ? sort.split(',').reduce((acc, f) => {
+      const field = f.trim();
+      acc[field.replace('-', '')] = field.startsWith('-') ? -1 : 1;
+      return acc;
+    }, {})
+  : { createdAt: -1 };
+
+const [items, total] = await Promise.all([
+  Producto.find(filter).sort(order).skip(skip).limit(Number(limit)),
+  Producto.countDocuments(filter)
+]);
+
+res.json({
+  status: 'ok',
+  meta: { page: Number(page), limit: Number(limit), total, pages: Math.ceil(total / Number(limit)) },
+  data: items
+});
+</code></pre>
+  </details>
+
+  <div class="callout tip">
+    <strong>Consejos prácticos:</strong>
+    <ul>
+      <li>Para espacios en <code>q</code>, usa <em>+</em> o <em>%20</em> (p.ej. <code>?q=camiseta%20node</code>).</li>
+      <li><code>activo</code> llega como texto: usa <code>activo === 'true'</code> para convertirlo a boolean.</li>
+      <li><code>minPrecio</code>/<code>maxPrecio</code> llegan como texto: envuélvelos con <code>Number()</code> antes de comparar.</li>
+      <li>Un <code>sort</code> con varios campos separa por coma: <code>-precio,nombre</code>.</li>
+      <li><strong>Paginación:</strong> <code>page</code> empieza en 1. <code>limit</code> por defecto 10.</li>
+    </ul>
+  </div>
+
+  <div class="callout success">
+    <strong>Prueba en Thunder Client (copiar/pegar):</strong><br>
+    • <code>GET http://localhost:3000/api/productos?q=node&amp;activo=true&amp;minPrecio=15&amp;maxPrecio=60&amp;sort=-precio,nombre&amp;page=1&amp;limit=5</code><br>
+    • <code>GET http://localhost:3000/api/productos?q=suda&amp;minPrecio=20&amp;sort=nombre</code>
+  </div>
+
+  <div class="callout warn">
+    <strong>Errores típicos:</strong>
+    <ul>
+      <li><em>“Me devuelve todo”</em> → Revisa que estás llamando a <code>/api/productos</code> (no <code>/api/productos/productos</code>) y que tu <code>listarProductos</code> es la versión con filtros.</li>
+      <li><em>“ID inválido”</em> al usar <code>/buscar</code> → Asegúrate de declarar <code>/buscar</code> <strong>antes</strong> que <code>/:id</code>.</li>
+      <li>Rango mal aplicado → Comprueba que no envías textos como <code>minPrecio=10€</code> (debe ser solo número).</li>
+    </ul>
+  </div>
+</article>
+
+  <!-- ===================================================== -->
+<!-- 🎯 Explicación visual — Orden de rutas en Express -->
+<!-- ===================================================== 
+<section class="card" id="orden-de-rutas">
+  <h2>🎯 Orden de rutas en Express: por qué <code>/buscar</code> va antes que <code>/:id</code></h2>
+
+  <p>
+    En Express, las rutas se evalúan <strong>de arriba a abajo</strong>.  
+    Esto significa que el primer patrón que coincide con la URL es el que se ejecuta.
+  </p>
+
+  <div class="callout info">
+    <strong>Ejemplo de archivo de rutas:</strong>
+    <pre><code>// 📄 src/routes/productos.routes.js
+route.get('/', ctrl.listarProductos);        // muestra todos
+route.get('/buscar', ctrl.buscarPorCampos);  // búsqueda literal
+route.get('/:id', ctrl.obtenerProducto);     // parámetro dinámico
+</code></pre>
+  </div>
+
+  <h3>🧩 ¿Qué pasa internamente?</h3>
+  <p>
+    La ruta <code>/:id</code> es un <em>comodín</em>: acepta <strong>cualquier valor</strong> en ese lugar de la URL.
+    Por tanto, si la declaras antes que <code>/buscar</code>, Express podría interpretar <code>"buscar"</code> como un <em>id</em> y lanzar un error.
+  </p>
+
+  <div class="table-wrapper">
+    <table class="table table-compact" aria-label="Comparativa de orden de rutas">
+      <thead>
+        <tr><th>Orden de las rutas</th><th>Petición</th><th>Qué hace Express</th><th>Resultado</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>/:id</code> antes de <code>/buscar</code></td>
+          <td><code>GET /api/productos/buscar</code></td>
+          <td>Coincide con <code>/:id</code> → interpreta <code>id = "buscar"</code></td>
+          <td class="text-red-600">❌ Error “ID inválido”</td>
+        </tr>
+        <tr>
+          <td><code>/buscar</code> antes de <code>/:id</code></td>
+          <td><code>GET /api/productos/buscar</code></td>
+          <td>Coincide con la ruta literal <code>/buscar</code></td>
+          <td class="text-green-700">✅ Ejecuta <code>buscarPorCampos</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>🧠 Regla de oro</h3>
+  <p>
+    Declara las rutas de <strong>más específicas a más generales</strong>:
+  </p>
+
+  <pre><code>✅ Buen orden:
+route.get('/buscar', ctrl.buscarPorCampos); // literal
+route.get('/:id', ctrl.obtenerProducto);    // comodín
+
+❌ Mal orden:
+route.get('/:id', ctrl.obtenerProducto);
+route.get('/buscar', ctrl.buscarPorCampos); // nunca se ejecuta
+</code></pre>
+
+  <div class="callout success">
+    <strong>Truco para recordar:</strong>  
+    “<em>Primero las calles con nombre, luego las sin nombre.</em>”  
+    Las rutas literales (<code>/buscar</code>, <code>/stats</code>, <code>/export</code>…) deben ir antes que las rutas dinámicas (<code>/:id</code>).
+  </div>
+</section>
+
+
+  <div class="callout success">
+    <strong>✅ Conclusión:</strong>
+    Ya dominas la lectura de productos:
+    <ul>
+      <li><strong>Todos:</strong> <code>GET /api/productos</code></li>
+      <li><strong>Por ID:</strong> <code>GET /api/productos/:id</code></li>
+      <li><strong>Con filtros:</strong> <code>GET /api/productos?q=camis&amp;activo=true</code> (y más parámetros)</li>
+      <li><strong>Ruta de búsqueda simple (opcional):</strong> <code>/buscar</code></li>
+    </ul>
+  </div>
+</section>
+     
+
+
+    <!-- UPDATE -->
+<article class="card">
+  <h3>4) Actualizar documentos — <code>PUT</code> vs <code>PATCH</code></h3>
+
+  <p>
+    En Mongoose podemos actualizar un producto de dos formas: reemplazando <strong>todo el documento</strong> (<code>PUT</code>) 
+    o modificando únicamente <strong>algunos campos</strong> (<code>PATCH</code>).  
+    Ambos métodos utilizan <code>findByIdAndUpdate()</code> pero su intención es diferente.
+  </p>
+
+  <div class="callout info">
+    <strong>Idea clave:</strong>  
+    <code>PUT</code> = sustitución completa.  
+    <code>PATCH</code> = modificación parcial.
+  </div>
+
+  <h4 style="margin-top:1rem;">🔄 PUT — Actualización completa con <code>/api/productos/:id</code></h4>
+  <p>
+    Se usa cuando quieres <strong>reemplazar todo el documento</strong>.  
+    El cliente debe enviar todos los campos del producto, aunque solo uno cambie.
+  </p>
+
+  <pre><code>// PUT /api/productos/:id - Reemplazar producto completo
+async reemplazarProducto(req, res) {
+  try {
+    const producto = await Producto.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,          // devuelve el documento actualizado
+        runValidators: true // 🔒 valida según el Schema
+      }
+    );
+
+    if (!producto) {
+      return res.status(404).json({ status: 'error', message: 'Producto no encontrado' });
+    }
+
+    res.json({ status: 'ok', data: producto });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ status: 'error', message: error.message });
+  }
+}
+</code></pre>
+
+  <div class="callout warn">
+    <strong>¿Cuándo usar PUT?</strong>
+    <ul>
+      <li>Cuando quieres enviar <strong>toda la representación del recurso</strong>.</li>
+      <li>Cuando la lógica de la API obliga a enviar el producto completo.</li>
+      <li>Cuando quieres asegurarte de que no quedan campos "viejos" o no enviados.</li>
+    </ul>
+  </div>
+
+  <h4 style="margin-top:1rem;">🛠 PATCH — Actualización parcial con <code>/api/productos/:id</code></h4>
+  <p>
+    Se usa cuando solo quieres <strong>modificar campos concretos</strong>.  
+    No hace falta enviar todos los atributos del producto.
+  </p>
+
+  <pre><code>// PATCH /api/productos/:id - Actualizar parcialmente
+async actualizarProducto(req, res) {
+  try {
+    const producto = await Producto.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,          // devuelve el documento actualizado
+        runValidators: true // 🔒 aplica reglas del Schema también en PATCH
+      }
+    );
+
+    if (!producto) {
+      return res.status(404).json({ status: 'error', message: 'Producto no encontrado' });
+    }
+
+    res.json({ status: 'ok', data: producto });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ status: 'error', message: error.message });
+  }
+}
+</code></pre>
+
+  <div class="callout success">
+    <strong>¿Cuándo usar PATCH?</strong>
+    <ul>
+      <li>Cuando solo quieres cambiar uno o varios campos.</li>
+      <li>Cuando la app hace ediciones rápidas (cambiar precio, stock, estado...)</li>
+      <li>Cuando quieres minimizar datos enviados por el cliente.</li>
+    </ul>
+  </div>
+
+  <h4 style="margin-top:1rem;">🧪 ¿Qué hace realmente <code>runValidators: true</code>?</h4>
+
+  <p>
+    Por defecto, Mongoose <strong>no valida</strong> los datos en métodos de actualización
+    como <code>findByIdAndUpdate()</code>.  
+    Eso significa que podrías enviar un precio negativo o borrar un campo obligatorio sin que Mongoose lo impida.
+  </p>
+
+  <div class="callout warn">
+    <strong>⚠️ Problema:</strong>  
+    Sin validación, <code>PATCH</code> y <code>PUT</code> podrían romper el modelo.
+  </div>
+
+  <p>
+    Para evitarlo, usamos:
+  </p>
+
+  <pre><code>runValidators: true</code></pre>
+
+  <p>
+    Esto obliga a Mongoose a comprobar las reglas del <strong>Schema</strong>:
+  </p>
+
+  <ul>
+    <li><code>required</code></li>
+    <li><code>min</code> y <code>max</code></li>
+    <li><code>minlength</code> / <code>maxlength</code></li>
+    <li><code>enum</code></li>
+    <li><code>match</code> (regex)</li>
+  </ul>
+
+  <div class="callout success">
+    <strong>Resultado:</strong>  
+    Cualquier actualización que viole el Schema será rechazada automáticamente.
+  </div>
+
+  <h4 style="margin-top:1rem;">📌 Resumen final para alumnos</h4>
+  <ul>
+    <li><strong>PUT</strong> reemplaza todo el documento.</li>
+    <li><strong>PATCH</strong> modifica solo lo que envíes.</li>
+    <li>Ambos usan <code>findByIdAndUpdate()</code>.</li>
+    <li><code>runValidators: true</code> garantiza que las reglas del Schema se mantengan.</li>
+  </ul>
+
+</article>
+
+
+     <!-- DELETE -->
+<article class="card">
+  <h3>5) Eliminar documentos — <code>DELETE /api/productos/:id</code></h3>
+
+  <p>
+    El método <strong>DELETE</strong> se utiliza para eliminar un documento existente en la colección.
+    En este caso, eliminamos un producto usando su identificador único <code>_id</code>.
+  </p>
+
+  <div class="callout info">
+    <strong>Idea clave:</strong>  
+    <code>DELETE</code> elimina el recurso por completo.  
+    Pero en proyectos profesionales se suele preferir el <strong>borrado lógico</strong>, 
+    donde el documento no desaparece, solo se marca como inactivo.
+  </div>
+
+  <h4 style="margin-top:1rem;">🗑️ DELETE — Eliminar un producto físicamente</h4>
+
+  <p>
+    Este método busca el producto por su <code>_id</code> y lo elimina de la base de datos.  
+    Si el producto no existe, respondemos con un error <strong>404</strong>.
+  </p>
+
+  <pre><code>// DELETE /api/productos/:id - Eliminar
+  async eliminarProducto(req, res) {
+    try {
+      const producto = await Producto.findByIdAndDelete(req.params.id);
+      if (!producto) {
+        return res.status(404).json({ status: 'error', message: 'Producto no encontrado' });
+      }
+      res.status(204).send();
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ status: 'error', message: 'Error al eliminar producto' });
+    }
+  }
+}
+</code></pre>
+
+  <div class="callout tip">
+    <strong>Ruta correspondiente:</strong>
+    <pre><code>// 📄 src/routes/productos.routes.js
+</code></pre>
+
+  <div class="callout success" style="margin-top:1rem;">
+    <strong>¿Por qué usamos <code>204 No Content</code>?</strong>
+    <ul>
+      <li>Indica que la operación se completó correctamente.</li>
+      <li>No se devuelve cuerpo JSON porque el recurso ya no existe.</li>
+      <li>Es la práctica recomendada en APIs REST.</li>
+    </ul>
+  </div>
+
+  <h4 style="margin-top:1rem;">🟧 Alternativa profesional: Borrado lógico</h4>
+
+  <p>
+    En muchos proyectos no interesa eliminar productos definitivamente (por auditoría, informes, histórico, etc.).  
+    En esos casos, en lugar de borrar el documento se marca como inactivo:
+  </p>
+
+  <pre><code>// Borrado lógico: actualizar "activo" a false
+await Producto.findByIdAndUpdate(id, { activo: false }, { new: true });
+</code></pre>
+
+  <p>
+    Y luego en el listado se muestran solo los productos activos:
+  </p>
+
+  <pre><code>// Listar solo activos
+Producto.find({ activo: true });
+</code></pre>
+
+  <div class="callout warn">
+    <strong>Cuándo usar borrado lógico:</strong>
+    <ul>
+      <li>Cuando necesitas conservar histórico de datos.</li>
+      <li>Cuando no puedes perder el registro del producto.</li>
+      <li>Cuando hay relaciones con pedidos, usuarios u otras colecciones.</li>
+    </ul>
+  </div>
+
+  <h4 style="margin-top:1rem;">📌 Resumen final para alumnos</h4>
+  <ul>
+    <li><code>DELETE</code> elimina el documento completamente.</li>
+    <li>Si el <code>_id</code> no existe → se devuelve <strong>404</strong>.</li>
+    <li><code>204 No Content</code> confirma que el borrado fue correcto.</li>
+    <li>En proyectos reales, se usa mucho el <strong>borrado lógico</strong> con <code>activo:false</code>.</li>
+  </ul>
+
+</article>
+
+    </section>
+
+   
+
+    
+
+    <!-- ===================================================== -->
+    <!-- 🧪 Prácticas con Thunder Client                        -->
+    <!-- ===================================================== 
+    <section class="card" id="thunder">
+      <h2>🧪 Prácticas con Thunder Client</h2>
+      <p>Abre Thunder Client en VS Code. Para POST/PATCH envía <code>Content-Type: application/json</code>.</p>
+
+      <h3>1) Crear (POST)</h3>
+      <pre><code>POST http://localhost:3000/api/productos
+Body (JSON)
+{
+  "nombre": "Sudadera Node",
+  "precio": 29.9,
+  "stock": 25,
+  "activo": true
+}
+</code></pre>
+
+      <h3>2) Listar y buscar (GET)</h3>
+      <pre><code>GET http://localhost:3000/api/productos
+GET http://localhost:3000/api/productos?limit=5&amp;page=1&amp;sort=-precio,nombre
+GET http://localhost:3000/api/productos?q=su
+GET http://localhost:3000/api/productos?minPrecio=10&amp;maxPrecio=30&amp;activo=true
+</code></pre>
+
+      <h3>3) Obtener por ID (GET)</h3>
+      <pre><code>GET http://localhost:3000/api/productos/&lt;ID_AQUI&gt;</code></pre>
+
+      <h3>4) Actualizar parcial (PATCH)</h3>
+      <pre><code>PATCH http://localhost:3000/api/productos/&lt;ID_AQUI&gt;
+Body (JSON)
+{ "precio": 24.99, "stock": 50 }
+</code></pre>
+
+      <h3>5) Eliminar (DELETE)</h3>
+      <pre><code>DELETE http://localhost:3000/api/productos/&lt;ID_AQUI&gt;</code></pre>
+
+      <div class="callout success">
+        <strong>Objetivo de la práctica:</strong> Crea 3 productos, lista con filtros, actualiza uno y elimina otro. Verifica todo en Atlas (Data Explorer → Recargar).
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- 🏁 Retos y errores habituales                          -->
+    <!-- ===================================================== 
+    <section class="card" id="retos-errores">
+      <h2>🏁 Retos de ampliación + Errores habituales</h2>
+
+      <article class="card">
+        <h3>Retos</h3>
+        <ol>
+          <li>Añade campo <code>categoria</code> (string) en el Schema y filtra por <code>?categoria=ropa</code>.</li>
+          <li>Implementa <code>PUT /api/productos/:id</code> “estricto” que reemplace todos los campos esperados.</li>
+          <li>Configura “borrado lógico”: <code>PATCH /:id</code> con <code>{ "activo": false }</code> y ocúltalos por defecto en el listado.</li>
+        </ol>
+      </article>
+
+      <article class="card">
+        <h3>Errores típicos</h3>
+        <ul>
+          <li>Olvidar <code>express.json()</code> → el body llega vacío</li>
+          <li>Conectar a otra DB (por ejemplo, <code>test</code>) y mirar <code>tienda</code> en Atlas</li>
+          <li>No montar el router en <code>/api/productos</code></li>
+          <li>Confundir <em>PUT</em> (reemplazo) con <em>PATCH</em> (parcial)</li>
+        </ul>
+      </article>
+    </section>
+    <div class="cta" style="margin:2rem 0 0">
+      <a class="btn btn-outline" href="10-modelosyesquemas.html">⟵ Volver al Tema 10</a>
+      <a class="btn btn-primary" href="12-relaciones.html">Ir al Tema 12  ⟶</a>
+    </div>
+  </main>-->
+
+  <footer role="contentinfo">
+    <p>Manual “Mongoo” — Tema 11 · Controlador CRUD con Mongoose. Accesible y listo para clase.</p>
+  </footer>
+</body>
+</html>

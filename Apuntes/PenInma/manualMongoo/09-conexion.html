@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tema 9 — Conectando nuestra API con MongoDB</title>
+  <meta name="description" content="Conexión de nuestra API con MongoDB usando Mongoose: configuración de entorno, conexión a la base de datos y manejo de errores." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header>
+    <div class="wrap hero hero--compact" role="banner">
+      <div class="hero-content">
+        <span class="kicker">Tema 9</span>
+        <h1>Conectando nuestra API con MongoDB</h1>
+        <p class="subtitle">En esta lección aprenderás a conectar tu servidor Express con una base de datos MongoDB usando Mongoose.</p>
+      </div>
+      <img src="logo.png" alt="Logo/ilustración del tema" class="hero-illus" loading="lazy">
+    </div>
+  </header>
+
+  <div class="cta" style="margin-top:2rem">
+    <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+    <a class="btn btn-primary" href="10-modelosyesquemas.html">Siguiente tema ➜</a>
+  </div>
+
+  <main id="contenido" class="wrap" role="main">
+
+
+
+<section class="card" id="tema9-conexion-mongodb">
+  <span class="badge">Tema 9</span>
+  <h2>🌍 Conectando nuestra API con MongoDB</h2>
+
+  <p class="lead">
+    En esta lección aprenderás a conectar tu servidor Express con una base de datos <strong>MongoDB Atlas</strong> 
+    usando <strong>Mongoose</strong>.  
+    Este será tu primer paso real para trabajar con datos persistentes en la nube.
+  </p>
+
+  <div class="callout success">
+    <p>🎯 <strong>Objetivo:</strong> configurar un entorno seguro (.env) y crear una función de conexión (<code>db.js</code>) 
+    que permita a nuestra API comunicarse con MongoDB.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔍 1️⃣ ¿Qué significa “conectar a una base de datos”?</h2>
+  <p>
+    Hasta ahora, nuestro servidor Express solo respondía con mensajes fijos (“ok”).  
+    Cuando <strong>conectamos a una base de datos</strong>, le damos la capacidad de:
+  </p>
+  <ul>
+    <li><strong>Guardar</strong> datos de forma permanente (no se borran al apagar el servidor).</li>
+    <li><strong>Consultar</strong> información real almacenada en colecciones.</li>
+    <li><strong>Actualizar</strong> o <strong>eliminar</strong> registros concretos.</li>
+  </ul>
+  <p>
+    En nuestro caso, usaremos <strong>MongoDB Atlas</strong>, que es un servicio gratuito en la nube 
+    donde puedes crear bases de datos NoSQL.  
+    Para acceder, necesitamos una <strong>URI de conexión</strong> (una dirección segura que incluye usuario, contraseña y cluster).
+  </p>
+</section>
+
+<section class="card">
+  <h2>🔐 Paso 1. Crear y configurar el archivo <code>.env</code></h2>
+
+  <p>
+    El archivo <code>.env</code> sirve para guardar <strong>variables de entorno</strong>: valores que necesita nuestra aplicación
+    pero que no deben mostrarse en el código público.  
+    En él guardaremos datos como la <strong>cadena de conexión a MongoDB Atlas</strong> y el <strong>puerto del servidor</strong>.
+  </p>
+
+  <h3>💡 ¿Qué es una variable de entorno?</h3>
+  <p>
+    Una variable de entorno es como una “<em>caja de configuración externa</em>”.  
+    El sistema la carga al iniciar la aplicación, y permite guardar información sensible o configurable, como:
+  </p>
+  <ul>
+    <li>🔑 La <strong>URI de conexión</strong> a la base de datos MongoDB (con usuario y contraseña).</li>
+    <li>⚙️ El <strong>puerto</strong> donde se ejecuta el servidor Express.</li>
+    <li>🔐 Claves, tokens o URLs de servicios externos.</li>
+  </ul>
+
+  <div class="callout info">
+    <p>
+      🔐 <strong>Ejemplo:</strong>  
+      Si subes tu proyecto a GitHub con las credenciales dentro del código, cualquiera podría verlas.  
+      Por eso guardamos esos datos en <code>.env</code> y añadimos el archivo al <code>.gitignore</code>.
+    </p>
+  </div>
+
+  <h3>📄 Cómo crear el archivo <code>.env</code></h3>
+  <ol>
+    <li>En la raíz de tu carpeta <code>backend</code> (junto a <code>package.json</code> y la carpeta <code>src/</code>), crea un archivo llamado <strong>.env</strong>.</li>
+    <li>Pega dentro el siguiente contenido (ajusta tu usuario y contraseña reales):</li>
+  </ol>
+
+  <pre><code># Cadena completa de conexión a MongoDB Atlas
+MONGODB_URI="mongodb+srv://inmacontreras2709_db_user:us77dJov5goG5oaP@ici27.lfxkraj.mongodb.net/tienda?retryWrites=true&w=majority&appName=ici27"
+
+# Nombre de la base de datos dentro del cluster
+MONGODB_DB="tienda"
+
+# Puerto del servidor local
+PORT=3000
+</code></pre>
+
+  <div class="callout success">
+    <p>✅ <strong>Explicación de cada línea:</strong></p>
+    <ul>
+      <li><code>MONGODB_URI</code>: la <strong>cadena de conexión completa</strong> que obtienes desde MongoDB Atlas (incluye usuario, contraseña, cluster y base).</li>
+      <li><code>MONGODB_DB</code>: el nombre de la base de datos que usarás en el cluster, en este caso <code>tienda</code>.</li>
+      <li><code>PORT</code>: el puerto local donde se ejecutará tu servidor Express.</li>
+    </ul>
+  </div>
+
+  <div class="callout warn">
+    ⚠️ <strong>Importante:</strong>  
+    Nunca subas este archivo a GitHub.  
+    Añade una línea <code>.env</code> en tu archivo <code>.gitignore</code> para mantenerlo oculto:
+    <pre><code>.env</code></pre>
+  </div>
+
+  <h3>🔗 Conexión con la librería <code>dotenv</code></h3>
+  <p>
+    La dependencia <code>dotenv</code> se encarga de <strong>leer automáticamente</strong> este archivo <code>.env</code>
+    cuando se inicia tu aplicación Node.js.
+  </p>
+  <p>
+    Al principio de tu <code>server.js</code> añade:
+  </p>
+  <pre><code>import dotenv from "dotenv";
+dotenv.config();</code></pre>
+
+  <p>
+    Desde ese momento podrás acceder a las variables con:
+  </p>
+  <pre><code>process.env.MONGODB_URI
+process.env.MONGODB_DB
+process.env.PORT
+</code></pre>
+
+  <div class="callout success">
+    <p>
+      ✅ <strong>Ventaja:</strong> puedes usar el mismo código en distintos entornos (local, pruebas, producción)
+      cambiando solo el contenido del archivo <code>.env</code>.
+    </p>
+  </div>
+
+  <hr>
+
+  <h2>🌐 Cómo obtener tu <code>MONGODB_URI</code> desde MongoDB Atlas</h2>
+
+  <p>
+    La <strong>URI de conexión</strong> es la dirección completa que permite a tu aplicación Node.js
+    conectarse a tu base de datos en la nube (MongoDB Atlas).  
+    Contiene tu usuario, contraseña, cluster y base de datos.
+  </p>
+
+  <h3>🧭 Pasos para obtenerla</h3>
+  <ol class="indice">
+    <li>Accede a tu cuenta en <a href="https://account.mongodb.com/account/login?signedOut=true" target="_blank" rel="noopener">MongoDB Atlas</a>.</li>
+    <li>Entra en tu <strong>proyecto</strong> y haz clic en tu <strong>Cluster</strong> (por ejemplo <em>Cluster0</em> o <em>ici27</em>).</li>
+    <li>Pulsa el botón <strong>Connect</strong> (arriba a la derecha).</li>
+    <li>Selecciona la opción <strong>“Drivers”</strong> (no “Shell” ni “Compass”).  
+      <div class="note" style="background:#f0fdf4;padding:.8rem;border-left:5px solid #13aa52;margin:.5rem 0">
+        ✅ <strong>Correcto:</strong> “Drivers” es la opción para conectar Node.js mediante Mongoose.  
+        <br>❌ <strong>No elijas:</strong> “Mongo Shell” ni “Compass”.
+      </div>
+    </li>
+    <li>Elige <strong>Driver:</strong> Node.js y <strong>Version:</strong> 5.5 o posterior.</li>
+    <li>Copia la cadena que aparece en “Connection String”.  
+      Verás algo parecido a:
+      <pre><code>mongodb+srv://&lt;username&gt;:&lt;password&gt;@ici27.lfxkraj.mongodb.net/?retryWrites=true&w=majority</code></pre>
+    </li>
+    <li>Sustituye los marcadores <code>&lt;username&gt;</code> y <code>&lt;password&gt;</code> por tus credenciales reales.</li>
+    <li>Añade al final el nombre de tu base de datos (por ejemplo <code>/tienda</code>):  
+      <pre><code>mongodb+srv://inmacontreras2709_db_user:us77dJov5goG5oaP@ici27.lfxkraj.mongodb.net/tienda?retryWrites=true&w=majority&appName=ici27</code></pre>
+    </li>
+  </ol>
+
+  <div class="callout info">
+    💡 <strong>Recuerda:</strong>  
+    Esta cadena es única para tu cuenta y contiene tus credenciales.  
+    No la compartas ni la publiques tal cual.
+  </div>
+
+  <h3>🧠 Diferencia entre “Mongo Shell” y “Drivers”</h3>
+  <table class="table">
+    <thead>
+      <tr><th>Tipo</th><th>Uso</th><th>Ejemplo</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Mongo Shell</strong></td>
+        <td>Permite conectarte manualmente desde la terminal (<code>mongosh</code>).</td>
+        <td><code>mongosh "mongodb+srv://ici27..." --username tuUsuario</code></td>
+      </tr>
+      <tr>
+        <td><strong>Driver (Node.js)</strong></td>
+        <td>Conecta tu aplicación mediante código (Mongoose o driver oficial).</td>
+        <td><code>mongoose.connect("mongodb+srv://...")</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    ⚠️ <strong>Importante:</strong>  
+    Si necesitas mostrar tu URI en clase o en una captura, oculta la contraseña con asteriscos:
+    <pre><code>mongodb+srv://usuario:********@cluster0.mongodb.net/tienda</code></pre>
+  </div>
+
+  <div class="callout success">
+    <strong>En resumen:</strong>
+    <ul>
+      <li>📍 Usa la opción <em>Drivers → Node.js</em> en Atlas para obtener la URI correcta.</li>
+      <li>✏️ Sustituye usuario, contraseña y base de datos.</li>
+      <li>📁 Guárdala en tu archivo <code>.env</code>.</li>
+      <li>🚀 Con <code>dotenv</code> podrás acceder a tus variables con <code>process.env</code>.</li>
+      <li>🧩 ¡Lista para usarla en <code>db.js</code> y conectar con Mongoose!</li>
+    </ul>
+  </div>
+</section>
+<section class="card">
+  <h2>🚫 Paso 2. Crear el archivo <code>.gitignore</code></h2>
+
+  <p>
+    El archivo <code>.gitignore</code> indica a <strong>Git</strong> qué archivos o carpetas <strong>no deben subirse</strong> 
+    al repositorio (por ejemplo, a GitHub).  
+    Su objetivo es proteger información sensible y evitar subir archivos innecesarios que solo sirven en tu entorno local.
+  </p>
+
+  <h3>💡 ¿Por qué es importante?</h3>
+  <ul>
+    <li>🔒 Protege tus <strong>credenciales y datos sensibles</strong> (por ejemplo, el archivo <code>.env</code> con la contraseña de tu base de datos).</li>
+    <li>⚙️ Evita subir carpetas pesadas como <code>node_modules/</code> (que se pueden volver a generar con <code>npm install</code>).</li>
+    <li>🧹 Mantiene tu repositorio <strong>limpio, ligero y seguro</strong>.</li>
+  </ul>
+
+  <div class="callout info">
+    <p>
+      💡 <strong>Recuerda:</strong> Git solo ignora los archivos que se añadan al <code>.gitignore</code> antes de haber sido 
+      <em>commiteados</em>.  
+      Si ya subiste un archivo sensible por error, deberás eliminarlo del historial del repositorio.
+    </p>
+  </div>
+
+  <h3>📄 Cómo crear el archivo</h3>
+  <ol>
+    <li>En la raíz del proyecto (donde está tu <code>package.json</code>), crea un archivo nuevo llamado <strong>.gitignore</strong>.</li>
+    <li>Pega dentro el siguiente contenido mínimo recomendado:</li>
+  </ol>
+
+  <pre><code># Ignorar dependencias (carpeta generada por npm)
+node_modules/
+
+# Ignorar variables de entorno (credenciales y configuraciones)
+.env
+
+# Ignorar archivos temporales o de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar logs de ejecución
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+</code></pre>
+
+  <div class="callout success">
+    <p>
+      ✅ <strong>Explicación rápida:</strong>
+    </p>
+    <ul>
+      <li><code>node_modules/</code>: contiene todas las dependencias instaladas con npm.  
+        No se sube a Git porque puede regenerarse con <code>npm install</code> añade esta explicación en tu README</li>
+      <li><code>.env</code>: archivo con datos sensibles (URI de MongoDB, claves, puertos).</li>
+      <li><code>.DS_Store</code> y <code>Thumbs.db</code>: archivos ocultos de macOS y Windows.</li>
+      <li><code>*.log</code>: registros de errores o depuración generados durante la ejecución.</li>
+    </ul>
+  </div>
+
+  <div class="callout warn">
+    ⚠️ <strong>Importante:</strong>  
+    Si olvidaste añadir <code>.env</code> al <code>.gitignore</code> y ya hiciste commit, 
+    elimínalo del repositorio inmediatamente con:
+    <pre><code>git rm --cached .env</code></pre>
+    Luego haz un nuevo commit para asegurar que queda fuera del control de versiones.
+  </div>
+
+  <div class="callout tip">
+    💬 <strong>Consejo:</strong>  
+    Puedes usar una plantilla oficial de <a href="https://github.com/github/gitignore/blob/main/Node.gitignore" target="_blank" rel="noopener">GitHub para Node.js</a>  
+    si quieres ampliar tu configuración según tu entorno o editor.
+  </div>
+
+  <div class="callout success">
+    <p>
+      🎯 <strong>Objetivo:</strong>  
+      Con este archivo, tu proyecto estará <strong>seguro y limpio</strong>.  
+      Git solo subirá el código esencial y dejará fuera todo lo que no debe compartirse.
+    </p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚙️ 3. Creando el archivo de conexión <code>db.js</code></h2>
+  <p>
+    Este archivo se guarda dentro de la carpeta <code>src/config/</code> y se encarga de conectar nuestra aplicación 
+    con la base de datos.  
+    Lo hacemos con la librería <code>Mongoose</code>, que simplifica las conexiones y gestiona automáticamente la reconexión si se pierde la conexión con Atlas.
+  </p>
+
+  <pre><code>// src/config/db.js
+import mongoose from "mongoose";
+
+export async function connectDB() {
+  try {
+    // 1️⃣ Leemos la URI completa y el nombre de la base desde el archivo .env
+    const uri = process.env.MONGODB_URI;
+    const dbName = process.env.MONGODB_DB || "tienda";
+
+    if (!uri) {
+      console.error("❌ No se encontró la variable MONGODB_URI en el archivo .env");
+      process.exit(1);
+    }
+
+    // 2️⃣ Intentamos establecer la conexión con Mongoose
+    await mongoose.connect(uri, {
+      dbName,
+      autoIndex: true, // crea índices si los defines en tus Schemas
+    });
+
+    console.log(`✅ Conectado a MongoDB → Base de datos: ${dbName}`);
+  } catch (error) {
+    console.error("❌ Error al conectar con MongoDB:", error.message);
+    process.exit(1); // Detiene el servidor si no puede conectar
+  }
+}
+</code></pre>
+
+  <div class="callout info">
+    <p><strong>💬 ¿Qué hace este código paso a paso?</strong></p>
+    <ul>
+      <li><strong>1️⃣</strong> Importa Mongoose, la librería que gestiona las conexiones con MongoDB.</li>
+      <li><strong>2️⃣</strong> Obtiene la cadena de conexión (<code>MONGODB_URI</code>) desde el archivo <code>.env</code>.</li>
+      <li><strong>3️⃣</strong> Llama a <code>mongoose.connect()</code> para establecer la conexión.</li>
+      <li><strong>4️⃣</strong> Si todo va bien, muestra un mensaje de éxito en la consola.</li>
+      <li><strong>5️⃣</strong> Si algo falla (URI incorrecta, red caída, credenciales erróneas…), muestra un error claro y detiene el servidor.</li>
+    </ul>
+  </div>
+
+  <div class="callout success">
+    <p>🎯 <strong>Objetivo:</strong>  
+      Tener una función reutilizable (<code>connectDB()</code>) que puedas importar en <code>server.js</code> 
+      para que la conexión a MongoDB se realice automáticamente al arrancar el servidor.
+    </p>
+  </div>
+</section>
+
+
+
+
+<section class="card">
+  <h2>🚀 4️⃣ Conectando la base de datos en <code>server.js</code></h2>
+  <p>
+    El archivo <code>server.js</code> es el corazón del servidor.  
+    Aquí importamos la función <code>connectDB()</code> para que la base de datos se conecte antes de iniciar el servidor Express.
+  </p>
+
+  <pre><code>// src/server.js
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { connectDB } from './config/db.js';
+import productosRoutes from './routes/productos.js';
+
+dotenv.config(); // carga el archivo .env
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Conectar a MongoDB
+await connectDB();
+
+// Rutas principales
+app.use('/api/productos', productosRoutes);
+
+// Ruta de prueba
+app.get('/', (_req, res) => res.json({ ok: true }));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+});
+</code></pre>
+
+  <div class="callout info">
+  <h3>🧩 ¿Cómo ver estos mensajes en la consola?</h3>
+  <p>
+    Para comprobar que tu servidor y la base de datos están funcionando correctamente, debes 
+    <strong>arrancar el servidor Node.js</strong> desde la terminal de Visual Studio Code.
+  </p>
+
+  <h4>⚙️ Pasos para iniciar el servidor</h4>
+  <ol>
+    <li>Abre la <strong>Terminal</strong> integrada en VS Code (<kbd>Ctrl</kbd> + <kbd>Ñ</kbd> o <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>'</kbd>).</li>
+    <li>Comprueba que estás dentro de la carpeta <code>backend-mongoose</code> o similar.</li>
+    <li>Ejecuta el comando:
+      <pre><code>npm run dev</code></pre>
+      <p>💡 Si no tienes nodemon instalado, también puedes usar:</p>
+      <pre><code>node src/server.js</code></pre>
+    </li>
+    <li>Espera unos segundos ⏳ hasta que aparezcan los mensajes de éxito.</li>
+  </ol>
+
+  <h4>🎯 Ejemplo de salida correcta:</h4>
+  <pre><code>[dotenv@17.2.3] injecting env (3) from .env
+✅ Conectado a MongoDB → Base de datos: tienda
+🚀 Servidor corriendo en http://localhost:3000
+</code></pre>
+
+  <h4>📘 Significado de los mensajes:</h4>
+  <ul>
+    <li><strong>✅ Conectado a MongoDB:</strong> Mongoose ha establecido conexión con tu base de datos Atlas.</li>
+    <li><strong>🚀 Servidor corriendo:</strong> Express está funcionando y escuchando peticiones HTTP en el puerto configurado (por defecto 3000).</li>
+  </ul>
+
+  <div class="callout success">
+    <p>🎉 <strong>Enhorabuena:</strong> Si ves ambos mensajes, tu backend está completamente operativo.  
+    Ya puedes probar tus rutas con Thunder Client, Postman o conectar el frontend React.</p>
+  </div>
+</div>
+
+</section>
+
+<section class="card">
+  <h2>🧩 5️⃣ Entendiendo el flujo completo</h2>
+  <p>
+    Veamos cómo encajan todas las piezas:
+  </p>
+
+  <pre><code>server.js → importa connectDB() → lee .env → se conecta a MongoDB Atlas → 
+Rutas (productosRoutes) → Controladores → Modelos → Base de datos</code></pre>
+
+  <div class="callout info">
+    <p><strong>📘 En resumen:</strong></p>
+    <ul>
+      <li><code>.env</code> guarda las credenciales.</li>
+      <li><code>db.js</code> establece la conexión segura.</li>
+      <li><code>server.js</code> arranca el servidor y activa las rutas.</li>
+    </ul>
+  </div>
+
+  <div class="callout success">
+    <p>✅ <strong>Ya tienes una API real conectada a MongoDB Atlas.</strong><br>
+    En el siguiente tema, crearemos nuestro <strong>primer modelo (Producto)</strong> 
+    y aprenderemos a guardar y leer documentos de la colección <code>productos</code>.</p>
+  </div>
+</section>
+ <div class="cta" style="margin:2rem 0 0">
+      <a class="btn btn-outline" href="08-mongoose.html">⟵ Volver al Tema 8</a>
+      <a class="btn btn-primary" href="10-modelos.html">Ir al Tema 10  ⟶</a>
+    </div>
+</main>
+ <footer role="contentinfo">
+    <div class="wrap">
+      <img src="pie.png" alt="Decoración del pie del manual" class="footer-img" loading="lazy">
+      Manual “Mongoo” · @Inma Contreras · © 2025
+    </div>
+  </footer>
+</body>
+</html>

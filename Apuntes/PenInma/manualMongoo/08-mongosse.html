@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tema 8 — Creando el entorno de trabajo</title>
+  <meta name="description" content="Creación de esquemas y modelos en Mongoose: validaciones, índices, virtuals, métodos, middlewares, populate básico, rendimiento (lean/select) y manejo de errores." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header>
+    <div class="wrap hero hero--compact" role="banner">
+      <div class="hero-content">
+        <span class="kicker">Tema 8</span>
+        <h1>Comenzando nuestro proyecto </h1>
+        <p class="subtitle">En esta lección vamos a crear nuestro entorno para poder empezar a trabajar con Mongo DB, mongosse y <node class="js"></node></p>
+      </div>
+      <img src="logo.png" alt="Logo/ilustración del tema" class="hero-illus" loading="lazy">
+    </div>
+  </header>
+
+  <div class="cta" style="margin-top:2rem">
+    <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+    <a class="btn btn-primary" href="09-conexion.html">Siguiente tema ➜</a>
+  </div>
+
+  <main id="contenido" class="wrap" role="main">
+
+    <section class="card">
+      <h2>🎯 Objetivos</h2>
+      <ul>
+        <li>Crear <strong>Schemas</strong> y <strong>Modelos</strong> con convenciones claras.</li>
+        <li>Aplicar <strong>validaciones</strong>, <strong>valores por defecto</strong> e <strong>índices</strong>.</li>
+        <li>Usar <strong>métodos</strong>, <strong>estáticos</strong>, <strong>virtuals</strong> y <strong>middlewares</strong>.</li>
+        <li>Mejorar rendimiento con <strong>select</strong>/<strong>lean</strong>.</li>
+        <li>Entender <strong>populate</strong> y el manejo correcto de <strong>errores</strong>.</li>
+      </ul>
+    </section>
+    <section class="card">
+  <h2>🧩 Guía de nomenclatura en proyectos Node.js + Express + Mongoose</h2>
+
+  <p>
+    Una buena organización y nombres coherentes son esenciales para que un proyecto sea <strong>fácil de entender, mantener y escalar</strong>.  
+    En programación, llamamos a esto <em>nomenclatura</em> o <em>naming convention</em>.
+  </p>
+
+  <div class="callout info">
+    <p>
+      💡 <strong>Regla general:</strong>  
+      Los archivos y carpetas se escriben en <strong>minúsculas</strong> y con <strong>guiones o puntos</strong> para separar palabras.  
+      Las clases y funciones siguen convenciones específicas que veremos a continuación.
+    </p>
+  </div>
+
+  <h3>📘 Tipos de nomenclatura más usados</h3>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Tipo de elemento</th>
+        <th>Convención</th>
+        <th>Ejemplo correcto ✅</th>
+        <th>Ejemplo incorrecto ❌</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Archivos y carpetas</strong></td>
+        <td><code>kebab-case</code> (minúsculas y guiones)</td>
+        <td><code>productos.routes.js</code><br><code>usuarios.controller.js</code></td>
+        <td><code>ProductosController.js</code><br><code>productos_Routes.js</code></td>
+      </tr>
+      <tr>
+        <td><strong>Clases</strong></td>
+        <td><code>PascalCase</code> (cada palabra con mayúscula)</td>
+        <td><code>ProductosController</code></td>
+        <td><code>productoscontroller</code>, <code>productos_Controller</code></td>
+      </tr>
+      <tr>
+        <td><strong>Funciones y variables</strong></td>
+        <td><code>camelCase</code> (minúscula inicial)</td>
+        <td><code>listarProductos()</code><br><code>connectDB()</code></td>
+        <td><code>ListarProductos()</code><br><code>connect_db()</code></td>
+      </tr>
+      <tr>
+        <td><strong>Constantes globales</strong></td>
+        <td><code>MAYÚSCULAS_CON_GUIONES</code></td>
+        <td><code>PORT</code><br><code>MONGODB_URI</code></td>
+        <td><code>port</code><br><code>MongoDbUri</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>📁 Estructura recomendada del proyecto</h3>
+
+  <pre><code>📦 backend-mongoose/
+ ┣ 📂 src/
+ ┃ ┣ 📂 config/
+ ┃ ┃ ┗ db.js
+ ┃ ┣ 📂 controllers/
+ ┃ ┃ ┗ productos.controller.js
+ ┃ ┣ 📂 routes/
+ ┃ ┃ ┗ productos.routes.js
+ ┃ ┣ 📂 models/
+ ┃ ┃ ┗ producto.model.js
+ ┃ ┗ server.js
+ ┣ 📄 .env
+ ┣ 📄 .gitignore
+ ┣ 📄 package.json
+</code></pre>
+
+  <div class="callout success">
+    <p>
+      ✅ <strong>Ventaja:</strong>  
+      Con esta estructura y nomenclatura uniforme, cualquier desarrollador o alumno puede identificar de un vistazo:
+    </p>
+    <ul>
+      <li>📂 <code>controllers/</code> → Lógica de negocio (qué hace la aplicación).</li>
+      <li>📂 <code>routes/</code> → Endpoints que conectan URLs con funciones.</li>
+      <li>📂 <code>models/</code> → Estructura de los datos en MongoDB (Mongoose).</li>
+      <li>📂 <code>config/</code> → Configuración general (base de datos, entorno, etc.).</li>
+    </ul>
+  </div>
+
+  <h3>🧠 Ejemplo práctico de coherencia</h3>
+
+  <h4>📄 Archivo: <code>controllers/productos.controller.js</code></h4>
+  <pre><code>class ProductosController {
+  async listarProductos(req, res) {
+    res.json({ ok: true, mensaje: 'Listado de productos' });
+  }
+
+  async crearProducto(req, res) {
+    res.status(201).json({ ok: true, mensaje: 'Producto creado' });
+  }
+}
+
+export default new ProductosController();</code></pre>
+
+  <h4>📄 Archivo: <code>routes/productos.routes.js</code></h4>
+  <pre><code>import { Router } from 'express';
+import productosController from '../controllers/productos.controller.js';
+
+const route = Router();
+
+route.get('/', productosController.listarProductos);
+route.post('/', productosController.crearProducto);
+
+export default route;</code></pre>
+
+  <div class="callout warn">
+    ⚠️ <strong>Atención:</strong>  
+    Asegúrate de que los nombres de las funciones en las rutas coincidan exactamente con los del controlador.  
+    Si en el controlador defines <code>listarProductos()</code>, no la llames <code>obtenerProductos()</code> en las rutas.
+  </div>
+
+  <div class="callout tip">
+    💬 <strong>Consejo profesional:</strong>  
+    Usa siempre nombres <strong>autoexplicativos</strong> (que digan qué hacen).  
+    Por ejemplo:  
+    <ul>
+      <li>✅ <code>actualizarProducto()</code> → se entiende al leerlo.</li>
+      <li>❌ <code>modificar()</code> → demasiado genérico, confuso.</li>
+    </ul>
+  </div>
+
+  <div class="callout success">
+    <p>
+      🎯 <strong>Objetivo:</strong>  
+      Un código bien nombrado no necesita comentarios para entenderse.  
+      Si todos los archivos siguen la misma convención, el proyecto será más profesional, más limpio y mucho más fácil de enseñar y mantener.
+    </p>
+  </div>
+</section>
+
+<section class="card" id="estructura-proyecto">
+  <h2>🧱 1️⃣ Estructura inicial del proyecto con Mongoose</h2>
+  <p class="lead">
+    Antes de empezar a crear esquemas y modelos, debemos preparar un proyecto Node.js bien organizado.
+    Esta estructura es la base de cualquier aplicación profesional que use MongoDB con Mongoose.
+  </p>
+
+  <h3>📁 Paso 1. Crear el proyecto y carpeta principal</h3>
+  Verificamos la versión de Node.js instalada (mínimo v14+):
+  <pre><code>node -v</code></pre>
+  Luego, creamos la carpeta del proyecto e inicializamos npm:
+  <pre><code>mkdir backend-mongoose (crea la carpeta del proyecto)
+cd backend-mongoose (entra en la carpeta)
+npm init -y (inicializa npm con nuestro package.json)
+</code></pre>
+  <p>Esto genera tu archivo <code>package.json</code>. Edita la propiedad <code>"type"</code> para trabajar con módulos ES:</p>
+  <pre><code>{
+  "name": "backend-mongoose",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    
+  }
+}</code></pre>
+
+  <div class="callout info">
+    <strong>💡 Consejo:</strong> Definir <code>"type": "module"</code> te permite usar <code>import</code> / <code>export</code> en lugar de <code>require</code>.
+  </div>
+
+<section class="card">
+  <h2>⚙️ Paso 2. Instalar dependencias básicas</h2>
+  <p>
+    Una vez creado el proyecto con <code>npm init -y</code>, vamos a instalar las librerías que harán posible conectarnos con MongoDB y crear nuestro servidor.
+  </p>
+
+  <h3>📦 Dependencias esenciales</h3>
+  <pre><code>npm install express mongoose dotenv cors </code></pre>
+  <p>
+    Además, instalamos <code>nodemon</code> como dependencia de desarrollo (para reiniciar el servidor automáticamente cada vez que guardamos un cambio):
+  </p>
+  <pre><code>npm install --save-dev nodemon</code></pre>
+
+  <div class="callout success">
+    <p>🔍 <strong>¿Qué hace cada paquete?</strong></p>
+    <ul>
+      <li><strong>express:</strong> crea el servidor web y las rutas de nuestra API.</li>
+      <li><strong>mongoose:</strong> nos permite conectar y trabajar con MongoDB desde Node.js de forma más sencilla y estructurada (usando esquemas y modelos).</li>
+      <li><strong>dotenv:</strong> gestiona <em>variables de entorno</em> (credenciales, puertos, URL del cluster, etc.) sin que aparezcan en el código.</li>
+      <li><strong>cors:</strong> permite que el backend acepte peticiones desde un frontend (por ejemplo, React o HTML local).</li>
+      
+      <li><strong>nodemon:</strong> reinicia el servidor al detectar cambios, para no tener que pararlo y arrancarlo a mano cada vez.</li>
+    </ul>
+  </div>
+
+  <h3>🧭 Configurar scripts en <code>package.json</code></h3> 
+</section>
+<div class="callout info">
+  <strong>Consejo:</strong> puedes instalar todas las librerías en una sola línea para ahorrar tiempo, 
+  o una por una si quieres observar cómo se añaden al <code>package.json</code>.  
+  En ambos casos el resultado es idéntico.
+  <pre><code>npm install express mongoose dotenv cors  
+npm install --save-dev nodemon</code></pre>
+</div>
+<p>Así quedará tu <code>package.json</code>:</p>
+<pre><code>{
+  "name": "backend-mongoose",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}</code></pre>
+
+  <div class="callout success">
+    ✅ <strong>Ventaja:</strong> los scripts <code>"start"</code> y <code>"dev"</code> nos permiten arrancar el servidor fácilmente en modo producción o desarrollo.
+  </div>
+
+
+
+  <section class="card">
+  <h2>🏗️ Paso 3. Crear estructura de carpetas (patrón MVC)</h2>
+  <p>Vamos a organizar el proyecto para que el código sea <strong>mantenible, testable</strong> y fácilmente ampliable. Usaremos una distribución inspirada en <strong>MVC</strong> (Modelo–Vista–Controlador) para separar responsabilidades.</p>
+    <p>¿Qué es MVC? El modelo <strong>MVC</strong> es un patrón de diseño que separa la lógica de la aplicación en tres componentes principales:</p>
+  1. <strong>Modelo (M)</strong>: maneja los datos y la lógica de negocio (en nuestro caso, los esquemas y modelos de Mongoose).
+  2. <strong>Vista (V)</strong>: representa la interfaz de usuario (en una API REST, esto se traduce en las respuestas JSON).
+  3. <strong>Controlador (C)</strong>: recibe las solicitudes del usuario, interactúa con el modelo y devuelve la vista adecuada (en nuestro caso, los controladores que gestionan las rutas).
+  <p>En nuestro proyecto, la estructura de carpetas quedará así:</p>
+  <pre><code>backend-mongoose/
+├─ .env
+├─ .gitignore
+├─ package.json
+├─ src/
+│  ├─ server.js            ← archivo de entrada (o app.js)
+│  ├─ config/              ← configuración de la app
+│  │  ├─ db.js             ← conexión a MongoDB con Mongoose
+│  │  
+│  ├─ models/              ← esquemas y modelos de datos (Mongoose)
+│  │  └─ Producto.js
+│  ├─ controllers/         ← lógica de negocio por recurs
+│  │  └─ productos.controller.js
+│  ├─ routes/              ← endpoints Express que llaman a controladores
+│  │  └─ productos.routes.js
+│     
+└─ README.md
+</code></pre>
+
+  <div class="grid cols-3">
+    <div class="card">
+      <h3 class="section-title">📍 <code>src/server.js</code> (o <code>app.js</code>)</h3>
+      <p>Es el <strong>punto de entrada</strong> de la aplicación. Crea la instancia de Express, aplica middlewares (p. ej., <code>express.json()</code> y <code>cors()</code>), monta las <strong>rutas</strong> y arranca el servidor en <code>process.env.PORT</code>. Suele requerir la conexión a la BD.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="section-title">⚙️ <code>src/config/</code></h3>
+      <ul>
+        <li><code>db.js</code>: configura y realiza la <strong>conexión Mongoose</strong> usando <code>MONGODB_URI</code> y <code>MONGODB_DB</code>.</li>
+        <li><code>env.js</code>: inicializa <code>dotenv</code> y expone las <strong>variables de entorno</strong> (centraliza <code>process.env</code>).</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 class="section-title">🧱 <code>src/models/</code></h3>
+      <p>Contiene los <strong>Schemas</strong> y <strong>Modelos</strong> de Mongoose. Cada archivo define la forma de los documentos, validaciones y métodos estáticos/de instancia. Ej.: <code>Producto.js</code> con campos <code>nombre</code>, <code>precio</code>, <code>stock</code>, etc.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="section-title">🧠 <code>src/controllers/</code></h3>
+      <p>Implementa la <strong>lógica de negocio</strong> por recurso (productos, usuarios…). Recibe <code>req</code>/<code>res</code>, orquesta llamadas al modelo y devuelve respuestas. Mantiene el código de las rutas <strong>limpio</strong> y reutilizable.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="section-title">🧭 <code>src/routes/</code></h3>
+      <p>Declara los <strong>endpoints</strong> (p. ej., <code>GET /api/productos</code>, <code>POST /api/productos</code>) y los <strong>conecta</strong> con su controlador correspondiente. No contiene negocio; solo mapea URLs → controladores.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="section-title">🛠️ <code>README.md</code></h3>
+      <p>Archivo donde explica la estructura del proyecto, cómo configurarlo y ejecutarlo, así como detalles sobre las API disponibles.Puedes ir creándolo a la vez.</p>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <strong>Archivos de raíz</strong>
+    <ul>
+      <li><code>.env</code>: credenciales y configuración (no se sube a Git).</li>
+      <li><code>.gitignore</code>: excluye <code>node_modules</code>, <code>.env</code> y artefactos temporales.</li>
+      <li><code>package.json</code>: metadatos del proyecto y <strong>scripts</strong> (<code>dev</code>, <code>start</code>, etc.).</li>
+    </ul>
+  </div>
+
+  <h3>🧭 Mini introducción a MVC</h3>
+  <p>
+    <strong>MVC</strong> es un patrón de arquitectura que separa responsabilidades para facilitar el mantenimiento:
+  </p>
+  <ul>
+    <li><strong>Modelo (M)</strong> → Datos y reglas de negocio en torno a la <em>persistencia</em>. En nuestro proyecto: <code>src/models/</code> (Mongoose).</li>
+    <li><strong>Vista (V)</strong> → Interfaz de usuario. En una API pura no hay “vistas” clásicas; el rol lo cumple el <strong>cliente</strong> (frontend) o las <strong>respuestas JSON</strong>.</li>
+    <li><strong>Controlador (C)</strong> → Recibe la petición, aplica la lógica y devuelve la respuesta. En nuestro proyecto: <code>src/controllers/</code>, conectados por <code>src/routes/</code>.</li>
+  </ul>
+
+  <div class="callout success">
+    <p><strong>¿Por qué es tan usado?</strong> Porque permite <em>escalar</em> el proyecto sin que el código se convierta en un “monolito” difícil de mantener. Separar rutas, controladores, modelos y configuración hace que cada capa sea <strong>testable</strong>, <strong>reutilizable</strong> y <strong>legible</strong>.</p>
+  </div>
+
+  
+</section>
+<section class="card">
+  <h2>🖥️ Paso 4. Archivo <code>server.js</code> — Punto de entrada de la aplicación</h2>
+  <p>
+    El archivo <code>server.js</code> (también puede llamarse <code>app.js</code>) es el <strong>punto de entrada</strong> de nuestra aplicación Node.js.  
+    Aquí se configura el servidor Express, se cargan las variables de entorno y se define el puerto donde escuchará la API.
+  </p>
+
+  <pre><code>import express from 'express';
+import dotenv from 'dotenv';
+import productosRoutes from './routes/productos.routes.js';//importamos las rutas de productos
+
+// 🔹 Cargar variables del archivo .env
+dotenv.config();
+
+// 🔹 Crear instancia de la aplicación Express
+const app = express();
+app.use(express.json());
+
+// ✅ Aquí decides la ruta base
+app.use('/api/productos', productosRoutes);
+
+// 🔹 Usar el puerto definido en .env o un valor por defecto
+const PORT = process.env.PORT || 3000;
+
+try {
+  // 🔹 Iniciar el servidor
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+  });
+} catch (error) {
+  console.error('❌ Error al iniciar el servidor:', error);
+}</code></pre>
+
+  <h3>🔍 Explicación paso a paso</h3>
+
+  <ul>
+    <li><strong>1️⃣ Importación de dependencias:</strong>  
+      <code>express</code> es el framework que nos permite crear un servidor web rápido y modular.  
+      <code>dotenv</code> carga automáticamente las variables definidas en el archivo <code>.env</code> para que puedan usarse en el proyecto.</li>
+
+    <li><strong>2️⃣ Configuración de variables de entorno:</strong>  
+      La instrucción <code>dotenv.config()</code> busca un archivo <code>.env</code> en la raíz del proyecto y lo carga en <code>process.env</code>.  
+      Así podemos acceder a valores sensibles como el puerto o la URI de MongoDB sin escribirlos directamente en el código.</li>
+
+    <li><strong>3️⃣ Creación del servidor Express:</strong>  
+      <code>const app = express();</code> inicializa la aplicación Express.  
+      Más adelante añadiremos aquí <em>middlewares</em> como <code>express.json()</code> o <code>cors()</code> y las rutas de nuestra API.</li>
+
+    <li><strong>4️⃣ Definición del puerto:</strong>  
+      <code>const PORT = process.env.PORT || 3000;</code> indica que, si existe una variable <code>PORT</code> en el archivo <code>.env</code>, se use esa;  
+      si no, se usará el puerto <code>3000</code> por defecto.</li>
+
+    <li><strong>5️⃣ Inicio del servidor:</strong>  
+      <code>app.listen(PORT, ...)</code> pone a escuchar al servidor en ese puerto.  
+      Si todo funciona, muestra en consola el mensaje <code>Servidor corriendo en http://localhost:4000</code>.</li>
+
+    <li><strong>6️⃣ Manejo de errores:</strong>  
+      El bloque <code>try/catch</code> captura posibles errores al iniciar el servidor (por ejemplo, si el puerto está ocupado o hay un problema de permisos).</li>
+  </ul>
+
+  <div class="callout info">
+    <strong>📦 En resumen:</strong> este archivo es el “corazón” de tu backend.  
+    Su función es <strong>inicializar Express</strong>, <strong>cargar la configuración global</strong> y <strong>mantener en marcha el servidor</strong> para que las rutas puedan atender peticiones.
+  </div>
+
+  
+
+<div class="callout info">
+  <strong>📘 Recuerda:</strong> ya aprendimos en el tema de <strong>Node.js</strong> que el archivo <code>package.json</code> 
+  puede incluir una sección llamada <code>"scripts"</code>, donde definimos <em>atajos de ejecución</em> para comandos frecuentes.  
+  En nuestro caso, añadimos dos scripts muy útiles:
+  <pre><code>"scripts": {
+  "start": "node src/server.js",
+  "dev": "nodemon src/server.js"
+}</code></pre>
+
+  <ul>
+    <li><code>npm run start</code> → ejecuta el servidor con Node.js (modo normal).</li>
+    <li><code>npm run dev</code> → usa <code>nodemon</code> para reiniciar automáticamente el servidor cuando detecta cambios en los archivos (modo desarrollo).</li>
+  </ul>
+
+  Esto nos ahorra tiempo, evita reiniciar manualmente el servidor y mantiene un flujo de trabajo profesional.
+</div>
+
+</section>
+
+<div class="callout success">
+    💡 <strong>Prueba rápida:</strong>  
+    Ejecuta en la terminal <code>npm run dev</code> (si tienes <code>nodemon</code>) o <code>node src/server.js</code>.  
+    Si todo está correcto, verás en consola:  
+    <code>🚀 Servidor corriendo en http://localhost:3000</code>
+  </div>
+
+  <section class="card">
+  <h2>🧭 Paso 5. Crear el archivo de rutas <code>productos.routes.js</code></h2>
+  <p>
+    En una API organizada con Express, las <strong>rutas</strong> son los caminos o direcciones que los usuarios pueden usar 
+    para pedir información o enviar datos.  
+    Cada ruta indica qué debe hacer el servidor cuando alguien accede a una URL concreta.
+  </p>
+
+  <p>Por ejemplo:</p>
+  <ul>
+    <li><code>GET /api/productos</code> → devuelve la lista de productos.</li>
+    <li><code>POST /api/productos</code> → añade un nuevo producto.</li>
+    <li><code>GET /api/productos/123</code> → busca un producto concreto por su ID.</li>
+  </ul>
+
+  <h3>📁 Ubicación y nombre del archivo</h3>
+  <p>Crea una carpeta llamada <code>routes</code> dentro de <code>src/</code>, y dentro un archivo llamado <code>productos.routes.js</code>.</p>
+
+  <h3>📜 Código base del archivo</h3>
+  <pre><code>import express from 'express';
+
+// 🔹 Creamos un "enrutador" de Express
+const route = express.Router();
+
+// 🔹 Importamos el controlador (lógica de los productos)
+import productosController from '../../controllers/productosController.js';
+
+// 🔹 Definimos las rutas básicas del recurso "productos"
+route.get('/');         // obtener todos los productos
+route.post('/');        // crear un nuevo producto
+route.get('/:id');      // obtener un producto por ID
+route.put('/:id');      // actualizar un producto
+route.delete('/:id');   // eliminar un producto
+
+// 🔹 Exportamos el router para poder usarlo en el servidor
+export default route;
+</code></pre>
+
+  <h3>🧩 Explicación paso a paso</h3>
+  <ul>
+    <li><strong>1️⃣</strong> <code>import express from 'express';</code>  
+      Importa Express para poder usar su sistema de rutas.</li>
+
+    <li><strong>2️⃣</strong> <code>const route = express.Router();</code>  
+      Crea un “mini-servidor” interno llamado <em>Router</em> que agrupa rutas relacionadas, en este caso todas las de <strong>productos</strong>.</li>
+
+    <li><strong>3️⃣</strong> <code>import productosController...</code>  
+      Aquí importaremos más adelante el archivo con la <strong>lógica de negocio</strong> (lo que hace cada ruta).</li>
+
+    <li><strong>4️⃣</strong> <code>route.get(...)</code>, <code>route.post(...)</code>, etc.  
+      Son los distintos métodos HTTP que usa una API:
+      <ul>
+        <li><code>GET</code> → leer información.</li>
+        <li><code>POST</code> → crear nuevos datos.</li>
+        <li><code>PUT</code> → actualizar datos existentes.</li>
+        <li><code>DELETE</code> → borrar datos.</li>
+      </ul>
+    </li>
+
+    <li><strong>5️⃣</strong> <code>export default route;</code>  
+      Permite que este grupo de rutas pueda ser usado por el archivo principal del servidor (<code>server.js</code>), 
+      que más adelante las “montará” en una dirección como <code>/api/productos</code>.</li>
+  </ul>
+
+  <div class="callout success">
+    💡 <strong>Resumen:</strong> este archivo solo define los caminos (rutas) y qué tipo de acción se espera en cada uno.  
+    La lógica que se ejecuta (crear, leer, actualizar, borrar) se escribirá más adelante en el <strong>controlador</strong>.
+  </div>
+</section>
+
+<!-- Paso 7: Conectar las rutas en el servidor -->
+<section class="card">
+  <h2>🧭 Paso 6. Conectar las rutas en el servidor principal</h2>
+  <p>
+    En el paso anterior definimos las rutas básicas dentro de <code>src/routes/productos.routes.js</code>, 
+    pero aún no las hemos conectado con nuestro servidor.  
+    Ahora iremos al archivo principal <strong><code>server.js</code></strong> (o <code>app.js</code>) para montar la <strong>ruta base</strong> del recurso.
+  </p>
+
+  <h3>📁 Ubicación del archivo</h3>
+  <pre><code>src/
+├─ config/
+│  └─ db.js
+├─ controllers/
+│  └─ productos.controller.js
+├─ models/
+│  └─ Producto.js
+├─ routes/
+│  └─ productos.routes.js
+└─ server.js   ← aquí creamos la ruta base
+</code></pre>
+
+  <h3>⚙️ Código de <code>server.js</code></h3>
+  <p>
+    Importamos Express, la conexión a la base de datos y el archivo de rutas.  
+    Luego usamos el método <code>app.use()</code> para indicar que todas las rutas de <code>productos</code> 
+    estarán bajo el prefijo <code>/api/productos</code> esta es la ruta que hemos definido en el servidor.
+  </p>
+
+  <pre><code>import express from 'express';
+import dotenv from 'dotenv';
+import productosRoutes from './routes/productos.routes.js';//importamos las rutas de productos
+
+// 🔹 Cargar variables del archivo .env
+dotenv.config();
+
+// 🔹 Crear instancia de la aplicación Express
+const app = express();
+app.use(express.json());
+
+// ✅ Aquí decides la ruta base
+app.use('/api/productos', productosRoutes);
+
+// 🔹 Usar el puerto definido en .env o un valor por defecto
+const PORT = process.env.PORT || 3000;
+
+try {
+  // 🔹 Iniciar el servidor
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+  });
+} catch (error) {
+  console.error('❌ Error al iniciar el servidor:', error);
+}
+</code></pre>
+
+  <div class="callout info">
+    💡 <strong>Ruta base:</strong> el prefijo <code>/api/productos</code> actúa como 
+    el “camino principal” del recurso.  
+    Todo lo que definiste en <code>productos.routes.js</code> (por ejemplo <code>GET '/'</code> o <code>POST '/'</code>) 
+    ahora funcionará como:
+    <ul>
+      <li><code>GET /api/productos</code> → obtener todos los productos</li>
+      <li><code>POST /api/productos</code> → crear un nuevo producto</li>
+      <li><code>GET /api/productos/:id</code> → obtener por ID</li>
+      <li><code>PUT /api/productos/:id</code> → actualizar</li>
+      <li><code>DELETE /api/productos/:id</code> → eliminar</li>
+    </ul>
+  </div>
+
+  <div class="callout success">
+    ✅ <strong>Comprueba:</strong> si el servidor muestra el mensaje. Arranca con npm run dev.
+    <code>🚀 Servidor corriendo en http://localhost:3000</code>, 
+    ya tienes tu API lista para recibir peticiones.
+  </div>
+</section>
+<div class="callout info">
+  <h3>🧠 BONUS — Cómo ver quién está usando un puerto y cerrar la conexión</h3>
+
+  <p>
+    A veces, cuando intentas arrancar el servidor, aparece un error como:
+  </p>
+  <pre><code>Error: listen EADDRINUSE: address already in use :::3000</code></pre>
+  <p>
+    Esto significa que **otro proceso ya está usando el mismo puerto** (por ejemplo, un servidor anterior que no se cerró correctamente).
+  </p>
+
+  <h4>💻 En Windows (PowerShell o CMD)</h4>
+  <ol>
+    <li>Ver quién usa el puerto (por ejemplo el 3000):  
+      <pre><code>netstat -ano | findstr :3000</code></pre>
+      👉 El número final es el <strong>PID</strong> (Identificador del Proceso).
+    </li>
+    <li>Comprobar qué programa es:  
+      <pre><code>tasklist /FI "PID eq 12345"</code></pre>
+    </li>
+    <li>Finalizar el proceso:  
+      <pre><code>taskkill /PID 12345 /F</code></pre>
+      ⚠️ Usa <code>/F</code> para forzar el cierre.
+    </li>
+  </ol>
+
+  
+
+  <h4>⚙️ Alternativa universal (con npm)</h4>
+  <p>
+    Si prefieres una forma más sencilla, instala el paquete <code>kill-port</code>:
+  </p>
+  <pre><code>npm install -g kill-port
+npx kill-port 3000</code></pre>
+Lo instalas y luego con una sola orden matas la conexión si la hay. 
+  <h4>✅ Consejo final</h4>
+  <p>
+    Una vez liberado el puerto, ejecuta de nuevo:
+  </p>
+  <pre><code>npm run dev</code></pre>
+  <p>
+    Si el servidor arranca sin errores, significa que el puerto ya estaba libre.  
+    Este procedimiento es muy útil cuando tienes varios proyectos Express o React abiertos a la vez.
+  </p>
+</div>
+
+<section class="card">
+  <h2>🧠 Paso 7. Crear el controlador <code>productos.controller.js</code></h2>
+  <p>
+    Ahora que ya tenemos las <strong>rutas</strong> (los caminos de la API), necesitamos decirle al servidor <em>qué debe hacer</em> cuando alguien accede a esas rutas.  
+    Esa es la función del <strong>controlador</strong>.
+  </p>
+
+  <h3>📘 ¿Qué es un controlador?</h3>
+  <p>
+    Un <strong>controlador</strong> es un archivo JavaScript que contiene las <em>funciones</em> que se ejecutan cuando el servidor recibe una petición HTTP.  
+    Es decir: cuando alguien accede a <code>/api/productos</code>, el controlador se encarga de decidir qué responder.
+  </p>
+
+  <div class="callout info">
+    <p><strong>📦 En resumen:</strong>  
+    <strong>Ruta → Controlador → Respuesta.</strong><br>
+    La ruta detecta la URL, el controlador realiza la acción y envía el resultado al cliente.</p>
+  </div>
+
+  <h3>🔗 Relación entre ruta y controlador</h3>
+  <p>En el archivo de rutas escribimos algo así:</p>
+  <pre><code>route.get('/', productosController.listarProductos);</code></pre>
+  <p>
+    Esto significa que cuando alguien visite <code>/api/productos</code> con el método <code>GET</code>, 
+    Express llamará automáticamente a la función <code>listarProductos()</code> dentro del controlador.
+  </p>
+
+  <h3>🧩 Estructura básica de un controlador</h3>
+  <ul>
+    <li><strong>1️⃣</strong> Importa el modelo (para acceder a la base de datos).</li>
+    <li><strong>2️⃣</strong> Crea una clase o un objeto con las funciones necesarias (listar, crear, actualizar, eliminar).</li>
+    <li><strong>3️⃣</strong> Exporta esa clase u objeto para poder usarlo desde las rutas.</li>
+  </ul>
+
+  <h3>📁 Archivo: <code>controllers/productosController.js</code></h3>
+
+  <pre><code>// src/controllers/productos.controller.js
+class ProductosController {
+  listarProductos = async (req, res) => {
+    res.status(200).json({ status: 'ok', mensaje: 'Listado de productos' });
+  };
+
+  crearProducto = async (req, res) => {
+    res.status(201).json({ status: 'ok', mensaje: 'Producto creado' });
+  };
+
+  obtenerProducto = async (req, res) => {
+    res.status(200).json({ status: 'ok', mensaje: `Obteniendo producto con ID ${req.params.id}` });
+  };
+
+  actualizarProducto = async (req, res) => {
+    res.status(200).json({ status: 'ok', mensaje: 'Producto actualizado' });
+  };
+
+  eliminarProducto = async (req, res) => {
+    res.status(200).json({ status: 'ok', mensaje: 'Producto eliminado' });
+  };
+}
+
+export default new ProductosController();
+
+</code></pre>
+
+
+
+    <p><strong>✔️ En resumen:</strong></p>
+    <ul>
+      <li>El <strong>router</strong> define los caminos (<code>/api/productos</code>, <code>/api/productos/:id</code>...).</li>
+      <li>El <strong>controlador</strong> dice qué debe pasar en cada uno (consultar, crear, actualizar o borrar).</li>
+      <li>El <strong>modelo</strong> (que veremos enseguida) se encarga de hablar con la base de datos.</li>
+    </ul>
+    <p>De esta forma, separamos la lógica en capas más claras y fáciles de mantener.</p>
+  </div>
+</section>
+<section class="card">
+  <h2>⏳ ¿Por qué usamos <code>async</code> y <code>await</code> en los controladores?</h2>
+
+  <p>
+    Cuando un controlador usa <strong>funciones que tardan un tiempo</strong> (por ejemplo, pedir datos a MongoDB o escribir en la base de datos),
+    esas operaciones no se hacen al instante.  
+    Si no las marcamos como “asíncronas”, el programa seguiría adelante sin esperar la respuesta.
+  </p>
+
+  <h3>💡 Ejemplo real</h3>
+  <p>Cuando hacemos esto en el controlador:</p>
+  <pre><code>const productos = await Producto.find();</code></pre>
+  <p>
+    Estamos diciéndole a JavaScript:  
+    👉 “<em>Espera a que MongoDB termine de buscar los productos</em> antes de seguir con la siguiente línea”.
+  </p>
+
+  <h3>🔹 Qué significa <code>async</code></h3>
+  <p>
+    La palabra clave <code>async</code> se pone delante de una función para indicar que dentro de ella
+    se usarán operaciones asíncronas (que pueden tardar).  
+    Es decir, funciones que no se ejecutan de inmediato, como llamadas a bases de datos o peticiones HTTP.
+  </p>
+  <pre><code>async function listarProductos(req, res) {
+  const productos = await Producto.find();
+  res.json(productos);
+}</code></pre>
+
+  <h3>🔹 Qué hace <code>await</code></h3>
+  <p>
+    La palabra <code>await</code> significa literalmente “espera”.  
+    Hace que el programa se detenga momentáneamente en esa línea hasta que la promesa (la respuesta de la BD) se complete.  
+    Sin <code>await</code>, el servidor seguiría ejecutando el código antes de tener los datos.
+  </p>
+
+  <h3>⚙️ Sin async/await (ejemplo incorrecto)</h3>
+  <pre><code>function listarProductos(req, res) {
+  const productos = Producto.find(); // ❌ Esto devuelve una promesa, no los datos
+  res.json(productos);               // Se ejecuta antes de que termine la consulta
+}</code></pre>
+
+  <h3>✅ Con async/await (correcto)</h3>
+  <pre><code>async function listarProductos(req, res) {
+  const productos = await Producto.find(); // ✅ Espera la respuesta de MongoDB
+  res.json(productos);
+}</code></pre>
+
+  <div class="callout success">
+    <strong>En resumen:</strong>
+    <ul>
+      <li><code>async</code> → marca una función como asíncrona (puede usar <code>await</code> dentro).</li>
+      <li><code>await</code> → pausa el código hasta que una operación (como <code>Producto.find()</code>) devuelva su resultado.</li>
+      <li>Se usan porque <strong>trabajar con bases de datos</strong> implica operaciones que tardan, y queremos esperar su respuesta antes de responder al cliente.</li>
+    </ul>
+  </div>
+
+  <p>
+    En tu servidor, casi todas las funciones que consultan MongoDB o Mongoose deben ser <strong>asíncronas</strong>, 
+    ya que los accesos a la base de datos son procesos externos que necesitan tiempo para completarse. Recuerda usar await.
+  </p>
+</section>
+
+
+<div class="callout info">
+  <h3>🎁 BONUS — ¿Qué es una clase y qué es un objeto?</h3>
+
+  <p>
+    En la <strong>Programación Orientada a Objetos (POO)</strong>, una <em>clase</em> y un <em>objeto</em> son dos conceptos esenciales.  
+    Para entenderlo, imagina que una <strong>clase</strong> es el <em>molde</em> o <em>plano</em> de un producto, y un <strong>objeto</strong> es la <em>pieza real</em> que se fabrica a partir de ese molde.
+  </p>
+
+  <h4>🧩 Clase → “Molde”, “receta” o “plano”</h4>
+  <p>
+    Una <strong>clase</strong> define cómo será algo: qué <em>propiedades</em> (datos) tiene y qué <em>acciones</em> (métodos o funciones) puede realizar.  
+    No crea nada por sí misma, simplemente describe cómo deben construirse los objetos de ese tipo.
+  </p>
+
+  <p>
+    Por ejemplo, podríamos definir la clase <code>Producto</code> que describe cómo debe ser cualquier producto de una tienda:
+  </p>
+
+  <pre><code>class Producto {
+  constructor(nombre, precio) {
+    this.nombre = nombre;   // propiedad
+    this.precio = precio;   // propiedad
+  }
+
+  mostrarInfo() {           // método
+    console.log(`${this.nombre} cuesta ${this.precio}€`);
+  }
+}</code></pre>
+
+  <p>
+    Aquí estamos definiendo el "molde" de los productos, pero todavía no hemos creado ninguno.  
+    Es como tener la receta de una pizza, pero sin haberla cocinado aún.
+  </p>
+
+  <h4>🎁 Objeto → “Instancia” o “ejemplar real” de la clase</h4>
+  <p>
+    Un <strong>objeto</strong> es una copia real creada a partir del molde (la clase).  
+    Cuando usamos la palabra clave <code>new</code>, estamos diciendo: “crea una nueva versión de esta clase con estos valores”.
+  </p>
+
+  <pre><code>const camiseta = new Producto("Camiseta verde", 19.99);
+const taza = new Producto("Taza JavaScript", 9.50);
+
+camiseta.mostrarInfo(); // 👉 "Camiseta verde cuesta 19.99€"
+taza.mostrarInfo();     // 👉 "Taza JavaScript cuesta 9.5€"</code></pre>
+
+  <p>
+    En este ejemplo, <code>camiseta</code> y <code>taza</code> son <strong>objetos</strong> (instancias) distintos, aunque ambos provienen del mismo molde <code>Producto</code>.
+  </p>
+
+  <h4>📚 Diferencia rápida entre clase y objeto</h4>
+  <table class="table">
+    <thead>
+      <tr><th>Clase</th><th>Objeto</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Es el molde o plano general</td><td>Es una copia concreta creada a partir de la clase</td></tr>
+      <tr><td>Define qué puede tener o hacer</td><td>Contiene valores reales y puede ejecutar sus métodos</td></tr>
+      <tr><td>No ocupa memoria hasta que se crea</td><td>Existe en memoria con datos propios</td></tr>
+      <tr><td>Se define con <code>class Nombre { ... }</code></td><td>Se crea con <code>new Nombre(...)</code></td></tr>
+    </tbody>
+  </table>
+
+  <h4>💡 Ejemplo visual</h4>
+  <p>
+    Si pensamos en una <strong>fábrica de camisetas</strong>:
+  </p>
+  <ul>
+    <li>🧩 La <strong>clase</strong> es el molde o diseño de la camiseta (define el color, la talla y el precio).</li>
+    <li>🎁 Cada <strong>objeto</strong> es una camiseta real fabricada con ese diseño (puede tener un color o talla concreta).</li>
+  </ul>
+
+  <h4>🧠 ¿Y por qué usamos una clase en nuestro controlador?</h4>
+  <p>
+    En el backend, usamos clases por el mismo motivo: tener un molde organizado que agrupe funciones relacionadas.  
+    Por ejemplo, un <strong>controlador</strong> puede tener varios métodos (listar, crear, eliminar, actualizar).  
+    Al reunirlos dentro de una clase, todo queda ordenado y agrupado bajo un mismo nombre.
+  </p>
+
+  <pre><code>// Creamos la clase
+class ProductosController {
+  async listarProductos(req, res) { ... }
+  async crearProducto(req, res) { ... }
+}
+
+// Exportamos una instancia (objeto)
+export default new ProductosController();</code></pre>
+
+  <p>
+    De esta forma, cuando Express recibe una petición, puede usar la instancia del controlador:
+  </p>
+
+  <pre><code>route.get('/', productosController.listarProductos);</code></pre>
+
+  <p>
+    Así, <code>productosController</code> es el <strong>objeto real</strong> que contiene las funciones de la clase <code>ProductosController</code>.  
+    Es una práctica profesional para mantener el código limpio, escalable y fácil de mantener.
+  </p>
+</div>
+
+</section>
+
+<section class="card">
+  <h2>Paso 8. Probando rutas — Controlador básico</h2>
+
+  <p>
+    Antes de conectar con la base de datos, vamos a comprobar que nuestro servidor y las rutas funcionan correctamente.   <h3>📚 Cómo se conecta con la ruta</h3>
+  <p>En el archivo <code>productos.routes.js</code> puedes asociar cada ruta con el método correspondiente del controlador. Es muy importante que 
+  los métodos que llamas en las rutas coincidan con las de tu controlador.</p>
+ 
+    Para ello crearemos un <strong>controlador de prueba</strong> que solo devolverá mensajes simples.  
+    Así podremos ver la comunicación completa entre el cliente y el servidor.
+  </p>
+
+
+  <h3>🔗 Conexión con las rutas</h3>
+  <p>
+    Este controlador se usa en el archivo <code>productos.routes.js</code> para responder a las peticiones.  
+    Cada ruta ejecuta uno de estos métodos y devuelve un mensaje “ok”.
+  </p>
+
+  <pre><code>
+    // src/routes/productos.routes.js
+import { Router } from 'express';
+import productosController from '../controllers/productos.controller.js';
+
+const route = Router();
+
+// GET /api/productos         → listarProductos
+route.get('/',     productosController.listarProductos);
+
+// POST /api/productos        → crearProducto
+route.post('/',    productosController.crearProducto);
+
+// GET /api/productos/:id     → obtenerProducto
+route.get('/:id',  productosController.obtenerProducto);
+
+// PUT /api/productos/:id     → actualizarProducto
+route.put('/:id',  productosController.actualizarProducto);
+
+// DELETE /api/productos/:id  → eliminarProducto
+route.delete('/:id', productosController.eliminarProducto);
+
+export default route;
+
+</code></pre>
+
+<section class="card">
+  <h2>🧭 Paso previo — Conectar las rutas en el servidor</h2>
+
+  <p>
+    Antes de probar con Thunder Client, tenemos que asegurarnos de que nuestro servidor “conoce” las rutas que hemos creado.  
+    Si no las importamos en el archivo principal (<code>server.js</code> o <code>app.js</code>), Express no sabrá qué hacer cuando lleguen las peticiones.
+  </p>
+
+  <h3>📁 Archivo: <code>src/server.js</code></h3>
+
+  <pre><code>import express from 'express';
+import cors from 'cors';
+
+// 🔹 Importamos la ruta de productos
+import productosRoutes from './routes/productos.routes.js';
+
+const app = express();
+
+// 🔹 Middleware: permite leer JSON en las peticiones
+app.use(express.json());
+app.use(cors());
+
+// 🔹 Montamos las rutas bajo un prefijo común
+app.use('/api/productos', productosRoutes);
+
+// 🔹 Ruta de prueba opcional
+app.get('/', (req, res) => {
+  res.send('Servidor funcionando correctamente ✅');
+});
+
+// 🔹 Arrancamos el servidor
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor activo en http://localhost:${PORT}`);
+});
+</code></pre>
+
+  <h3>🧠 Explicación paso a paso</h3>
+  <ul>
+    <li><strong>1️⃣ Importamos</strong> las dependencias (<code>express</code>, <code>cors</code>) y la ruta que queremos activar (<code>productosRoutes</code>).</li>
+    <li><strong>2️⃣ Activamos</strong> el middleware <code>express.json()</code> para poder leer datos en formato JSON enviados desde Thunder Client.</li>
+    <li><strong>3️⃣ Conectamos</strong> las rutas al servidor con <code>app.use('/api/productos', productosRoutes)</code>.  
+      Esto significa que cualquier petición que empiece por <code>/api/productos</code> se gestionará por el archivo <code>productos.routes.js</code>.</li>
+    <li><strong>4️⃣ Iniciamos</strong> el servidor con <code>app.listen()</code>.</li>
+  </ul>
+
+  <h3>🔗 Relación entre archivos</h3>
+  <pre><code>server.js  →  rutas/productos.routes.js  →  controllers/productosController.js</code></pre>
+  
+
+  <div class="callout success">
+    <p>🎯 <strong>Ahora sí:</strong> con esta conexión activa, ya puedes abrir Thunder Client y probar las rutas.  
+    Si todo está bien, deberías ver respuestas como <code>{"status":"ok","mensaje":"Listado de productos"}</code> o <code>{"status":"ok","mensaje":"Producto creado"}</code>.</p>
+  </div>
+</section>
+
+
+<section class="card">
+  <h2>🧪 Probando nuestras rutas — GET, POST, PUT y DELETE</h2>
+
+  <p>
+    Ha llegado el momento de comprobar que nuestras <strong>rutas y controladores</strong> están funcionando correctamente.  
+    Aún no nos conectamos con la base de datos, pero ya podemos simular las peticiones y ver las respuestas que envía el servidor.
+  </p>
+
+  <h3>⚙️ Cómo probar el servidor</h3>
+  <ol>
+    <li>Ejecuta tu servidor con <code>npm run dev</code> o <code>node src/server.js</code>.</li>
+    <li>Abre tu navegador y escribe la dirección  
+      <code>http://localhost:4000/api/productos</code>.</li>
+    <li>Verás un mensaje como este:  
+      <pre><code>{
+  "status": "ok",
+  "mensaje": "Listado de productos"
+}</code></pre>
+      Esto indica que tu ruta <code>GET</code> funciona correctamente.
+    </li>
+  </ol>
+
+  <div class="callout info">
+    <p>💡 <strong>Importante:</strong> el navegador solo puede enviar peticiones <code>GET</code>.  
+    Para probar las rutas <code>POST</code>, <code>PUT</code> y <code>DELETE</code> necesitamos una herramienta especial que nos permita elegir el método de la petición y enviar datos en formato JSON.</p>
+  </div>
+
+  <h3>⚡ Usar Thunder Client</h3>
+  <p>
+    <strong>Thunder Client</strong> es una extensión gratuita de Visual Studio Code que permite probar APIs directamente desde el editor.  
+    Es una herramienta muy visual, perfecta para empezar a trabajar con APIs REST.
+  </p>
+
+  <h4>🧩 Instalación paso a paso</h4>
+  <ol>
+    <li>Abre Visual Studio Code.</li>
+    <li>Haz clic en el icono de <strong>Extensiones</strong> (barra lateral izquierda o <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd>).</li>
+    <li>Busca “<strong>Thunder Client</strong>” (autor: <em>Rangav</em>).</li>
+    <li>Pulsa <strong>Instalar</strong>.</li>
+    <li>Después verás un nuevo icono ⚡ en la barra lateral izquierda.</li>
+  </ol>
+
+  <h4>🚀 Cómo usarlo</h4>
+  <ol>
+    <li>Haz clic en el icono ⚡ de Thunder Client.</li>
+    <li>Pulsa <strong>“New Request”</strong> para crear una nueva prueba.</li>
+    <li>Elige el método HTTP: <strong>GET</strong>, <strong>POST</strong>, <strong>PUT</strong> o <strong>DELETE</strong>.</li>
+    <li>Escribe la URL de tu servidor, por ejemplo:<br>
+      <code>http://localhost:4000/api/productos</code></li>
+    <li>Haz clic en <strong>Send</strong> y observa la respuesta del servidor.</li>
+    <li>Si estás probando <code>POST</code> o <code>PUT</code>, abre la pestaña <em>Body → JSON</em> y escribe algo como:
+      <pre><code>{
+  "nombre": "Camiseta azul",
+  "precio": 15.99,
+  "stock": 10
+}</code></pre>
+    </li>
+  </ol>
+
+  <h3>🧠 Ejemplos de prueba con Thunder Client</h3>
+  <p>Cada ruta de nuestro controlador básico responderá con un mensaje “ok” para confirmar que funciona.</p>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Método</th>
+        <th>Ruta</th>
+        <th>Acción esperada</th>
+        <th>Respuesta del servidor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>GET</td>
+        <td><code>/api/productos</code></td>
+        <td>Listar todos los productos</td>
+        <td><code>{"status": "ok", "mensaje": "Listado de productos"}</code></td>
+      </tr>
+      <tr>
+        <td>POST</td>
+        <td><code>/api/productos</code></td>
+        <td>Crear un nuevo producto</td>
+        <td><code>{"status": "ok", "mensaje": "Producto creado"}</code></td>
+      </tr>
+      <tr>
+        <td>GET</td>
+        <td><code>/api/productos/123</code></td>
+        <td>Obtener un producto concreto</td>
+        <td><code>{"status": "ok", "mensaje": "Obteniendo producto con ID 123"}</code></td>
+      </tr>
+      <tr>
+        <td>PUT</td>
+        <td><code>/api/productos/123</code></td>
+        <td>Actualizar un producto existente</td>
+        <td><code>{"status": "ok", "mensaje": "Producto actualizado"}</code></td>
+      </tr>
+      <tr>
+        <td>DELETE</td>
+        <td><code>/api/productos/123</code></td>
+        <td>Eliminar un producto</td>
+        <td><code>{"status": "ok", "mensaje": "Producto eliminado"}</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout success">
+    <h4>✅ Ventajas de usar Thunder Client</h4>
+    <ul>
+      <li>No necesitas abrir otra aplicación: funciona dentro de VSCode.</li>
+      <li>Permite probar todos los métodos HTTP fácilmente.</li>
+      <li>Guarda tus peticiones y colecciones para reutilizarlas.</li>
+      <li>Ideal para practicar y entender cómo se comunican las APIs.</li>
+    </ul>
+  </div>
+
+  <div class="callout info">
+    <p>💬 <strong>Objetivo de esta etapa:</strong> que el alumno comprenda el flujo completo entre <strong>Ruta → Controlador → Respuesta</strong>.</p>
+    <p>No hay conexión con MongoDB todavía: solo verificamos que las peticiones llegan al servidor y obtienen una respuesta válida en JSON.</p>
+  </div>
+
+  <div class="callout warn">
+    ⚠️ <strong>Consejo:</strong>  
+    Asegúrate de que tu servidor esté en ejecución antes de probar las rutas, con:  
+    <code>npm run dev</code> o <code>node src/server.js</code>.
+  </div>
+  <p>
+      ✅ <strong>En resumen:</strong> las rutas y el controlador trabajan juntos:
+      <ul>
+        <li>Las <strong>rutas</strong> detectan la URL y el tipo de petición.</li>
+        <li>El <strong>controlador</strong> ejecuta la acción adecuada y devuelve la respuesta.</li>
+      </ul>
+      Esta es la base de toda API REST.
+    </p>
+
+  <div class="callout success">
+    <p>🎯 <strong>Próximo paso:</strong> una vez que todas las rutas devuelvan respuestas correctas, añadiremos el <strong>modelo Producto</strong> y conectaremos con <strong>MongoDB</strong> usando <code>Mongoose</code>.</p>
+  </div>
+</section>
+<section class="card">
+  <h2>🧾 Resumen — Lo aprendido en este tema</h2>
+  <ul>
+    <li><strong>Estructura del proyecto (MVC ligero)</strong>: <code>src/</code> con <code>server.js</code>, <code>routes/</code>, <code>controllers/</code>, <code>models/</code>, <code>config/</code>, <code>helpers/</code>.</li>
+    <li><strong>Dependencias clave</strong>: <code>express</code>, <code>mongoose</code>, <code>dotenv</code>, <code>cors</code> y <code>nodemon</code> (dev).</li>
+    <li><strong>.env</strong>: guardamos <code>PORT</code> y <code>MONGODB_URI</code> fuera del código; se cargan con <code>dotenv.config()</code>.</li>
+    <li><strong>server.js</strong>: arranca Express, aplica <code>express.json()</code>/<code>cors()</code>, y <em>monta</em> las rutas con <code>app.use('/api/productos', productosRoutes)</code>.</li>
+    <li><strong>Rutas</strong> (router): definen los caminos de la API (<code>GET/POST/PUT/DELETE</code>).</li>
+    <li><strong>Controlador básico</strong>: funciones que reciben <code>req</code>/<code>res</code> y responden con JSON “ok” (sin BD aún).</li>
+    <li><strong>Thunder Client</strong>: probamos todas las rutas desde VS Code (el navegador solo prueba <code>GET</code>).</li>
+    <li><strong>Async/Await</strong>: por qué “esperar” respuestas lentas (BD/red) y cómo lo haremos en controladores reales.</li>
+    <li><strong>Clase vs Objeto</strong>: usamos una <em>clase</em> para agrupar métodos del controlador y exportamos una <em>instancia</em>.</li>
+    <li><strong>Detalle importante</strong>: la ruta <code>DELETE</code> definida como <code>/api/productos/:id</code> exige <em>enviar un ID</em> (si no, 404).</li>
+  </ul>
+
+  <div class="callout success">
+    <strong>Checklist de éxito</strong>
+    <ul>
+      <li>Servidor activo en <code>http://localhost:3000</code> (o el <code>PORT</code> de tu <code>.env</code>).</li>
+      <li><code>GET /api/productos</code> devuelve <code>{"status":"ok","mensaje":"Listado de productos"}</code>.</li>
+      <li>Con Thunder Client, <code>POST</code>, <code>PUT</code> y <code>DELETE</code> responden “ok”.</li>
+      <li>Entiendes el flujo: <strong>Ruta → Controlador → Respuesta JSON</strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="callout info">
+  <h3>🧠 BONUS — Cómo ver quién está usando un puerto y cerrar la conexión</h3>
+
+  <p>
+    A veces, cuando intentas arrancar el servidor, aparece un error como:
+  </p>
+  <pre><code>Error: listen EADDRINUSE: address already in use :::3000</code></pre>
+  <p>
+    Esto significa que **otro proceso ya está usando el mismo puerto** (por ejemplo, un servidor anterior que no se cerró correctamente).
+  </p>
+
+  <h4>💻 En Windows (PowerShell o CMD)</h4>
+  <ol>
+    <li>Ver quién usa el puerto (por ejemplo el 3000):  
+      <pre><code>netstat -ano | findstr :3000</code></pre>
+      👉 El número final es el <strong>PID</strong> (Identificador del Proceso).
+    </li>
+    <li>Comprobar qué programa es:  
+      <pre><code>tasklist /FI "PID eq 12345"</code></pre>
+    </li>
+    <li>Finalizar el proceso:  
+      <pre><code>taskkill /PID 12345 /F</code></pre>
+      ⚠️ Usa <code>/F</code> para forzar el cierre.
+    </li>
+  </ol>
+
+  <h4>🍏 En macOS o Linux (Terminal)</h4>
+  <ol>
+    <li>Listar procesos que usan el puerto:  
+      <pre><code>lsof -i :3000</code></pre>
+    </li>
+    <li>Cerrar el proceso por su PID:  
+      <pre><code>kill 12345</code></pre>
+      (O forzar el cierre con <code>kill -9 12345</code>)
+    </li>
+    <li>Comando rápido para hacerlo de una vez:  
+      <pre><code>kill -9 $(lsof -t -i:3000)</code></pre>
+    </li>
+  </ol>
+
+  <h4>⚙️ Alternativa universal (con npm)</h4>
+  <p>
+    Si prefieres una forma más sencilla, instala el paquete <code>kill-port</code>:
+  </p>
+  <pre><code>npm install -g kill-port
+npx kill-port 3000</code></pre>
+
+  <h4>✅ Consejo final</h4>
+  <p>
+    Una vez liberado el puerto, ejecuta de nuevo:
+  </p>
+  <pre><code>npm run dev</code></pre>
+  <p>
+    Si el servidor arranca sin errores, significa que el puerto ya estaba libre.  
+    Este procedimiento es muy útil cuando tienes varios proyectos Express o React abiertos a la vez.
+  </p>
+</div>
+
+
+
+
+
+    <div class="cta" style="margin:2rem 0 0">
+      <a class="btn btn-outline" href="07-puentemongoose.html">⟵ Volver al Tema 7</a>
+      <a class="btn btn-primary" href="09-conexion.html">Ir al Tema 9  ⟶</a>
+    </div>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="wrap">
+      <img src="pie.png" alt="Decoración del pie del manual" class="footer-img" loading="lazy">
+      Manual “Mongoo” · @Inma Contreras · © 2025
+    </div>
+  </footer>
+</body>
+</html>

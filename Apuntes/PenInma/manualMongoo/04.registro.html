@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tema 4 — Registro en MongoDB Atlas (online)</title>
+  <meta name="description" content="Guía paso a paso para crear cuenta en MongoDB Atlas, entender qué es un clúster, crear usuario y red, y conseguir tu cadena de conexión. Comparativa Atlas online vs MongoDB local." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- CABECERA -->
+  <header>
+    <div class="wrap hero hero--compact" role="banner">
+      <div class="hero-content">
+        <span class="kicker">Tema 4</span>
+        <h1>Registro en MongoDB Atlas (online) y primer clúster</h1>
+        <p class="subtitle">
+          Crea tu cuenta gratuita, entiende qué es un <strong>clúster</strong> y consigue tu cadena de conexión. Usaremos Atlas online porque es sencillo, rápido y no requiere instalar nada.
+        </p>
+      </div>
+      <img src="logo.png" alt="Logo/ilustración del tema" class="hero-illus" loading="lazy">
+    </div>
+  </header>
+
+  <!-- CTA navegación superior -->
+  <div class="cta" style="margin-top:1rem">
+    <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+    <a class="btn btn-outline" href="03-tipos-de-datos.html">⬅ Tema anterior</a>
+    <a class="btn btn-primary" href="05-mongo-shell.html">Siguiente tema ➜</a>
+  </div>
+
+  <main id="contenido" class="wrap" role="main">
+
+    <!-- 0. Por qué Atlas -->
+    <section class="card">
+      <h2>☁️ Atlas online vs 💻 MongoDB local (¿cuál usamos y por qué?)</h2>
+      <div class="grid cols-3">
+        <div class="card" style="padding:1rem">
+          <h3>Atlas (online)</h3>
+          <ul>
+            <li>No instalas nada en tu PC.</li>
+            <li>Plan <strong>M0</strong> gratuito (aprendizaje).</li>
+            <li>Tu base en la nube: accesible desde clase y casa.</li>
+            <li>Cadena <code>mongodb+srv://</code> lista para usar.</li>
+          </ul>
+          <p><strong>Lo usaremos en el curso.</strong></p>
+        </div>
+        <div class="card" style="padding:1rem">
+          <h3>Mongo local</h3>
+          <ul>
+            <li>Requiere instalación y servicio local.</li>
+            <li>Rendimiento alto en tu máquina.</li>
+            <li>Útil sin internet o para desarrollo avanzado.</li>
+          </ul>
+          <p>Lo dejaremos para más adelante.</p>
+        </div>
+        <div class="card" style="padding:1rem">
+          <h3>Conclusión</h3>
+          <p>Empezamos con <strong>Atlas</strong> por simplicidad y porque replica un entorno profesional real. Más adelante verás cómo pasar a local si lo necesitas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Qué es un clúster -->
+    <section class="card">
+      <h2>🧠 ¿Qué es un <em>clúster</em>?</h2>
+      <p>Un <strong>clúster</strong> es un “equipo” de servidores en la nube que guarda y protege tus datos. Piensa en él como tu “ordenador de bases de datos” en internet.</p>
+      <ul>
+        <li>Dentro del clúster crearás <strong>bases de datos</strong>.</li>
+        <li>Dentro de cada base crearás <strong>colecciones</strong> (carpetas de documentos).</li>
+        <li>Cada documento es un <strong>JSON</strong> con tus datos.</li>
+      </ul>
+      <p>En Atlas usaremos el plan gratis <strong>M0</strong>, perfecto para aprender.</p>
+    </section>
+<section class="card">
+      <h3>☁️ ¿Qué es un Cluster en MongoDB Atlas?</h3>
+      <p>Un Cluster es la infraestructura distribuida que aloja tus bases de datos. No es solo un ordenador, sino una red de servidores que garantiza que tus datos sean:</p>
+      <ul>
+        <li>Seguros: Los datos se replican (copian) en varios lugares.</li>
+        <li>Disponibles: Si un servidor falla, otro lo reemplaza automáticamente.</li>
+      </ul>
+      <p>✅ Solo lo creas una vez en MongoDB Atlas. Dentro de tu Cluster activo, podrás crear y gestionar tus Bases de Datos.</p>
+    </section>
+
+    <!-- 2. Registro paso a paso -->
+    <section class="card">
+      <h2>📝 Registro en Atlas: paso a paso </h2>
+      <ol>
+        <li><strong>Ir a Atlas</strong> y crear cuenta con email o con Google/GitHub.</li>
+        <li><strong>Nombre del proyecto</strong>: por ejemplo, <code>CursoMongoo</code>.</li>
+        <li><strong>Crear clúster</strong>:
+          <ul>
+            <li>Plan: <strong>Shared</strong> → <strong>M0 Free</strong>.</li>
+            <li>Proveedor/Región: el valor por defecto cercano (por ejemplo, AWS / eu-west-1 o similar).</li>
+            <li>Nombre del clúster: <code>Cluster0</code> (o el que prefieras).</li>
+          </ul>
+        </li>
+        <li><strong>Usuario de base de datos</strong> (no confundir con tu cuenta):
+          <ul>
+            <li>Usuario: <code>app_user</code></li>
+            <li>Contraseña segura (guárdala).</li>
+            <li>Rol: “Read and write to any database” (para empezar).</li>
+          </ul>
+        </li>
+       
+         
+        </li>
+        <li>Espera a que el clúster quede en estado <strong>READY</strong> (unos minutos).</li>
+      </ol>
+      <p class="lead">¡Listo! Ya tienes tu “servidor de BBDD” en la nube. Ahora toca conectarnos.</p>
+    </section>
+
+    <!-- 3. Conexión: cadena SRV -->
+    <section class="card">
+      <h2>🔗 Consigue tu cadena de conexión (SRV)</h2>
+      <ol>
+        <li>En tu clúster, pulsa <strong>Connect</strong>.</li>
+        <li>Elige <strong>Drivers</strong> (o “Connect your application”).</li>
+        <li>Copia la cadena <code>mongodb+srv://...</code> y <em>reemplaza</em> <code>&lt;username&gt;</code> y <code>&lt;password&gt;</code> por los de tu usuario de BBDD.</li>
+      </ol>
+      <pre><code>mongodb+srv://app_user:TU_PASSWORD@cluster0.xxxxx.mongodb.net/</code></pre>
+      <p><strong>Importante:</strong> nunca subas esta cadena con la contraseña a GitHub. Más adelante la guardaremos en un archivo <code>.env</code>.</p>
+    </section>
+
+    <!-- 4. Primera base/colección desde Atlas UI -->
+    <section class="card">
+      <h2>📁 Crea tu primera base de datos y colección (desde el navegador)</h2>
+      <ol>
+        <li>En el clúster, abre <strong>Browse Collections</strong>.</li>
+        <li>Pulsa <strong>Add My Own Data</strong>.</li>
+        <li>Base de datos: <code>mongoo</code>. Colección: <code>alumnos</code>.</li>
+        <li>Inserta un documento de prueba:</li>
+      </ol>
+<pre><code>{
+  "nombre": "Ana",
+  "edad": 21,
+  "activo": true,
+  "habilidades": ["MongoDB", "HTML"]
+}</code></pre>
+      <p>Verás el documento guardado al instante. ¡Ya estás trabajando en la nube! 🎉</p>
+    </section>
+
+    
+
+    <!-- 6. Glosario mínimo -->
+    <section class="card">
+      <h2>📚 Glosario mínimo de Atlas</h2>
+      <ul>
+        <li><strong>Clúster</strong>: tu servidor de bases de datos en la nube.</li>
+        <li><strong>Proyecto</strong>: carpeta que agrupa clústeres.</li>
+        <li><strong>Usuario de BBDD</strong>: credencial que usan tus apps para conectarse (distinto a tu login web).</li>
+        <li><strong>Allowlist (IP Access)</strong>: lista de IPs con permiso para entrar.</li>
+        <li><strong>Cadena SRV</strong>: dirección de conexión que usarás en tus apps (<code>mongodb+srv://...</code>).</li>
+      </ul>
+    </section>
+
+    <!-- 7. Buenas prácticas -->
+    <section class="card">
+      <h2>✅ Buenas prácticas desde el día 1</h2>
+      <ul>
+        <li>No publiques tu contraseña ni tu cadena completa en Git/GitHub.</li>
+        <li>Para el curso, usa <code>0.0.0.0/0</code> (acceso total) solo de forma temporal.</li>
+        <li>Usa nombres sencillos: BBDD <code>mongoo</code>, colección <code>alumnos</code>.</li>
+        <li>Guarda la cadena SRV en un bloc/notas (luego pasará a <code>.env</code>).</li>
+      </ul>
+    </section>
+    <!-- 8. Nomenclatura recomendada -->
+<section class="card">
+  <h2>🧩 Nomenclatura adecuada en MongoDB y Mongoose</h2>
+  <p>Adoptar una convención clara desde el inicio facilita la lectura del código y evita errores entre shell, colecciones y modelos.</p>
+
+  <ul>
+    <li><strong>Bases de datos:</strong> siempre en <code>minúsculas</code> y sin espacios. Ejemplo: <code>mongoo</code>, <code>tienda</code>.</li>
+    <li><strong>Colecciones:</strong> en <code>plural minúscula</code> y sin tildes. Ejemplo: <code>alumnos</code>, <code>productos</code>, <code>usuarios</code>.</li>
+    <li><strong>Documentos (campos):</strong> en <code>camelCase</code> — primera palabra en minúscula, siguientes con mayúscula inicial. Ejemplo: <code>nombreAlumno</code>, <code>fechaAlta</code>.</li>
+    <li><strong>Modelos Mongoose:</strong> en <code>PascalCase</code> (primera letra en mayúscula, singular). Ejemplo: <code>Alumno</code>, <code>Producto</code>.</li>
+    <li><strong>Archivos y rutas:</strong> en <code>minúsculas</code> y con guiones si es necesario. Ejemplo: <code>alumnos.model.js</code>, <code>rutas/alumnos.js</code>.</li>
+  </ul>
+
+  <p class="lead">👉 Ejemplo práctico:</p>
+  <pre><code>// Nombre de base de datos: mongoo
+// Colección: alumnos
+// Modelo en Mongoose:
+const mongoose = require('mongoose');
+
+const alumnoSchema = new mongoose.Schema({
+  nombreAlumno: String,
+  edad: Number,
+  fechaAlta: Date
+});
+
+const Alumno = mongoose.model('Alumno', alumnoSchema);
+</code></pre>
+</section>
+
+
+    <!-- 8. Checklist -->
+    <section class="card">
+      <h2>🧾 Checklist de este tema</h2>
+      <ul>
+        <li>✓ Cuenta en Atlas creada.</li>
+        <li>✓ Clúster M0 en estado READY.</li>
+        <li>✓ Usuario de BBDD y acceso de red configurados.</li>
+        <li>✓ Cadena SRV copiada (sin subir a Git).</li>
+        <li>✓ BBDD <code>mongoo</code> y colección <code>alumnos</code> con un documento de prueba.</li>
+        <li>✓ Nomenclatura adecuada adoptada.</li>
+        
+      </ul>
+    </section>
+
+    <!-- CTA navegación inferior -->
+    <div class="cta" style="margin-top:1rem">
+      <a class="btn btn-outline" href="03-tipos-de-datos.html">⬅ Tema anterior</a>
+      <a class="btn btn-primary" href="05-mongo-shell.html">Siguiente tema ➜</a>
+    </div>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="wrap">
+      <img src="pie.png" alt="Decoración del pie del manual" class="footer-img" loading="lazy">
+      Manual “Mongoo” · @Inma Contreras · © 2025
+    </div>
+  </footer>
+</body>
+</html>

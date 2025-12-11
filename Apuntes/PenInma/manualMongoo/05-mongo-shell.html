@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tema 5 — Registro en MongoDB Atlas (online) y uso desde shell</title>
+  <meta name="description" content="Guía paso a paso para crear cuenta en MongoDB Atlas, entender qué es un clúster, crear usuario y red, y conseguir tu cadena de conexión. Comparativa Atlas online vs MongoDB local." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- CABECERA -->
+  <header>
+    <div class="wrap hero hero--compact" role="banner">
+      <div class="hero-content">
+        <span class="kicker">Tema 5</span>
+        <h1>Registro en MongoDB Atlas (online) y uso desde shell</h1>
+        <p class="subtitle">
+          Crea tu cuenta gratuita, entiende qué es un <strong>clúster</strong> y consigue tu cadena de conexión. Usaremos Atlas online porque es sencillo, rápido y no requiere instalar nada.
+        </p>
+      </div>
+      <img src="logo.png" alt="Logo/ilustración del tema" class="hero-illus" loading="lazy">
+    </div>
+  </header>
+
+  <!-- CTA navegación superior -->
+  <div class="cta" style="margin-top:1rem">
+    <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+    <a class="btn btn-outline" href="04.registro.html">⬅ Tema anterior</a>
+    <a class="btn btn-primary" href="06-colecciones-y-documentos.html">Siguiente tema ➜</a>
+  </div>
+  <header>
+  <div class="wrap">
+    <div class="card">
+      <h2 class="section-title">Objetivos de aprendizaje</h2>
+      <p class="lead">
+        Que el alumnado sea capaz de conectar a su cluster Atlas desde mongosh y ejecutar un CRUD completo (insertar, leer, actualizar y borrar) sobre su propia base de datos.
+      </p>
+      <ul class="objetivos">
+        <li>Crear usuario y permitir IP en Atlas.</li>
+        <li>Instalar y probar <code>mongosh</code>.</li>
+        <li>Conectar con URI <code>mongodb+srv</code> de forma segura.</li>
+        <li>Aplicar CRUD: <code>insertOne</code>, <code>insertMany</code>, <code>find</code>, <code>updateOne</code>/<code>updateMany</code>, <code>deleteOne</code>/<code>deleteMany</code>.</li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+
+  <main id="contenido" class="wrap" role="main">
+
+    <!-- Preparación Atlas -->
+    <section id="preparacion" class="card" aria-labelledby="t-prep">
+      <h2 id="t-prep" class="section-title">1) Preparación en MongoDB Atlas</h2>
+      <p>Antes de usar la consola, necesitamos que tu cluster en Atlas acepte conexiones y que exista un usuario de base de datos.</p>
+
+      <div class="grid cols-3">
+        <article class="card">
+          <h3>1.1 Crear usuario de base de datos</h3>
+          <ol>
+            <li>Entra en <em>Database Access</em> &rarr; <strong>Add New Database User</strong>.</li>
+            <li>Elige <strong>Password</strong> y define <code>DB_USERNAME</code> y <code>DB_PASSWORD</code>.</li>
+            <li>Rol recomendado para pruebas: <strong>Atlas Admin</strong> o <strong>Read and write to any database</strong> (mejor restringir después).</li>
+          </ol>
+        </article>
+        <article class="card">
+          <h3>1.2 Permitir tu IP</h3>
+          <ol>
+            <li>Ve a <em>Network Access</em> &rarr; <strong>Add IP Address</strong>.</li>
+            <li>Opción rápida: <strong>Allow Access From Anywhere (0.0.0.0/0)</strong> (solo para desarrollo).</li>
+            <li>Mejor opción: añadir tu IP actual (más seguro).</li>
+          </ol>
+        </article>
+        <article class="card">
+          <h3>1.3 Obtener la cadena de conexión</h3>
+          <ol>
+            <li>En <em>Database</em> &rarr; <strong>Connect</strong> &rarr; <em>Drivers</em>.</li>
+            <li>Copia la URI <code>mongodb+srv://...</code> (driver Node 5.x también vale para mongosh).</li>
+          </ol>
+          <pre><code>mongodb+srv://&lt;DB_USERNAME&gt;:&lt;DB_PASSWORD&gt;@&lt;NOMBRE_CLUSTER&gt;.mongodb.net/?retryWrites=true&amp;w=majority&amp;appName=&lt;APP&gt;</code></pre>
+          <p><small>Más cómodo si añades el nombre de tu base: <code>.../tienda?retryWrites=true...</code></small></p>
+        </article>
+      </div>
+
+      <div class="note" style="background:#fefce8;padding:1rem;border-radius:8px;border-left:5px solid #fbbf24;">
+        <strong>Seguridad:</strong> No pegues contraseñas con caracteres sin codificar en la URL. Prefiere que mongosh te pida la contraseña o usa variables de entorno.
+      </div>
+    </section>
+
+   <article class="card">
+  <h3>2.1 Instalar <code>mongosh</code> y conectarte con tu cuenta de MongoDB Atlas</h3>
+  <p>
+    <strong>MongoDB Shell (mongosh)</strong> es la consola oficial para conectarte a MongoDB desde tu ordenador.  
+    Puedes instalarla de dos formas: desde la web de descargas o directamente al iniciar sesión en tu cuenta de <strong>MongoDB Atlas</strong>.
+  </p>
+
+  <h4>🧭 Paso previo — Inicia sesión en tu cuenta</h4>
+  <ol>
+    <li>Ve a la página oficial de acceso:  
+      <a href="https://account.mongodb.com/account/login?signedOut=true" target="_blank" rel="noopener">
+        https://account.mongodb.com/account/login
+      </a>
+    </li>
+    <li>Introduce tu correo y contraseña de Atlas.</li>
+    <li>Accede a tu <strong>proyecto (Project)</strong> y haz clic en el botón verde <strong>Connect</strong> del clúster que tengas creado.</li>
+    <li>Selecciona la opción <strong>Connect with MongoDB Shell</strong>.</li>
+  </ol>
+
+  <div class="callout info">
+    <strong>💡 Consejo:</strong> esta opción es la más cómoda, porque Atlas te mostrará directamente el comando exacto
+    que debes usar en tu terminal, incluyendo el nombre de tu clúster y la base por defecto.
+  </div>
+
+  <pre><code>mongosh "mongodb+srv://&lt;tu_cluster&gt;.mongodb.net/&lt;nombre_base&gt;" --username &lt;tu_usuario&gt;</code></pre>
+
+  <p>
+    Esa cadena de conexión <strong>es siempre la misma</strong> para tu proyecto, salvo el usuario y la contraseña.
+    Te pedirá la contraseña de forma segura cada vez que te conectes.  
+    ⚠️ <strong>Guarda bien tu contraseña</strong>, ya que no se muestra ni se almacena en la URI por motivos de seguridad.
+  </p>
+
+  <h4>💻 Instalación directa según tu sistema</h4>
+  <ul>
+    <li>
+      <strong>🪟 Windows:</strong>
+      <ol>
+        <li>Entra en <a href="https://www.mongodb.com/try/download/shell" target="_blank" rel="noopener">https://www.mongodb.com/try/download/shell</a>.</li>
+        <li>Selecciona <strong>Windows (64-bit)</strong> y descarga el archivo <code>.msi</code>.</li>
+        <li>Ejecuta el instalador y sigue estos pasos:
+          <ul>
+            <li>Pulsa <strong>Next</strong> → acepta la licencia.</li>
+            <li>Elige <strong>Complete installation</strong>.</li>
+            <li>Deja marcada la opción <strong>Add mongosh to PATH</strong> (importante).</li>
+            <li>Haz clic en <strong>Install</strong> y luego en <strong>Finish</strong>.</li>
+          </ul>
+        </li>
+        <li>Cierra y vuelve a abrir tu terminal (PowerShell o Windows Terminal).</li>
+        <li>Verifica la instalación:</li>
+      </ol>
+      <pre><code>mongosh --version</code></pre>
+      <p>Deberías ver algo como <code>2.x.x</code>.</p>
+    </li>
+
+    <li><strong>🍏 macOS:</strong> puedes instalarlo fácilmente con Homebrew:</li>
+    <pre><code>brew install mongosh</code></pre>
+
+    <li><strong>🐧 Linux (Debian/Ubuntu):</strong> instala desde los repos oficiales o con:</li>
+    <pre><code>sudo apt install mongosh</code></pre>
+  </ul>
+
+  <div class="note" style="background:#f0fdf4;padding:1rem;border-radius:8px;border-left:5px solid #13aa52;">
+    <strong>✅ Prueba rápida:</strong> abre una nueva terminal y escribe <code>mongosh</code>.  
+    Si ves un prompt <code>test&gt;</code>, ¡ya estás dentro de la consola!  
+    Sal con <code>exit</code>.
+  </div>
+
+  <div class="callout success" style="margin-top:1rem;">
+    <strong>🔐 Resumen:</strong>
+    <ul>
+      <li>Identifícate en Atlas y usa la opción <em>Connect → Connect with MongoDB Shell</em>.</li>
+      <li>Copia el comando de conexión que te da Atlas (URI con tu clúster y usuario).</li>
+      <li>Guarda la contraseña en un lugar seguro (no se muestra ni se guarda en texto plano).</li>
+      <li>Comprueba que mongosh está instalado correctamente con <code>mongosh --version</code>.</li>
+    </ul>
+  </div>
+</article>
+
+<article class="card">
+  <h3>2.2 Conectarte a tu base de datos Atlas (desde Windows)</h3>
+  <p>Una vez instalado <code>mongosh</code>, el siguiente paso es conectarte a tu base de datos en la nube (Atlas).  
+  Para ello, usarás la cadena de conexión <strong>URI</strong> que te da Atlas y tu nombre de usuario.</p>
+
+  <ol>
+    <li>
+      Abre tu terminal (PowerShell o Windows Terminal).
+    </li>
+    <li>
+      En MongoDB Atlas, entra en tu <strong>Cluster</strong> → pulsa <strong>Connect</strong> → elige <em>“Connect with the MongoDB Shell”</em>.
+    </li>
+    <li>
+      Copia la cadena de conexión que se muestra, parecida a esta:
+      <pre><code>mongosh "mongodb+srv://&lt;TU_CLUSTER&gt;.mongodb.net/tienda" --username "&lt;TU_USUARIO&gt;"</code></pre>
+    </li>
+    <li>
+      Pega el comando en tu terminal y pulsa <kbd>Enter</kbd>.  
+      MongoDB te pedirá la contraseña del usuario (no se muestra al escribir por seguridad).
+    </li>
+  </ol>
+
+  <div class="note" style="background:#f0f9ff;padding:1rem;border-radius:8px;border-left:5px solid #007bff;">
+    <strong>💡 Ejemplo completo:</strong>
+    <pre><code>mongosh "mongodb+srv://cluster0.xxxxx.mongodb.net/tienda" --username alumno</code></pre>
+    <p>Cuando te pida la contraseña, escríbela y pulsa <kbd>Enter</kbd>.</p>
+  </div>
+
+  <h4>📺 Resultado esperado</h4>
+  <p>Si todo ha ido bien, verás algo parecido a esto:</p>
+  <pre><code>Current Mongosh Log ID: 6738f8d3...
+Connecting to:          mongodb+srv://cluster0.xxxxx.mongodb.net/tienda
+Using MongoDB:          7.0.5
+Using Mongosh:          2.2.10
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+Atlas atlas-xxxxxx-shard-0 [primary] tienda&gt;
+</code></pre>
+
+  <p>El prompt final (por ejemplo <code>tienda&gt;</code>) indica que ya estás dentro de tu base de datos en Atlas y puedes empezar a ejecutar comandos.</p>
+
+  <h4>✅ Comprobación rápida</h4>
+  <pre><code>// Comprueba en qué base estás
+db
+// Muestra las bases de datos existentes
+show databases
+
+// Muestra las colecciones existentes
+show collections
+
+// Crea una nueva base si lo deseas
+use tienda
+
+// Inserta un documento de prueba
+db.productos.insertOne({ nombre: "Prueba Atlas", precio: 10.99, activo: true })
+
+// Comprueba que se ha guardado
+db.productos.find()</code></pre>
+
+  <p>Si ves el documento insertado, ¡felicidades! Ya estás trabajando directamente sobre tu base de datos Atlas desde la consola de Windows 🎉</p>
+
+  <div class="note" style="background:#fff7ed;padding:1rem;border-radius:8px;border-left:5px solid #f97316;">
+    <strong>⚠️ Seguridad:</strong> Nunca compartas tu contraseña ni publiques tu URI completa.  
+    Usa variables de entorno si compartes el proyecto con otros compañeros o subes el código a GitHub.
+  </div>
+</article>
+
+        <article class="card">
+          <h3>2.2 Conexión (pide contraseña)</h3>
+          <p>Ejecuta en tu terminal; <code>mongosh</code> pedirá la contraseña de forma segura.</p>
+          <pre><code>mongosh "mongodb+srv://&lt;NOMBRE_CLUSTER&gt;.mongodb.net/tienda" \
+  --username "&lt;DB_USERNAME&gt;"</code></pre>
+        </article>
+
+        
+      </div>
+
+      <h3>Comprobar conexión y seleccionar base</h3>
+      <pre><code>// Si no pusiste la DB en la URL, selecciona aquí:
+use tienda
+
+// Ver colecciones
+show collections</code></pre>
+    </section>
+
+    <article class="card">
+  <h3>2.4 Solución de errores comunes de conexión</h3>
+  <p>Si al conectar con Atlas te aparece un error, revisa primero este checklist rápido:</p>
+  <ul>
+    <li>¿El <strong>usuario</strong> y la <strong>contraseña</strong> son correctos? (Database Access)</li>
+    <li>¿Tu <strong>IP</strong> está permitida en <em>Network Access</em>? (o 0.0.0.0/0 en desarrollo)</li>
+    <li>¿El <strong>cluster</strong> está <em>Running</em>? (no pausado)</li>
+    <li>¿La <strong>URI</strong> tiene el formato <code>mongodb+srv://</code> correcto?</li>
+    <li>¿Estás usando <strong>mongosh</strong> actualizado? <code>mongosh --version</code></li>
+  </ul>
+
+  <div class="grid cols-3">
+    <!-- Error 1 -->
+    <section class="card" role="region" aria-label="Error bad auth">
+      <h4>❌ MongoServerError: bad auth / Authentication failed</h4>
+      <p><strong>Causa:</strong> usuario o contraseña incorrectos, o el usuario no tiene permisos en esa base (<code>authSource</code> incorrecto).</p>
+      <p><strong>Solución:</strong></p>
+      <ul>
+        <li>Resetea la contraseña del usuario en <em>Database Access</em>.</li>
+        <li>Conéctate así para que <em>mongosh</em> pida la contraseña:
+          <pre><code>mongosh "mongodb+srv://&lt;CLUSTER&gt;.mongodb.net/tienda" --username "&lt;DB_USERNAME&gt;"</code></pre>
+        </li>
+        <li>Si tu usuario solo existe en una DB concreta, añade <code>?authSource=tu_db</code>:
+          <pre><code>mongodb+srv://&lt;CLUSTER&gt;.mongodb.net/tienda?authSource=tu_db</code></pre>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Error 2 -->
+    <section class="card" role="region" aria-label="Error not authorized">
+      <h4>🔒 not authorized on &lt;db&gt; to execute command</h4>
+      <p><strong>Causa:</strong> el usuario no tiene rol para esa operación/base.</p>
+      <p><strong>Solución:</strong></p>
+      <ul>
+        <li>En <em>Database Access</em>, edita el usuario y dale un rol con escritura (p. ej. <em>Read and write to any database</em> en desarrollo).</li>
+        <li>Comprueba que estás en la base correcta:
+          <pre><code>db   // muestra base actual
+use tienda</code></pre>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Error 3 -->
+    <section class="card" role="region" aria-label="Error IP whitelist">
+      <h4>🌐 IP not allowed / connection timed out</h4>
+      <p><strong>Causa:</strong> tu IP no está permitida o hay bloqueo de red.</p>
+      <p><strong>Solución:</strong></p>
+      <ul>
+        <li>En <em>Network Access</em> añade tu IP actual o <code>0.0.0.0/0</code> (solo desarrollo).</li>
+        <li>Verifica que no haya proxy/cortafuegos corporativo bloqueando la salida TLS (puerto 27017).</li>
+      </ul>
+    </section>
+
+    <!-- Error 4 -->
+    <section class="card" role="region" aria-label="Error URI">
+      <h4>🧩 MongoParseError: Invalid connection string</h4>
+      <p><strong>Causa:</strong> URI mal escrita (tildes, espacios, parámetros mal formados).</p>
+      <p><strong>Solución:</strong></p>
+      <ul>
+        <li>Usa la URI que da Atlas en <em>Connect → Connect with the MongoDB Shell</em>.</li>
+        <li>Ejemplo válido:
+          <pre><code>mongosh "mongodb+srv://&lt;CLUSTER&gt;.mongodb.net/tienda" --username "&lt;USER&gt;"</code></pre>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Error 5 -->
+    <section class="card" role="region" aria-label="Error caracteres contraseña">
+      <h4>🔑 Contraseña con caracteres especiales</h4>
+      <p><strong>Causa:</strong> si pones la contraseña <em>dentro</em> de la URI y tiene <code>@</code>, <code>#</code>, <code>:</code>, etc., rompe la URL.</p>
+      <p><strong>Solución:</strong></p>
+      <ul>
+        <li>Mejor no incluir la contraseña en la URI: deja que <em>mongosh</em> la pida.</li>
+        <li>O codifica la contraseña (URL encode). Ej.: <code>@</code> → <code>%40</code>.</li>
+      </ul>
+    </section>
+
+    <!-- Error 6 -->
+    <section class="card" role="region" aria-label="Error DNS SRV">
+      <h4>🛰️ Fallo DNS SRV / TLS handshake failed</h4>
+      <p><strong>Causa:</strong> DNS del sistema no resuelve el registro SRV o inspección SSL/TLS en la red.</p>
+      <p><strong>Solución:</strong></p>
+      <ul>
+        <li>Prueba en otra red o con DNS públicos (8.8.8.8 / 1.1.1.1).</li>
+        <li>Actualiza <em>mongosh</em> y SO; evita proxys que intercepten TLS.</li>
+      </ul>
+    </section>
+  </div>
+
+  <h4>🧪 Comprobaciones rápidas en consola</h4>
+  <pre><code>// Ver base actual y colecciones
+db
+show collections
+
+// Probar un insert mínimo
+db.test_conexion.insertOne({ ok: true, fecha: new Date() })
+db.test_conexion.find().limit(1)</code></pre>
+
+  <div class="note" style="background:#eef2ff;padding:1rem;border-radius:8px;border-left:5px solid #6366f1;">
+    <strong>Modo detallado (logs):</strong> añade <code>--verbose</code> para más pistas:<br>
+    <code>mongosh --verbose "mongodb+srv://&lt;CLUSTER&gt;.mongodb.net/tienda" --username "&lt;USER&gt;"</code>
+  </div>
+
+  <p>Si nada de esto funciona, revisa en Atlas: <em>Clusters → Metrics</em> (estado), <em>Activity Feed</em> (eventos), y confirma que el nombre del cluster y la base en tu URI son correctos.</p>
+</article>
+<article class="card">
+  <h3>2.5 Cerrar sesión y desinstalar <code>mongosh</code></h3>
+  <p>Cuando termines de trabajar con tu base de datos o quieras liberar espacio en tu equipo, puedes desconectarte y eliminar la shell de forma segura.</p>
+
+  <h4>🔌 Desconectarte de la sesión actual</h4>
+  <p>Si estás dentro de <code>mongosh</code> (verás algo como <code>tienda&gt;</code> o <code>test&gt;</code>), escribe cualquiera de los siguientes comandos:</p>
+  <pre><code>exit</code></pre>
+  <p>O simplemente presiona <kbd>Ctrl</kbd> + <kbd>D</kbd>.  
+  Verás el mensaje:</p>
+  <pre><code>Bye!</code></pre>
+
+  <p>Esto cierra la sesión y desconecta de tu base de datos (Atlas o local).  
+  No borra nada de tus datos, solo finaliza la conexión activa.</p>
+
+  <h4>🧹 Desinstalar <code>mongosh</code> del sistema</h4>
+  <p>Según el método de instalación, usa la opción correspondiente:</p>
+
+  <div class="grid cols-3">
+    <section class="card" aria-label="Windows">
+      <h5>🪟 Windows</h5>
+      <ul>
+        <li>Si lo instalaste con el <strong>instalador .msi</strong>:
+          <ol>
+            <li>Abre <em>Inicio → Configuración → Aplicaciones → Aplicaciones instaladas</em>.</li>
+            <li>Busca <strong>MongoDB Shell (mongosh)</strong>.</li>
+            <li>Pulsa <strong>Desinstalar</strong> y confirma.</li>
+          </ol>
+        </li>
+        <li>Si lo instalaste con <strong>Winget</strong>:
+          <pre><code>winget uninstall MongoDB.Shell</code></pre></li>
+        <li>Si lo instalaste con <strong>Chocolatey</strong>:
+          <pre><code>choco uninstall mongosh -y</code></pre></li>
+        <li>Ruta típica (por si quieres borrar manualmente):  
+          <code>C:\Program Files\MongoDB\mongosh\</code></li>
+      </ul>
+    </section>
+
+    <section class="card" aria-label="macOS">
+      <h5>🍎 macOS</h5>
+      <p>Si lo instalaste con <em>Homebrew</em>:</p>
+      <pre><code>brew uninstall mongosh</code></pre>
+      <p>Para eliminar también configuraciones:</p>
+      <pre><code>rm -rf ~/.mongodb/mongosh</code></pre>
+    </section>
+
+    <section class="card" aria-label="Linux">
+      <h5>🐧 Linux (Debian/Ubuntu)</h5>
+      <p>Desinstala con:</p>
+      <pre><code>sudo apt remove mongosh</code></pre>
+      <p>O para limpiar por completo:</p>
+      <pre><code>sudo apt purge mongosh
+sudo apt autoremove</code></pre>
+      <p>Borra configuración si quieres:</p>
+      <pre><code>rm -rf ~/.mongodb/mongosh</code></pre>
+    </section>
+  </div>
+
+<article class="card resumen" style="margin-top:1rem">
+  <h4 class="section-title">🧭 Resumen rápido</h4>
+
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Acción</th>
+          <th>Comando o método</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Salir de la sesión</td>
+          <td><code>exit</code> o <kbd>Ctrl</kbd> + <kbd>D</kbd></td>
+        </tr>
+        <tr>
+          <td>Desinstalar (Windows)</td>
+          <td>Panel de control → “MongoDB Shell” → Desinstalar</td>
+        </tr>
+        <tr>
+          <td>Desinstalar (Winget)</td>
+          <td><code>winget uninstall MongoDB.Shell</code></td>
+        </tr>
+        <tr>
+          <td>Desinstalar (Chocolatey)</td>
+          <td><code>choco uninstall mongosh -y</code></td>
+        </tr>
+        <tr>
+          <td>Desinstalar (macOS)</td>
+          <td><code>brew uninstall mongosh</code></td>
+        </tr>
+        <tr>
+          <td>Desinstalar (Linux)</td>
+          <td><code>sudo apt remove mongosh</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</article>
+
+
+  <div class="note" style="background:#fef0f4;padding:1rem;border-radius:8px;border-left:5px solid #d81b60;">
+    <strong>💡 Consejo:</strong> Desinstalar <code>mongosh</code> no borra tus bases de datos de Atlas.  
+    Tu cluster y los datos siguen seguros en la nube.  
+    Solo se elimina la herramienta local de tu ordenador.
+  </div>
+</article>
+<!-- 🔌 Tipos de conexión con MongoDB Atlas -->
+<section class="card" id="tipos-conexion" aria-labelledby="titulo-tipos-conexion">
+  <h2 id="titulo-tipos-conexion">🔌 Tipos de conexión con MongoDB Atlas</h2>
+  <p>Atlas ofrece varios métodos de conexión según tu objetivo: practicar comandos, programar con drivers oficiales, usar una interfaz visual o analizar datos. Este resumen te ayuda a elegir el adecuado.</p>
+
+  <div class="table-wrapper">
+    <table class="table table-compact" aria-label="Resumen de tipos de conexión">
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Para qué sirve</th>
+          <th>Ideal para…</th>
+          <th>Qué obtienes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Drivers</strong> (Node.js, Python, Java…)</td>
+          <td>Conectar tu aplicación usando los drivers oficiales.</td>
+          <td>APIs/Backends con <em>Mongoose</em> o drivers nativos.</td>
+          <td>URI <code>mongodb+srv://</code> para tu <code>.env</code>.</td>
+        </tr>
+        <tr>
+          <td><strong>Shell</strong> (mongosh)</td>
+          <td>Ejecutar comandos CRUD directamente en consola.</td>
+          <td>Aprendizaje, pruebas rápidas y administración básica.</td>
+          <td>Comando <code>mongosh</code> con usuario/contraseña.</td>
+        </tr>
+        <tr>
+          <td><strong>Compass</strong></td>
+          <td>Interfaz gráfica de escritorio para explorar y editar datos.</td>
+          <td>Visualizar colecciones sin escribir comandos.</td>
+          <td>Conexión por URI dentro de la app Compass.</td>
+        </tr>
+        <tr>
+          <td><strong>MongoDB for VS Code</strong></td>
+          <td>Extensión que integra Atlas en el editor.</td>
+          <td>Trabajar en VS Code viendo colecciones y ejecutando scripts.</td>
+          <td>Panel de conexión dentro de la extensión.</td>
+        </tr>
+        <tr>
+          <td><strong>Atlas SQL</strong></td>
+          <td>Consulta de datos en modo SQL (solo lectura).</td>
+          <td>Dashboards en Excel/Power BI/Tableau y equivalencias SQL.</td>
+          <td>Endpoint SQL y credenciales para herramientas BI.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <section class="card">
+    <h3>1) Drivers → Conectar una app (p. ej., Node.js + Mongoose)</h3>
+    <ol>
+      <li>Atlas → <em>Connect</em> → <strong>Drivers</strong> → Driver: <strong>Node.js</strong>.</li>
+      <li>Copia tu URI y guárdalo en <code>.env</code>:</li>
+    </ol>
+    <pre><code># .env
+MONGO_URI=mongodb+srv://app_user:TUPASS@&lt;cluster&gt;.mongodb.net/mi_tienda
+</code></pre>
+    <p>Conecta con Mongoose:</p>
+    <pre><code>// src/db.js
+import mongoose from "mongoose";
+await mongoose.connect(process.env.MONGO_URI);
+console.log("✅ Conectado a Atlas");
+</code></pre>
+    <div class="callout info">
+      <strong>Nota:</strong> La URI no cambia cada vez; reutilízala salvo que cambies usuario, contraseña, clúster o reglas de red.
+    </div>
+  </section>
+
+  <section class="card">
+    <h3>2) Shell (mongosh) → Practicar comandos</h3>
+    <ol>
+      <li>Instala mongosh (desde el asistente de <em>Connect → Shell</em>).</li>
+      <li>Conéctate desde PowerShell/Terminal:</li>
+    </ol>
+    <pre><code>mongosh "mongodb+srv://&lt;cluster&gt;.mongodb.net/" --apiVersion 1 --username app_user
+# luego escribe tu contraseña
+show dbs
+use mi_tienda
+db.productos.find()
+</code></pre>
+    <div class="callout success">
+      <strong>Tip:</strong> Crea un alias en PowerShell para no pegar la cadena cada vez.
+    </div>
+  </section>
+
+  <section class="card">
+    <h3>3) Compass → Interfaz visual</h3>
+    <p>Descarga Compass, abre “New Connection” y pega la URI <code>mongodb+srv://…</code>. Podrás ver colecciones, filtrar, crear índices y hacer agregaciones con asistentes.</p>
+  </section>
+
+  <section class="card">
+    <h3>4) MongoDB for VS Code → Todo en el editor</h3>
+    <ol>
+      <li>Instala la extensión <em>MongoDB for VS Code</em>.</li>
+      <li>Conéctate a Atlas con tu URI y navega colecciones desde la barra lateral.</li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h3>5) Atlas SQL → Análisis en herramientas BI</h3>
+    <p>Activa Atlas SQL para exponer colecciones como tablas virtuales (solo lectura) y conéctalas a Excel, Power BI o Tableau para informes.</p>
+  </section>
+
+  <div class="callout warn">
+    <strong>Seguridad:</strong> Usa usuarios específicos de BD (no tu login de Atlas), guarda el URI en variables de entorno, limita IPs permitidas y rota contraseñas si las compartiste por error.
+  </div>
+</section>
+
+
+    <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="04.registro.html">⟵ Tema 4</a>
+      <a class="btn btn-primary" href="06-colecciones-y-documentos.html">Tema 6 ⟶</a>
+    </div>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="wrap">
+      <img src="pie.png" alt="Decoración del pie del manual" class="footer-img" loading="lazy">
+      Manual “Mongoo” · @Inma Contreras · © 2025
+    </div>
+  </footer>
+</body>
+</html>

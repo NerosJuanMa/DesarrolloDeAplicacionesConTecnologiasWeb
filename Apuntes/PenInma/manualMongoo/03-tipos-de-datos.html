@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tema 3 — Tipos de datos en MongoDB (versión fácil)</title>
+  <meta name="description" content="Versión sencilla: tipos básicos de datos en MongoDB y cómo usarlos con ejemplos cortos (insertar, buscar y actualizar). Incluye introducción simple a fechas." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- CABECERA -->
+  <header>
+    <div class="wrap hero hero--compact" role="banner">
+      <div class="hero-content">
+        <span class="kicker">Tema 3</span>
+        <h1>Tipos de datos en MongoDB (versión fácil)</h1>
+        <p class="subtitle">
+          Lo esencial para empezar: texto, número, sí/no, listas, objetos, identificadores y fechas. Ejemplos cortos para crear, buscar y actualizar.
+        </p>
+      </div>
+      <img src="logo.png" alt="Logo/ilustración del tema" class="hero-illus" loading="lazy">
+    </div>
+  </header>
+
+  <!-- CTA navegación superior -->
+  <div class="cta" style="margin-top:1rem">
+    <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+    <a class="btn btn-outline" href="02-relacional-vs-no-relacional.html">⬅ Tema anterior</a>
+    <a class="btn btn-primary" href="04.registro.html">Siguiente tema ➜</a>
+  </div>
+
+  <main id="contenido" class="wrap" role="main">
+
+    <!-- 1 -->
+    <section class="card">
+      <h2>📘 1) Antes de nada: JSON que escribes, BSON que guarda</h2>
+      <p>Tú escribirás los datos como <strong>JSON</strong> (con llaves y comas). MongoDB los guarda por dentro como <strong>BSON</strong> (binario rápido). No te preocupes: tú sigues usando JSON.</p>
+      <pre><code>{"nombre":"Ana","edad":28,"activo":true}</code></pre>
+    </section>
+
+    <!-- 2 -->
+    <section class="card">
+      <h2>🧱 2) Tipos básicos que usarás ya</h2>
+
+      <h3>📝 Texto — <code>String</code></h3>
+      <p>Palabras, correos, ciudades… (siempre entre comillas).</p>
+<pre><code>db.alumnos.insertOne({ nombre: "Ana", email: "ana@mail.com" })
+db.alumnos.find({ nombre: "Ana" })</code></pre>
+
+      <h3>🔢 Número — <code>Number</code></h3>
+      <p>Edades, notas, precios… (sin comillas).</p>
+<pre><code>db.alumnos.insertOne({ nombre: "Luis", edad: 22, nota: 8.5 })
+db.alumnos.find({ edad: { $gte: 18 } })</code></pre>
+
+      <h3>✅ Sí/No — <code>Boolean</code></h3>
+<pre><code>db.alumnos.insertOne({ nombre: "Marta", activo: true })
+db.alumnos.find({ activo: true })</code></pre>
+
+      <h3>📦 Lista — <code>Array</code></h3>
+      <p>Varios valores en un mismo campo.</p>
+<pre><code>db.alumnos.insertOne({ nombre: "Sofía", habilidades: ["JS","MongoDB"] })
+db.alumnos.find({ habilidades: "MongoDB" })</code></pre>
+
+      <h3>🏠 Objeto — <code>Object</code></h3>
+      <p>Información dentro de información.</p>
+<pre><code>db.alumnos.insertOne({
+  nombre: "Pedro",
+  direccion: { ciudad: "Sevilla", cp: "41001" }
+})
+db.alumnos.find({ "direccion.ciudad": "Sevilla" })</code></pre>
+
+      <h3>🆔 Identificador — <code>ObjectId</code></h3>
+      <p>MongoDB crea <code>_id</code> automáticamente (único). Para buscar por un id en la consola:</p>
+<pre><code>db.alumnos.find({ _id: ObjectId("507f1f77bcf86cd799439011") })</code></pre>
+
+      <h3>🚫 Vacío — <code>null</code></h3>
+      <p>Campo sin dato (por ahora).</p>
+<pre><code>db.alumnos.insertOne({ nombre: "Leo", telefono: null })</code></pre>
+    </section>
+
+    <!-- 3 -->
+    <section class="card">
+      <h2>🗓️ 3) Fechas sin líos (mini-guía)</h2>
+      <p>Hay dos formas comunes de guardar fechas:</p>
+      <ol>
+        <li><strong>Como texto (fácil):</strong> ideal para mostrar. Formato recomendado: <code>"AAAA-MM-DD"</code> (ej. <code>"2025-11-05"</code>).</li>
+        <li><strong>Como fecha real (<code>Date</code>):</strong> ideal para filtrar por rangos de días/meses/años.</li>
+      </ol>
+
+      <h4>➊ Guardar como texto (fácil y suficiente para mostrar)</h4>
+<pre><code>db.alumnos.insertOne({ nombre:"Irene", fechaRegistro: "2025-01-15" })
+db.alumnos.find({ fechaRegistro: "2025-01-15" })</code></pre>
+
+      <h4>➋ Guardar como <code>Date</code> (para filtros por fechas)</h4>
+<pre><code>db.alumnos.insertOne({ nombre:"Irene", alta: new Date("2025-01-15") })
+
+// Buscar de 1 a 31 de enero de 2025
+db.alumnos.find({
+  alta: { $gte: new Date("2025-01-01"), $lt: new Date("2025-02-01") }
+})</code></pre>
+
+      <p><strong>Tips rápidos:</strong></p>
+      <ul>
+        <li>Si solo muestras la fecha, usa texto. Si vas a “buscar por meses/días”, usa <code>Date</code>.</li>
+        <li>Formato cómodo de texto: <code>"AAAA-MM-DD"</code>.</li>
+        <li>En <code>Date</code> usa siempre el formato ISO (<code>"2025-01-15"</code>) para evitar líos de zona horaria.</li>
+      </ul>
+    </section>
+
+    <!-- 4 -->
+    <section class="card">
+      <h2>🔎 4) Recetas de búsqueda muy comunes</h2>
+      <div class="grid cols-3">
+        <div class="card" style="padding:1rem">
+          <h3>Por nombre (texto)</h3>
+<pre><code>db.alumnos.find({ nombre: "Ana" })</code></pre>
+        </div>
+        <div class="card" style="padding:1rem">
+          <h3>Mayores de edad</h3>
+<pre><code>db.alumnos.find({ edad: { $gte: 18 } })</code></pre>
+        </div>
+        <div class="card" style="padding:1rem">
+          <h3>Tiene “MongoDB”</h3>
+<pre><code>db.alumnos.find({ habilidades: "MongoDB" })</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="card">
+      <h2>✍️ 5) Actualizar sin miedo</h2>
+      <div class="grid cols-3">
+        <div class="card" style="padding:1rem">
+          <h3>Cambiar un dato</h3>
+<pre><code>db.alumnos.updateOne(
+  { nombre: "Ana" },
+  { $set: { ciudad: "Córdoba" } }
+)</code></pre>
+        </div>
+        <div class="card" style="padding:1rem">
+          <h3>Sumar 1 a la edad</h3>
+<pre><code>db.alumnos.updateOne(
+  { nombre: "Luis" },
+  { $inc: { edad: 1 } }
+)</code></pre>
+        </div>
+        <div class="card" style="padding:1rem">
+          <h3>Añadir a una lista</h3>
+<pre><code>// evita duplicados en la lista
+db.alumnos.updateOne(
+  { nombre: "Sofía" },
+  { $addToSet: { habilidades: "Node.js" } }
+)</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="card">
+      <h2>💡 6) Consejos rápidos</h2>
+      <ul>
+        <li>Texto siempre entre comillas. Número y booleano, sin comillas.</li>
+        <li>Usa el mismo tipo en todos los documentos (si <code>edad</code> es número, que siempre lo sea).</li>
+        <li>Para enseñar una fecha, texto es cómodo. Para filtrar por rangos, usa <code>Date</code>.</li>
+        <li>No te compliques con objetos muy profundos: 1–2 niveles suelen bastar.</li>
+      </ul>
+    </section>
+
+    <!-- 7 -->
+    <section class="card">
+      <h2>🧪 7) Mini-práctica (10 minutos)</h2>
+      <ol>
+        <li>Crea la colección <code>alumnos</code>.</li>
+        <li>Inserta 3–5 documentos variando: <code>edad</code>, <code>activo</code>, <code>habilidades</code>, <code>direccion.ciudad</code> y una fecha (prueba texto y <code>Date</code>).</li>
+        <li>Busca: “alumnos activos que tengan ‘MongoDB’”.</li>
+        <li>Actualiza: añade “Node.js” a quien tenga “MongoDB”.</li>
+      </ol>
+<pre><code>// ejemplo consulta del paso 3
+db.alumnos.find({ activo: true, habilidades: "MongoDB" })</code></pre>
+    </section>
+
+    <!-- 8 -->
+    <section class="card">
+      <h2>💬 8) Cierre</h2>
+      <p>Con estos tipos y recetas ya puedes crear, buscar y actualizar documentos sin complicarte. En el siguiente tema te ayudo a crear tu base en la nube y hacer tus primeras inserciones desde la interfaz.</p>
+    </section>
+
+    <!-- CTA navegación inferior -->
+    <div class="cta" style="margin-top:1rem">
+      <a class="btn btn-outline" href="02-relacional-vs-no-relacional.html">⬅ Tema anterior</a>
+      <a class="btn btn-primary" href="04.registro.html">Siguiente tema ➜</a>
+    </div>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="wrap">
+      <img src="pie.png" alt="Decoración del pie del manual" class="footer-img" loading="lazy">
+      Manual “Mongoo” · @Inma Contreras · © 2025
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manual “Mongoo” → Introducción práctica con puente a MySQL</title>
+  <meta name="description" content="Manual didáctico de bases de datos NoSQL con Mongoo, enfocado en un aprendizaje progresivo con equivalencias en MySQL." />
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- 🧭 NAV superior -->
+  <nav class="main-nav" role="navigation" aria-label="Menú principal">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="brand">📗 Manual Mongoo</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="#objetivos">Objetivos</a></li>
+        <li><a href="#indice">Índice</a></li>
+        <li><a href="#metodo">Metodología</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 🟢 CABECERA -->
+  <header>
+    <div class="wrap hero" role="banner">
+      <div class="hero-content">
+        <h1>Manual de “Mongoo”<br>
+          <span style="font-weight:700;opacity:.92">introducción práctica con puente a MySQL</span>
+        </h1>
+        <p class="subtitle">Empieza desde cero: qué es una base de datos, relacional vs. no relacional, tipos de datos, entorno de trabajo y un mini-proyecto CRUD con enfoque Full Stack.</p>
+        <div class="cta" role="group" aria-label="Acciones principales">
+          <a class="btn btn-primary" href="#indice">Ir al índice</a>
+          <a class="btn btn-outline" href="#objetivos">Ver objetivos</a>
+        </div>
+      </div>
+      <img src="logo.png" alt="Logo del manual Mongoo" class="logo" loading="lazy">
+    </div>
+  </header>
+
+  <!-- 🧾 CONTENIDO PRINCIPAL -->
+  <main id="contenido" class="wrap" role="main">
+    <section id="intro" class="card">
+      <h2 class="section-title">¿Qué es este manual?</h2>
+      <p class="lead">Es una introducción a <strong>“Mongoo”</strong> (base de datos no relacional orientada a documentos). El objetivo es que comprendas los fundamentos de las bases de datos <strong>relacionales</strong> y <strong>no relacionales</strong> y sepas aplicar ambos enfoques en desarrollo web.</p>
+    </section>
+
+    <section id="objetivos" class="grid cols-3" style="margin-top:1rem">
+      <div class="card" style="grid-column:1/-1">
+        <h2 class="section-title">Objetivos de aprendizaje</h2>
+        <ul class="objetivos">
+          <li>Comprender el concepto de <strong>base de datos</strong>.</li>
+          <li>Distinguir entre modelos <strong>relacionales</strong> y <strong>NoSQL</strong>.</li>
+          <li>Aprender los fundamentos de <strong>“Mongoo”</strong> y su relación con MySQL.</li>
+          <li>Instalar el entorno y crear la primera colección de datos.</li>
+          <li>Aplicar operaciones CRUD con ejemplos didácticos.</li>
+          <li>Desarrollar un mini-proyecto final comparando MongoDB y MySQL.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="indice" class="card" style="margin-top:1rem">
+      <h2 class="section-title">Índice de lecciones</h2>
+      <ol class="indice">
+        <li><a href="01-introduccion-bbdd.html">¿Qué es una base de datos?</a></li>
+        <li><a href="02-relacional-vs-no-relacional.html">Relacional vs. No relacional (ideas clave y analogías)</a></li>
+        <li><a href="03-tipos-de-datos.html">“Mongoo” y su modelo de datos.</a></li>
+        <li><a href="04-registro.html">Registro en MongoDB Atlas (online) y primer clúster</a></li>
+        <li><a href="05-mongo-shell.html">Creamos nuestra primera bbdd en Mongoo</a></li>
+        <li><a href="06-colecciones-y-documentos.html">Metiendo datos en nuestra bbdd</a></li>
+        
+        <li><a href="08-mongosse.html">Creando nuestro entorno para trabajar con MongoDB</a></li>
+        <li><a href="09-conexion.html">Modelos y esquema en Mongoose</a></li>
+        <li><a href="10-modelosyesquemas.html">Trabajando con modelos.Mongoose</a></li>
+        <li><a href="011-trabajando-con-mongoose.html"> CRUD</a></li>
+        <li><a href="12-readme.html">Trabajamos nuestro Readme.md</a></li>
+      <p class="lead" style="margin-top:.6rem">
+        Usa este índice como menú de navegación del manual: cada enlace abre la lección correspondiente.
+      </p>
+    </section>
+
+    <section id="metodo" class="card" style="margin-top:1rem">
+      <h2 class="section-title">Metodología</h2>
+      <p>El aprendizaje es <strong>progresivo</strong> y práctico. Cada lección alterna teoría clara con ejercicios de aplicación. El enfoque es <em>Full Stack educativo</em>: todo lo que aprendas sobre bases de datos podrás aplicarlo en proyectos web reales (Node.js, Express, React, MySQL y MongoDB).</p>
+    </section>
+  </main>
+
+  <!-- 🟩 PIE -->
+  <footer role="contentinfo">
+    <img src="pie.png" alt="Decoración del pie del manual" class="footer-img" loading="lazy">
+    <div class="wrap">
+      Manual “Mongoo” · @Inma Contreras · © 2025
+    </div>
+  </footer>
+</body>
+</html>

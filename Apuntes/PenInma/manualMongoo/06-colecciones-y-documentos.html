@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tema 6 — Colecciones y Documentos en MongoDB</title>
+  <meta name="description" content="Aprende a crear colecciones e insertar documentos en MongoDB. Diferencia clara entre crear colección e insertar documento. Ejemplos: productos y productos." />
+  <link rel="stylesheet" href="styles.css" /> 
+    <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header>
+  <div class="wrap hero hero--compact" role="banner">
+    <div class="hero-content">
+      <span class="kicker">Tema 6</span>
+      <h1>Colecciones y Documentos</h1>
+      <p class="subtitle">
+        Aprende a crear colecciones e insertar documentos en MongoDB. Ejercicio. Enfoque Full Stack.
+      </p>
+    </div>
+    <img src="logo.png" alt="Logo/ilustración del tema" class="hero-illus" loading="lazy">
+  </div>
+</header>
+
+
+  <div class="cta" style="margin-top:2rem">
+      <a class="btn btn-outline" href="index.html">🏠 Inicio</a>
+      <a class="btn btn-primary" href="07-puentemongoose.html">Siguiente tema ➜</a>
+    </div>
+
+  <main id="contenido" class="wrap">
+    
+    
+    <hr>
+    
+    <section class="card">
+      <h2>📦 1️⃣ Colección y 📄 2️⃣ Documento: Los Protagonistas</h2>
+      
+      <h3>📦 La Colección (Tu Carpeta de Datos)</h3>
+      <p>Una Colección es el contenedor lógico de documentos. Es el equivalente a una Tabla SQL, pero con una diferencia CLAVE: los documentos dentro no tienen por qué tener la misma estructura.</p>
+      <ul>
+        <li>Ejemplo: La colección se llamará `productos`.</li>
+        <li>Sintaxis: Siempre la nombras en minúsculas y plural, siguiendo la convención de la comunidad (ej. `db.productos`).</li>
+      </ul>
+
+      <h3>📄 El Documento (Tu Dato Completo)</h3>
+      <p>Un Documento es el registro individual, un objeto escrito en formato JSON (o BSON en memoria). Es la Fila de SQL, pero con campos flexibles.</p>
+      
+    
+        <div>
+          <h4>Ejemplo: Producto (Documento en la colección `productos`)</h4>
+          <pre><code>{
+  "nombre": "Camiseta React",
+  "precio": 19.99,
+  "stock": 50,
+  "categoria": "ropa",
+  "activo": true
+}</code></pre>
+        </div>
+      </div>
+    </section>
+    <!-- 🧱 Crear una Base de Datos, Colecciones y Documentos -->
+<section class="card" id="crear-bbdd">
+  <h2>🧱 Crear una Base de Datos, Colecciones y Documentos</h2>
+  <p>
+    En MongoDB <strong>no necesitas crear manualmente las bases de datos</strong>. 
+    El sistema aplica el principio de <strong>creación perezosa</strong> (<em>lazy creation</em>): 
+    la base de datos y sus colecciones se generan <em>automáticamente</em> cuando insertas el primer documento.
+  </p>
+
+  <h3>⚙️ 1️⃣ Cambiar de contexto con <code>use &lt;nombre&gt;</code></h3>
+  <p>
+    El comando <code>use</code> permite moverte al contexto de una base de datos existente 
+    o preparar una nueva. Si no existe aún, MongoDB la mantiene en espera hasta que insertes algo.
+  </p>
+
+  <pre><code>// Cambiar o preparar el contexto de la base "tienda"
+use tienda
+</code></pre>
+
+  <div class="callout info">
+    <strong>Nota:</strong> Tras ejecutar <code>use tienda</code> la base todavía no aparece en <code>show dbs</code>.
+    Solo será visible cuando contenga al menos un documento.
+  </div>
+
+  <h3>⚙️ 2️⃣ Crear la primera colección e insertar un documento</h3>
+  <p>
+    En MongoDB, las <strong>colecciones</strong> son el equivalente a las tablas en SQL. 
+    Se crean automáticamente al insertar el primer documento dentro de ellas:
+  </p>
+
+  <pre><code>// Crear colección "productos" e insertar un documento
+db.productos.insertOne({
+  nombre: "Camiseta básica",
+  precio: 9.99,
+  stock: 50,
+  categoria: "ropa"
+})
+</code></pre>
+
+  <p>
+    Este comando crea tres niveles de estructura:
+  </p>
+  <ul>
+    <li>🗄️ Base de datos <strong>tienda</strong></li>
+    <li>📁 Colección <strong>productos</strong></li>
+    <li>📄 Documento con campos <code>nombre</code>, <code>precio</code>, <code>stock</code> y <code>categoria</code></li>
+  </ul>
+
+  <h3>🧩 3️⃣ Añadir más colecciones</h3>
+  <p>
+    Puedes crear nuevas colecciones de la misma manera, simplemente insertando documentos en ellas:
+  </p>
+
+  <pre><code>// Crear colección "clientes"
+db.clientes.insertOne({
+  nombre: "Lucía Pérez",
+  email: "lucia@example.com",
+  ciudad: "Madrid"
+})
+
+// Crear colección "pedidos"
+db.pedidos.insertOne({
+  cliente: "Lucía Pérez",
+  producto: "Camiseta básica",
+  cantidad: 2,
+  fecha: new Date()
+})
+</code></pre>
+
+  <div class="callout success">
+    <strong>Resumen:</strong>
+    <ul>
+      <li><code>use tienda</code> → cambia al contexto o crea el espacio de trabajo.</li>
+      <li><code>insertOne()</code> → crea la colección y el primer documento.</li>
+      <li>Las colecciones se crean automáticamente al insertar datos.</li>
+      <li>MongoDB crea la base de datos cuando guardas el primer documento.</li>
+    </ul>
+  </div>
+
+  <h3>🔗 4️⃣ Relaciones entre colecciones</h3>
+  <p>
+    Aunque MongoDB no usa claves foráneas como en SQL, 
+    podemos establecer <strong>relaciones lógicas</strong> entre colecciones enlazando 
+    documentos mediante campos comunes (por ejemplo, el <code>_id</code> del cliente 
+    dentro de un pedido). Esto se llama <strong>referencia</strong> o <em>embedding</em>.
+  </p>
+
+  <pre><code>// Ejemplo de referencia (cliente relacionado en pedidos)
+db.pedidos.insertOne({
+  clienteId: ObjectId("673b2a9c12345abcde67890f"), // _id del cliente
+  producto: "Camiseta básica",
+  cantidad: 2
+})
+</code></pre>
+
+  <div class="callout info">
+    <strong>En resumen:</strong> una base de datos MongoDB se forma por colecciones, 
+    y cada colección contiene documentos JSON independientes que pueden relacionarse entre sí
+    mediante campos comunes o identificadores.
+  </div>
+</section>
+<!-- 🎯 Infografía: Jerarquía MongoDB (BBDD → Colecciones → Documentos → Relaciones) -->
+<section class="card" id="infografia-jerarquia">
+  <h2>🧭 Infografía — Jerarquía de MongoDB</h2>
+  <p class="lead">Visualiza cómo se organiza una base de datos en MongoDB y cómo se relacionan las colecciones entre sí.</p>
+
+  <!-- Diagrama jerárquico -->
+  <article class="card" aria-labelledby="jerarquia">
+    <h3 id="jerarquia" class="section-title">📐 Estructura: BBDD → Colecciones → Documentos</h3>
+    <div class="grid--one">
+      <div class="card" aria-label="Base de datos">
+        <h4>🗄️ Base de datos <code>tienda</code></h4>
+        <p>Contenedor principal de todas tus colecciones y documentos.</p>
+        <div class="callout info">
+          <strong>Creación perezosa:</strong> la BBDD se crea cuando guardas el primer documento.
+        </div>
+        <pre><code>// Cambiar/preparar contexto
+use tienda</code></pre>
+      </div>
+
+      <div class="card" aria-label="Colecciones">
+        <h4>📁 Colecciones</h4>
+        <ul>
+          <li><strong>productos</strong> (catálogo)</li>
+          <li><strong>clientes</strong> (personas)</li>
+          <li><strong>pedidos</strong> (transacciones)</li>
+        </ul>
+        <div class="callout">
+          Son como “tablas” en SQL, pero flexibles: no requieren esquema rígido.
+        </div>
+        <pre><code>// Colección se crea al insertar
+db.productos.insertOne({ nombre: "Camiseta", precio: 9.99 })</code></pre>
+      </div>
+
+      <div class="card" aria-label="Documentos">
+        <h4>📄 Documentos (JSON)</h4>
+        <p>Cada documento es un objeto JSON con su <code>_id</code> único.</p>
+        <pre><code>{
+  _id: ObjectId("..."),
+  nombre: "Camiseta básica",
+  precio: 9.99,
+  stock: 50,
+  categoria: "ropa"
+}</code></pre>
+        <div class="callout success">
+          <strong>Clave:</strong> insertar el primer documento crea BBDD y colección.
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Relaciones entre colecciones -->
+<article class="card" aria-labelledby="relaciones">
+  <h3 id="relaciones" class="section-title">🔗 Relaciones entre colecciones</h3>
+  <p>En MongoDB puedes relacionar datos de dos maneras principales: <strong>Embedding</strong> (anidando documentos) y <strong>Referencias</strong> (enlazando mediante <code>_id</code>).</p>
+
+  <!-- 🧩 EMBEDDING -->
+  <div class="card" aria-label="embedding">
+    <h4>🧩 <em>Embedding</em> (anidar)</h4>
+    <p>Consiste en guardar subdocumentos dentro del documento principal. Es útil cuando los datos siempre se consultan juntos, por ejemplo, las líneas de un pedido.</p>
+    <pre><code>// Un pedido con sus líneas embebidas
+db.pedidos.insertOne({
+  cliente: { _id: ObjectId("..."), nombre: "Lucía" },
+  lineas: [
+    { productoId: ObjectId("..."), nombre: "Camiseta", cantidad: 2 },
+    { productoId: ObjectId("..."), nombre: "Pantalón", cantidad: 1 }
+  ],
+  fecha: new Date()
+})</code></pre>
+    <div class="callout success">
+      <strong>Útil para:</strong> lecturas rápidas y estructuras simples donde los datos “viven y mueren” juntos.
+    </div>
+  </div>
+
+  <!-- 🔗 REFERENCIAS -->
+  <div class="card" aria-label="referencias">
+    <h4>🔗 Referencias (<code>_id</code>)</h4>
+    <p>En lugar de duplicar datos, guardamos solo los identificadores de otros documentos, estableciendo una relación lógica entre colecciones.</p>
+    <pre><code>// Un pedido que referencia cliente y productos
+db.pedidos.insertOne({
+  clienteId: ObjectId("64f...abc"),
+  productoIds: [ ObjectId("65a...def"), ObjectId("65a...987") ],
+  fecha: new Date()
+})</code></pre>
+    <div class="callout info">
+      <strong>Útil para:</strong> evitar duplicados, mantener integridad y reducir el tamaño de los documentos cuando los datos cambian con frecuencia.
+    </div>
+  </div>
+
+  <!-- 🧮 COMPARATIVA -->
+  <div class="card" aria-label="comparativa">
+    <h4>🧮 ¿Cuál usar?</h4>
+    <p>Elige el tipo de relación en función del tamaño, frecuencia de actualización y reutilización de los datos.</p>
+    <table class="table" aria-label="Comparativa embedding vs referencias">
+      <thead>
+        <tr>
+          <th>Caso</th>
+          <th>Mejor opción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Datos pequeños y muy ligados</td>
+          <td>✅ Embedding</td>
+        </tr>
+        <tr>
+          <td>Reutilización en muchas colecciones</td>
+          <td>✅ Referencias</td>
+        </tr>
+        <tr>
+          <td>Actualizaciones frecuentes</td>
+          <td>✅ Referencias</td>
+        </tr>
+        <tr>
+          <td>Lectura única “todo en uno”</td>
+          <td>✅ Embedding</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout warn" role="note">
+      <strong>Regla práctica:</strong> usa <em>embedding</em> cuando los datos sean inseparables y se consulten juntos; usa <em>referencias</em> cuando se compartan, crezcan o cambien a menudo.
+    </div>
+  </div>
+</article>
+  
+
+
+
+  <div class="callout success">
+    <strong>Resumen visual:</strong> 🗄️ BBDD → 📁 Colecciones → 📄 Documentos → 🔗 Relaciones (Embedding / Referencias).
+  </div>
+</section>
+
+
+    <hr>
+    <section class="card">
+  <h2>🧪 3️⃣ El CRUD: Creación de Datos (INSERT)</h2>
+  <p>
+    La operación de Creación (CREATE) o Inserción (INSERT) es el primer paso. 
+    Aquí es donde debes prestar más atención a la sintaxis del Shell.
+  </p>
+
+  <h3>La Sintaxis de Oro del MongoDB Shell</h3>
+  <p>Todos los comandos que verás aquí y en el resto del CRUD siguen este patrón:</p>
+  <pre><code>db.nombreColeccion.metodo(argumentos)</code></pre>
+  <ul>
+    <li><code>db</code>: palabra reservada que representa tu Base de Datos actual. ¡Siempre empieza por <code>db</code>!</li>
+    <li><code>.nombreColeccion</code>: carpeta donde guardarás el dato (ej. <code>.productos</code>).</li>
+    <li><code>.metodo()</code>: la acción (ej. <code>.insertOne()</code>).</li>
+  </ul>
+
+  <h3>Importante: ¿Cuándo se Crea la Colección?</h3>
+  <div class="note" style="background:#fefce8;padding:1rem;border-radius:8px;border-left:5px solid #fbbf24;">
+    <strong>¡Atención!</strong> En MongoDB, NO necesitas un <em>CREATE COLLECTION</em>. 
+    La colección se crea de forma implícita en el momento en que insertas el primer documento.
+  </div>
+
+  <h3>Método 1: Inserción de un Único Documento (<code>insertOne</code>)</h3>
+  <p>Utiliza este método para añadir un solo documento. El argumento es el objeto JSON que quieres guardar.</p>
+  <pre><code>// Insertar UN documento en la colección 'productos'
+db.productos.insertOne({
+  nombre: "Auriculares Bluetooth",
+  precio: 35.0,
+  stock: 100,
+  categoria: "tecnologia",
+  activo: true
+});</code></pre>
+
+  <h3>Método 2: Inserción de Varios Documentos (<code>insertMany</code>)</h3>
+  <p>Más eficiente cuando quieres añadir varios documentos de golpe. El argumento es un array <code>[]</code> con objetos JSON.</p>
+  <pre><code>// Insertar VARIOS documentos en la colección 'productos'
+db.productos.insertMany([
+  { nombre: "Camiseta React", precio: 19.99, stock: 50,  categoria: "ropa" },
+  { nombre: "Taza JavaScript", precio: 9.5,  stock: 120, categoria: "accesorios" }
+]);</code></pre>
+
+  <hr>
+
+  <h3 style="margin:1rem 0 .25rem 0;font-size:1.15rem">✅ Las tres formas de insertar datos (tu rutina profesional)</h3>
+  <p style="margin:.25rem 0 1rem 0;color:var(--color-muted, #4b5563)">
+    Aunque practicamos en la consola, en proyectos reales la inserción suele venir desde el código. Compara las tres vías:
+  </p>
+
+  <div style="overflow:auto;border:1px solid var(--color-border,#d1d5db);border-radius:12px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.06)">
+    <table role="table" aria-label="Comparativa de vías para insertar datos"
+           style="width:100%;border-collapse:separate;border-spacing:0;min-width:680px;font-size:0.98rem">
+      <thead>
+        <tr style="background:linear-gradient(0deg,rgba(19,170,82,.06),rgba(19,170,82,.06));color:#065f46">
+          <th scope="col" style="text-align:left;padding:14px 16px;border-bottom:1px solid var(--color-border,#d1d5db);font-weight:700">Vía</th>
+          <th scope="col" style="text-align:left;padding:14px 16px;border-bottom:1px solid var(--color-border,#d1d5db);font-weight:700">Cuándo usarla</th>
+          <th scope="col" style="text-align:left;padding:14px 16px;border-bottom:1px solid var(--color-border,#d1d5db);font-weight:700">Ejemplo práctico</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#fff">
+          <td style="padding:14px 16px;vertical-align:top">
+            <span style="display:inline-flex;align-items:center;gap:.5rem;font-weight:700">
+              <span style="display:inline-grid;place-items:center;width:28px;height:28px;border-radius:999px;background:#e3fcef;border:1px solid #baf7ce;color:#065f46;font-size:.9rem">1</span>
+              MongoDB Shell <span aria-hidden="true">🧠</span>
+            </span>
+            <div style="font-size:.9rem;color:var(--color-muted,#4b5563)">( <code style="background:#f8fafc;padding:.1rem .35rem;border:1px solid #e5e7eb;border-radius:6px">mongosh</code> )</div>
+          </td>
+          <td style="padding:14px 16px;vertical-align:top">
+            Pruebas rápidas, verificación de datos, tareas administrativas o carga puntual desde la consola.
+          </td>
+          <td style="padding:14px 16px;vertical-align:top">
+            <div style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0b1020;color:#e6edf3;border-radius:8px;padding:10px 12px;line-height:1.35;border:1px solid #111827">
+              db.productos.insertOne({ nombre: "Camiseta Mongo", precio: 19.99 })
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:#fafafa">
+          <td style="padding:14px 16px;vertical-align:top">
+            <span style="display:inline-flex;align-items:center;gap:.5rem;font-weight:700">
+              <span style="display:inline-grid;place-items:center;width:28px;height:28px;border-radius:999px;background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;font-size:.9rem">2</span>
+              Código (Mongoose / ORM) <span aria-hidden="true">💻</span>
+            </span>
+            <div style="font-size:.9rem;color:var(--color-muted,#4b5563)">Ruta profesional (APIs, validación, reglas)</div>
+          </td>
+          <td style="padding:14px 16px;vertical-align:top">
+            90% de los casos reales: desde tu backend/API. Aplica esquemas, validaciones, <em>hooks</em> y lógica de negocio.
+          </td>
+          <td style="padding:14px 16px;vertical-align:top">
+            <div style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0b1020;color:#e6edf3;border-radius:8px;padding:10px 12px;line-height:1.35;border:1px solid #111827">
+              await Producto.create({ nombre: "Taza JS", precio: 9.99 })
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:#fff">
+          <td style="padding:14px 16px;vertical-align:top">
+            <span style="display:inline-flex;align-items:center;gap:.5rem;font-weight:700">
+              <span style="display:inline-grid;place-items:center;width:28px;height:28px;border-radius:999px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:.9rem">3</span>
+              Importación de archivos <span aria-hidden="true">📤</span>
+            </span>
+            <div style="font-size:.9rem;color:var(--color-muted,#4b5563)">Inicializaciones masivas (.json, .csv)</div>
+          </td>
+          <td style="padding:14px 16px;vertical-align:top">
+            Semillas de datos, migraciones o cargas grandes al arrancar un proyecto o entorno.
+          </td>
+          <td style="padding:14px 16px;vertical-align:top">
+            <div style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0b1020;color:#e6edf3;border-radius:8px;padding:10px 12px;line-height:1.35;border:1px solid #111827">
+              mongoimport --uri "mongodb+srv://CLUSTER/tienda" --collection productos --file productos.json --jsonArray
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin:.75rem 0 0 0;font-size:.92rem;color:var(--color-muted,#4b5563)">
+    <strong>Regla didáctica:</strong> usa <em>Shell</em> para aprender y auditar; <em>Mongoose</em> para construir; 
+    <em>importación</em> para poblar rápido.
+  </p>
+
+  <div class="note" style="background:#f0f9ff;padding:1rem;border-radius:8px;border-left:5px solid #007bff;">
+    <strong>Tu Foco: La Inserción desde el Código.</strong><br>
+    En el próximo tema aprenderás a usar Mongoose (para Node.js). 
+    Con Mongoose, tu código recibe los datos del usuario y usa <code>.save()</code> o <code>.create()</code> 
+    para llevarlos al cluster. Esto es lo que se hace en la industria.
+  </div>
+</section>
+<section class="card" id="leer-documentos">
+  <h2>🔍 4️⃣ El RUD: Leer (Buscar) Documentos</h2>
+  <p>
+    La lectura de datos se realiza con el método <code>.find()</code>, equivalente al 
+    <code>SELECT</code> de SQL. Es una de las operaciones más usadas en MongoDB, 
+    ya que permite explorar, filtrar y ordenar los documentos almacenados.
+  </p>
+
+  <h3>📘 Sintaxis general</h3>
+  <pre><code>db.coleccion.find(filtro, proyeccion)</code></pre>
+  <ul>
+    <li><strong>filtro:</strong> define qué documentos quieres recuperar. Si lo dejas vacío, devuelve todos.</li>
+    <li><strong>proyección:</strong> indica qué campos mostrar (por defecto muestra todos).</li>
+  </ul>
+
+  <div class="grid-2">
+    <div>
+      <h4>📜 Buscar TODO (equivalente a <code>SELECT *</code>)</h4>
+      <pre><code>db.productos.find()
+// Si dejas los paréntesis vacíos, muestra todos los documentos.</code></pre>
+    </div>
+    <div>
+      <h4>🎯 Buscar con Filtro (el WHERE)</h4>
+      <pre><code>db.productos.find({ activo: true })
+// Busca todos los productos donde el campo 'activo' sea true.</code></pre>
+    </div>
+  </div>
+
+  <h3>🎛️ Proyección de campos</h3>
+  <p>Para mostrar solo ciertos campos (como en <code>SELECT nombre, precio FROM ...</code>):</p>
+  <pre><code>// Muestra solo nombre y precio, sin el campo _id
+db.productos.find({}, { nombre: 1, precio: 1, _id: 0 })</code></pre>
+
+  <hr>
+
+  <section class="card" id="operadores-comparacion">
+    <h3>🔢 Operadores de comparación</h3>
+    <p>
+      MongoDB utiliza operadores con prefijo <code>$</code> para realizar comparaciones dentro de los filtros. 
+      Funcionan igual que los signos matemáticos (&lt;, ≤, &gt;, ≥, =, ≠), pero adaptados a la sintaxis JSON.
+    </p>
+
+    <pre><code>// Precio MENOR o IGUAL que 20
+db.productos.find({ precio: { $lte: 20 } })
+
+// Precio MAYOR que 30
+db.productos.find({ precio: { $gt: 30 } })
+
+// Precio ENTRE 10 y 25
+db.productos.find({ precio: { $gte: 10, $lte: 25 } })
+</code></pre>
+
+    <h4>📘 Significado de los operadores</h4>
+    <div class="table-wrapper">
+      <table class="table table-compact" aria-label="Operadores de comparación en MongoDB">
+        <thead>
+          <tr>
+            <th>Operador</th>
+            <th>Significado</th>
+            <th>Ejemplo</th>
+            <th>Equivalente matemático</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>$eq</code></td>
+            <td>Igual a</td>
+            <td><code>{ precio: { $eq: 10 } }</code></td>
+            <td>=</td>
+          </tr>
+          <tr>
+            <td><code>$ne</code></td>
+            <td>No igual a</td>
+            <td><code>{ precio: { $ne: 10 } }</code></td>
+            <td>≠</td>
+          </tr>
+          <tr>
+            <td><code>$lt</code></td>
+            <td>Menor que</td>
+            <td><code>{ precio: { $lt: 20 } }</code></td>
+            <td>&lt;</td>
+          </tr>
+          <tr>
+            <td><code>$lte</code></td>
+            <td>Menor o igual que</td>
+            <td><code>{ precio: { $lte: 20 } }</code></td>
+            <td>≤</td>
+          </tr>
+          <tr>
+            <td><code>$gt</code></td>
+            <td>Mayor que</td>
+            <td><code>{ precio: { $gt: 30 } }</code></td>
+            <td>&gt;</td>
+          </tr>
+          <tr>
+            <td><code>$gte</code></td>
+            <td>Mayor o igual que</td>
+            <td><code>{ precio: { $gte: 30 } }</code></td>
+            <td>≥</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout info">
+      <strong>💡 Consejo:</strong> Puedes combinar varios operadores en el mismo filtro para crear consultas más precisas, por ejemplo:
+      <pre><code>db.productos.find({ precio: { $gte: 10, $lte: 25 } })</code></pre>
+      Esto devuelve los productos con precios comprendidos entre 10 y 25 (ambos incluidos).
+    </div>
+
+    <div class="callout success">
+      <strong>Resumen rápido:</strong>  
+      <ul>
+        <li><code>$lt</code> → menor que (<em>less than</em>)</li>
+        <li><code>$lte</code> → menor o igual que (<em>less than or equal</em>)</li>
+        <li><code>$gt</code> → mayor que (<em>greater than</em>)</li>
+        <li><code>$gte</code> → mayor o igual que (<em>greater than or equal</em>)</li>
+        <li><code>$eq</code> → igual a (<em>equal</em>)</li>
+        <li><code>$ne</code> → distinto de (<em>not equal</em>)</li>
+      </ul>
+    </div>
+
+    <div class="callout warn">
+      <strong>🗣️ Etimología:</strong>  
+      Todos los operadores son <strong>abreviaturas del inglés</strong>:
+      <ul>
+        <li><code>lt</code> → <em>less than</em> (menor que)</li>
+        <li><code>lte</code> → <em>less than or equal</em> (menor o igual que)</li>
+        <li><code>gt</code> → <em>greater than</em> (mayor que)</li>
+        <li><code>gte</code> → <em>greater than or equal</em> (mayor o igual que)</li>
+        <li><code>eq</code> → <em>equal</em> (igual)</li>
+        <li><code>ne</code> → <em>not equal</em> (no igual)</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <h3>📊 Ordenar, limitar y paginar</h3>
+  <p>Como en SQL con <code>ORDER BY</code> y <code>LIMIT</code>, puedes controlar el orden y número de resultados.</p>
+  <pre><code>// Orden ascendente por precio (1 = ascendente, -1 = descendente)
+db.productos.find().sort({ precio: 1 })
+
+// Limitar resultados
+db.productos.find().limit(5)
+
+// Saltar los primeros N documentos (paginación)
+db.productos.find().sort({ precio: 1 }).skip(5).limit(5)</code></pre>
+
+
+
+  <h3>🧮 Contar documentos</h3>
+  <p>Para saber cuántos documentos cumplen un filtro:</p>
+  <pre><code>// Contar todos los documentos
+db.productos.countDocuments({})
+
+// Contar solo los activos
+db.productos.countDocuments({ activo: true })
+
+// Contar los de una categoría concreta
+db.productos.countDocuments({ categoria: "ropa" })</code></pre>
+
+  <div class="callout info">
+    <strong>💡 Tip profesional:</strong>  
+    Combina <code>find()</code> con <code>sort()</code>, <code>limit()</code> 
+    y <code>countDocuments()</code> para inspeccionar grandes colecciones 
+    sin sobrecargar la consola ni el servidor.
+  </div>
+
+  <hr>
+
+  <div class="callout success">
+    <strong>🧩 Equivalencias SQL ↔ MongoDB</strong>
+    <div class="table-wrapper">
+      <table class="table table-compact" aria-label="Comparación SQL y MongoDB">
+        <thead>
+          <tr>
+            <th>SQL</th>
+            <th>MongoDB</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>SELECT * FROM productos</code></td>
+            <td><code>db.productos.find()</code></td>
+          </tr>
+          <tr>
+            <td><code>SELECT nombre, precio FROM productos</code></td>
+            <td><code>db.productos.find({}, { nombre: 1, precio: 1, _id: 0 })</code></td>
+          </tr>
+          <tr>
+            <td><code>SELECT * FROM productos WHERE precio &gt; 30</code></td>
+            <td><code>db.productos.find({ precio: { $gt: 30 } })</code></td>
+          </tr>
+          <tr>
+            <td><code>SELECT * FROM productos ORDER BY precio ASC LIMIT 5</code></td>
+            <td><code>db.productos.find().sort({ precio: 1 }).limit(5)</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>✏️ 5️⃣ El CUD: Actualizar Documentos</h2>
+  <p>
+    Actualizar datos significa modificar el valor de uno o varios campos de un documento existente.  
+    En MongoDB lo hacemos con los métodos <code>updateOne()</code> y <code>updateMany()</code>.  
+    Siempre debes indicar **qué documento** quieres cambiar (filtro) y **cómo** quieres cambiarlo (operador).
+  </p>
+
+  <h3>🧩 Sintaxis general</h3>
+  <pre><code>db.coleccion.updateOne(filtro, { operador: { cambios } })</code></pre>
+  <ul>
+    <li><strong>filtro</strong>: indica qué documento(s) se van a modificar (por ejemplo <code>{ nombre: "Taza JS" }</code>).</li>
+    <li><strong>operador</strong>: define cómo cambiar los valores (<code>$set</code>, <code>$inc</code>, <code>$push</code>...).</li>
+  </ul>
+
+  <div class="note" style="background:#fefce8;padding:1rem;border-radius:8px;border-left:5px solid #fbbf24;">
+    <strong>💡 Recuerda:</strong> si no usas un operador (como <code>$set</code>), reemplazarás todo el documento por el nuevo objeto.
+  </div>
+
+  <div style="margin-top:1rem;">
+  <div class="card">
+    <h4>Actualizar UNO (<code>updateOne</code>)</h4>
+    <p>Modifica solo el primer documento que cumpla el filtro.</p>
+    <pre><code>db.productos.updateOne(
+  { nombre: "Taza JavaScript" },   // Filtro
+  { $set: { precio: 10.00 } }      // Operador: cambia el precio a 10.00
+)</code></pre>
+  </div>
+
+  <div class="card">
+    <h4>Actualizar VARIOS (<code>updateMany</code>)</h4>
+    <p>Modifica todos los documentos que cumplan el filtro.</p>
+    <pre><code>db.productos.updateMany(
+  { categoria: "ropa" }, 
+  { $inc: { stock: 10 } } // Suma 10 unidades al stock de toda la ropa
+)</code></pre>
+  </div>
+</div>
+
+
+  <h3>🔧 Principales Operadores de Actualización</h3>
+  <ul>
+    <li><code>$set</code> → Asigna un nuevo valor a un campo existente o lo crea si no existe.</li>
+    <li><code>$inc</code> → Incrementa (suma o resta) el valor numérico de un campo.</li>
+    <li><code>$push</code> → Agrega un valor al final de un array (permite duplicados).</li>
+    <li><code>$addToSet</code> → Agrega un valor al array solo si no existe (sin duplicar).</li>
+  </ul>
+
+  <pre><code>// Ejemplos de uso de operadores
+db.productos.updateOne(
+  { nombre: "Sudadera Dev" },
+  { $addToSet: { tallas: "XL" } } // añade una talla sin duplicar
+)
+
+db.productos.updateOne(
+  { nombre: "Sudadera Dev" },
+  { $push: { tallas: "XS" } }     // añade talla al final del array
+)</code></pre>
+
+  <h3>🚀 Crear si no existe (Upsert)</h3>
+  <p>Si el documento no existe, MongoDB puede crearlo automáticamente con la opción <code>{ upsert: true }</code>.</p>
+  <pre><code>db.productos.updateOne(
+  { nombre: "Gorra Node" },
+  { $set: { precio: 14.5, stock: 25, categoria:"accesorios", activo:true } },
+  { upsert: true }
+)</code></pre>
+
+  <h3>🧨 Reemplazar un documento completo</h3>
+  <p>Con <code>replaceOne()</code> sustituyes todo el documento por otro nuevo (se mantiene el mismo <code>_id</code>).</p>
+  <pre><code>db.productos.replaceOne(
+  { nombre: "Pegatina CSS" },
+  { nombre: "Pegatina CSS", precio: 1.75, stock: 250, categoria:"accesorios", activo:true }
+)</code></pre>
+
+  <h3>📋 Verificar los cambios</h3>
+  <p>Después de actualizar, revisa los resultados con una consulta:</p>
+  <pre><code>db.productos.find({}, { nombre: 1, precio: 1, stock: 1, _id: 0 })</code></pre>
+
+  <div class="note" style="background:#f0fdf4;padding:1rem;border-radius:8px;border-left:5px solid #13aa52;">
+    <strong>Checkpoint:</strong>  
+    <ul style="margin-top:.5rem;">
+      <li>¿Se actualizó el precio correctamente?</li>
+      <li>¿Los productos de <em>ropa</em> aumentaron su stock?</li>
+      <li>¿Aparece el nuevo campo o array si antes no existía?</li>
+    </ul>
+  </div>
+
+<h3>⚙️ Comparativa con Mongoose (nivel profesional)</h3>
+<p>
+  En código (Node.js + Mongoose) usarás los mismos métodos, pero aplicados a un modelo.
+  Ambos ejemplos realizan la misma operación, solo cambia el entorno donde se ejecutan:
+</p>
+
+<div style="margin-top:1rem;">
+  <div class="card" style="margin-bottom:1rem;">
+    <h4>💻 En Shell</h4>
+    <pre><code>db.productos.updateOne(
+  { nombre:"Taza JS" },
+  { $set:{ precio:12.99 } }
+)</code></pre>
+  </div>
+
+  <div class="card">
+    <h4>🧠 En Mongoose</h4>
+    <pre><code>await Producto.updateOne(
+  { nombre:"Taza JS" },
+  { $set:{ precio:12.99 } }
+)</code></pre>
+  </div>
+</div>
+
+<div class="callout info" style="margin-top:1rem;">
+    <strong>💡 ¿Por qué usamos <code>await</code> en Mongoose?</strong>
+    <p>
+      Porque <code>updateOne()</code> devuelve una <em>Promesa</em>.  
+      Node.js ejecuta el código de manera asíncrona y no espera automáticamente a que
+      termine la operación con la base de datos.  
+      Al escribir <code>await</code>, indicamos al programa que se <strong>detenga hasta recibir la respuesta</strong>,
+      garantizando que los cambios se guarden antes de continuar.
+    </p>
+  </div>
+
+  <p style="margin-top:1rem;color:var(--color-muted,#4b5563);font-size:.95rem;">
+    En Mongoose también podrás usar métodos equivalentes como <code>.findByIdAndUpdate()</code> o <code>.save()</code> 
+    para manejar la lógica desde el backend. Lo importante es que ahora entiendes 
+    <strong>qué está ocurriendo dentro de la base de datos.</strong>
+  </p>
+
+  <div class="note" style="background:#eef2ff;padding:1rem;border-radius:8px;border-left:5px solid #4f46e5;">
+    <strong>Resumen:</strong>  
+    <ul>
+      <li>Usa <code>updateOne()</code> o <code>updateMany()</code> con operadores de cambio (<code>$set</code>, <code>$inc</code>, <code>$push</code>...).</li>
+      <li>Utiliza <code>upsert</code> para crear el documento si no existe.</li>
+      <li>Comprueba siempre los resultados con <code>find()</code> o <code>countDocuments()</code>.</li>
+      <li>En Mongoose, el mismo proceso se traduce a métodos de modelo.</li>
+    </ul>
+  </div>
+</section>
+<section class="card">
+  <h2>🗑️ 6️⃣ El CRD: Borrar Documentos</h2>
+  <p>
+    El borrado de documentos es la operación más delicada del CRUD.  
+    En MongoDB se realiza con los métodos <code>deleteOne()</code> y <code>deleteMany()</code>.  
+    Recuerda: <strong>no hay vuelta atrás</strong>, así que revisa siempre tu filtro antes de ejecutar.
+  </p>
+
+  <h3>🧩 Sintaxis general</h3>
+  <pre><code>db.coleccion.deleteOne(filtro)
+db.coleccion.deleteMany(filtro)</code></pre>
+  <ul>
+    <li><strong>deleteOne()</strong> → elimina solo el primer documento que cumpla el filtro.</li>
+    <li><strong>deleteMany()</strong> → elimina todos los documentos que cumplan el filtro.</li>
+    <li>Si no incluyes filtro, podrías eliminar toda la colección (¡peligroso!).</li>
+  </ul>
+
+  <div class="note" style="background:#fefce8;padding:1rem;border-radius:8px;border-left:5px solid #fbbf24;">
+    <strong>⚠️ Consejo crítico:</strong> Antes de borrar, ejecuta siempre un <code>find()</code> con el mismo filtro para comprobar qué documentos se verán afectados.
+  </div>
+
+  <div class="grid-2" style="margin-top:1rem;">
+    <div>
+      <h4>🗑️ Borrar UNO (<code>deleteOne</code>)</h4>
+      <p>Elimina el primer documento que cumpla el filtro especificado.</p>
+      <pre><code>// Ejemplo: borrar un solo producto
+db.productos.deleteOne({ nombre: "Camiseta React" })</code></pre>
+      <p style="font-size:.9rem;color:var(--color-muted,#4b5563);">
+        ✅ Ideal para eliminar un elemento concreto (por su nombre, ID o campo único).
+      </p>
+    </div>
+
+    <div>
+      <h4>🧹 Borrar VARIOS (<code>deleteMany</code>)</h4>
+      <p>Elimina todos los documentos que coincidan con el filtro.</p>
+      <pre><code>// Ejemplo: borrar todos los productos inactivos
+db.productos.deleteMany({ activo: false })</code></pre>
+      <p style="font-size:.9rem;color:var(--color-muted,#4b5563);">
+        ⚠️ Úsalo con precaución: revisa tu filtro o limita el borrado a colecciones de prueba.
+      </p>
+    </div>
+  </div>
+
+  <h3>🔎 Verificar resultados</h3>
+  <p>Después de un borrado, puedes comprobar cuántos documentos quedan:</p>
+  <pre><code>db.productos.countDocuments({})
+// o verificar directamente los activos
+db.productos.find({ activo: true }, { nombre:1, _id:0 })</code></pre>
+
+  <h3>🧱 Casos prácticos</h3>
+  <ul>
+    <li>Eliminar productos obsoletos o descatalogados:</li>
+    <pre><code>db.productos.deleteMany({ stock: { $lte: 0 } })</code></pre>
+    <li>Eliminar un documento por su <code>_id</code> (ID único):</li>
+    <pre><code>db.productos.deleteOne({ _id: ObjectId("654e3a8e14c0d4e4f5c17a3b") })</code></pre>
+  </ul>
+
+  <h3>💾 Precauciones adicionales</h3>
+  <ul>
+    <li>Haz siempre una copia o exportación antes de borrados masivos (<code>mongoexport</code>).</li>
+    <li>No uses <code>deleteMany({})</code> salvo en entornos de práctica o test.</li>
+    <li>Para limpiar una colección completa de forma controlada, puedes hacerlo desde la consola de Atlas (con confirmación manual).</li>
+  </ul>
+
+  <h3>⚙️ Comparativa con Mongoose</h3>
+  <div class="grid-2">
+    <div>
+      <h4>En Shell</h4>
+      <pre><code>db.productos.deleteOne({ nombre: "Camiseta React" })
+db.productos.deleteMany({ activo: false })</code></pre>
+    </div>
+    <div>
+      <h4>En Mongoose</h4>
+      <pre><code>await Producto.deleteOne({ nombre: "Camiseta React" })
+await Producto.deleteMany({ activo: false })</code></pre>
+    </div>
+  </div>
+
+  <p style="margin-top:1rem;color:var(--color-muted,#4b5563);font-size:.95rem;">
+    En Mongoose también podrás usar métodos derivados como 
+    <code>findByIdAndDelete()</code> o <code>deleteMany()</code> directamente sobre el modelo.  
+    La lógica es la misma: se traduce internamente al comando MongoDB equivalente.
+  </p>
+
+  <div class="note" style="background:#fee2e2;padding:1rem;border-radius:8px;border-left:5px solid #b91c1c;">
+    <strong>⚠️ Advertencia final:</strong>  
+    El borrado no se puede deshacer. Antes de ejecutar un <code>deleteMany()</code>, verifica tu filtro, 
+    haz una copia y confirma que estás en la base de datos correcta.
+  </div>
+</section>
+
+<!-- 🧾 Colección de Pedidos: Relaciones entre Clientes y Productos -->
+<section class="card" id="coleccion-pedidos">
+  <h2>🧾 8️⃣ Nueva colección: <code>pedidos</code></h2>
+  <p>
+    Ahora que ya sabes crear colecciones y documentos, es momento de dar un paso más:
+    <strong>relacionar los datos entre sí</strong>.  
+    Crearemos una colección <code>pedidos</code> donde cada documento estará vinculado 
+    con un <strong>cliente</strong> y uno o varios <strong>productos</strong>.
+  </p>
+
+  <div class="callout info">
+    <strong>Objetivo didáctico:</strong> Comprender cómo se conectan las colecciones entre sí 
+    usando <code>ObjectId</code> (referencias) o subdocumentos embebidos.
+  </div>
+
+  <h3>📁 1️⃣ Crear la colección <code>clientes</code> (si no existe)</h3>
+  <p>
+    Primero necesitamos algunos clientes en nuestra base de datos.  
+    Si aún no los tienes, crea unos pocos ejemplos en la colección <code>clientes</code>:
+  </p>
+
+  <pre><code>// Crear algunos clientes
+db.clientes.insertMany([
+  { nombre: "Lucía Pérez", email: "lucia@example.com", ciudad: "Madrid" },
+  { nombre: "Carlos López", email: "carlos@example.com", ciudad: "Sevilla" }
+])</code></pre>
+
+  <h3>📦 2️⃣ Crear la colección <code>productos</code> (si no existe)</h3>
+  <p>De igual forma, asegúrate de tener productos disponibles en la colección <code>productos</code>:</p>
+
+  <pre><code>// Crear algunos productos de ejemplo
+db.productos.insertMany([
+  { nombre: "Camiseta React", precio: 19.99, stock: 50, categoria: "ropa", activo: true },
+  { nombre: "Taza JavaScript", precio: 9.5, stock: 120, categoria: "accesorios", activo: true }
+])</code></pre>
+
+  <h3>🧩 3️⃣ Crear la colección <code>pedidos</code> (con referencias)</h3>
+  <p>
+    Para relacionar las colecciones, obtenemos primero los <code>_id</code> de un cliente y de los productos.
+    Luego los usamos como referencias dentro del pedido:
+  </p>
+
+  <pre><code>// Buscar un cliente y un producto
+const cliente = db.clientes.findOne({ email: "lucia@example.com" })
+const producto1 = db.productos.findOne({ nombre: "Camiseta React" })
+const producto2 = db.productos.findOne({ nombre: "Taza JavaScript" })
+
+// Crear un pedido referenciando cliente y productos
+db.pedidos.insertOne({
+  clienteId: cliente._id,
+  productos: [
+    { productoId: producto1._id, cantidad: 2 },
+    { productoId: producto2._id, cantidad: 1 }
+  ],
+  fecha: new Date(),
+  estado: "pendiente",
+  total: producto1.precio * 2 + producto2.precio
+})</code></pre>
+
+  <div class="callout success">
+    <strong>¿Qué acabas de hacer?</strong>
+    <ul>
+      <li>🗄️ Has creado una nueva colección: <code>pedidos</code>.</li>
+      <li>🔗 Has relacionado documentos usando <code>ObjectId</code> como referencia.</li>
+      <li>🧮 Has calculado un campo <code>total</code> a partir de los precios.</li>
+    </ul>
+  </div>
+
+  <h3>🧩 4️⃣ Alternativa: Embedding (subdocumentos)</h3>
+  <p>
+    Si el pedido no va a crecer mucho y quieres guardar todo “junto”, puedes embebir los datos 
+    directamente dentro del documento principal:
+  </p>
+
+  <pre><code>// Pedido con datos embebidos
+db.pedidos.insertOne({
+  cliente: { nombre: "Carlos López", email: "carlos@example.com" },
+  productos: [
+    { nombre: "Camiseta React", cantidad: 1, precio: 19.99 },
+    { nombre: "Taza JavaScript", cantidad: 2, precio: 9.5 }
+  ],
+  fecha: new Date(),
+  estado: "enviado",
+  total: 19.99 + 2 * 9.5
+})</code></pre>
+
+  <div class="callout info">
+    <strong>Embedding vs Referencias:</strong>  
+    <ul>
+      <li><strong>Embedding</strong> = todo el pedido está contenido en un único documento (rápido de leer).</li>
+      <li><strong>Referencias</strong> = las relaciones se mantienen separadas y actualizables.</li>
+    </ul>
+  </div>
+
+  <h3>📋 5️⃣ Comprobación de datos</h3>
+  <p>Para visualizar los pedidos creados:</p>
+  <pre><code>db.pedidos.find().pretty()</code></pre>
+
+  
+  <div class="callout success">
+    <strong>Resumen de este bloque:</strong>
+    <ul>
+      <li>✅ <code>clientes</code> → colección con datos personales.</li>
+      <li>✅ <code>productos</code> → colección con el catálogo.</li>
+      <li>✅ <code>pedidos</code> → colección que relaciona ambas mediante <code>ObjectId</code> o documentos embebidos.</li>
+      <li>🧠 Entiendes cómo MongoDB maneja relaciones sin usar claves foráneas.</li>
+    </ul>
+  </div>
+</section>
+
+
+  <!-- MINI CHEAT SHEET -->
+  <article class="card">
+    <h3>6️⃣ Mini “cheat sheet” del CRUD</h3>
+    <div class="grid--one">
+      <div class="card">
+        <h4>Conexión</h4>
+        <pre><code>mongosh "mongodb+srv://&lt;CLUSTER&gt;.mongodb.net/tienda" --username "&lt;USER&gt;"
+use tienda
+show collections</code></pre>
+      </div>
+      <div class="card">
+        <h4>CRUD básico</h4>
+        <pre><code>db.productos.insertOne({...})
+db.productos.find({filtro})
+db.productos.updateOne({f},{ $set:{...} })
+db.productos.deleteOne({f})</code></pre>
+      </div>
+      <div class="card">
+        <h4>Extras</h4>
+        <pre><code>db.productos.countDocuments({})
+db.productos.createIndex({nombre:1})
+mongoimport --uri "mongodb+srv://..." \
+  --collection productos --file productos.json --jsonArray</code></pre>
+      </div>
+    </div>
+  </article>
+
+  <!-- COMPARATIVA -->
+  <article class="card">
+    <h3>7️⃣ Comparativa Shell vs Mongoose</h3>
+    <table>
+      <thead><tr><th>Operación</th><th>MongoDB Shell</th><th>Mongoose (Node.js)</th></tr></thead>
+      <tbody>
+        <tr><td>CREATE</td><td><code>db.productos.insertOne({...})</code></td><td><code>await Producto.create({...})</code></td></tr>
+        <tr><td>READ</td><td><code>db.productos.find({filtro})</code></td><td><code>Producto.find({filtro})</code></td></tr>
+        <tr><td>UPDATE</td><td><code>db.productos.updateOne({f},{ $set:{...} })</code></td><td><code>Producto.updateOne({f},{ $set:{...} })</code></td></tr>
+        <tr><td>DELETE</td><td><code>db.productos.deleteOne({f})</code></td><td><code>Producto.deleteOne({f})</code></td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:.5rem;font-size:.9rem;color:var(--color-muted);">
+      👉 Aprender el CRUD desde el Shell te prepara para entender exactamente qué hace Mongoose “por debajo”.
+    </p>
+  </article>
+
+  <div class="note" style="background:#eef2ff;padding:1rem;border-radius:8px;border-left:5px solid #4f46e5;margin-top:1rem;">
+    <strong>Resumen:</strong>  
+    <ul>
+      <li>Usa el Shell para <strong>aprender y verificar</strong>.</li>
+      <li>Usa Mongoose para <strong>automatizar y validar</strong>.</li>
+      <li>Domina <code>find()</code> y los operadores <code>$set</code>, <code>$inc</code>, <code>$push</code>, <code>$addToSet</code>.</li>
+      <li>Haz siempre una copia o prueba antes de usar <code>deleteMany()</code>.</li>
+    </ul>
+  </div>
+</section>
+
+
+    <hr>
+
+    <section class="card">
+      <h2>🧰 7️⃣ Trucos Esenciales del Shell</h2>
+      <p>Comandos adicionales que te serán muy útiles en tu día a día:</p>
+      <pre><code>// 1. Proyección: Muestra SOLO los campos 'nombre' y 'precio'
+db.productos.find({}, { nombre: 1, precio: 1, _id: 0 }); // El _id: 0 oculta el ID por defecto.
+
+// 2. Contar: Averigua cuántos documentos cumplen el criterio
+db.productos.countDocuments({ categoria: "ropa" });
+
+// 3. Paginación: Para ver los datos en partes (p. ej., primeros 10)
+db.productos.find().skip(0).limit(10); </code></pre>
+    </section>
+
+    <section class="card">
+  <h2>🌟 10 Métodos Fundamentales: La Guía Rápida del CRUD</h2>
+  <p>Estos son los comandos esenciales que debes memorizar. Son la base de las operaciones en MongoDB, tanto si trabajas directamente en la consola (Shell) como si programas con Mongoose. Hay muchos más y
+    muchos más operadores pero recuerda que Roma no se construyó en una semana. Empieza por dominar estos y luego ve ampliando tu repertorio.
+  </p>
+  
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>CRUD</th>
+          <th>Función</th>
+          <th>Sintaxis en MongoDB Shell (Prueba)</th>
+          <th>Sintaxis en Mongoose (Profesional)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="4" style="text-align: center; font-weight: bold; background: #e0f7fa;">CREAR (INSERTAR)</td>
+        </tr>
+        <tr>
+          <td>CREATE</td>
+          <td>Inserta un documento.</td>
+          <td><code>db.productos.insertOne({ ... })</code></td>
+          <td><code>await Producto.create({ ... })</code></td>
+        </tr>
+        <tr>
+          <td>CREATE</td>
+          <td>Inserta varios documentos a la vez.</td>
+          <td><code>db.productos.insertMany([ {..}, {..} ])</code></td>
+          <td><code>await Producto.insertMany([ {..}, {..} ])</code></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align: center; font-weight: bold; background: #e8f5e9;">READ (LEER / BUSCAR)</td>
+        </tr>
+        <tr>
+          <td>READ</td>
+          <td>Busca uno o más documentos (el SELECT básico).</td>
+          <td><code>db.productos.find( {filtro} )</code></td>
+          <td><code>Modelo.find( {filtro} )</code></td>
+        </tr>
+        <tr>
+          <td>READ</td>
+          <td>Busca solo el primer documento que coincida.</td>
+          <td><code>db.productos.findOne( {filtro} )</code></td>
+          <td><code>Modelo.findOne( {filtro} )</code></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align: center; font-weight: bold; background: #fffde7;">UPDATE (ACTUALIZAR)</td>
+        </tr>
+        <tr>
+          <td>UPDATE</td>
+          <td>Actualiza solo el primer documento que coincida.</td>
+          <td><code>db.productos.updateOne( {filtro}, {$set: {..}} )</code></td>
+          <td><code>Modelo.updateOne( {filtro}, {$set: {..}} )</code></td>
+        </tr>
+        <tr>
+          <td>UPDATE</td>
+          <td>Actualiza todos los documentos que coincidan.</td>
+          <td><code>db.productos.updateMany( {filtro}, {$inc: {..}} )</code></td>
+          <td><code>Modelo.updateMany( {filtro}, {$inc: {..}} )</code></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align: center; font-weight: bold; background: #ffebee;">DELETE (BORRAR)</td>
+        </tr>
+        <tr>
+          <td>DELETE</td>
+          <td>Borra solo el primer documento que coincida.</td>
+          <td><code>db.productos.deleteOne( {filtro} )</code></td>
+          <td><code>Modelo.deleteOne( {filtro} )</code></td>
+        </tr>
+        <tr>
+          <td>DELETE</td>
+          <td>Borra todos los documentos que coincidan.</td>
+          <td><code>db.productos.deleteMany( {filtro} )</code></td>
+          <td><code>Modelo.deleteMany( {filtro} )</code></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align: center; font-weight: bold; background: #f3e5f5;">UTILIDAD ESENCIAL</td>
+        </tr>
+        <tr>
+          <td>COUNT</td>
+          <td>Cuenta cuántos documentos cumplen un filtro.</td>
+          <td><code>db.productos.countDocuments( {filtro} )</code></td>
+          <td><code>Modelo.countDocuments( {filtro} )</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <p class="note" style="background:#fef0f4;padding:1rem;border-radius:8px;border-left:5px solid #d81b60;">
+    Recuerda la clave: En el Shell usas <code>db.nombre_coleccion</code>. En Mongoose (código) usas <code>Modelo</code> (con mayúscula y singular, por convención, como <code>Producto</code>).
+  </p>
+</section>
+    <hr>
+
+  <section id="ejercicio-crud-consola" class="card">
+  <h2>🧭 Ejercicio guiado — Crea tu BD en Atlas y haz un CRUD completo desde la consola</h2>
+  <p>
+    Objetivo: conectarte a tu cluster de <strong>MongoDB Atlas</strong> con <code>mongosh</code>, 
+    crear tu base de datos <code>tienda</code>, trabajar con la colección <code>productos</code> y practicar <strong>INSERT, READ, UPDATE y DELETE</strong>
+    con datos realistas (tipos simples, documentos embebidos y arrays).
+  </p>
+
+  <div class="note" style="background:#e8f5e9;padding:1rem;border-radius:8px;border-left:5px solid #4caf50;">
+    <strong>Requisitos previos:</strong> tener tu <em>usuario de base de datos</em> creado en Atlas, la <em>IP permitida</em>, y <code>mongosh</code> instalado. 
+    Si no, revisa las secciones 2.1–2.4 de este tema.
+  </div>
+
+  <!-- Paso 1: Conexión -->
+  <article class="card">
+    <h3>Paso 1 — Conéctate a tu cluster y selecciona la base</h3>
+    <ol>
+      <li>Abre tu terminal (PowerShell en Windows o tu terminal habitual).</li>
+      <li>Conéctate a Atlas (la contraseña se pide de forma segura):</li>
+    </ol>
+    <pre><code>mongosh "mongodb+srv://&lt;TU_CLUSTER&gt;.mongodb.net/tienda" --username "&lt;TU_USUARIO&gt;"</code></pre>
+    <p>Si no pusiste la base en la URI, selecciónala ahora:</p>
+    <pre><code>use tienda
+show collections</code></pre>
+    <p><small>Al principio puede que no haya colecciones; se crean al insertar el primer documento.</small></p>
+  </article>
+
+  <!-- Paso 2: Insert -->
+  <article class="card">
+    <h3>Paso 2 — INSERT: crea la colección y añade documentos</h3>
+    <p>Vamos a trabajar con <code>db.productos</code>. La colección se crea al primer insert.</p>
+
+    <div class="grid cols-3">
+      <section class="card" aria-label="InsertOne simple">
+        <h4>2.1 Insertar 1 documento (simple)</h4>
+        <pre><code>db.productos.insertOne({
+  nombre: "Camiseta React",
+  precio: 19.99,
+  stock: 50,
+  categoria: "ropa",
+  activo: true
+})</code></pre>
+      </section>
+
+      <section class="card" aria-label="InsertMany variado">
+        <h4>2.2 Insertar varios (tipos variados)</h4>
+        <pre><code>db.productos.insertMany([
+  {
+    nombre: "Taza JavaScript",
+    precio: 9.5,
+    stock: 120,
+    categoria: "accesorios",
+    activo: true
+  },
+  {
+    nombre: "Sudadera Dev",
+    precio: 32.00,
+    stock: 10,
+    categoria: "ropa",
+    activo: true,
+    tallas: ["S","M","L"],           // array
+    detalles: {                      // documento embebido
+      color: "negro",
+      material: "algodon"
+    }
+  },
+  {
+    nombre: "Pegatina CSS",
+    precio: 1.50,
+    stock: 300,
+    categoria: "accesorios",
+    activo: false,
+    etiquetas: ["sticker","frontend","css"]
+  }
+])</code></pre>
+      </section>
+
+      <section class="card" aria-label="Insert con fecha y decimal">
+        <h4>2.3 Insert con fecha y campos opcionales</h4>
+        <pre><code>db.productos.insertOne({
+  nombre: "Gorra Node",
+  precio: 14.50,
+  stock: 25,
+  categoria: "accesorios",
+  activo: true,
+  creadoEn: new Date(),           // fecha actual
+  proveedor: { nombre: "DevShop", nif: "B12345678" } // embebido
+})</code></pre>
+      </section>
+    </div>
+
+    <div class="note" style="background:#f0f9ff;padding:1rem;border-radius:8px;border-left:5px solid #007bff;">
+      <strong>Checkpoint A:</strong> ¿Cuántos documentos hay ahora?
+      <pre><code>db.productos.countDocuments({})</code></pre>
+    </div>
+  </article>
+
+  <!-- Paso 3: Read -->
+  <article class="card">
+    <h3>Paso 3 — READ: busca, proyecta, ordena y pagina</h3>
+    <div class="grid cols-3">
+      <section class="card">
+        <h4>3.1 Listado básico</h4>
+        <pre><code>db.productos.find().limit(5)</code></pre>
+        <p><small>Usa <code>limit()</code> para no saturar la consola.</small></p>
+      </section>
+
+      <section class="card">
+        <h4>3.2 Proyección (solo campos necesarios)</h4>
+        <pre><code>db.productos.find({}, { nombre:1, precio:1, _id:0 })</code></pre>
+      </section>
+
+      <section class="card">
+        <h4>3.3 Filtros (operadores)</h4>
+        <pre><code>// Activos
+db.productos.find({ activo: true })
+
+// Precio ≤ 20
+db.productos.find({ precio: { $lte: 20 } })
+
+// Por texto (regex, sin índice)
+db.productos.find({ nombre: /node/i })</code></pre>
+      </section>
+    </div>
+
+    <div class="grid cols-3">
+      <section class="card">
+        <h4>3.4 Ordenar y paginar</h4>
+        <pre><code>db.productos.find({}, { nombre:1, precio:1, _id:0 })
+  .sort({ precio: 1 })   // asc
+  .skip(0)
+  .limit(3)</code></pre>
+      </section>
+
+      <section class="card">
+        <h4>3.5 Búsquedas por campos embebidos y arrays</h4>
+        <pre><code>// Campo embebido
+db.productos.find({ "detalles.material": "algodon" })
+
+// Contiene un valor en el array
+db.productos.find({ tallas: "M" })
+
+// Contiene todos estos valores
+db.productos.find({ etiquetas: { $all: ["sticker","css"] } })</code></pre>
+      </section>
+
+      <section class="card">
+        <h4>3.6 Conteos</h4>
+        <pre><code>db.productos.countDocuments({ categoria: "accesorios" })</code></pre>
+      </section>
+    </div>
+
+    <div class="note" style="background:#fefce8;padding:1rem;border-radius:8px;border-left:5px solid #fbbf24;">
+      <strong>Checkpoint B:</strong> ¿Cuántos <em>accesorios</em> activos con precio ≤ 20 tienes?
+      <pre><code>db.productos.countDocuments({ categoria:"accesorios", activo:true, precio:{ $lte:20 } })</code></pre>
+    </div>
+  </article>
+
+  <!-- Paso 4: Update -->
+  <article class="card">
+    <h3>Paso 4 — UPDATE: modifica documentos con operadores</h3>
+
+    <div class="grid cols-3">
+      <section class="card">
+        <h4>4.1 Actualiza uno con <code>$set</code></h4>
+        <pre><code>db.productos.updateOne(
+  { nombre: "Taza JavaScript" },
+  { $set: { precio: 10.00 } }
+)</code></pre>
+      </section>
+
+      <section class="card">
+        <h4>4.2 Incrementa stock de toda la ropa</h4>
+        <pre><code>db.productos.updateMany(
+  { categoria: "ropa" },
+  { $inc: { stock: 10 } }
+)</code></pre>
+      </section>
+
+      <section class="card">
+        <h4>4.3 Añade valores a arrays</h4>
+        <pre><code>// Añade una talla si no existe (evita duplicados)
+db.productos.updateOne(
+  { nombre: "Sudadera Dev" },
+  { $addToSet: { tallas: "XL" } }
+)
+
+// Inserta al final del array (puede duplicar)
+db.productos.updateOne(
+  { nombre: "Sudadera Dev" },
+  { $push: { tallas: "XS" } }
+)</code></pre>
+      </section>
+    </div>
+
+    <div class="grid cols-3">
+      <section class="card">
+        <h4>4.4 Upsert (crear si no existe)</h4>
+        <pre><code>db.productos.updateOne(
+  { nombre: "Mochila JS" },
+  { $set: { precio: 24.99, stock: 40, categoria:"accesorios", activo:true } },
+  { upsert: true }
+)</code></pre>
+      </section>
+
+      <section class="card">
+        <h4>4.5 Reemplazar documento (cuidado)</h4>
+        <pre><code>db.productos.replaceOne(
+  { nombre: "Pegatina CSS" },
+  { nombre: "Pegatina CSS", precio: 1.75, stock: 250, categoria:"accesorios", activo:true }
+)</code></pre>
+      </section>
+
+      <section class="card">
+        <h4>4.6 Ver cambios</h4>
+        <pre><code>db.productos.find({}, { nombre:1, precio:1, stock:1, _id:0 })</code></pre>
+      </section>
+    </div>
+
+    <div class="note" style="background:#f0fdf4;padding:1rem;border-radius:8px;border-left:5px solid #13aa52;">
+      <strong>Checkpoint C:</strong> ¿Existe ahora <em>Mochila JS</em>? ¿Qué <em>tallas</em> tiene <em>Sudadera Dev</em>?
+    </div>
+  </article>
+
+  <!-- Paso 5: Delete -->
+<article class="card">
+  <h3>Paso 5 — DELETE: elimina con filtros</h3>
+
+  <div class="grid cols-3">
+    <section class="card">
+      <h4>5.1 Borrar uno</h4>
+      <p>Elimina el primer documento que cumpla la condición dada.</p>
+      <pre><code>db.productos.deleteOne({ nombre: "Pegatina CSS" })</code></pre>
+    </section>
+
+    <section class="card">
+      <h4>5.2 Borrar varios (inactivos)</h4>
+      <p>Elimina todos los documentos que cumplan el filtro indicado.</p>
+      <pre><code>db.productos.deleteMany({ activo: false })</code></pre>
+    </section>
+
+    <section class="card">
+      <h4>5.3 Eliminar colección completa con <code>drop()</code></h4>
+      <p>
+        Si deseas borrar **toda la colección**, puedes usar el método <code>drop()</code>.  
+        Este comando elimina la colección completa (estructura y documentos), no solo los datos.
+      </p>
+      <pre><code>db.productos.drop()</code></pre>
+      <div class="callout warn">
+        ⚠️ <strong>Atención:</strong> este comando no se puede deshacer.  
+        Después de ejecutarlo, la colección <code>productos</code> dejará de existir en la base de datos.
+      </div>
+      <p>Para confirmar su eliminación, puedes comprobar:</p>
+      <pre><code>show collections</code></pre>
+      <p>Si la colección ha sido borrada correctamente, ya no aparecerá en la lista.</p>
+    </section>
+  </div>
+</article>
+
+      <!-- Paso 6: Pedidos con referencias -->
+<article class="card" id="paso-pedidos">
+  <h3>📦 Paso 6 — Crear la colección <code>pedidos</code> y relacionar datos</h3>
+  <p>
+    En este último paso aprenderás a conectar tus colecciones entre sí.  
+    Vamos a crear una colección <code>pedidos</code> donde cada documento
+    se vinculará con un <strong>cliente</strong> (de la colección <code>clientes</code>)
+    y uno o varios <strong>productos</strong> (de la colección <code>productos</code>).
+  </p>
+
+  <div class="callout info">
+    <strong>¿Por qué es importante?</strong>  
+    Así simulamos relaciones entre datos, igual que en una base relacional, 
+    pero usando identificadores únicos (<code>_id</code>) en lugar de claves foráneas.
+  </div>
+
+  <h4>6.1 Crear la colección <code>clientes</code> (si no existe)</h4>
+  <p>Primero asegúrate de tener algunos clientes de ejemplo:</p>
+  <pre><code>db.clientes.insertMany([
+  { nombre: "Lucía Pérez", email: "lucia@example.com", ciudad: "Madrid" },
+  { nombre: "Carlos López", email: "carlos@example.com", ciudad: "Sevilla" }
+])</code></pre>
+
+  <h4>6.2 Crear la colección <code>pedidos</code> con referencias</h4>
+  <p>
+    Vamos a relacionar un cliente con los productos que pidió.  
+    Para ello, recuperamos los <code>_id</code> del cliente y de los productos y los usamos como referencias.
+  </p>
+
+  <pre><code>// Buscar un cliente y dos productos
+const cliente = db.clientes.findOne({ email: "lucia@example.com" })
+const prod1 = db.productos.findOne({ nombre: "Camiseta React" })
+const prod2 = db.productos.findOne({ nombre: "Taza JavaScript" })
+
+// Crear el primer pedido
+db.pedidos.insertOne({
+  clienteId: cliente._id,
+  productos: [
+    { productoId: prod1._id, cantidad: 2 },
+    { productoId: prod2._id, cantidad: 1 }
+  ],
+  fecha: new Date(),
+  estado: "pendiente",
+  total: prod1.precio * 2 + prod2.precio
+})
+</code></pre>
+
+  <h4>6.3 Crea un segundo pedido (otro cliente)</h4>
+  <p>
+    Ahora repite el proceso para otro cliente y producto distinto.
+  </p>
+  <pre><code>// Segundo pedido (cliente Carlos López)
+const cliente2 = db.clientes.findOne({ email: "carlos@example.com" })
+const prod3 = db.productos.findOne({ nombre: "Sudadera Dev" })
+
+db.pedidos.insertOne({
+  clienteId: cliente2._id,
+  productos: [
+    { productoId: prod3._id, cantidad: 1 }
+  ],
+  fecha: new Date(),
+  estado: "enviado",
+  total: prod3.precio
+})
+</code></pre>
+
+  <h4>6.4 Consultar los pedidos creados</h4>
+  <p>
+    Comprueba que se han insertado correctamente.  
+    Usa <code>pretty()</code> para ver el formato JSON completo:
+  </p>
+  <pre><code>db.pedidos.find().pretty()</code></pre>
+
+  <div class="callout success">
+    <strong>Resumen del aprendizaje:</strong>
+    <ul>
+      <li>Has creado una nueva colección (<code>pedidos</code>) con referencias a <code>clientes</code> y <code>productos</code>.</li>
+      <li>Entiendes cómo funcionan las relaciones en MongoDB mediante el uso de <code>ObjectId</code>.</li>
+      <li>Has practicado la lógica de un pedido real con fecha, estado y total calculado.</li>
+    </ul>
+  </div>
+
+  </article>
+
+
+      <section class="card">
+        <h4>5.3 Comprobar</h4>
+        <pre><code>db.productos.countDocuments({})</code></pre>
+      </section>
+    </div>
+
+    <p class="note" style="color:#b91c1c;font-weight:600">⚠️ El borrado no se puede deshacer. Revisa siempre el filtro.</p>
+  </article>
+
+  <!-- Tabla de tareas -->
+<article class="card">
+  <h3 style="font-size:1.3rem;margin-bottom:.5rem">📋 Tareas que debes completar</h3>
+  <p style="color:var(--color-muted,#4b5563);margin-bottom:1rem">
+    Completa los siguientes pasos en orden. Cada tarea está pensada para reforzar una parte del CRUD en la consola de <code>mongosh</code>. 
+    Lee la descripción, ejecuta el comando y guarda evidencia (captura o salida).
+  </p>
+
+  <div style="overflow:auto;border-radius:1rem;border:1px solid var(--color-border,#d1d5db);box-shadow:0 1px 8px rgba(0,0,0,.05)">
+    <table role="table" aria-label="Tareas CRUD en mongosh"
+           style="width:100%;border-collapse:separate;border-spacing:0;font-size:0.95rem;background:#fff">
+      <thead style="background:linear-gradient(90deg,#13aa52 0%,#16c264 100%);color:#fff;">
+        <tr>
+          <th scope="col" style="padding:.9rem .8rem;text-align:center;width:60px;">#</th>
+          <th scope="col" style="padding:.9rem 1rem;text-align:left;">Tarea</th>
+          <th scope="col" style="padding:.9rem 1rem;text-align:left;">Comando de referencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#f9fafb;">
+          <td style="text-align:center;font-weight:700;color:#065f46;">1</td>
+          <td>Conéctate a Atlas y selecciona tu base <code>tienda</code>.</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            mongosh "mongodb+srv://.../tienda" --username ... <br><span style="opacity:.7">use tienda</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:#065f46;">2</td>
+          <td>Inserta al menos <strong>5 productos</strong> (usa arrays y documentos embebidos).</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            db.productos.insertOne({...})<br>db.productos.insertMany([...])
+          </td>
+        </tr>
+        <tr style="background:#f9fafb;">
+          <td style="text-align:center;font-weight:700;color:#065f46;">3</td>
+          <td>Lista solo <code>nombre</code> y <code>precio</code> de todos los productos.</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            db.productos.find({}, { nombre:1, precio:1, _id:0 })
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:#065f46;">4</td>
+          <td>Filtra los <strong>activos</strong> con precio ≤ 20.</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            db.productos.find({ activo:true, precio:{ $lte:20 } })
+          </td>
+        </tr>
+        <tr style="background:#f9fafb;">
+          <td style="text-align:center;font-weight:700;color:#065f46;">5</td>
+          <td>Ordena por precio ascendente y limita el resultado a 3 documentos.</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            db.productos.find().sort({ precio:1 }).limit(3)
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:#065f46;">6</td>
+          <td>Actualiza el precio de un producto con <code>$set</code>.</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            db.productos.updateOne({ nombre:"..." }, { $set:{ precio:10.0 } })
+          </td>
+        </tr>
+        <tr style="background:#f9fafb;">
+          <td style="text-align:center;font-weight:700;color:#065f46;">7</td>
+          <td>Incrementa el stock de toda la categoría <code>ropa</code> en +10 unidades.</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            db.productos.updateMany({ categoria:"ropa" }, { $inc:{ stock:10 } })
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:#065f46;">8</td>
+          <td>Añade una talla nueva a <em>Sudadera Dev</em> sin duplicar.</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            db.productos.updateOne({ nombre:"Sudadera Dev" }, { $addToSet:{ tallas:"XL" } })
+          </td>
+        </tr>
+        <tr style="background:#f9fafb;">
+          <td style="text-align:center;font-weight:700;color:#065f46;">9</td>
+          <td>Crea (upsert) <em>Mochila JS</em> si no existe todavía.</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            db.productos.updateOne({ nombre:"Mochila JS" }, { $set:{ ... } }, { upsert:true })
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:#065f46;">10</td>
+          <td>Borra todos los productos marcados como inactivos.</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            db.productos.deleteMany({ activo:false })
+          </td>
+        </tr>
+                <!-- === NUEVAS TAREAS: PEDIDOS === -->
+        <tr style="background:#f9fafb;">
+          <td style="text-align:center;font-weight:700;color:#065f46;">11</td>
+          <td>Crea al menos <strong>2 clientes</strong> (si no existen) para poder referenciarlos desde pedidos.</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            db.clientes.insertMany([ { nombre:"Lucía", email:"lucia@example.com" }, { nombre:"Carlos", email:"carlos@example.com" } ])
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:#065f46;">12</td>
+          <td>Inserta un <strong>pedido</strong> que <strong>referencie</strong> un cliente y productos existentes (usa sus <code>_id</code>).</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            const c = db.clientes.findOne({ nombre:"Lucía" });<br>
+            const p1 = db.productos.findOne({ nombre:"Camiseta React" });<br>
+            const p2 = db.productos.findOne({ nombre:"Taza JavaScript" });<br>
+            db.pedidos.insertOne({ clienteId:c._id, productos:[{ productoId:p1._id, cantidad:2 }, { productoId:p2._id, cantidad:1 }], fecha:new Date(), estado:"pendiente", total:p1.precio*2 + p2.precio })
+          </td>
+        </tr>
+        <tr style="background:#f9fafb;">
+          <td style="text-align:center;font-weight:700;color:#065f46;">13</td>
+          <td>Lista todos los pedidos con formato legible.</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            db.pedidos.find().pretty()
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:#065f46;">14</td>
+          <td>Actualiza el <strong>estado</strong> de un pedido a <code>"enviado"</code>.</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            db.pedidos.updateOne({ estado:"pendiente" }, { $set:{ estado:"enviado" } })
+          </td>
+        </tr>
+        <tr style="background:#f9fafb;">
+          <td style="text-align:center;font-weight:700;color:#065f46;">15</td>
+          <td>Añade un producto extra a un pedido con <code>$push</code> (por ejemplo, otra “Taza JavaScript”).</td>
+          <td style="font-family:ui-monospace,Consolas,monospace;background:#0b1020;color:#e6edf3;padding:.6rem .8rem;border-radius:.5rem;">
+            const taza = db.productos.findOne({ nombre:"Taza JavaScript" });<br>
+            db.pedidos.updateOne({ estado:"enviado" }, { $push:{ productos:{ productoId:taza._id, cantidad:1 } }, $inc:{ total:taza.precio } })
+          </td>
+        </tr>
+       
+
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:1rem;color:var(--color-muted,#4b5563);font-size:.9rem;">
+    💡 <strong>Consejo:</strong> revisa cada bloque tras ejecutarlo. Usa <code>db.productos.find()</code> o <code>countDocuments()</code> 
+    después de cada grupo de tareas para confirmar los cambios.  
+    
+  </p>
+</article>
+
+  
+
+  <!-- Solución orientativa (plegable) -->
+  <details class="card">
+    <summary><strong>👀 Solución orientativa (ver solo para corregir)</strong></summary>
+    <pre><code>// Conexión (ejemplo)
+mongosh "mongodb+srv://cluster0.xxxxx.mongodb.net/tienda" --username alumno
+use tienda
+
+// Insert básicos + variados
+db.productos.insertOne({ nombre:"Camiseta React", precio:19.99, stock:50, categoria:"ropa", activo:true })
+db.productos.insertMany([
+  { nombre:"Taza JavaScript", precio:9.5, stock:120, categoria:"accesorios", activo:true },
+  { nombre:"Sudadera Dev", precio:32.00, stock:10, categoria:"ropa", activo:true, tallas:["S","M","L"], detalles:{ color:"negro", material:"algodon" } },
+  { nombre:"Pegatina CSS", precio:1.50, stock:300, categoria:"accesorios", activo:false, etiquetas:["sticker","frontend","css"] }
+])
+db.productos.insertOne({ nombre:"Gorra Node", precio:14.50, stock:25, categoria:"accesorios", activo:true, creadoEn:new Date(), proveedor:{ nombre:"DevShop", nif:"B12345678" } })
+
+// READ
+db.productos.find({}, { nombre:1, precio:1, _id:0 })
+db.productos.find({ activo:true, precio:{ $lte:20 } })
+db.productos.find({ "detalles.material":"algodon" })
+db.productos.find({ tallas:"M" })
+db.productos.find().sort({ precio:1 }).limit(3)
+
+// UPDATE
+db.productos.updateOne({ nombre:"Taza JavaScript" }, { $set:{ precio:10.00 } })
+db.productos.updateMany({ categoria:"ropa" }, { $inc:{ stock:10 } })
+db.productos.updateOne({ nombre:"Sudadera Dev" }, { $addToSet:{ tallas:"XL" } })
+db.productos.updateOne({ nombre:"Mochila JS" }, { $set:{ precio:24.99, stock:40, categoria:"accesorios", activo:true } }, { upsert:true })
+
+// DELETE
+db.productos.deleteOne({ nombre:"Pegatina CSS" })
+db.productos.deleteMany({ activo:false })
+
+// === CLIENTES Y PEDIDOS (solución orientativa) ===
+
+// Crear clientes
+db.clientes.insertMany([
+  { nombre:"Lucía Pérez", email:"lucia@example.com", ciudad:"Madrid", activo:true },
+  { nombre:"Carlos López", email:"carlos@example.com", ciudad:"Sevilla", activo:true }
+])
+
+// Crear pedido referenciado (Lucía + Camiseta React + Taza JavaScript)
+const c = db.clientes.findOne({ nombre:"Lucía Pérez" })
+const pr1 = db.productos.findOne({ nombre:"Camiseta React" })
+const pr2 = db.productos.findOne({ nombre:"Taza JavaScript" })
+
+db.pedidos.insertOne({
+  clienteId: c._id,
+  productos: [
+    { productoId: pr1._id, cantidad: 2 },
+    { productoId: pr2._id, cantidad: 1 }
+  ],
+  fecha: new Date(),
+  estado: "pendiente",
+  total: pr1.precio*2 + pr2.precio
+})
+
+// Listar pedidos (solo clienteId y total)
+db.pedidos.find({}, { clienteId:1, total:1, _id:0 })
+
+// Contar pendientes
+db.pedidos.countDocuments({ estado:"pendiente" })
+
+// Marcar uno como enviado
+const ped = db.pedidos.findOne({ estado:"pendiente" })
+db.pedidos.updateOne({ _id: ped._id }, { $set:{ estado:"enviado" } })
+
+// Añadir un producto al array (sin duplicar)
+const extra = db.productos.findOne({ nombre:"Gorra Node" })
+db.pedidos.updateOne(
+  { _id: ped._id },
+  { $addToSet: { productos: { productoId: extra._id, cantidad: 1 } } }
+)
+
+// === VERIFICACIÓN FINAL  ===
+
+// Ver cuántos productos hay
+db.productos.countDocuments({})
+
+// Listar nombre, precio y stock
+db.productos.find({}, { nombre:1, precio:1, stock:1, _id:0 })
+
+// Ver cuántos clientes existen (si la colección está creada)
+db.clientes.countDocuments({})
+
+// Ver cuántos pedidos hay
+db.pedidos.countDocuments({})
+
+// Mostrar los pedidos (clienteId, total y estado)
+db.pedidos.find({}, { clienteId:1, total:1, estado:1, _id:0 })
+
+
+
+
+</code></pre>
+  </details>
+<section class="card" id="doc-oficial">
+  <h2>📚 Consulta la documentación oficial de MongoDB Shell</h2>
+  <p>
+    Dominar los comandos del <strong>Shell</strong> no consiste en memorizarlos, sino en 
+    <strong>entender su lógica y saber dónde buscar ayuda</strong>.  
+    La documentación oficial de MongoDB es tu mejor aliada para seguir creciendo paso a paso.
+  </p>
+
+  <div class="callout success" style="background:#f0fdf4;padding:1rem;border-radius:8px;border-left:5px solid #13aa52;">
+    <p><strong>💪 Aprende a aprender:</strong></p>
+    <ul>
+      <li>Explora cómo se ejecutan los comandos más usados (<code>use</code>, <code>show dbs</code>, <code>db.find()</code>...).</li>
+      <li>Consulta ejemplos reales y buenas prácticas directamente de los ingenieros de MongoDB.</li>
+      <li>Descubre nuevas funciones a medida que avances hacia <strong>Mongoose</strong> y las APIs REST.</li>
+    </ul>
+  </div>
+
+  <p style="margin-top:1rem;">
+    🔗 <a href="https://www.mongodb.com/docs/mongodb-shell/run-commands/" target="_blank" rel="noopener" 
+          style="font-weight:600;color:#13aa52;text-decoration:underline;">
+      Ir a la documentación oficial de MongoDB Shell →
+    </a>
+  </p>
+
+  <p style="font-size:0.95rem;color:var(--color-muted,#4b5563);margin-top:.5rem;">
+    💬 <em>Recuerda:</em> un buen desarrollador no lo sabe todo de memoria, pero sí sabe <strong>dónde encontrar la respuesta</strong>.
+  </p>
+</section>
+
+
+</section>
+<section class="card">
+  <h2>🎓 ¿Por qué es importante practicar los comandos en la consola antes de usar Mongoose?</h2>
+  <p>
+    Muchos alumnos se preguntan si vale la pena practicar los comandos del Shell (<code>mongosh</code>) 
+    cuando después trabajarán con <strong>Mongoose</strong>.  
+    La respuesta es <strong>sí, absolutamente</strong>. Esta práctica tiene un valor formativo clave, 
+    porque permite comprender cómo piensa realmente MongoDB.
+  </p>
+
+  <h3>🧩 1️⃣ Comprender qué hace Mongoose “por debajo”</h3>
+  <p>
+    Mongoose no inventa un nuevo lenguaje: traduce tus métodos de alto nivel 
+    (<code>create()</code>, <code>find()</code>, <code>updateOne()</code>…) a comandos nativos de MongoDB, 
+    los mismos que ejecutas en la consola.  
+    <strong>Practicar el Shell es como aprender a pensar en MongoDB antes de hablar en Mongoose.</strong>
+  </p>
+
+  <div class="grid cols-2" style="margin-top:1rem">
+    <div>
+      <h4>En consola</h4>
+      <pre><code>db.productos.find({ precio: { $lte: 20 } })</code></pre>
+    </div>
+    <div>
+      <h4>En Mongoose</h4>
+      <pre><code>Producto.find({ precio: { $lte: 20 } })</code></pre>
+    </div>
+  </div>
+
+  <h3>🧠 2️⃣ Desarrollar la mentalidad “orientada a documentos”</h3>
+  <p>
+    En bases relacionales (SQL) se piensa en tablas, claves y relaciones.  
+    En MongoDB, se piensa en <strong>documentos, colecciones, arrays y operadores</strong>.  
+    Trabajar con la consola ayuda a visualizar directamente cómo se estructuran y almacenan los datos:
+  </p>
+  <ul>
+    <li>Ver la forma real del documento JSON/BSON.</li>
+    <li>Comprender cómo funcionan los operadores (<code>$set</code>, <code>$inc</code>, <code>$push</code>…).</li>
+    <li>Aprender a filtrar, ordenar y proyectar sin depender de frameworks.</li>
+  </ul>
+
+  <h3>💡 3️⃣ Favorecer la autonomía técnica</h3>
+  <p>
+    Un alumno que domina el Shell puede moverse por cualquier entorno MongoDB sin depender del código.
+    Si Mongoose falla, o se trabaja con otra herramienta (Prisma, Typegoose, etc.), 
+    <strong>entenderá exactamente qué ocurre en la base de datos</strong>.
+  </p>
+
+  <div class="note" style="background:#f0fdf4;padding:1rem;border-radius:8px;border-left:5px solid #13aa52;">
+    <strong>Conclusión:</strong> practicar en la consola no es tiempo perdido.  
+    Es construir las bases conceptuales para trabajar después con Mongoose, Express o cualquier otro ORM.  
+    El alumno pasa de ejecutar comandos → a modelar datos → a crear APIs completas.
+  </div>
+
+  <h3>📚 4️⃣ Secuencia de aprendizaje recomendada</h3>
+  <div class="table-wrapper">
+    <table style="width:100%;border-collapse:collapse;border:1px solid var(--color-border,#d1d5db);">
+      <thead style="background:linear-gradient(90deg,#13aa52 0%,#16c264 100%);color:#fff;">
+        <tr>
+          <th style="padding:.8rem;text-align:left;">Etapa</th>
+          <th style="padding:.8rem;text-align:left;">Herramienta</th>
+          <th style="padding:.8rem;text-align:left;">Objetivo pedagógico</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#fff;">
+          <td style="padding:.8rem;">1️⃣ Consola MongoDB (mongosh)</td>
+          <td style="padding:.8rem;">Shell local / Atlas</td>
+          <td style="padding:.8rem;">Comprender cómo funciona MongoDB de forma nativa.  
+          Practicar CRUD, operadores y estructura JSON.</td>
+        </tr>
+        <tr style="background:#f9fafb;">
+          <td style="padding:.8rem;">2️⃣ Mongoose</td>
+          <td style="padding:.8rem;">ORM para Node.js</td>
+          <td style="padding:.8rem;">Aprender a aplicar lo mismo desde el código: esquemas, validaciones, modelos y lógica de negocio.</td>
+        </tr>
+        <tr style="background:#fff;">
+          <td style="padding:.8rem;">3️⃣ Express + API REST</td>
+          <td style="padding:.8rem;">Servidor Node.js</td>
+          <td style="padding:.8rem;">Integrar las operaciones en endpoints y conectar la base con el frontend.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:1rem;color:var(--color-muted,#4b5563);font-size:.95rem;">
+    💬 <em>En resumen:</em> el Shell te enseña a “pensar como MongoDB”;  
+    Mongoose te enseña a “programar con MongoDB”.  
+    Juntas, ambas etapas preparan al alumno para construir aplicaciones reales y comprender todo el flujo de datos.
+  </p>
+</section>
+
+
+    <hr>
+
+  
+    <!-- Buenas prácticas -->
+    <section class="card">
+      <h2>🛡️ Buenas prácticas al pasar a Mongoose</h2>
+      <ul>
+        <li>Usa <strong>variables de entorno</strong> para la URI (nada de contraseñas en código).</li>
+        <li>Define <strong>validaciones</strong> (required, min, enum) para capturar errores de negocio temprano.</li>
+        <li>Activa <strong>timestamps</strong> y <strong>select</strong>/<strong>lean</strong> cuando toque (rendimiento).</li>
+        <li>Centraliza la <strong>conexión</strong> (módulo <code>db.js</code>) y maneja <strong>errores</strong> con try/catch y eventos.</li>
+      </ul>
+    </section>
+
+    <div class="cta" style="margin:2rem 0 0">
+      <a class="btn btn-outline" href="05-mongo-shell.html">⟵ Volver al Tema 5</a>
+      <a class="btn btn-primary" href="07-puentemongoose.html">Ir al Tema 7 ⟶</a>
+    </div>
+  </main>
+
+    <footer role="contentinfo">
+    <div class="wrap">
+      <img src="pie.png" alt="Decoración del pie del manual" class="footer-img" loading="lazy">
+      Manual “Mongoo” · @Inma Contreras · © 2025
+    </div>
+  </footer>
+</body>
+</html>
+
+
+   

@@ -1,0 +1,420 @@
+
+
+    <section class="card">
+      <h2>🧪 3️⃣ El CRUD: Creación de Datos (INSERT)</h2>
+      <p>La operación de Creación (CREATE) o Inserción (INSERT) es el primer paso. Aquí es donde debes prestar más atención a la sintaxis del Shell.</p>
+      
+      <h3>La Sintaxis de Oro del MongoDB Shell</h3>
+      <p>Todos los comandos que verás aquí y en el resto del CRUD siguen este patrón:</p>
+      <pre><code>db.nombreColeccion.metodo(argumentos)</code></pre>
+      <ul>
+        <li>`db`: Es una palabra reservada que representa tu Base de Datos actual. ¡Siempre empieza por `db`!</li>
+        <li>`.nombreColeccion`: El nombre de la carpeta donde quieres guardar el dato (ej. `.productos`).</li>
+        <li>`.metodo()`: La acción que quieres ejecutar (ej. `.insertOne()`).</li>
+      </ul>
+
+      <h3>Importante: ¿Cuándo se Crea la Colección?</h3>
+      <div class="note" style="background:#fefce8;padding:1rem;border-radius:8px;border-left:5px solid #fbbf24;">
+        <strong>¡Atención!</strong> En MongoDB, NO existe un comando `CREATE COLLECTION`. La colección se crea de forma implícita y automática en el momento en que se inserta el primer documento.
+      </div>
+
+      <h3>Método 1: Inserción de un Único Documento (`insertOne`)</h3>
+      <p>Utiliza este método para añadir un solo documento. El argumento es el objeto JSON que quieres guardar.</p>
+      
+      <pre><code>// Comando: Insertar UN solo documento en la colección 'productos'
+db.productos.insertOne({
+  nombre: "Auriculares Bluetooth",
+  precio: 35.0,
+  stock: 100,
+  categoria: "tecnologia",
+  activo: true
+});</code></pre>
+      
+      <h3>Método 2: Inserción de Varios Documentos (`insertMany`)</h3>
+      <p>Es más eficiente si quieres añadir varios documentos a la vez. El argumento debe ser una lista (array `[]`) que contiene los objetos JSON a insertar.</p>
+      
+      <pre><code>// Comando: Insertar VARIOS documentos en la colección 'productos'
+db.productos.insertMany([
+  { nombre: "Camiseta React", precio: 19.99, stock: 50, categoria: "ropa" },
+  { nombre: "Taza JavaScript", precio: 9.5, stock: 120, categoria: "accesorios" }
+]);</code></pre>
+
+      <hr>
+
+     <h3 style="margin:1rem 0 .25rem 0;font-size:1.15rem">✅ Las tres formas de insertar datos (tu rutina profesional)</h3>
+<p style="margin:.25rem 0 1rem 0;color:var(--color-muted, #4b5563)">
+  Aunque practicamos en la consola, en proyectos reales la inserción suele venir desde el código. Compara las tres vías:
+</p>
+
+<div style="overflow:auto;border:1px solid var(--color-border,#d1d5db);border-radius:12px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.06)">
+  <table role="table" aria-label="Comparativa de vías para insertar datos" 
+         style="width:100%;border-collapse:separate;border-spacing:0;min-width:680px;font-size:0.98rem">
+    <thead>
+      <tr style="background:linear-gradient(0deg,rgba(19,170,82,.06),rgba(19,170,82,.06));color:#065f46">
+        <th scope="col" style="text-align:left;padding:14px 16px;border-bottom:1px solid var(--color-border,#d1d5db);font-weight:700">Vía</th>
+        <th scope="col" style="text-align:left;padding:14px 16px;border-bottom:1px solid var(--color-border,#d1d5db);font-weight:700">Cuándo usarla</th>
+        <th scope="col" style="text-align:left;padding:14px 16px;border-bottom:1px solid var(--color-border,#d1d5db);font-weight:700">Ejemplo práctico</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fff">
+        <td style="padding:14px 16px;vertical-align:top">
+          <span style="display:inline-flex;align-items:center;gap:.5rem;font-weight:700">
+            <span style="display:inline-grid;place-items:center;width:28px;height:28px;border-radius:999px;background:#e3fcef;border:1px solid #baf7ce;color:#065f46;font-size:.9rem">1</span>
+            MongoDB Shell <span aria-hidden="true">🧠</span>
+          </span>
+          <div style="font-size:.9rem;color:var(--color-muted,#4b5563)">(<code style="background:#f8fafc;padding:.1rem .35rem;border:1px solid #e5e7eb;border-radius:6px">mongosh</code>)</div>
+        </td>
+        <td style="padding:14px 16px;vertical-align:top">
+          Pruebas rápidas, verificación de datos, tareas administrativas o carga puntual desde la consola.
+        </td>
+        <td style="padding:14px 16px;vertical-align:top">
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0b1020;color:#e6edf3;border-radius:8px;padding:10px 12px;line-height:1.35;border:1px solid #111827">
+            db.productos.insertOne({ nombre: "Camiseta Mongo", precio: 19.99 })
+          </div>
+        </td>
+      </tr>
+
+      <tr style="background:#fafafa">
+        <td style="padding:14px 16px;vertical-align:top">
+          <span style="display:inline-flex;align-items:center;gap:.5rem;font-weight:700">
+            <span style="display:inline-grid;place-items:center;width:28px;height:28px;border-radius:999px;background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;font-size:.9rem">2</span>
+            Código (Mongoose / ORM) <span aria-hidden="true">💻</span>
+          </span>
+          <div style="font-size:.9rem;color:var(--color-muted,#4b5563)">Ruta profesional (APIs, validación, reglas)</div>
+        </td>
+        <td style="padding:14px 16px;vertical-align:top">
+          90% de los casos reales: desde tu backend/API. Aplica esquemas, validaciones, hooks y lógica de negocio.
+        </td>
+        <td style="padding:14px 16px;vertical-align:top">
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0b1020;color:#e6edf3;border-radius:8px;padding:10px 12px;line-height:1.35;border:1px solid #111827">
+            await Producto.create({ nombre: "Taza JS", precio: 9.99 })
+          </div>
+        </td>
+      </tr>
+
+      <tr style="background:#fff">
+        <td style="padding:14px 16px;vertical-align:top">
+          <span style="display:inline-flex;align-items:center;gap:.5rem;font-weight:700">
+            <span style="display:inline-grid;place-items:center;width:28px;height:28px;border-radius:999px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:.9rem">3</span>
+            Importación de archivos <span aria-hidden="true">📤</span>
+          </span>
+          <div style="font-size:.9rem;color:var(--color-muted,#4b5563)">Inicializaciones masivas (.json, .csv)</div>
+        </td>
+        <td style="padding:14px 16px;vertical-align:top">
+          Semillas de datos, migraciones o cargas grandes al arrancar un proyecto o entorno.
+        </td>
+        <td style="padding:14px 16px;vertical-align:top">
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0b1020;color:#e6edf3;border-radius:8px;padding:10px 12px;line-height:1.35;border:1px solid #111827">
+            mongoimport --uri "mongodb+srv://CLUSTER/tienda" --collection productos --file productos.json --jsonArray
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p style="margin:.75rem 0 0 0;font-size:.92rem;color:var(--color-muted,#4b5563)">
+  <strong>Regla didáctica:</strong> usa <em>Shell</em> para aprender y auditar; <em>Mongoose</em> para construir; <em>importación</em> para poblar rápido.
+</p>
+
+      
+      <div class="note" style="background:#f0f9ff;padding:1rem;border-radius:8px;border-left:5px solid #007bff;">
+        <strong>Tu Foco: La Inserción desde el Código.</strong><br>
+        En el próximo tema aprenderás a usar Mongoose (para Node.js). Con Mongoose, tu código recibe los datos del usuario y usa el método `.save()` o `.create()` para llevarlos al Cluster. Esto es lo que se hace en la industria.
+      </div>
+    </section>
+
+    <hr>
+
+    <section class="card">
+      <h2>🔍 4️⃣ El RUD: Leer (Buscar) Documentos</h2>
+      <p>La lectura de datos se hace con el método `.find()`. Es el equivalente al `SELECT` de SQL.</p>
+      
+      <h3>Sintaxis: `db.coleccion.find(filtro)`</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Buscar TODO (El SELECT *)</h4>
+          <pre><code>db.productos.find(); 
+// Si dejas los paréntesis vacíos, trae todos los documentos.</code></pre>
+        </div>
+        <div>
+          <h4>Buscar con Filtro (El WHERE)</h4>
+          <pre><code>db.productos.find({ activo: true }); 
+// Busca todos los productos donde el campo 'activo' sea true.</code></pre>
+        </div>
+      </div>
+      
+      <h4>Extras: Ordenar y Contar</h4>
+      <pre><code>// Ordenar por precio ascendente (1) o descendente (-1)
+db.productos.find().sort({ precio: 1 }); 
+
+// Usando operadores: Buscar los que tengan un precio MENOR O IGUAL ($lte) a 20
+db.productos.find({ precio: { $lte: 20 } });</code></pre>
+    </section>
+
+    <hr>
+
+    <section class="card">
+      <h2>✏️ 5️⃣ El CUD: Actualizar Documentos</h2>
+      <p>Para modificar datos, usamos los métodos `updateOne()` y `updateMany()`. Es OBLIGATORIO usar un Operador de Actualización para indicarle a MongoDB cómo cambiar el dato. El más común es `$set`.</p>
+      
+      <h3>Sintaxis: `db.coleccion.updateOne(filtro, { operador: { ... } })`</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Actualizar UNO (`updateOne`)</h4>
+          <p>Solo cambia el primer documento que cumpla el filtro.</p>
+          <pre><code>db.productos.updateOne(
+  { nombre: "Taza JavaScript" }, // Filtro: ¿Qué documento?
+  { $set: { precio: 10.0 } }      // Operador: Cambia el precio a 10.0
+);</code></pre>
+        </div>
+        <div>
+          <h4>Actualizar VARIOS (`updateMany`)</h4>
+          <p>Cambia todos los documentos que cumplan el filtro.</p>
+          <pre><code>db.productos.updateMany(
+  { categoria: "ropa" }, 
+  { $inc: { stock: 10 } } // Operador: Suma 10 al stock de TODA la ropa
+);</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <hr>
+
+    
+      <section class="card">
+      <h2>🧪 3️⃣ El CRUD: Creación de Datos (INSERT)</h2>
+      <p>La operación de Creación (CREATE) o Inserción (INSERT) es el primer paso. Aquí es donde debes prestar más atención a la sintaxis del Shell.</p>
+      
+      <h3>La Sintaxis de Oro del MongoDB Shell</h3>
+      <p>Todos los comandos que verás aquí y en el resto del CRUD siguen este patrón:</p>
+      <pre><code>db.nombreColeccion.metodo(argumentos)</code></pre>
+      <ul>
+        <li>`db`: Es una palabra reservada que representa tu Base de Datos actual. ¡Siempre empieza por `db`!</li>
+        <li>`.nombreColeccion`: El nombre de la carpeta donde quieres guardar el dato (ej. `.productos`).</li>
+        <li>`.metodo()`: La acción que quieres ejecutar (ej. `.insertOne()`).</li>
+      </ul>
+
+      <h3>Importante: ¿Cuándo se Crea la Colección?</h3>
+      <div class="note" style="background:#fefce8;padding:1rem;border-radius:8px;border-left:5px solid #fbbf24;">
+        <strong>¡Atención!</strong> En MongoDB, NO existe un comando `CREATE COLLECTION`. La colección se crea de forma implícita y automática en el momento en que se inserta el primer documento.
+      </div>
+
+      <h3>Método 1: Inserción de un Único Documento (`insertOne`)</h3>
+      <p>Utiliza este método para añadir un solo documento. El argumento es el objeto JSON que quieres guardar.</p>
+      
+      <pre><code>// Comando: Insertar UN solo documento en la colección 'productos'
+db.productos.insertOne({
+  nombre: "Auriculares Bluetooth",
+  precio: 35.0,
+  stock: 100,
+  categoria: "tecnologia",
+  activo: true
+});</code></pre>
+      
+      <h3>Método 2: Inserción de Varios Documentos (`insertMany`)</h3>
+      <p>Es más eficiente si quieres añadir varios documentos a la vez. El argumento debe ser una lista (array `[]`) que contiene los objetos JSON a insertar.</p>
+      
+      <pre><code>// Comando: Insertar VARIOS documentos en la colección 'productos'
+db.productos.insertMany([
+  { nombre: "Camiseta React", precio: 19.99, stock: 50, categoria: "ropa" },
+  { nombre: "Taza JavaScript", precio: 9.5, stock: 120, categoria: "accesorios" }
+]);</code></pre>
+
+      <hr>
+
+     <h3 style="margin:1rem 0 .25rem 0;font-size:1.15rem">✅ Las tres formas de insertar datos (tu rutina profesional)</h3>
+<p style="margin:.25rem 0 1rem 0;color:var(--color-muted, #4b5563)">
+  Aunque practicamos en la consola, en proyectos reales la inserción suele venir desde el código. Compara las tres vías:
+</p>
+
+<div style="overflow:auto;border:1px solid var(--color-border,#d1d5db);border-radius:12px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.06)">
+  <table role="table" aria-label="Comparativa de vías para insertar datos" 
+         style="width:100%;border-collapse:separate;border-spacing:0;min-width:680px;font-size:0.98rem">
+    <thead>
+      <tr style="background:linear-gradient(0deg,rgba(19,170,82,.06),rgba(19,170,82,.06));color:#065f46">
+        <th scope="col" style="text-align:left;padding:14px 16px;border-bottom:1px solid var(--color-border,#d1d5db);font-weight:700">Vía</th>
+        <th scope="col" style="text-align:left;padding:14px 16px;border-bottom:1px solid var(--color-border,#d1d5db);font-weight:700">Cuándo usarla</th>
+        <th scope="col" style="text-align:left;padding:14px 16px;border-bottom:1px solid var(--color-border,#d1d5db);font-weight:700">Ejemplo práctico</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fff">
+        <td style="padding:14px 16px;vertical-align:top">
+          <span style="display:inline-flex;align-items:center;gap:.5rem;font-weight:700">
+            <span style="display:inline-grid;place-items:center;width:28px;height:28px;border-radius:999px;background:#e3fcef;border:1px solid #baf7ce;color:#065f46;font-size:.9rem">1</span>
+            MongoDB Shell <span aria-hidden="true">🧠</span>
+          </span>
+          <div style="font-size:.9rem;color:var(--color-muted,#4b5563)">(<code style="background:#f8fafc;padding:.1rem .35rem;border:1px solid #e5e7eb;border-radius:6px">mongosh</code>)</div>
+        </td>
+        <td style="padding:14px 16px;vertical-align:top">
+          Pruebas rápidas, verificación de datos, tareas administrativas o carga puntual desde la consola.
+        </td>
+        <td style="padding:14px 16px;vertical-align:top">
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0b1020;color:#e6edf3;border-radius:8px;padding:10px 12px;line-height:1.35;border:1px solid #111827">
+            db.productos.insertOne({ nombre: "Camiseta Mongo", precio: 19.99 })
+          </div>
+        </td>
+      </tr>
+
+      <tr style="background:#fafafa">
+        <td style="padding:14px 16px;vertical-align:top">
+          <span style="display:inline-flex;align-items:center;gap:.5rem;font-weight:700">
+            <span style="display:inline-grid;place-items:center;width:28px;height:28px;border-radius:999px;background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;font-size:.9rem">2</span>
+            Código (Mongoose / ORM) <span aria-hidden="true">💻</span>
+          </span>
+          <div style="font-size:.9rem;color:var(--color-muted,#4b5563)">Ruta profesional (APIs, validación, reglas)</div>
+        </td>
+        <td style="padding:14px 16px;vertical-align:top">
+          90% de los casos reales: desde tu backend/API. Aplica esquemas, validaciones, hooks y lógica de negocio.
+        </td>
+        <td style="padding:14px 16px;vertical-align:top">
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0b1020;color:#e6edf3;border-radius:8px;padding:10px 12px;line-height:1.35;border:1px solid #111827">
+            await Producto.create({ nombre: "Taza JS", precio: 9.99 })
+          </div>
+        </td>
+      </tr>
+
+      <tr style="background:#fff">
+        <td style="padding:14px 16px;vertical-align:top">
+          <span style="display:inline-flex;align-items:center;gap:.5rem;font-weight:700">
+            <span style="display:inline-grid;place-items:center;width:28px;height:28px;border-radius:999px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:.9rem">3</span>
+            Importación de archivos <span aria-hidden="true">📤</span>
+          </span>
+          <div style="font-size:.9rem;color:var(--color-muted,#4b5563)">Inicializaciones masivas (.json, .csv)</div>
+        </td>
+        <td style="padding:14px 16px;vertical-align:top">
+          Semillas de datos, migraciones o cargas grandes al arrancar un proyecto o entorno.
+        </td>
+        <td style="padding:14px 16px;vertical-align:top">
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0b1020;color:#e6edf3;border-radius:8px;padding:10px 12px;line-height:1.35;border:1px solid #111827">
+            mongoimport --uri "mongodb+srv://CLUSTER/tienda" --collection productos --file productos.json --jsonArray
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p style="margin:.75rem 0 0 0;font-size:.92rem;color:var(--color-muted,#4b5563)">
+  <strong>Regla didáctica:</strong> usa <em>Shell</em> para aprender y auditar; <em>Mongoose</em> para construir; <em>importación</em> para poblar rápido.
+</p>
+
+      
+      <div class="note" style="background:#f0f9ff;padding:1rem;border-radius:8px;border-left:5px solid #007bff;">
+        <strong>Tu Foco: La Inserción desde el Código.</strong><br>
+        En el próximo tema aprenderás a usar Mongoose (para Node.js). Con Mongoose, tu código recibe los datos del usuario y usa el método `.save()` o `.create()` para llevarlos al Cluster. Esto es lo que se hace en la industria.
+      </div>
+    </section>
+
+    <hr>
+
+  
+    <section class="card">
+     
+
+    <hr>
+
+    <section class="card">
+      <h2>🗑️ 6️⃣ El CRD: Borrar Documentos</h2>
+      <p>Para eliminar registros, usamos `deleteOne()` o `deleteMany()`. ¡No hay vuelta atrás, úsalo con mucho cuidado!</p>
+      
+      <h3>Sintaxis: `db.coleccion.deleteMany(filtro)`</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Borrar UNO (`deleteOne`)</h4>
+          <pre><code>db.productos.deleteOne({ nombre: "Camiseta React" });</code></pre>
+        </div>
+        <div>
+          <h4>Borrar VARIOS (`deleteMany`)</h4>
+          <pre><code>db.productos.deleteMany({ activo: false }); 
+// Borra todos los productos que hemos marcado como inactivos.</code></pre>
+        </div>
+      </div>
+      <p class="note" style="color: red; font-weight: bold;">⚠️ ¡Peligro! El borrado en MongoDB no se puede deshacer. Siempre revisa bien tu filtro antes de ejecutar un `deleteMany()`.</p>
+    </section>
+<!-- =====================================================
+     CRUD COMPLETO EN MONGODB DESDE LA CONSOLA (MONGOSH)
+===================================================== -->
+<section id="crud" class="card" aria-labelledby="t-crud">
+  <h2 id="t-crud" class="section-title">🧪 CRUD completo en MongoDB desde la consola (<code>mongosh</code>)</h2>
+  <p>
+    En MongoDB todas las operaciones siguen el mismo patrón:
+    <code>db.&lt;coleccion&gt;.&lt;método&gt;(argumentos)</code>.  
+    La colección se crea automáticamente al insertar el primer documento.
+  </p>
+
+  <div class="note" style="background:#fefce8;padding:1rem;border-radius:8px;border-left:5px solid #fbbf24;">
+    <strong>Concepto clave:</strong> CRUD son las 4 operaciones básicas de cualquier base de datos:
+    <ul style="margin-top:.5rem;">
+      <li><strong>C</strong>reate → crear datos (<code>insertOne</code>, <code>insertMany</code>)</li>
+      <li><strong>R</strong>ead → leer/buscar (<code>find</code>)</li>
+      <li><strong>U</strong>pdate → actualizar (<code>updateOne</code>, <code>updateMany</code>)</li>
+      <li><strong>D</strong>elete → borrar (<code>deleteOne</code>, <code>deleteMany</code>)</li>
+    </ul>
+  </div>
+
+  <!-- CREATE -->
+  <article class="card">
+    <h3>1️⃣ CREATE — Insertar documentos</h3>
+    <p>Los documentos se añaden en formato <code>JSON</code>.  
+      No hace falta “crear” la colección antes: MongoDB la genera al insertar el primer documento.
+    </p>
+
+    <h4>Insertar un documento (<code>insertOne</code>)</h4>
+    <pre><code>db.productos.insertOne({
+  nombre: "Camiseta Mongo",
+  precio: 19.99,
+  stock: 50,
+  categoria: "ropa",
+  activo: true
+})</code></pre>
+
+    <h4>Insertar varios documentos (<code>insertMany</code>)</h4>
+    <pre><code>db.productos.insertMany([
+  { nombre: "Taza JS", precio: 9.99, stock: 120, categoria: "accesorios", activo: true },
+  { nombre: "Sudadera Dev", precio: 32.00, stock: 10, categoria: "ropa", activo: true },
+  { nombre: "Pegatina CSS", precio: 1.50, stock: 300, categoria: "accesorios", activo: false }
+])</code></pre>
+
+    <div class="note" style="background:#e8f5e9;padding:1rem;border-radius:8px;border-left:5px solid #13aa52;">
+      <strong>Consejo:</strong> Usa <code>insertMany</code> para poblar tu colección rápidamente y practicar los filtros después.
+    </div>
+  </article>
+
+  <!-- READ -->
+  <article class="card">
+    <h3>2️⃣ READ — Leer o buscar documentos</h3>
+    <p>El método <code>find()</code> es equivalente al <code>SELECT</code> de SQL.  
+      Puedes mostrar todo o aplicar filtros, orden, límites y proyecciones.
+    </p>
+
+    <pre><code>// Mostrar todos los documentos
+db.productos.find()
+
+// Mostrar solo campos concretos (nombre y precio)
+db.productos.find({}, { nombre:1, precio:1, _id:0 })
+
+// Filtrar por campo booleano o numérico
+db.productos.find({ activo:true })
+db.productos.find({ precio: { $lte: 20 } })
+
+// Búsqueda por texto (expresiones regulares)
+db.productos.find({ nombre: /mongo/i })
+
+// Ordenar y limitar
+db.productos.find().sort({ precio: 1 }).limit(5).skip(0)
+
+// Contar resultados
+db.productos.countDocuments({ categoria:"ropa" })</code></pre>
+
+    <div class="note" style="background:#f0f9ff;padding:1rem;border-radius:8px;border-left:5px solid #007bff;">
+      <strong>💡 Tip:</strong> Usa <code>limit()</code> para no saturar la consola y <code>sort()</code> para ordenar resultados.
+    </div>
+  </article>
+
+
+
+
+

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tema 13 — Colección “Pedidos”: conectar clientes y productos</title>
+  <meta name="description" content="Aprende a modelar pedidos con referencias a clientes y productos en MongoDB usando Mongoose y populate()." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="favicon.ico" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="hero hero--compact">
+    <div class="wrap hero-content">
+      <span class="kicker">Tema 13 · Mongoose intermedio</span>
+      <h1>Colección <span style="color:var(--color-primary)">Pedidos</span></h1>
+      <p class="subtitle">
+        En esta lección aprenderás a crear la colección <strong>pedidos</strong>, que conecta clientes y productos, 
+        aplicando relaciones uno-a-muchos y usando <code>populate()</code> en cascada.
+      </p>
+    </div>
+  </header>
+
+  <main id="contenido" class="wrap">
+
+    <!-- ===================================================== -->
+    <!-- 🎯 OBJETIVOS -->
+    <!-- ===================================================== -->
+    <section class="card">
+      <h2>🎯 Objetivos de la lección</h2>
+      <ul>
+        <li>Entender cómo modelar un pedido con varios productos y un cliente asociado.</li>
+        <li>Aprender a usar <code>ObjectId</code> en arreglos de referencias.</li>
+        <li>Usar <code>populate()</code> en cascada para mostrar cliente + productos en un pedido.</li>
+        <li>Crear ejemplos funcionales con Thunder Client.</li>
+      </ul>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- 🧩 CONCEPTO GENERAL -->
+    <!-- ===================================================== -->
+    <section class="card">
+      <h2>🧩 Cómo se relacionan las colecciones</h2>
+      <p>Un pedido se compone de tres partes esenciales:</p>
+      <ul>
+        <li>🧑‍💼 <strong>Cliente</strong> → quién hace el pedido.</li>
+        <li>🛒 <strong>Productos</strong> → qué artículos incluye.</li>
+        <li>📅 <strong>Datos del pedido</strong> → fecha, total, estado.</li>
+      </ul>
+
+      <pre><code>// Relación conceptual
+Pedido {
+  cliente: ObjectId(Cliente),
+  productos: [ ObjectId(Producto), ObjectId(Producto) ],
+  fecha: Date,
+  total: Number
+}</code></pre>
+
+      <p>Así conseguimos que un pedido pueda tener varios productos y un cliente único asociado.</p>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- 🧱 MODELOS -->
+    <!-- ===================================================== -->
+    <section class="card">
+      <h2>🧱 Paso 1 — Crear los modelos</h2>
+
+      <h3>📄 <code>src/models/Cliente.js</code></h3>
+      <pre><code>import mongoose from "mongoose";
+
+const clienteSchema = new mongoose.Schema({
+  nombre: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  telefono: { type: String }
+}, { timestamps: true });
+
+const Cliente = mongoose.model("Cliente", clienteSchema);
+export default Cliente;
+</code></pre>
+
+      <h3>📄 <code>src/models/Pedido.js</code></h3>
+      <pre><code>import mongoose from "mongoose";
+
+const pedidoSchema = new mongoose.Schema({
+  cliente: { type: mongoose.Schema.Types.ObjectId, ref: "Cliente", required: true },
+  productos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Producto", required: true }],
+  fecha: { type: Date, default: Date.now },
+  total: { type: Number, min: 0 }
+}, { timestamps: true });
+
+const Pedido = mongoose.model("Pedido", pedidoSchema);
+export default Pedido;
+</code></pre>
+
+      <div class="callout info">
+        <strong>Observa:</strong> el campo <code>productos</code> es un array de referencias a la colección <code>productos</code>.  
+        Esto permite que un pedido tenga varios artículos.
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- ⚙️ CONTROLADOR -->
+    <!-- ===================================================== -->
+    <section class="card">
+      <h2>⚙️ Paso 2 — Controlador de pedidos</h2>
+      <p>El controlador gestionará la creación y lectura de pedidos, usando <code>populate()</code> para mostrar datos relacionados.</p>
+
+      <pre><code>// 📄 src/controllers/pedidosController.js
+import Pedido from "../models/Pedido.js";
+import Cliente from "../models/Cliente.js";
+import Producto from "../models/Producto.js";
+
+class PedidosController {
+
+  // Crear un pedido
+  async crearPedido(req, res) {
+    try {
+      const { cliente, productos, total } = req.body;
+      if (!cliente || !productos || productos.length === 0) {
+        return res.status(400).json({ status: "error", message: "Cliente y productos son obligatorios" });
+      }
+      const nuevo = await Pedido.create({ cliente, productos, total });
+      res.status(201).json({ status: "ok", data: nuevo });
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ status: "error", message: "Error al crear pedido" });
+    }
+  }
+
+  // Listar todos los pedidos con cliente y productos poblados
+  async listarPedidos(req, res) {
+    try {
+      const pedidos = await Pedido.find()
+        .populate("cliente", "nombre email")
+        .populate("productos", "nombre precio");
+      res.json({ status: "ok", total: pedidos.length, data: pedidos });
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ status: "error", message: "Error al listar pedidos" });
+    }
+  }
+
+  // Obtener un pedido por ID
+  async obtenerPedido(req, res) {
+    try {
+      const pedido = await Pedido.findById(req.params.id)
+        .populate("cliente", "nombre email")
+        .populate("productos", "nombre precio");
+      if (!pedido) return res.status(404).json({ status: "error", message: "Pedido no encontrado" });
+      res.json({ status: "ok", data: pedido });
+    } catch (e) {
+      res.status(400).json({ status: "error", message: "ID inválido" });
+    }
+  }
+}
+
+export default new PedidosController();
+</code></pre>
+
+      <div class="callout tip">
+        <strong>Explicación:</strong>
+        <ul>
+          <li><code>populate("cliente")</code> sustituye el ID del cliente por su nombre y email.</li>
+          <li><code>populate("productos")</code> hace lo mismo para los productos del pedido.</li>
+          <li>En el resultado final se muestran datos reales, no solo IDs.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- 🌐 RUTAS -->
+    <!-- ===================================================== -->
+    <section class="card">
+      <h2>🌐 Paso 3 — Rutas para pedidos</h2>
+      <pre><code>// 📄 src/routes/pedidos.routes.js
+import { Router } from "express";
+import ctrl from "../controllers/pedidosController.js";
+const route = Router();
+
+route.post("/", ctrl.crearPedido);
+route.get("/", ctrl.listarPedidos);
+route.get("/:id", ctrl.obtenerPedido);
+
+export default route;
+</code></pre>
+      <p>Y en tu <code>server.js</code> debes montar el router:</p>
+      <pre><code>import pedidosRoutes from "./routes/pedidos.routes.js";
+app.use("/api/pedidos", pedidosRoutes);</code></pre>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- 🧪 PRUEBAS CON THUNDER CLIENT -->
+    <!-- ===================================================== -->
+    <section class="card">
+      <h2>🧪 Paso 4 — Pruebas paso a paso en Thunder Client</h2>
+      <ol>
+        <li><strong>Crear cliente:</strong><br>
+          <pre><code>POST http://localhost:3000/api/clientes
+Body:
+{
+  "nombre": "Inma Contreras",
+  "email": "inma@example.com",
+  "telefono": "600123456"
+}</code></pre></li>
+
+        <li><strong>Crear productos:</strong><br>
+          <pre><code>POST http://localhost:3000/api/productos
+Body:
+{ "nombre": "Sudadera Verde", "precio": 35 }</code></pre>
+          <pre><code>POST http://localhost:3000/api/productos
+Body:
+{ "nombre": "Taza Mongo", "precio": 10 }</code></pre></li>
+
+        <li><strong>Crear pedido:</strong><br>
+          Copia los <code>_id</code> del cliente y los productos y crea:
+          <pre><code>POST http://localhost:3000/api/pedidos
+Body:
+{
+  "cliente": "673c57f8c6e8a23256b4f912",
+  "productos": ["673c57f8c6e8a23256b4f930", "673c57f8c6e8a23256b4f931"],
+  "total": 45
+}</code></pre></li>
+
+        <li><strong>Listar pedidos con populate:</strong><br>
+          <code>GET http://localhost:3000/api/pedidos</code>
+          <pre><code>{
+  "status": "ok",
+  "data": [
+    {
+      "cliente": { "nombre": "Inma Contreras", "email": "inma@example.com" },
+      "productos": [
+        { "nombre": "Sudadera Verde", "precio": 35 },
+        { "nombre": "Taza Mongo", "precio": 10 }
+      ],
+      "total": 45
+    }
+  ]
+}</code></pre></li>
+      </ol>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- 📘 RESUMEN -->
+    <!-- ===================================================== -->
+    <section class="card resumen">
+      <h2>📘 Resumen final</h2>
+      <ul>
+        <li>Un pedido se relaciona con <strong>un cliente</strong> (uno-a-muchos).</li>
+        <li>Y con <strong>muchos productos</strong> (muchos-a-muchos vía array).</li>
+        <li>Gracias a <code>populate()</code>, podemos mostrar toda la información combinada.</li>
+        <li>Las relaciones múltiples permiten crear modelos de negocio completos (tienda, reservas, envíos, etc.).</li>
+      </ul>
+      <p><strong>Ejercicio final:</strong> crea un pedido nuevo y muestra en la respuesta el nombre del cliente y los productos comprados con sus precios.  
+      Luego calcula el total automáticamente en el backend.</p>
+    </section>
+
+  </main>
+
+  <footer role="contentinfo">
+    <p>Manual “Mongoo” — Tema 13 · Colección Pedidos: conectar clientes y productos.</p>
+  </footer>
+</body>
+</html>
+<pre></code></pre>
+
+      
