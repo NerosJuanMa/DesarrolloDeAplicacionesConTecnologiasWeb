@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Técnico: CRUD Canciones - Frontend ↔ Backend</title>
+    <style>
+        :root {
+            --bg: #fff;
+            --text: #232323;
+            --muted: #666;
+            --primary: #d155b6;
+            --primary-2: #1d9eb5;
+            --ok: #1b8a5a;
+            --warn: #c77d00;
+            --err: #b91c1c;
+            --card: #fafafa;
+            --code: #1e1e1e;
+            --code-text: #eaeaea;
+            --kbd: #2d2d2d;
+            --border: #e6e6e6;
+            --chip: #f1f1f1;
+            --backend: #ff6b6b;
+            --frontend: #4ecdc4;
+            --json: #95a5a6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+            font-size: clamp(24px, 4vw, 36px);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            margin: 0;
+            color: #fffb;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1em;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        @media (min-width: 1000px) {
+            .grid {
+                grid-template-columns: 1.35fr 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            margin: 0 0 20px;
+            font-size: clamp(20px, 3vw, 26px);
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary-2);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            margin: 20px 0 15px;
+            font-size: 1.3em;
+            color: var(--primary-2);
+        }
+
+        h4 {
+            margin: 15px 0 10px;
+            color: var(--text);
+        }
+
+        .flow {
+            font-family: ui-monospace, 'SFMono Regular', Menlo, Consolas, monospace;
+            background: #fff;
+            border: 2px dashed var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            white-space: pre-wrap;
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+
+        .map table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .map th, .map td {
+            border: 1px solid var(--border);
+            padding: 12px;
+            vertical-align: top;
+            text-align: left;
+        }
+
+        .map th {
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+            color: white;
+            font-weight: 600;
+        }
+
+        .chip {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            background: var(--chip);
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: #333;
+            margin: 2px;
+        }
+
+        .legend {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .legend .chip {
+            border: 0;
+            font-weight: 500;
+        }
+
+        .pill {
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 0.2rem 0.5rem;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .pill.get { background: #0b6bcb; }
+        .pill.post { background: #1b8a5a; }
+        .pill.put { background: #9153d8; }
+        .pill.del { background: #b91c1c; }
+
+        .ok { color: var(--ok); }
+        .warn { color: var(--warn); }
+        .err { color: var(--err); }
+        .muted { color: var(--muted); }
+
+        details {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            background: #fff;
+            margin: 15px 0;
+        }
+
+        details[open] {
+            border-color: var(--primary);
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            padding: 5px 0;
+            color: var(--primary);
+        }
+
+        summary:hover {
+            color: var(--primary-2);
+        }
+
+        pre, code {
+            font-family: ui-monospace, 'SFMono Regular', Menlo, Consolas, monospace;
+        }
+
+        pre {
+            background: var(--code);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+
+        code {
+           
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .backend-code {
+            border-left: 5px solid var(--backend);
+        }
+
+        .frontend-code {
+            border-left: 5px solid var(--frontend);
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 4px solid var(--warn);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .technical-note {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .important {
+            background: #fef2f2;
+            border-left: 4px solid var(--err);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .archivo-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            border-left: 5px solid;
+        }
+
+        .archivo-card.backend {
+            border-left-color: var(--backend);
+        }
+
+        .archivo-card.frontend {
+            border-left-color: var(--frontend);
+        }
+
+        .archivo-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .funciones {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .funciones ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .funciones li {
+            background: #e9ecef;
+            margin: 8px 0;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .sequence-diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .step-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 10px 5px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            min-width: 150px;
+        }
+
+        .arrow {
+            font-size: 2em;
+            color: var(--primary);
+            margin: 0 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .flow-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .tech-explanation {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .code-comparison {
+            display: grid;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        @media (min-width: 800px) {
+            .code-comparison {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .error-handling {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-container {
+                flex-direction: column;
+            }
+            
+            .arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Manual Técnico: Comunicación Frontend ↔ Backend</h1>
+        <p>Guía técnica completa del flujo de datos entre script.js y server.js en la aplicación CRUD de canciones</p>
+    </header>
+
+    <div class="container">
+        <!-- Arquitectura y Conceptos Fundamentales -->
+        <section class="card">
+            <h2>🏗️ Arquitectura y Conceptos Técnicos Fundamentales</h2>
+            
+            <div class="technical-note">
+                <h4>📚 Conceptos Clave que Debes Dominar:</h4>
+                <ul style="margin-top: 10px; padding-left: 30px;">
+                    <li><strong>Cliente-Servidor:</strong> Separación de responsabilidades entre frontend (cliente) y backend (servidor)</li>
+                    <li><strong>API REST:</strong> Conjunto de endpoints HTTP que permiten operaciones CRUD</li>
+                    <li><strong>JSON:</strong> Formato de intercambio de datos entre frontend y backend</li>
+                    <li><strong>HTTP Methods:</strong> GET (leer), POST (crear), PUT (actualizar), DELETE (eliminar)</li>
+                    <li><strong>Asynchronous Programming:</strong> Uso de async/await para operaciones no bloqueantes</li>
+                </ul>
+            </div>
+
+            <div class="legend">
+                <span class="chip">FRONT = navegador (HTML/CSS/JS)</span>
+                <span class="chip">BACK = Express (Node.js)</span>
+                <span class="chip">JSON = formato de datos</span>
+                <span class="chip">HTTP = protocolo de comunicación</span>
+            </div>
+
+            <div class="flow">
+<strong>Flujo Técnico Completo:</strong>
+
+1) <span class="ok">INICIALIZACIÓN</span> → DOMContentLoaded ejecuta obtenerTodasLasCanciones()
+2) <span class="pill get">GET</span> /api/canciones → Express router ejecuta app.get()
+3) <span class="warn">LECTURA</span> → leerCanciones() usa fs.readFileSync() + JSON.parse()
+4) <span class="ok">RESPUESTA</span> → res.json() serializa datos y envía HTTP response
+5) <span class="warn">FRONTEND</span> → fetch() recibe response, await response.json() deserializa
+6) <span class="ok">RENDERIZADO</span> → mostrarCancionesEnPantalla() manipula DOM
+7) <span class="pill post">POST/PUT/DELETE</span> → Operaciones de escritura activan guardarCanciones()
+8) <span class="warn">PERSISTENCIA</span> → fs.writeFileSync() + JSON.stringify() actualiza archivo
+            </div>
+        </section>
+
+        <!-- Mapeo Técnico Frontend ↔ Backend -->
+        <section class="grid">
+            <div class="card map">
+                <h2>🗺️ Mapeo Técnico Completo Frontend ↔ Backend</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Función Frontend</th>
+                            <th>HTTP Method</th>
+                            <th>Endpoint Backend</th>
+                            <th>Función Backend</th>
+                            <th>Operación de Archivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>obtenerTodasLasCanciones()</code></td>
+                            <td><span class="pill get">GET</span></td>
+                            <td><code>/api/canciones</code></td>
+                            <td><code>app.get() → leerCanciones()</code></td>
+                            <td><strong>READ:</strong> fs.readFileSync() + JSON.parse()</td>
+                        </tr>
+                        <tr>
+                            <td><code>crearNuevaCancion(datos)</code></td>
+                            <td><span class="pill post">POST</span></td>
+                            <td><code>/api/canciones</code></td>
+                            <td><code>app.post() → guardarCanciones()</code></td>
+                            <td><strong>WRITE:</strong> JSON.stringify() + fs.writeFileSync()</td>
+                        </tr>
+                        <tr>
+                            <td><code>actualizarCancionExistente(id, datos)</code></td>
+                            <td><span class="pill put">PUT</span></td>
+                            <td><code>/api/canciones/:id</code></td>
+                            <td><code>app.put() → findIndex() → guardarCanciones()</code></td>
+                            <td><strong>UPDATE:</strong> Modifica array + fs.writeFileSync()</td>
+                        </tr>
+                        <tr>
+                            <td><code>eliminarCancion(id)</code></td>
+                            <td><span class="pill del">DELETE</span></td>
+                            <td><code>/api/canciones/:id</code></td>
+                            <td><code>app.delete() → splice() → guardarCanciones()</code></td>
+                            <td><strong>DELETE:</strong> splice() + fs.writeFileSync()</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>⚙️ Middleware y Configuración Técnica</h2>
+                
+                <h3>Middleware Stack en server.js:</h3>
+                <div class="tech-explanation">
+                    <pre><code>app.use(cors());                    // CORS headers para cross-origin
+app.use(express.json());            // Parser JSON para req.body
+app.use(express.static(...));       // Servir archivos estáticos</code></pre>
+                </div>
+
+                <h4>🔧 Funciones Técnicas Clave:</h4>
+                <div class="funciones">
+                    <ul>
+                        <li><strong>express.json():</strong> Middleware que parsea req.body en POST/PUT</li>
+                        <li><strong>JSON.parse():</strong> Convierte string del archivo a objeto JavaScript</li>
+                        <li><strong>JSON.stringify():</strong> Convierte objeto JavaScript a string para archivo</li>
+                        <li><strong>fs.readFileSync():</strong> Lectura síncrona del archivo JSON</li>
+                        <li><strong>fs.writeFileSync():</strong> Escritura síncrona al archivo JSON</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Análisis Detallado por Operación CRUD -->
+        <section class="card">
+            <h2>🔍 Análisis Técnico Detallado por Operación CRUD</h2>
+
+            <details open>
+                <summary>📖 READ - Obtener Todas las Canciones (GET /api/canciones)</summary>
+                
+                <div class="code-comparison">
+                    <div>
+                        <h4>🌐 Frontend (script.js)</h4>
+                        <pre class="frontend-code"><code>async function obtenerTodasLasCanciones() {
+    try {
+        mostrarIndicadorCarga(true);
+        
+        // fetch() hace HTTP GET request
+        const respuesta = await fetch(URL_API);
+        
+        // response.json() deserializa el JSON del servidor
+        const datos = await respuesta.json();
+        
+        if (datos.exito) {
+            // Manipulación del DOM
+            mostrarCancionesEnPantalla(datos.datos);
+            actualizarContador(datos.datos.length);
+            mostrarMensaje(datos.mensaje, 'exito');
+        }
+    } catch (error) {
+        // Error handling para fallos de red
+        mostrarMensaje('No se puede conectar con el servidor', 'error');
+    } finally {
+        mostrarIndicadorCarga(false);
+    }
+}</code></pre>
+                    </div>
+
+                    <div>
+                        <h4>🖥️ Backend (server.js)</h4>
+                        <pre class="backend-code"><code>app.get('/api/canciones', (peticion, respuesta) => {
+    // Llamada a función auxiliar
+    const canciones = leerCanciones();
+    
+    // Respuesta HTTP con JSON serializado
+    respuesta.json({
+        exito: true,
+        datos: canciones,
+        mensaje: `Se encontraron ${canciones.length} canciones`
+    });
+});
+
+function leerCanciones() {
+    try {
+        // Lectura síncrona del sistema de archivos
+        const contenido = fs.readFileSync(ARCHIVO_CANCIONES, 'utf8');
+        
+        // Parsing de JSON string a JavaScript array
+        const canciones = JSON.parse(contenido);
+        return canciones;
+    } catch (error) {
+        // Manejo de errores de archivo
+        return [];
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="important">
+                    <h4>⚠️ Diferencia Técnica Crítica:</h4>
+                    <p><strong>express.json()</strong> solo parsea el <em>cuerpo de peticiones HTTP</em> (POST/PUT). Para leer archivos del sistema, necesitas <strong>JSON.parse()</strong> explícitamente.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>➕ CREATE - Crear Nueva Canción (POST /api/canciones)</summary>
+                
+                <div class="code-comparison">
+                    <div>
+                        <h4>🌐 Frontend (script.js)</h4>
+                        <pre class="frontend-code"><code>async function crearNuevaCancion(datosCancion) {
+    try {
+        const respuesta = await fetch(URL_API, {
+            method: 'POST',                    // HTTP Method
+            headers: {
+                'Content-Type': 'application/json'  // MIME type
+            },
+            // Serialización de objeto a JSON string
+            body: JSON.stringify(datosCancion)
+        });
+        
+        const datos = await respuesta.json();
+        
+        if (datos.exito) {
+            mostrarMensaje(datos.mensaje, 'exito');
+            limpiarFormulario();
+            // Re-fetch para actualizar la UI
+            obtenerTodasLasCanciones();
+        }
+    } catch (error) {
+        mostrarMensaje('Error al guardar la canción', 'error');
+    }
+}</code></pre>
+                    </div>
+
+                    <div>
+                        <h4>🖥️ Backend (server.js)</h4>
+                        <pre class="backend-code"><code>app.post('/api/canciones', (peticion, respuesta) => {
+    // express.json() ya parseó req.body
+    const { titulo, artista, año } = peticion.body;
+    
+    // Validación de datos
+    if (!titulo || !artista || !año) {
+        return respuesta.status(400).json({
+            exito: false,
+            mensaje: 'Faltan datos requeridos'
+        });
+    }
+    
+    const canciones = leerCanciones();
+    
+    // Creación del nuevo objeto
+    const nuevaCancion = {
+        id: obtenerSiguienteId(canciones),
+        titulo: titulo.trim(),
+        artista: artista.trim(),
+        año: parseInt(año)
+    };
+    
+    // Mutación del array
+    canciones.push(nuevaCancion);
+    
+    // Persistencia al archivo
+    if (guardarCanciones(canciones)) {
+        respuesta.status(201).json({
+            exito: true,
+            datos: nuevaCancion,
+            mensaje: `Canción "${nuevaCancion.titulo}" creada`
+        });
+    }
+});</code></pre>
+                    </div>
+                </div>
+
+                <div class="technical-note">
+                    <h4>🔧 Detalles Técnicos:</h4>
+                    <ul>
+                        <li><strong>HTTP Status 201:</strong> Indica "Created" según estándar HTTP</li>
+                        <li><strong>Content-Type header:</strong> Especifica formato JSON para el parser</li>
+                        <li><strong>ID Generation:</strong> Algoritmo para evitar colisiones de IDs</li>
+                        <li><strong>Data Sanitization:</strong> trim() elimina whitespace, parseInt() convierte tipos</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>✏️ UPDATE - Actualizar Canción (PUT /api/canciones/:id)</summary>
+                
+                <div class="code-comparison">
+                    <div>
+                        <h4>🌐 Frontend (script.js)</h4>
+                        <pre class="frontend-code"><code>async function actualizarCancionExistente(id, datosCancion) {
+    try {
+        // Template literal para URL con parámetro
+        const respuesta = await fetch(`${URL_API}/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datosCancion)
+        });
+        
+        const datos = await respuesta.json();
+        
+        if (datos.exito) {
+            mostrarMensaje(datos.mensaje, 'exito');
+            limpiarFormulario();
+            obtenerTodasLasCanciones();
+        }
+    } catch (error) {
+        mostrarMensaje('Error al actualizar', 'error');
+    }
+}</code></pre>
+                    </div>
+
+                    <div>
+                        <h4>🖥️ Backend (server.js)</h4>
+                        <pre class="backend-code"><code>app.put('/api/canciones/:id', (peticion, respuesta) => {
+    // Extracción del parámetro de ruta
+    const id = parseInt(peticion.params.id);
+    const { titulo, artista, año } = peticion.body;
+    
+    const canciones = leerCanciones();
+    
+    // Búsqueda por índice usando findIndex()
+    const indice = canciones.findIndex(c => c.id === id);
+    
+    if (indice === -1) {
+        return respuesta.status(404).json({
+            exito: false,
+            mensaje: `No se encontró canción con ID ${id}`
+        });
+    }
+    
+    // Reemplazo completo del objeto en el array
+    canciones[indice] = {
+        id: id,  // Preservar ID original
+        titulo: titulo.trim(),
+        artista: artista.trim(),
+        año: parseInt(año)
+    };
+    
+    if (guardarCanciones(canciones)) {
+        respuesta.json({
+            exito: true,
+            datos: canciones[indice],
+            mensaje: 'Canción actualizada exitosamente'
+        });
+    }
+});</code></pre>
+                    </div>
+                </div>
+
+                <div class="technical-note">
+                    <h4>🔧 Algoritmos Utilizados:</h4>
+                    <ul>
+                        <li><strong>findIndex():</strong> Búsqueda lineal O(n) para localizar elemento</li>
+                        <li><strong>Route Parameters:</strong> Express parsing de :id en la URL</li>
+                        <li><strong>Immutable ID:</strong> Preservación del identificador único</li>
+                        <li><strong>HTTP 404:</strong> Status code para recurso no encontrado</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>🗑️ DELETE - Eliminar Canción (DELETE /api/canciones/:id)</summary>
+                
+                <div class="code-comparison">
+                    <div>
+                        <h4>🌐 Frontend (script.js)</h4>
+                        <pre class="frontend-code"><code>async function eliminarCancion(id) {
+    try {
+        const respuesta = await fetch(`${URL_API}/${id}`, {
+            method: 'DELETE'  // Solo método, no body needed
+        });
+        
+        const datos = await respuesta.json();
+        
+        if (datos.exito) {
+            mostrarMensaje(datos.mensaje, 'exito');
+            obtenerTodasLasCanciones();
+        }
+    } catch (error) {
+        mostrarMensaje('Error al eliminar', 'error');
+    }
+}
+
+// Confirmación antes de eliminar
+function preguntarSiEliminar(id, titulo) {
+    modalConfirmar.classList.remove('oculto');
+    
+    // Event binding dinámico
+    botonConfirmarEliminar.onclick = () => {
+        eliminarCancion(id);
+        modalConfirmar.classList.add('oculto');
+    };
+}</code></pre>
+                    </div>
+
+                    <div>
+                        <h4>🖥️ Backend (server.js)</h4>
+                        <pre class="backend-code"><code>app.delete('/api/canciones/:id', (peticion, respuesta) => {
+    const id = parseInt(peticion.params.id);
+    const canciones = leerCanciones();
+    
+    const indice = canciones.findIndex(c => c.id === id);
+    
+    if (indice === -1) {
+        return respuesta.status(404).json({
+            exito: false,
+            mensaje: `No se encontró canción con ID ${id}`
+        });
+    }
+    
+    // splice() modifica array in-place y retorna elemento eliminado
+    const [cancionEliminada] = canciones.splice(indice, 1);
+    
+    if (guardarCanciones(canciones)) {
+        respuesta.json({
+            exito: true,
+            datos: cancionEliminada,  // Retornar elemento eliminado
+            mensaje: `Canción "${cancionEliminada.titulo}" eliminada`
+        });
+    }
+});</code></pre>
+                    </div>
+                </div>
+
+                <div class="technical-note">
+                    <h4>🔧 Técnicas de Eliminación:</h4>
+                    <ul>
+                        <li><strong>splice(index, 1):</strong> Eliminación in-place que retorna array con elemento eliminado</li>
+                        <li><strong>Destructuring:</strong> [cancionEliminada] extrae primer elemento del array retornado</li>
+                        <li><strong>UI Confirmation:</strong> Modal pattern para prevenir eliminaciones accidentales</li>
+                        <li><strong>Soft Delete Alternative:</strong> Podrías usar flag "activo: false" en lugar de splice()</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <!-- Flujo de Datos y Formatos JSON -->
+        <section class="grid">
+            <div class="card">
+                <h2>📊 Formatos de Datos y Payloads JSON</h2>
+                
+                <h3>Request Payload (Frontend → Backend)</h3>
+                <pre><code>{
+  "titulo": "Mediterráneo",
+  "artista": "Joan Manuel Serrat", 
+  "año": 1971
+}</code></pre>
+
+                <h3>Success Response (Backend → Frontend)</h3>
+                <pre><code>{
+  "exito": true,
+  "datos": {
+    "id": 2,
+    "titulo": "Mediterráneo",
+    "artista": "Joan Manuel Serrat",
+    "año": 1971
+  },
+  "mensaje": "Operación completada exitosamente"
+}</code></pre>
+
+                <h3>Error Response (Backend → Frontend)</h3>
+                <pre><code>{
+  "exito": false,
+  "mensaje": "Descripción específica del error",
+  "codigo": 400  // HTTP status code opcional
+}</code></pre>
+
+                <div class="technical-note">
+                    <h4>🔧 Estrategia de Response Design:</h4>
+                    <p>Todos los endpoints siguen el patrón consistente <code>{ exito, datos?, mensaje }</code> para facilitar el manejo en el frontend.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>⚡ Manejo de Errores y Edge Cases</h2>
+                
+                <h3>🛡️ Validación y Sanitización</h3>
+                <div class="error-handling">
+                    <pre><code>// Backend validation
+if (!titulo || !artista || !año) {
+    return res.status(400).json({
+        exito: false,
+        mensaje: 'Todos los campos son requeridos'
+    });
+}
+
+// Frontend error handling
+try {
+    const respuesta = await fetch(URL_API);
+    if (!respuesta.ok) {
+        throw new Error(`HTTP ${respuesta.status}`);
+    }
+} catch (error) {
+    console.error('Error de red:', error);
+    mostrarMensaje('Error de conexión', 'error');
+}</code></pre>
+                </div>
+
+                <h3>🔄 Estrategias de Re-sincronización</h3>
+                <ul style="padding-left: 30px;">
+                    <li><strong>Optimistic Updates:</strong> Actualizar UI inmediatamente, revertir si falla</li>
+                    <li><strong>Pessimistic Updates:</strong> Esperar confirmación del servidor antes de actualizar UI</li>
+                    <li><strong>Retry Logic:</strong> Reintentar operaciones fallidas con backoff exponencial</li>
+                    <li><strong>Cache Invalidation:</strong> Re-fetch después de mutaciones para garantizar consistencia</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Conceptos Avanzados -->
+        <section class="card">
+            <h2>🚀 Conceptos Técnicos Avanzados</h2>
+
+            <details>
+                <summary>🔄 Event Loop y Asynchronous Programming</summary>
+                <div class="tech-explanation">
+                    <pre><code>// El Event Loop permite operaciones no-bloqueantes
+async function obtenerTodasLasCanciones() {
+    // fetch() retorna Promise, await suspende la función
+    const respuesta = await fetch(URL_API);
+    
+    // Mientras espera la respuesta, el hilo principal puede procesar otros eventos
+    const datos = await respuesta.json();
+    
+    // La función se resume cuando la Promise se resuelve
+    mostrarCancionesEnPantalla(datos.datos);
+}</code></pre>
+                    
+                    <p><strong>Beneficio:</strong> La UI permanece responsive mientras se realizan operaciones de red.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>🔒 CORS y Seguridad</summary>
+                <div class="tech-explanation">
+                    <pre><code>// server.js
+app.use(cors()); // Permite requests desde otros dominios
+
+// Configuración más restrictiva:
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));</code></pre>
+                    
+                    <p><strong>CORS Headers:</strong> El navegador verifica permisos antes de realizar requests cross-origin.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>📁 File System Operations</summary>
+                <div class="tech-explanation">
+                    <pre><code>// Operaciones síncronas vs asíncronas
+function leerCancionesSincrono() {
+    // Bloquea el hilo principal
+    const contenido = fs.readFileSync(ARCHIVO_CANCIONES, 'utf8');
+    return JSON.parse(contenido);
+}
+
+async function leerCancionesAsincrono() {
+    // No bloquea, pero requiere manejo de Promises
+    const contenido = await fs.promises.readFile(ARCHIVO_CANCIONES, 'utf8');
+    return JSON.parse(contenido);
+}</code></pre>
+                    
+                    <p><strong>Trade-off:</strong> Síncronas son más simples pero pueden bloquear el servidor.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>🎯 DOM Manipulation y Event Handling</summary>
+                <div class="tech-explanation">
+                    <pre><code>// Event delegation para elementos dinámicos
+listaCanciones.addEventListener('click', (evento) => {
+    if (evento.target.classList.contains('btn-eliminar')) {
+        const id = evento.target.dataset.id;
+        preguntarSiEliminar(id);
+    }
+});
+
+// Virtual DOM update pattern
+function mostrarCancionesEnPantalla(canciones) {
+    // Rebuild completo del DOM - simple pero ineficiente para listas grandes
+    listaCanciones.innerHTML = canciones.map(crearHTMLCancion).join('');
+}</code></pre>
+                    
+                    <p><strong>Optimización:</strong> Para apps más complejas, considera frameworks como React con Virtual DOM.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- Sección JSON: La Piedra Angular -->
+        <section class="card">
+            <h2>🧩 JSON, express.json(), parse() y stringify(): Los Pilares del Intercambio de Datos</h2>
+            
+            <div class="important">
+                <h4>🎯 Conceptos Fundamentales que Debes Dominar:</h4>
+                <p>Estos tres elementos son la <strong>columna vertebral</strong> de cualquier aplicación web moderna, incluyendo cuando trabajas con bases de datos.</p>
+            </div>
+
+            <details open>
+                <summary>🔧 express.json(): El Intérprete de Peticiones HTTP</summary>
+                
+                <div class="technical-note">
+                    <h4>¿Qué hace exactamente express.json()?</h4>
+                    <p>Es un <strong>middleware</strong> que actúa como un "traductor automático" para las peticiones HTTP que llegan al servidor.</p>
+                </div>
+
+                <div class="code-comparison">
+                    <div>
+                        <h4>🚫 Sin express.json()</h4>
+                        <pre class="backend-code"><code>app.post('/api/canciones', (req, res) => {
+    console.log(req.body); // undefined ❌
+    
+    // Tendríamos que parsear manualmente:
+    let rawData = '';
+    req.on('data', chunk => {
+        rawData += chunk;
+    });
+    req.on('end', () => {
+        try {
+            const datos = JSON.parse(rawData); // Manual parsing
+            // Ahora sí podemos usar los datos
+        } catch (error) {
+            // Manejar errores de parsing
+        }
+    });
+});</code></pre>
+                    </div>
+
+                    <div>
+                        <h4>✅ Con express.json()</h4>
+                        <pre class="backend-code"><code>// Configuración una sola vez
+app.use(express.json());
+
+app.post('/api/canciones', (req, res) => {
+    // ¡req.body ya es un objeto JavaScript! ✨
+    console.log(req.body); // { titulo: "...", artista: "..." }
+    
+    const { titulo, artista, año } = req.body; // Funciona perfectamente
+    
+    // Podemos usar los datos inmediatamente
+});</code></pre>
+                    </div>
+                </div>
+
+                <div class="note">
+                    <h4>🔍 Detalles Técnicos:</h4>
+                    <ul>
+                        <li><strong>Cuándo actúa:</strong> Solo en peticiones POST, PUT, PATCH (que envían datos en el body)</li>
+                        <li><strong>Content-Type requerido:</strong> "application/json" en el header</li>
+                        <li><strong>Límite de tamaño:</strong> Por defecto 100kb (configurable)</li>
+                        <li><strong>Qué NO hace:</strong> No lee archivos del sistema, solo peticiones HTTP</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>📝 JSON.parse(): El Deserializador</summary>
+                
+                <div class="technical-note">
+                    <h4>🎯 Función: Convertir texto JSON → Objeto JavaScript</h4>
+                    <p>Toma un <strong>string</strong> con formato JSON y lo convierte en un objeto/array que JavaScript puede manipular.</p>
+                </div>
+
+                <div class="code-comparison">
+                    <div>
+                        <h4>📁 Leyendo Archivos</h4>
+                        <pre class="backend-code"><code>// server.js
+function leerCanciones() {
+    try {
+        // fs.readFileSync() devuelve STRING
+        const contenidoTexto = fs.readFileSync('canciones.json', 'utf8');
+        console.log(typeof contenidoTexto); // "string"
+        console.log(contenidoTexto); 
+        // '[{"id":1,"titulo":"Bohemian Rhapsody",...}]'
+        
+        // JSON.parse() convierte string → array/object
+        const cancionesArray = JSON.parse(contenidoTexto);
+        console.log(typeof cancionesArray); // "object"
+        console.log(Array.isArray(cancionesArray)); // true
+        
+        return cancionesArray; // Ahora podemos usar .push(), .filter(), etc.
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return []; // Array vacío si falla
+    }
+}</code></pre>
+                    </div>
+
+                    <div>
+                        <h4>🌐 Respuestas de APIs</h4>
+                        <pre class="frontend-code"><code>// script.js
+async function obtenerTodasLasCanciones() {
+    const respuesta = await fetch(URL_API);
+    
+    // respuesta.text() devolvería STRING
+    const textoJSON = await respuesta.text();
+    console.log(typeof textoJSON); // "string"
+    
+    // Pero response.json() hace JSON.parse() automáticamente
+    const datosObjeto = JSON.parse(textoJSON);
+    // Equivale a: await respuesta.json()
+    
+    console.log(typeof datosObjeto); // "object"
+    return datosObjeto;
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="error-handling">
+                    <h4>⚠️ Errores Comunes con JSON.parse():</h4>
+                    <pre><code>// ❌ JSON inválido
+JSON.parse('{nombre: "Juan"}'); // Error: falta comillas en "nombre"
+
+// ❌ String vacío
+JSON.parse(''); // Error: Unexpected end of JSON input
+
+// ❌ undefined o null
+JSON.parse(undefined); // Error: Unexpected token u
+
+// ✅ Siempre usar try-catch
+try {
+    const datos = JSON.parse(contenidoArchivo);
+    return datos;
+} catch (error) {
+    console.error('JSON inválido:', error.message);
+    return null; // O valor por defecto
+}</code></pre>
+                </div>
+            </details>
+
+            <details>
+                <summary>💾 JSON.stringify(): El Serializador</summary>
+                
+                <div class="technical-note">
+                    <h4>🎯 Función: Convertir Objeto JavaScript → String JSON</h4>
+                    <p>Toma un objeto/array de JavaScript y lo convierte en texto JSON para guardarlo o enviarlo.</p>
+                </div>
+
+                <div class="code-comparison">
+                    <div>
+                        <h4>💾 Guardando en Archivos</h4>
+                        <pre class="backend-code"><code>// server.js
+function guardarCanciones(cancionesArray) {
+    try {
+        // cancionesArray es un Array de JavaScript
+        console.log(typeof cancionesArray); // "object"
+        console.log(Array.isArray(cancionesArray)); // true
+        
+        // JSON.stringify() convierte array → string
+        const textoJSON = JSON.stringify(cancionesArray, null, 2);
+        console.log(typeof textoJSON); // "string"
+        console.log(textoJSON);
+        /*
+        [
+          {
+            "id": 1,
+            "titulo": "Bohemian Rhapsody",
+            "artista": "Queen",
+            "año": 1975
+          }
+        ]
+        */
+        
+        // fs.writeFileSync() requiere STRING
+        fs.writeFileSync('canciones.json', textoJSON);
+        return true;
+    } catch (error) {
+        console.error('Error stringifying JSON:', error);
+        return false;
+    }
+}</code></pre>
+                    </div>
+
+                    <div>
+                        <h4>📡 Enviando por HTTP</h4>
+                        <pre class="frontend-code"><code>// script.js
+async function crearNuevaCancion(datosCancion) {
+    // datosCancion es un objeto JavaScript
+    console.log(typeof datosCancion); // "object"
+    console.log(datosCancion);
+    // { titulo: "Mi canción", artista: "Artista", año: 2024 }
+    
+    const respuesta = await fetch(URL_API, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // ¡Importante!
+        },
+        // JSON.stringify() convierte objeto → string
+        body: JSON.stringify(datosCancion)
+        // HTTP solo puede enviar texto, no objetos
+    });
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="technical-note">
+                    <h4>🔧 Parámetros de JSON.stringify():</h4>
+                    <pre><code>JSON.stringify(value, replacer, space)
+
+// value: el objeto a convertir
+// replacer: función/array para filtrar propiedades (opcional)
+// space: número de espacios para indentación (opcional)
+
+// Ejemplos:
+JSON.stringify(obj);           // Compacto (sin espacios)
+JSON.stringify(obj, null, 2);  // Con indentación de 2 espacios
+JSON.stringify(obj, ['id', 'titulo']); // Solo propiedades específicas</code></pre>
+                </div>
+            </details>
+
+            <details>
+                <summary>🗄️ JSON y Bases de Datos: El Futuro de tu Aplicación</summary>
+                
+                <div class="important">
+                    <h4>🚀 ¿Cómo Cambia con Bases de Datos?</h4>
+                    <p>Cuando migres de archivos JSON a bases de datos (MongoDB, PostgreSQL, MySQL), estos conceptos siguen siendo <strong>fundamentales</strong>.</p>
+                </div>
+
+                <h4>📊 Con MongoDB (Base de Datos NoSQL):</h4>
+                <div class="tech-explanation">
+                    <pre><code>// MongoDB maneja objetos JavaScript nativamente
+const { MongoClient } = require('mongodb');
+
+app.post('/api/canciones', async (req, res) => {
+    // express.json() sigue parseando req.body ✅
+    const { titulo, artista, año } = req.body;
+    
+    const nuevaCancion = { titulo, artista, año };
+    
+    // MongoDB almacena directamente el objeto (internamente usa BSON)
+    const resultado = await db.collection('canciones').insertOne(nuevaCancion);
+    
+    res.json({ exito: true, datos: resultado });
+    // ❌ NO necesitas JSON.stringify() para MongoDB
+});
+
+app.get('/api/canciones', async (req, res) => {
+    // MongoDB devuelve objetos JavaScript directamente
+    const canciones = await db.collection('canciones').find().toArray();
+    
+    res.json({ exito: true, datos: canciones });
+    // ❌ NO necesitas JSON.parse() para MongoDB
+});</code></pre>
+                </div>
+
+                <h4>🐘 Con PostgreSQL/MySQL (Bases de Datos SQL):</h4>
+                <div class="tech-explanation">
+                    <pre><code>// Con bases SQL, a veces necesitas JSON.stringify/parse para campos JSON
+const { Pool } = require('pg'); // PostgreSQL
+
+app.post('/api/canciones', async (req, res) => {
+    // express.json() sigue parseando req.body ✅
+    const { titulo, artista, año, metadatos } = req.body;
+    
+    // Si 'metadatos' es un objeto complejo, stringify para SQL
+    const metadatosJSON = JSON.stringify(metadatos);
+    
+    const query = 'INSERT INTO canciones (titulo, artista, año, metadatos) VALUES ($1, $2, $3, $4)';
+    await pool.query(query, [titulo, artista, año, metadatosJSON]);
+});
+
+app.get('/api/canciones', async (req, res) => {
+    const result = await pool.query('SELECT * FROM canciones');
+    
+    // Parsear campos JSON de la base de datos
+    const canciones = result.rows.map(row => ({
+        ...row,
+        metadatos: JSON.parse(row.metadatos) // Parse campos JSON
+    }));
+    
+    res.json({ exito: true, datos: canciones });
+});</code></pre>
+                </div>
+
+                <h4>🔄 ORMs y el Manejo Automático:</h4>
+                <div class="tech-explanation">
+                    <pre><code>// Con Sequelize (ORM para SQL)
+const Cancion = sequelize.define('Cancion', {
+    titulo: DataTypes.STRING,
+    artista: DataTypes.STRING,
+    año: DataTypes.INTEGER,
+    metadatos: DataTypes.JSON // Manejo automático de JSON
+});
+
+app.post('/api/canciones', async (req, res) => {
+    // express.json() sigue siendo necesario ✅
+    const nuevaCancion = await Cancion.create(req.body);
+    // Sequelize maneja stringify/parse automáticamente ✨
+    
+    res.json({ exito: true, datos: nuevaCancion });
+});</code></pre>
+                </div>
+
+                <div class="note">
+                    <h4>📋 Resumen: JSON en el Ecosistema de Datos</h4>
+                    <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+                        <tr style="background: var(--primary); color: white;">
+                            <th style="padding: 10px; border: 1px solid var(--border);">Escenario</th>
+                            <th style="padding: 10px; border: 1px solid var(--border);">express.json()</th>
+                            <th style="padding: 10px; border: 1px solid var(--border);">JSON.parse()</th>
+                            <th style="padding: 10px; border: 1px solid var(--border);">JSON.stringify()</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid var(--border);"><strong>Archivos JSON</strong></td>
+                            <td style="padding: 10px; border: 1px solid var(--border);">✅ Siempre</td>
+                            <td style="padding: 10px; border: 1px solid var(--border);">✅ Para leer</td>
+                            <td style="padding: 10px; border: 1px solid var(--border);">✅ Para escribir</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid var(--border);"><strong>MongoDB</strong></td>
+                            <td style="padding: 10px; border: 1px solid var(--border);">✅ Siempre</td>
+                            <td style="padding: 10px; border: 1px solid var(--border);">❌ Automático</td>
+                            <td style="padding: 10px; border: 1px solid var(--border);">❌ Automático</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid var(--border);"><strong>SQL + JSON fields</strong></td>
+                            <td style="padding: 10px; border: 1px solid var(--border);">✅ Siempre</td>
+                            <td style="padding: 10px; border: 1px solid var(--border);">⚠️ Para campos JSON</td>
+                            <td style="padding: 10px; border: 1px solid var(--border);">⚠️ Para campos JSON</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid var(--border);"><strong>ORMs (Sequelize, etc.)</strong></td>
+                            <td style="padding: 10px; border: 1px solid var(--border);">✅ Siempre</td>
+                            <td style="padding: 10px; border: 1px solid var(--border);">❌ Automático</td>
+                            <td style="padding: 10px; border: 1px solid var(--border);">❌ Automático</td>
+                        </tr>
+                    </table>
+                </div>
+            </details>
+
+            <details>
+                <summary>🎯 Ejercicio Práctico: Flujo Completo de Datos</summary>
+                
+                <div class="technical-note">
+                    <h4>🔄 Sigue el Dato: De Frontend a Archivo y Vuelta</h4>
+                    <p>Veamos paso a paso cómo viaja un dato desde el formulario hasta el archivo JSON:</p>
+                </div>
+
+                <div class="flow">
+<strong>FLUJO COMPLETO - CREAR CANCIÓN:</strong>
+
+1) 👤 <span class="ok">USUARIO</span> escribe en formulario:
+   titulo: "Imagine", artista: "John Lennon", año: 1971
+   → Tipo: HTML form elements (strings)
+
+2) 🌐 <span class="warn">FRONTEND</span> captura con JavaScript:
+   const datosCancion = { titulo, artista, año: parseInt(año) }
+   → Tipo: Objeto JavaScript
+
+3) 📡 <span class="ok">HTTP REQUEST</span> - fetch() + JSON.stringify():
+   body: '{"titulo":"Imagine","artista":"John Lennon","año":1971}'
+   → Tipo: String JSON (lo que viaja por la red)
+
+4) 🖥️ <span class="warn">EXPRESS.JSON()</span> parsea automáticamente:
+   req.body = { titulo: "Imagine", artista: "John Lennon", año: 1971 }
+   → Tipo: Objeto JavaScript (otra vez)
+
+5) 📁 <span class="ok">BACKEND</span> lee archivo con fs.readFileSync():
+   contenido = '[{"id":1,...}]'  ← String del archivo
+   → Tipo: String JSON
+
+6) 🔄 <span class="warn">JSON.PARSE()</span> convierte a array:
+   canciones = [{ id: 1, ... }]
+   → Tipo: Array JavaScript
+
+7) ➕ <span class="ok">MANIPULACIÓN</span> - agregar nueva canción:
+   canciones.push({ id: 2, titulo: "Imagine", ... })
+   → Tipo: Array JavaScript (modificado)
+
+8) 💾 <span class="warn">JSON.STRINGIFY()</span> prepara para archivo:
+   textoJSON = '[{"id":1,...},{"id":2,"titulo":"Imagine",...}]'
+   → Tipo: String JSON
+
+9) 📁 <span class="ok">FS.WRITEFILESYNC()</span> guarda en disco:
+   canciones.json ← String JSON escrito al archivo
+   → Tipo: Archivo de texto
+
+10) 📡 <span class="warn">RESPUESTA HTTP</span> - res.json():
+    '{"exito":true,"datos":{...},"mensaje":"..."}'
+    → Tipo: String JSON (respuesta HTTP)
+
+11) 🌐 <span class="ok">FRONTEND</span> recibe con response.json():
+    datos = { exito: true, datos: {...}, mensaje: "..." }
+    → Tipo: Objeto JavaScript
+
+12) 🎨 <span class="warn">DOM UPDATE</span> - mostrar en pantalla:
+    HTML actualizado con la nueva canción
+    → Tipo: Elementos HTML visibles
+                </div>
+
+                <div class="important">
+                    <h4>💡 Puntos Clave del Flujo:</h4>
+                    <ul>
+                        <li><strong>3 conversiones críticas:</strong> Object→String→Object→String→Object</li>
+                        <li><strong>express.json() actúa solo en paso 4</strong> (peticiones HTTP entrantes)</li>
+                        <li><strong>JSON.parse() en paso 6</strong> (archivos) y paso 11 (response.json())</li>
+                        <li><strong>JSON.stringify() en paso 3</strong> (envío) y paso 8 (archivo)</li>
+                        <li><strong>HTTP siempre transporta texto</strong>, nunca objetos JavaScript</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <!-- FAQ Técnico -->
+        <section class="card">
+            <h2>🤔 FAQ Técnico para Desarrolladores</h2>
+
+            <details>
+                <summary>¿Por qué express.json() no funciona para leer archivos?</summary>
+                <div class="technical-note">
+                    <p><strong>express.json()</strong> es middleware que solo parsea el <em>cuerpo de peticiones HTTP entrantes</em>. Cuando lees un archivo con <code>fs.readFileSync()</code>, obtienes un string que necesitas convertir manualmente con <code>JSON.parse()</code>.</p>
+                    
+                    <pre><code>// ❌ Incorrecto
+const datos = fs.readFileSync('datos.json'); // string
+
+// ✅ Correcto  
+const datos = JSON.parse(fs.readFileSync('datos.json', 'utf8'));</code></pre>
+                </div>
+            </details>
+
+            <details>
+                <summary>¿Cuándo usar await vs .then()?</summary>
+                <div class="technical-note">
+                    <p><strong>async/await</strong> es sintaxis más limpia para el mismo concepto que <code>.then()</code>:</p>
+                    
+                    <pre><code>// Estilo .then() - más verboso
+fetch(URL_API)
+    .then(response => response.json())
+    .then(datos => mostrarCanciones(datos))
+    .catch(error => manejarError(error));
+
+// Estilo async/await - más legible
+try {
+    const response = await fetch(URL_API);
+    const datos = await response.json();
+    mostrarCanciones(datos);
+} catch (error) {
+    manejarError(error);
+}</code></pre>
+                </div>
+            </details>
+
+            <details>
+                <summary>¿Por qué re-fetch después de crear/editar/eliminar?</summary>
+                <div class="technical-note">
+                    <p>Garantiza <strong>consistencia de datos</strong> entre frontend y backend. Alternativas:</p>
+                    
+                    <ul>
+                        <li><strong>Optimistic Updates:</strong> Actualizar UI inmediatamente, asumir éxito</li>
+                        <li><strong>Response Data:</strong> Usar datos del response para actualizar UI</li>
+                        <li><strong>State Management:</strong> Mantener estado local sincronizado</li>
+                    </ul>
+                    
+                    <pre><code>// Optimistic update (más complejo pero mejor UX)
+function eliminarCancionOptimistic(id) {
+    // 1. Actualizar UI inmediatamente
+    removerCancionDelDOM(id);
+    
+    // 2. Hacer request
+    fetch(`/api/canciones/${id}`, { method: 'DELETE' })
+        .catch(() => {
+            // 3. Revertir si falla
+            obtenerTodasLasCanciones();
+            mostrarError('No se pudo eliminar');
+        });
+}</code></pre>
+                </div>
+            </details>
+
+            <details>
+                <summary>¿Cómo escalar esta arquitectura?</summary>
+                <div class="technical-note">
+                    <p><strong>Limitaciones actuales</strong> y <strong>evoluciones posibles</strong>:</p>
+                    
+                    <ul>
+                        <li><strong>Archivo JSON → Base de datos:</strong> MongoDB, PostgreSQL, MySQL</li>
+                        <li><strong>Operaciones síncronas → Asíncronas:</strong> fs.promises, streams</li>
+                        <li><strong>Vanilla JS → Framework:</strong> React, Vue, Angular</li>
+                        <li><strong>Estado local → State management:</strong> Redux, Zustand, Context API</li>
+                        <li><strong>REST → GraphQL:</strong> Queries más eficientes, menos over-fetching</li>
+                        <li><strong>Single server → Microservices:</strong> Escalabilidad horizontal</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <!-- Resumen Final -->
+        <section class="card">
+            <h2>🎯 Puntos Clave para Dominar la Arquitectura</h2>
+            
+            <div class="important">
+                <h4>🔥 Conceptos Críticos que Debes Entender:</h4>
+                <ul style="margin-top: 15px; padding-left: 30px;">
+                    <li><strong>Separación de Responsabilidades:</strong> Frontend maneja UI/UX, Backend maneja datos/lógica</li>
+                    <li><strong>Stateless HTTP:</strong> Cada request es independiente, no hay memoria entre requests</li>
+                    <li><strong>JSON como Lingua Franca:</strong> Formato universal de intercambio de datos</li>
+                    <li><strong>Event-Driven Architecture:</strong> UI responde a eventos del usuario, triggea API calls</li>
+                    <li><strong>Error Handling:</strong> Siempre manejar casos de fallo en red, validación, etc.</li>
+                    <li><strong>Async Programming:</strong> Operaciones de red nunca bloquean la UI</li>
+                </ul>
+            </div>
+
+            <div class="technical-note">
+                <h4>💡 Next Steps para Profundizar:</h4>
+                <ol style="margin-top: 10px; padding-left: 30px;">
+                    <li>Implementar <strong>validación de esquemas</strong> con Joi o Zod</li>
+                    <li>Agregar <strong>autenticación JWT</strong> para endpoints protegidos</li>
+                    <li>Implementar <strong>pagination</strong> para listas grandes</li>
+                    <li>Agregar <strong>rate limiting</strong> para prevenir abuse</li>
+                    <li>Implementar <strong>tests unitarios</strong> con Jest</li>
+                    <li>Configurar <strong>logging</strong> con Winston</li>
+                    <li>Migrar a <strong>TypeScript</strong> para type safety</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Roadmap de Evolución -->
+        <section class="card">
+            <h2>🛣️ Roadmap: ¿Cuál es el Paso Natural Después de Esto?</h2>
+            
+            <div class="important">
+                <h4>🎯 Has Construido una Base Sólida</h4>
+                <p>Dominar este CRUD con archivos JSON te ha dado los <strong>fundamentos universales</strong> del desarrollo web. Ahora tienes varias rutas de evolución natural:</p>
+            </div>
+
+            <div class="sequence-diagram">
+                <h3>📈 Progresión Recomendada (De Menor a Mayor Complejidad)</h3>
+                
+                <div class="flow-container">
+                    <div class="step-box">
+                        <h4>NIVEL 1</h4>
+                        <p>✅ CRUD con JSON</p>
+                        <small>(Actual)</small>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="step-box">
+                        <h4>NIVEL 2</h4>
+                        <p>🗄️ Migrar a DB</p>
+                        <small>(MongoDB)</small>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="step-box">
+                        <h4>NIVEL 3</h4>
+                        <p>🔐 Autenticación</p>
+                        <small>(JWT/Sessions)</small>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="step-box">
+                        <h4>NIVEL 4</h4>
+                        <p>⚛️ Frontend Framework</p>
+                        <small>(React)</small>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <details open>
+                <summary>🗄️ PASO 1: Migrar a Base de Datos </summary>
+                
+                <div class="technical-note">
+                    <h4>🎯 Objetivo: Reemplazar canciones.json con una base de datos real</h4>
+                    <p>Este es el <strong>paso más natural</strong> porque mantiene toda tu lógica actual, solo cambias dónde guardas los datos.</p>
+                </div>
+
+                <h4>🍃 Opción A: MongoDB (NoSQL) - Más Fácil</h4>
+                <div class="code-comparison">
+                    <div>
+                        <h5>❌ Código Actual (JSON)</h5>
+                        <pre class="backend-code"><code>function leerCanciones() {
+    const contenido = fs.readFileSync('canciones.json', 'utf8');
+    return JSON.parse(contenido);
+}
+
+function guardarCanciones(canciones) {
+    const contenidoJSON = JSON.stringify(canciones, null, 2);
+    fs.writeFileSync('canciones.json', contenidoJSON);
+}</code></pre>
+                    </div>
+
+                    <div>
+                        <h5>✅ Nuevo Código (MongoDB)</h5>
+                        <pre class="backend-code"><code>const { MongoClient } = require('mongodb');
+
+async function leerCanciones() {
+    return await db.collection('canciones').find().toArray();
+}
+
+async function guardarCancion(cancion) {
+    return await db.collection('canciones').insertOne(cancion);
+}</code></pre>
+                    </div>
+                </div>
+
+                <h4>🐘 Opción B: PostgreSQL (SQL) - Más Estructurado</h4>
+                <div class="tech-explanation">
+                    <pre><code>-- Crear tabla
+CREATE TABLE canciones (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    artista VARCHAR(255) NOT NULL,
+    año INTEGER NOT NULL
+);
+
+-- Tu JavaScript queda muy similar
+const { Pool } = require('pg');
+const pool = new Pool({ connectionString: 'postgresql://...' });
+
+async function leerCanciones() {
+    const result = await pool.query('SELECT * FROM canciones');
+    return result.rows;
+}</code></pre>
+                </div>
+
+                <div class="note">
+                    <h4>✨ Ventajas Inmediatas:</h4>
+                    <ul>
+                        <li><strong>Concurrencia:</strong> Multiple usuarios simultáneos sin corrupción</li>
+                        <li><strong>Escalabilidad:</strong> Millones de canciones sin problemas</li>
+                        <li><strong>Queries:</strong> Buscar por artista, año, etc.</li>
+                        <li><strong>Backup automático:</strong> No perder datos si se va la luz</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>🔐 PASO 2: Añadir Autenticación y Autorización </summary>
+                
+                <div class="technical-note">
+                    <h4>🎯 Objetivo: Solo usuarios registrados pueden crear/editar/eliminar</h4>
+                    <p>Agregar sistema de login, registro y permisos usando JWT o sesiones.</p>
+                </div>
+
+                <h4>🔑 Funcionalidades a Implementar:</h4>
+                <div class="tech-explanation">
+                    <pre><code>// Nuevos endpoints de autenticación
+POST /api/auth/register    // Registro de usuario
+POST /api/auth/login       // Login
+POST /api/auth/logout      // Logout
+GET  /api/auth/profile     // Datos del usuario actual
+
+// Middleware de protección
+function requireAuth(req, res, next) {
+    const token = req.headers.authorization;
+    if (!token) return res.status(401).json({ error: 'Token requerido' });
+    
+    try {
+        const decoded = jwt.verify(token, SECRET_KEY);
+        req.user = decoded;
+        next();
+    } catch (error) {
+        res.status(401).json({ error: 'Token inválido' });
+    }
+}
+
+// Proteger rutas existentes
+app.post('/api/canciones', requireAuth, async (req, res) => {
+    // Solo usuarios autenticados pueden crear canciones
+    const nuevaCancion = { ...req.body, usuarioId: req.user.id };
+    // ... resto de la lógica
+});</code></pre>
+                </div>
+
+                <h4>🎨 Cambios en el Frontend:</h4>
+                <div class="tech-explanation">
+                    <pre><code>// Nuevo formulario de login
+async function login(email, password) {
+    const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    });
+    
+    const data = await response.json();
+    localStorage.setItem('token', data.token); // Guardar token
+}
+
+// Incluir token en todas las peticiones
+async function crearNuevaCancion(datosCancion) {
+    const token = localStorage.getItem('token');
+    const respuesta = await fetch(URL_API, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Incluir token
+        },
+        body: JSON.stringify(datosCancion)
+    });
+}</code></pre>
+                </div>
+            </details>
+
+            <details>
+                <summary>⚛️ PASO 3: Migrar Frontend a React</summary>
+                
+                <div class="technical-note">
+                    <h4>🎯 Objetivo: UI más dinámica y mantenible</h4>
+                    <p>Tu JavaScript vanilla actual te ha preparado perfectamente para entender frameworks.</p>
+                </div>
+
+                <h4>⚛️ Con React:</h4>
+                <div class="code-comparison">
+                    <div>
+                        <h5>❌ JavaScript Vanilla Actual</h5>
+                        <pre class="frontend-code"><code>function mostrarCancionesEnPantalla(canciones) {
+    let htmlCompleto = '';
+    canciones.forEach(cancion => {
+        htmlCompleto += `
+            &lt;div class="cancion-item"&gt;
+                &lt;h3&gt;${cancion.titulo}&lt;/h3&gt;
+                &lt;p&gt;${cancion.artista}&lt;/p&gt;
+            &lt;/div&gt;
+        `;
+    });
+    listaCanciones.innerHTML = htmlCompleto;
+}</code></pre>
+                    </div>
+
+                    <div>
+                        <h5>✅ React (Más Declarativo)</h5>
+                        <pre class="frontend-code"><code>function ListaCanciones({ canciones }) {
+    return (
+        &lt;div&gt;
+            {canciones.map(cancion =&gt; (
+                &lt;CancionItem 
+                    key={cancion.id} 
+                    cancion={cancion} 
+                /&gt;
+            ))}
+        &lt;/div&gt;
+    );
+}
+
+function CancionItem({ cancion }) {
+    return (
+        &lt;div className="cancion-item"&gt;
+            &lt;h3&gt;{cancion.titulo}&lt;/h3&gt;
+            &lt;p&gt;{cancion.artista}&lt;/p&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="note">
+                    <h4>✨ Ventajas de los Frameworks:</h4>
+                    <ul>
+                        <li><strong>State Management:</strong> React/Vue manejan el estado automáticamente</li>
+                        <li><strong>Componentes Reutilizables:</strong> Escribir una vez, usar en muchos lugares</li>
+                        <li><strong>Virtual DOM:</strong> Updates más eficientes que innerHTML</li>
+                        <li><strong>Ecosistema:</strong> Miles de librerías y herramientas</li>
+                    </ul>
+                </div>
+            </details>
+
+            
+                <div class="technical-note">
+                    <h4>🚀 Tu Ventaja Actual:</h4>
+                    <p>Haber construido este CRUD completo te da una <strong>base sólida</strong> para ser Full Stack. Entiendes cómo las piezas encajan juntas, que es la habilidad más valiosa.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recomendaciones Finales -->
+        <section class="card">
+            <h2>💡 Recomendaciones para tu Próximo Paso</h2>
+            
+            <div class="important">
+                <h4>🎯 Mi Recomendación Personal:</h4>
+                <p>Empieza con <strong>migrar a MongoDB</strong>. Es el cambio más pequeño con el mayor impacto. Te dará confianza y experiencia real con bases de datos.</p>
+            </div>
+
+           
+        </section>
+    </div>
+</body>
+</html>
