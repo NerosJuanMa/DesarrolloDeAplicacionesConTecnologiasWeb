@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UF1843 - Usabilidad Web</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.png">
+</head>
+<body>
+    <header>
+        <h1>UF1843: Usabilidad y Accesibilidad en Desarrollo Web</h1>
+      <nav>
+            <a href="index.html">Accesibilidad Web</a>
+            <a href="usabilidad.html">Usabilidad Web</a>
+            <a href="practico.html">Planificación</a>
+             <a href="diseñoweb.html">Diseño Web</a>
+            <a href="desarrollo.html">Referencias y Código</a>
+           
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Unidad Didáctica 2: Usabilidad Web</h2>
+
+        <!-- Epígrafe 1: Definición de usabilidad [65] -->
+        <details>
+            <summary>1. Definición de usabilidad</summary>
+            <div class="contenido-leccion">
+                <p>La usabilidad se enfoca en que la experiencia digital sea satisfactoria, eficiente y efectiva para cualquier usuario [65].</p>
+                <p>Según la norma ISO 9241-11, la usabilidad se define como: "El grado en que un producto puede ser utilizado por usuarios específicos para lograr objetivos específicos con eficacia, eficiencia y satisfacción en un contexto de uso específico" [66].</p>
+                
+                <h4>Desglose de términos clave [66, 67]:</h4>
+                <ul>
+                    <li>Eficacia: Capacidad para cumplir tareas con éxito.</li>
+                    <li>Eficiencia: Qué tan rápido y con cuánto esfuerzo se logra la tarea.</li>
+                    <li>Satisfacción: Grado de agrado o percepción positiva del usuario.</li>
+                </ul>
+
+                <h4>Características de un sitio web utilizable [68]:</h4>
+                <p>Claridad, Consistencia, Retroalimentación, Control, y Minimización de errores [68].</p>
+                
+                <!-- Cuadro Resumen [69, 70] -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Definición de Usabilidad</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Concepto</th>
+                                <th>Definición breve</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Usabilidad</td>
+                                <td>Facilidad para usar un sitio con eficacia, eficiencia y satisfacción [69].</td>
+                                <td>Comprar un producto en una tienda online sin confusión [69].</td>
+                            </tr>
+                            <tr>
+                                <td>Eficacia</td>
+                                <td>Lograr objetivos correctamente [70].</td>
+                                <td>Completar un formulario sin errores [70].</td>
+                            </tr>
+                            <tr>
+                                <td>Eficiencia</td>
+                                <td>Conseguir objetivos rápidamente [70].</td>
+                                <td>Navegar rápido usando menú intuitivo [70].</td>
+                            </tr>
+                            <tr>
+                                <td>Satisfacción</td>
+                                <td>Percepción positiva durante y después [70].</td>
+                                <td>Sentirse cómodo con el diseño y funciones [70].</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- Epígrafe 2: Diseño centrado en el usuario [71] -->
+        <details>
+            <summary>2. Importancia del diseño web centrado en el usuario</summary>
+            <div class="contenido-leccion">
+                <p>El Diseño Web Centrado en el Usuario (UCD) es una metodología iterativa que pone a las personas reales en el centro del desarrollo, asegurando que los productos se adapten a sus necesidades [71, 72].</p>
+
+                <h4>Principios de UCD [72, 73]:</h4>
+                <ul>
+                    <li>Enfoque en los usuarios y sus tareas reales [73].</li>
+                    <li>Diseño iterativo (crear, probar y ajustar) [73].</li>
+                    <li>Interactividad continua (involucrar usuarios con entrevistas o pruebas) [73].</li>
+                    <li>Multidisciplinariedad [73].</li>
+                </ul>
+
+                <h4>Beneficios [73, 74]:</h4>
+                <p>Mayor satisfacción y fidelidad, reducción de errores y abandonos, eficiencia en el desarrollo y mejor Retorno de la Inversión (ROI) [73, 74].</p>
+                
+                <!-- Cuadro Resumen [75, 76] -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Diseño Centrado en el Usuario</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Concepto</th>
+                                <th>Descripción breve</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Diseño centrado en usuario</td>
+                                <td>Metodología que prioriza necesidades y contexto de usuarios [75].</td>
+                                <td>Involucrar usuarios en pruebas de prototipos [75].</td>
+                            </tr>
+                            <tr>
+                                <td>Principio iterativo</td>
+                                <td>Diseñar, probar y ajustar continuamente [75].</td>
+                                <td>Lanzamiento de versiones beta para feedback [76].</td>
+                            </tr>
+                            <tr>
+                                <td>Beneficio principal</td>
+                                <td>Mejor experiencia y menor trabajo [76].</td>
+                                <td>Usuarios satisfechos que usan el sitio sin ayuda [76].</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- Epígrafe 3: Diferencias Accesibilidad vs. Usabilidad [76] -->
+        <details>
+            <summary>3. Diferencias entre accesibilidad y usabilidad</summary>
+            <div class="contenido-leccion">
+                <p>Ambos son fundamentales, pero no equivalentes [76].</p>
+                <ul>
+                    <li>Accesibilidad: Capacidad de cualquier persona, incluyendo aquellas con discapacidades, para acceder y navegar sin barreras [77]. Se basa en WCAG, ADA, UNE [78].</li>
+                    <li>Usabilidad: Grado en que cualquier usuario puede utilizar el sitio para lograr objetivos con eficacia, eficiencia y satisfacción [77]. Se basa en estándares ISO 9241 y técnicas UX [78].</li>
+                </ul>
+                
+                <p>La accesibilidad es un requisito para la usabilidad inclusiva [79]. Una web accesible suele ser más usable para todos, pero una web usable no siempre es accesible para usuarios con discapacidad [79].</p>
+
+                <!-- Cuadro Resumen [80, 81] -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Accesibilidad vs. Usabilidad</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Punto clave</th>
+                                <th>Accesibilidad</th>
+                                <th>Usabilidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Prioridad</td>
+                                <td>Eliminar barreras para diversidad funcional [80].</td>
+                                <td>Mejorar la experiencia para todos los usuarios [80].</td>
+                            </tr>
+                            <tr>
+                                <td>Normativas y estándares</td>
+                                <td>WCAG, ADA, UNE [81].</td>
+                                <td>ISO 9241, principios UX [81].</td>
+                            </tr>
+                            <tr>
+                                <td>Ejemplo práctico</td>
+                                <td>Texto alternativo, navegación teclado [81].</td>
+                                <td>Diseño claro, lógica organización [81].</td>
+                            </tr>
+                            <tr>
+                                <td>Meta combinada</td>
+                                <td colspan="2">Crear sitios accesibles y agradables para todos [81].</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+        
+        <!-- Epígrafe 4: Ventajas y problemas combinación [81] -->
+        <details>
+            <summary>4. Ventajas y problemas en la combinación de accesibilidad y usabilidad</summary>
+            <div class="contenido-leccion">
+                <p>Integrar ambos conceptos es necesario para crear sitios web efectivos e inclusivos [81], aunque presenta desafíos [82].</p>
+
+                <h4>Ventajas de la combinación [82, 83]:</h4>
+                <p>Experiencia inclusiva y satisfactoria para todos, mayor alcance y fidelización, mejora en la calidad del producto, cumplimiento de normativas y optimización en SEO [82, 83].</p>
+
+                <h4>Problemas y desafíos comunes [83, 84]:</h4>
+                <p>Conflicto entre criterios estéticos y técnicos, costos y tiempo adicional, falta de conocimiento integrado y dificultad en la evaluación conjunta [84, 85].</p>
+
+                <!-- Cuadro Resumen [86] -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Ventajas y problemas combinados</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ventajas</th>
+                                <th>Problemas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Experiencia inclusiva completa [86].</td>
+                                <td>Conflicto diseño-estético vs accesibilidad [86].</td>
+                            </tr>
+                            <tr>
+                                <td>Mayor base de usuarios [86].</td>
+                                <td>Costos y tiempos incrementados [86].</td>
+                            </tr>
+                            <tr>
+                                <td>Mejor calidad y cumplimiento [86].</td>
+                                <td>Coordinación y conocimiento fragmentado [86].</td>
+                            </tr>
+                            <tr>
+                                <td>Optimización SEO y rendimiento [86].</td>
+                                <td>Dificultad en pruebas integrales [86].</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+        
+        <!-- Epígrafe 5: Ventajas y dificultades usabilidad [87] -->
+        <details>
+            <summary>5. Ventajas y dificultades en la implantación de sitios web utilizables</summary>
+            <div class="contenido-leccion">
+                <p>La implantación de usabilidad ofrece beneficios claros, pero también retos específicos [88].</p>
+                
+                <h4>Ventajas de implantar sitios utilizables [89, 90]:</h4>
+                <p>Mejor experiencia para el usuario, aumento de la fidelidad y retención, reducción de errores y soporte técnico, incremento en conversiones y ventaja competitiva [89, 90].</p>
+
+                <h4>Dificultades en la implantación [90, 91]:</h4>
+                <p>Falta de formación y cultura centrada en el usuario, conflictos entre diseño visual y usabilidad, recursos limitados, diversidad de usuarios y dificultad en la evaluación objetiva [91].</p>
+
+                <!-- Cuadro Resumen [92, 93] -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Ventajas y dificultades de la usabilidad</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ventajas</th>
+                                <th>Dificultades</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mejor experiencia y satisfacción [92].</td>
+                                <td>Falta de formación específica [92].</td>
+                            </tr>
+                            <tr>
+                                <td>Mayor fidelidad y conversión [93].</td>
+                                <td>Recursos y tiempo limitados [93].</td>
+                            </tr>
+                            <tr>
+                                <td>Reducción de soporte técnico [93].</td>
+                                <td>Conflictos diseño vs funcionalidad [93].</td>
+                            </tr>
+                            <tr>
+                                <td>Ventaja competitiva [93].</td>
+                                <td>Evaluación continua compleja [93].</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- Epígrafe 6: Métodos de usabilidad [93] -->
+        <details>
+            <summary>6. Métodos de usabilidad</summary>
+            <div class="contenido-leccion">
+                <p>Los métodos de usabilidad permiten evaluar, medir y mejorar la facilidad de uso [94].</p>
+
+                <h4>Tipos de métodos:</h4>
+                <ul>
+                    <li>Cualitativos: Se enfocan en entender la experiencia y percepciones. Incluyen: Pruebas de usabilidad (observación de usuarios), Entrevistas y Grupos focales, y Evaluación heurística (expertos revisan contra principios universales) [95, 96].</li>
+                    <li>Cuantitativos: Se centran en mediciones objetivas y estadísticas. Incluyen: Análisis de métricas web, Encuestas estructuradas y Pruebas A/B [96].</li>
+                </ul>
+
+                <!-- Cuadro Resumen [97, 98] -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Métodos de usabilidad</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Método</th>
+                                <th>Tipo</th>
+                                <th>Características</th>
+                                <th>Uso recomendado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pruebas de usabilidad</td>
+                                <td>Cualitativo [97].</td>
+                                <td>Usuarios reales realizando tareas [97].</td>
+                                <td>Validar procesos críticos [97].</td>
+                            </tr>
+                            <tr>
+                                <td>Evaluación heurística</td>
+                                <td>Cualitativo [97].</td>
+                                <td>Expertos analizan interfaz [97].</td>
+                                <td>Diagnóstico rápido sistemático [97].</td>
+                            </tr>
+                            <tr>
+                                <td>Análisis de métricas</td>
+                                <td>Cuantitativo [97].</td>
+                                <td>Datos estadísticos web [97].</td>
+                                <td>Seguimiento y evaluación continua [97].</td>
+                            </tr>
+                            <tr>
+                                <td>Encuestas</td>
+                                <td>Cuantitativo [98].</td>
+                                <td>Opiniones y satisfacción [98].</td>
+                                <td>Medición de percepción global [98].</td>
+                            </tr>
+                            <tr>
+                                <td>Pruebas A/B</td>
+                                <td>Cuantitativo [98].</td>
+                                <td>Comparación entre variantes [98].</td>
+                                <td>Optimización iterativa [98].</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- Epígrafe 7: Análisis de requerimientos [99] -->
+        <details>
+            <summary>7. Análisis de requerimientos de usuario</summary>
+            <div class="contenido-leccion">
+                <p>El análisis de requerimientos es un paso crítico inicial para un diseño usable, ayudando a definir objetivos claros y interfaces ajustadas a las demandas reales [99].</p>
+
+                <h4>Tipos de requerimientos [100]:</h4>
+                <ul>
+                    <li>Funcionales: Tareas o funciones que el usuario debe poder realizar.</li>
+                    <li>No funcionales: Criterios de calidad, rendimiento, seguridad, usabilidad.</li>
+                    <li>Explícitos: Declaraciones directas de necesidades.</li>
+                    <li>Implícitos: Aspectos deducidos del contexto o prácticas.</li>
+                </ul>
+
+                <h4>Métodos para estructurar requerimientos [101]:</h4>
+                <p>Personas (perfiles semificticios) [101], Historias de usuario (narrativas breves) [101], Casos de uso (descripción detallada y secuencial) [101], y Mapas de experiencia [101].</p>
+
+                <!-- Cuadro Resumen [102, 103] -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Análisis de requisitos de usuario</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Elemento</th>
+                                <th>Descripción</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Requerimiento funcional</td>
+                                <td>Tareas y funciones que el usuario debe realizar [102].</td>
+                                <td>Poder enviar un mensaje desde la web [102].</td>
+                            </tr>
+                            <tr>
+                                <td>Requerimiento no funcional</td>
+                                <td>Criterios de calidad y usabilidad [102].</td>
+                                <td>Interfaz intuitiva y rápida [103].</td>
+                            </tr>
+                            <tr>
+                                <td>Persona</td>
+                                <td>Perfil representante del usuario final [103].</td>
+                                <td>Usuario joven experto en tecnología [103].</td>
+                            </tr>
+                            <tr>
+                                <td>Historia de usuario</td>
+                                <td>Narrativa desde la perspectiva del usuario [103].</td>
+                                <td>"Como usuario quiero consultar mi historial..." [103].</td>
+                            </tr>
+                            <tr>
+                                <td>Caso de uso</td>
+                                <td>Secuencia detallada de interacción [103].</td>
+                                <td>Pasos para realizar una compra [103].</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- Epígrafe 8: Diseño conceptual y prototipos [104] -->
+        <details>
+            <summary>8. Principios del diseño conceptual. Creación de prototipos orientados al usuario.</summary>
+            <div class="contenido-leccion">
+                <p>El diseño conceptual define las bases estructurales y funcionales de la interfaz [104]. La creación de prototipos sirve para validar ideas y asegurar que el diseño responde a los requerimientos [104].</p>
+
+                <h4>Principios fundamentales del diseño conceptual [105, 106]:</h4>
+                <p>Sencillo (minimizar complejidad) [105], Consistencia (homogeneidad en elementos) [105], Visibilidad (opciones accesibles) [106], Retroalimentación (respuesta perceptible a acciones) [106], Control del usuario (poder corregir o volver atrás) [106], y Flexibilidad [106].</p>
+
+                <h4>Tipos de prototipos [107]:</h4>
+                <ul>
+                    <li>Baja fidelidad: Bocetos, wireframes. Útiles para validar estructura y flujo general [107].</li>
+                    <li>Alta fidelidad: Simulaciones digitales interactivas, casi idénticas al producto final [107].</li>
+                </ul>
+
+                <!-- Cuadro Resumen [108, 109] -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Principios y prototipado</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Principio</th>
+                                <th>Descripción</th>
+                                <th>Ejemplo práctico</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sencillo</td>
+                                <td>Minimizar complejidades y distracciones [108].</td>
+                                <td>Menú simple con opciones claras [108].</td>
+                            </tr>
+                            <tr>
+                                <td>Consistencia</td>
+                                <td>Mantener elementos similares y predecibles [108].</td>
+                                <td>Mismos botones y estilos en todas las páginas [108].</td>
+                            </tr>
+                            <tr>
+                                <td>Visibilidad</td>
+                                <td>Mostrar opciones y estados de forma clara [108].</td>
+                                <td>Botón “Enviar” siempre visible y habilitado [108].</td>
+                            </tr>
+                            <tr>
+                                <td>Retroalimentación</td>
+                                <td>Informar al usuario tras acciones [108].</td>
+                                <td>Mensajes “Formulario enviado con éxito” [108].</td>
+                            </tr>
+                            <tr>
+                                <td>Control del usuario</td>
+                                <td>Poder cancelar o volver fácilmente [109].</td>
+                                <td>Botón “Atrás” en formularios [109].</td>
+                            </tr>
+                            <tr>
+                                <td>Prototipado</td>
+                                <td>Crear modelos para validar diseño [109].</td>
+                                <td>Wireframes para validar flujo y estructura [109].</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+        
+        <!-- Epígrafe 9: Pautas para sitios utilizables [110] -->
+        <details>
+            <summary>9. Pautas para la creación de sitios web utilizables</summary>
+            <div class="contenido-leccion">
+                <p>Las pautas de usabilidad se basan en principios de diseño, arquitectura de la información y contenido [110].</p>
+
+                <h4>Pautas clave [111, 112]:</h4>
+                <ul>
+                    <li>Claridad y simplicidad de contenidos: Lenguaje claro, textos divididos en párrafos cortos, evitar jergas [111].</li>
+                    <li>Navegación intuitiva y consistente: Menús claros, enlaces descriptivos, facilitar opciones para regresar [111].</li>
+                    <li>Diseño visual accesible: Contrastes adecuados, fuentes legibles, diseño responsivo [112].</li>
+                    <li>Retroalimentación efectiva: Mensajes claros en acciones (errores, confirmaciones), evitar mensajes técnicos [112].</li>
+                    <li>Optimización de tiempos de carga: Minimizar recursos pesados y priorizar contenido visible [112, 113].</li>
+                    <li>Accesibilidad integrada como base: Implementar textos alternativos, navegación con teclado [113].</li>
+                </ul>
+
+                <!-- Cuadro Resumen [114, 115] -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Pautas esenciales para sitios utilizables</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pauta</th>
+                                <th>Descripción</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Claridad del contenido</td>
+                                <td>Textos claros, organizados [114].</td>
+                                <td>Uso de títulos y listas [114].</td>
+                            </tr>
+                            <tr>
+                                <td>Navegación intuitiva</td>
+                                <td>Menús visibles, enlaces descriptivos [114].</td>
+                                <td>Menú fijo en la parte superior [114].</td>
+                            </tr>
+                            <tr>
+                                <td>Diseño visual adecuado</td>
+                                <td>Contrastes, tamaños legibles [114].</td>
+                                <td>Texto negro sobre fondo blanco [114].</td>
+                            </tr>
+                            <tr>
+                                <td>Retroalimentación</td>
+                                <td>Mensajes claros y oportunos [114].</td>
+                                <td>“Error: campo obligatorio vacío” [114].</td>
+                            </tr>
+                            <tr>
+                                <td>Optimización de carga</td>
+                                <td>Recursos livianos y carga rápida [115].</td>
+                                <td>Imágenes optimizadas [115].</td>
+                            </tr>
+                            <tr>
+                                <td>Accesibilidad integrada</td>
+                                <td>Navegación teclado, alt en imágenes [115].</td>
+                                <td>Uso de alt en todas las imágenes [115].</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- Epígrafe 10: Evaluación de la usabilidad [116] -->
+        <details>
+            <summary>10. Evaluación de la usabilidad</summary>
+            <div class="contenido-leccion">
+                <p>La evaluación es el proceso sistemático de medir y analizar qué tan fácil y satisfactorio es para los usuarios utilizar un sitio [116].</p>
+                
+                <h4>Fases de la evaluación [117, 118]:</h4>
+                <ol>
+                    <li>Planificación: Definir objetivos, perfiles, tareas y métodos de evaluación [117].</li>
+                    <li>Preparación: Diseñar materiales (guías, cuestionarios) y configurar entornos [118].</li>
+                    <li>Ejecución: Facilitar a los usuarios tareas bajo observación y registrar métricas [118].</li>
+                    <li>Análisis: Procesar datos e identificar patrones y priorizar problemas [118].</li>
+                    <li>Informes y recomendaciones: Elaborar documento y proponer cambios basados en evidencia [119].</li>
+                </ol>
+
+                <h4>Métricas comunes [119]:</h4>
+                <p>Tasa de éxito, Tiempo en tarea, Número de errores, Satisfacción (ej. System Usability Scale - SUS) y Retención [119].</p>
+
+                <!-- Cuadro Resumen [120, 121] -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Evaluación de usabilidad</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fase</th>
+                                <th>Actividad clave</th>
+                                <th>Ejemplo o método</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Planificación</td>
+                                <td>Definir objetivos y usuarios [120].</td>
+                                <td>Seleccionar tareas y perfiles [120].</td>
+                            </tr>
+                            <tr>
+                                <td>Preparación</td>
+                                <td>Crear materiales y entorno [120].</td>
+                                <td>Guías de tareas, entorno controlado [120].</td>
+                            </tr>
+                            <tr>
+                                <td>Ejecución</td>
+                                <td>Observación y recogida de datos [121].</td>
+                                <td>Pruebas con usuarios [121].</td>
+                            </tr>
+                            <tr>
+                                <td>Análisis</td>
+                                <td>Procesamiento y síntesis de resultados [121].</td>
+                                <td>Medición cuantitativa y cualitativa [121].</td>
+                            </tr>
+                            <tr>
+                                <td>Informe</td>
+                                <td>Comunicación y propuesta de mejoras [121].</td>
+                                <td>Documento claro con recomendaciones [121].</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- Test de Repaso: Usabilidad (15 preguntas) -->
+        <div class="test-repaso">
+            <h3>Test de Repaso: Usabilidad Web (15 Preguntas)</h3>
+            <p>Seleccione la opción correcta para cada pregunta. (Nota: La funcionalidad de autocorrección requiere JavaScript en un entorno real).</p>
+            <form id="test-usabilidad">
+                
+                <!-- P16: Definición usabilidad -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>16. Según la norma ISO 9241-11, la usabilidad se define por eficacia, eficiencia y: [66]</p>
+                    <label class="opcion"><input type="radio" name="p16" value="a"> Diseño visual.</label><br>
+                    <label class="opcion"><input type="radio" name="p16" value="b"> Satisfacción.</label><br>
+                    <label class="opcion"><input type="radio" name="p16" value="c"> Velocidad de carga.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P17: Eficacia -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>17. Dentro de la usabilidad, la Eficacia se refiere a: [66]</p>
+                    <label class="opcion"><input type="radio" name="p17" value="a"> Capacidad para cumplir tareas con éxito.</label><br>
+                    <label class="opcion"><input type="radio" name="p17" value="b"> Rapidez con la que se completa una tarea.</label><br>
+                    <label class="opcion"><input type="radio" name="p17" value="c"> Grado de agrado después del uso.</label>
+                    <div class="feedback"></div>
+                </div>
+                
+                <!-- P18: UCD -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>18. ¿Cuál es el proceso clave de la metodología de Diseño Centrado en el Usuario (UCD)? [73]</p>
+                    <label class="opcion"><input type="radio" name="p18" value="a"> Diseño secuencial y lineal.</label><br>
+                    <label class="opcion"><input type="radio" name="p18" value="b"> Desarrollo basado únicamente en supuestos técnicos.</label><br>
+                    <label class="opcion"><input type="radio" name="p18" value="c"> Diseño iterativo (crear, probar y ajustar continuamente).</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P19: Beneficio UCD -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>19. Un beneficio de implementar UCD es: [74]</p>
+                    <label class="opcion"><input type="radio" name="p19" value="a"> Reducción de errores y abandonos.</label><br>
+                    <label class="opcion"><input type="radio" name="p19" value="b"> Mayor complejidad técnica.</label><br>
+                    <label class="opcion"><input type="radio" name="p19" value="c"> Independencia de la retroalimentación del usuario.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P20: Relación Accesibilidad/Usabilidad -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>20. ¿Cómo se relaciona la accesibilidad con la usabilidad? [79]</p>
+                    <label class="opcion"><input type="radio" name="p20" value="a"> La accesibilidad es un requisito para la usabilidad inclusiva.</label><br>
+                    <label class="opcion"><input type="radio" name="p20" value="b"> Son conceptos totalmente independientes.</label><br>
+                    <label class="opcion"><input type="radio" name="p20" value="c"> La usabilidad solo se aplica a usuarios con discapacidad.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P21: Enfoque Accesibilidad/Usabilidad -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>21. Mientras la accesibilidad se enfoca en eliminar barreras técnicas y cognitivas, la usabilidad se enfoca en: [78]</p>
+                    <label class="opcion"><input type="radio" name="p21" value="a"> El cumplimiento estricto de WCAG Nivel AAA.</label><br>
+                    <label class="opcion"><input type="radio" name="p21" value="b"> Facilitar tareas, navegación y comprensión para todos los usuarios.</label><br>
+                    <label class="opcion"><input type="radio" name="p21" value="c"> Priorizar el diseño estético sobre la funcionalidad.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P22: Problema Combinación -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>22. ¿Cuál es un problema común al intentar combinar accesibilidad y usabilidad? [83]</p>
+                    <label class="opcion"><input type="radio" name="p22" value="a"> El diseño accesible siempre es más atractivo visualmente.</label><br>
+                    <label class="opcion"><input type="radio" name="p22" value="b"> La reducción de costos y tiempo.</label><br>
+                    <label class="opcion"><input type="radio" name="p22" value="c"> Conflicto entre criterios estéticos innovadores y recomendaciones técnicas de accesibilidad.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P23: Dificultad Usabilidad -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>23. Una de las principales dificultades en la implantación de sitios web utilizables es: [90, 91]</p>
+                    <label class="opcion"><input type="radio" name="p23" value="a"> Falta de formación y cultura centrada en el usuario en los equipos.</label><br>
+                    <label class="opcion"><input type="radio" name="p23" value="b"> Reducción automática del soporte técnico.</label><br>
+                    <label class="opcion"><input type="radio" name="p23" value="c"> Aumento de la fidelidad del cliente.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P24: Método cualitativo -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>24. ¿Qué método de usabilidad implica que expertos revisen el sitio comparándolo con principios universales (heurísticas)? [96]</p>
+                    <label class="opcion"><input type="radio" name="p24" value="a"> Pruebas A/B.</label><br>
+                    <label class="opcion"><input type="radio" name="p24" value="b"> Evaluación heurística.</label><br>
+                    <label class="opcion"><input type="radio" name="p24" value="c"> Análisis de métricas web.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P25: Requerimiento usuario -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>25. ¿Qué tipo de requerimiento se refiere a criterios de calidad, rendimiento o usabilidad? [100]</p>
+                    <label class="opcion"><input type="radio" name="p25" value="a"> Requerimiento funcional.</label><br>
+                    <label class="opcion"><input type="radio" name="p25" value="b"> Historia de usuario.</label><br>
+                    <label class="opcion"><input type="radio" name="p25" value="c"> Requerimiento no funcional.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P26: Estructurar requerimientos -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>26. Los perfiles semificticios que representan grupos de usuarios se denominan: [101]</p>
+                    <label class="opcion"><input type="radio" name="p26" value="a"> Casos de uso.</label><br>
+                    <label class="opcion"><input type="radio" name="p26" value="b"> Personas.</label><br>
+                    <label class="opcion"><input type="radio" name="p26" value="c"> Historias de vida.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P27: Principio Diseño Conceptual -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>27. El principio de diseño conceptual que exige que las opciones y acciones disponibles siempre estén claras y visibles es: [106]</p>
+                    <label class="opcion"><input type="radio" name="p27" value="a"> Visibilidad.</label><br>
+                    <label class="opcion"><input type="radio" name="p27" value="b"> Sencillez.</label><br>
+                    <label class="opcion"><input type="radio" name="p27" value="c"> Flexibilidad.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P28: Tipo de prototipo -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>28. Los prototipos de baja fidelidad son comúnmente: [107]</p>
+                    <label class="opcion"><input type="radio" name="p28" value="a"> Simulaciones digitales idénticas al producto final.</label><br>
+                    <label class="opcion"><input type="radio" name="p28" value="b"> Pruebas A/B con usuarios reales.</label><br>
+                    <label class="opcion"><input type="radio" name="p28" value="c"> Bocetos, wireframes o diagramas simples.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P29: Pauta Usabilidad -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>29. Para mejorar la usabilidad, en los formularios se recomienda: [113]</p>
+                    <label class="opcion"><input type="radio" name="p29" value="a"> Evitar la retroalimentación inmediata.</label><br>
+                    <label class="opcion"><input type="radio" name="p29" value="b"> Usar ayudas contextuales (ejemplos, pistas).</label><br>
+                    <label class="opcion"><input type="radio" name="p29" value="c"> Depender solo de colores para indicar errores.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P30: Métrica de usabilidad -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>30. ¿Cuál de estas es una métrica clave en la evaluación de usabilidad? [119]</p>
+                    <label class="opcion"><input type="radio" name="p30" value="a"> Tasa de éxito (porcentaje de tareas completadas correctamente).</label><br>
+                    <label class="opcion"><input type="radio" name="p30" value="b"> Densidad de código.</label><br>
+                    <label class="opcion"><input type="radio" name="p30" value="c"> Inversión publicitaria.</label>
+                    <div class="feedback"></div>
+                </div>
+                
+                <button type="button" class="btn-corregir" onclick="corregirTest('test-usabilidad', 15)">Corregir Test de Usabilidad</button>
+            </form>
+        </div>
+    </div>
+    <!-- Script simulado (requeriría JS real para funcionar) -->
+    <script>
+        // El script se repite aquí para asegurar que funcione si las páginas se cargan de forma independiente.
+        function corregirTest(testId, questionsPerPage) {
+            const form = document.getElementById(testId);
+            const questions = form.querySelectorAll('.pregunta');
+            let correctCount = 0;
+            const totalQuestions = questionsPerPage;
+
+            questions.forEach((q, index) => {
+                const feedback = q.querySelector('.feedback');
+                const selected = q.querySelector('input:checked');
+                const correctAnswer = q.getAttribute('data-correct-answer');
+
+                feedback.style.display = 'block';
+                feedback.classList.remove('correcto', 'incorrecto');
+                
+                if (selected && selected.value === correctAnswer) {
+                    feedback.classList.add('correcto');
+                    // Para el segundo test, ajustamos el índice de pregunta para que sea 16-30
+                    const questionNumber = testId === 'test-usabilidad' ? index + 16 : index + 1;
+                    feedback.innerHTML = `¡Correcto! Pregunta ${questionNumber}.`;
+                    correctCount++;
+                } else {
+                    feedback.classList.add('incorrecto');
+                    const questionNumber = testId === 'test-usabilidad' ? index + 16 : index + 1;
+                    feedback.innerHTML = `Incorrecto. Pregunta ${questionNumber}. La respuesta correcta es: ${correctAnswer}.`;
+                }
+            });
+
+            alert(`Test completado. Puntuación: ${correctCount} de ${questionsPerPage}.`);
+        }
+    </script>
+</body>
+</html>

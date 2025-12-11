@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lección: Referencias y Código Accesible/Usable</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <link rel="icon" href="favicon.png">
+</head>
+<body>
+    <header>
+        <h1>UF1843: Referencias Imprescindibles y Código de Calidad</h1>
+      <nav>
+            <a href="index.html">Accesibilidad Web</a>
+            <a href="usabilidad.html">Usabilidad Web</a>
+            <a href="practico.html">Planificación</a>
+             <a href="diseñoweb.html">Diseño Web</a>
+            <a href="desarrollo.html">Referencias y Código</a>
+           
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Lección: Referencias Imprescindibles y Código Accesible/Usable</h2>
+        <p>Como desarrolladores, somos los guardianes de la experiencia digital. Programar de manera accesible y usable significa asegurar que el código no solo funcione, sino que cumpla con un conjunto de estándares de calidad que son, en muchos casos, requisitos legales.</p>
+
+        <!-- Epígrafe 1: Referencias Fundamentales de Desarrollo -->
+        <details open>
+            <summary>1. Las Referencias que NO Pueden Faltar en su Desarrollo Web</summary>
+            <div class="contenido-leccion">
+                <p>Para garantizar que su web es accesible y usable, su trabajo debe estar fundamentado en guías y marcos legales establecidos. La accesibilidad no es solo "pasar un checker", sino una estrategia integral que abarca gobierno, formación y evaluación continua.</p>
+
+                <h4>1.1. Fundamentos Técnicos y Conceptual (W3C y WebAIM)</h4>
+                <ul>
+                    <li>W3C/WAI – Introducción a la Accesibilidad Web: Esta es la fuente primordial para entender la definición y a quién beneficia la accesibilidad. Permite comprender la idea de “percibir, entender, navegar, interactuar y contribuir”.</li>
+                    <li>WebAIM – Introduction to Web Accessibility: Proporciona una explicación didáctica de las Pautas de Accesibilidad al Contenido Web (WCAG) y los principios POUR (Perceptible, Operable, Comprensible, Robusto).</li>
+                    <li>GOV.UK Service Manual – Accesibilidad: Ofrece una guía operativa muy clara sobre cómo integrar la accesibilidad en los servicios digitales: qué hacer, cuándo y cómo.</li>
+                </ul>
+
+                <h4>1.2. Marcos de Usabilidad (Nielsen Norman Group)</h4>
+                <p>Para la usabilidad, su referencia técnica debe ser el trabajo del NN/g (Nielsen Norman Group):</p>
+                <ul>
+                    <li>Usability 101: Define la usabilidad clásica mediante sus cinco componentes: aprendizaje, eficiencia, memorabilidad, errores y satisfacción. Esto establece sus objetivos de evaluación.</li>
+                    <li>10 Heurísticas de Nielsen: Este marco es rápido y esencial para revisar interfaces y justificar hallazgos de usabilidad. Es la base para el diagnóstico de interfaces.</li>
+                </ul>
+                
+                <h4>1.3. Marco Legal (Obligación de Cumplimiento)</h4>
+                <p>Ignorar la normativa expone tanto al cliente como al desarrollador a riesgos legales. Deben conocer especialmente:</p>
+                <ul>
+                    <li>Real Decreto 1112/2018 (España): Establece la base legal para la accesibilidad de sitios y apps del sector público, incluyendo las obligaciones y la presunción de conformidad. Existe un resumen ciudadano ideal para comprenderlo rápidamente.</li>
+                    <li>Norma UNE 139803: Es la adaptación técnica española de las WCAG. Es su referencia técnica para asegurar la conformidad.</li>
+                    <li>Ley 11/2023 / Acta Europea de Accesibilidad (EAA - 2019/882): Esta legislación es fundamental, ya que amplía el impacto al sector privado (incluido el *e-commerce*) y entra en vigor completamente en junio de 2025. Deben entender que la accesibilidad no es solo un derecho, sino un contexto de cumplimiento y una oportunidad empresarial.</li>
+                </ul>
+
+                <!-- Cuadro Resumen -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Referencias Imprescindibles para el Desarrollador</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Referencia</th>
+                                <th>Tipo</th>
+                                <th>Propósito en el Desarrollo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>W3C/WAI</td>
+                                <td>Estándar Internacional</td>
+                                <td>Define el qué: principios POUR (Perceptible, Operable, Comprensible, Robusto).</td>
+                            </tr>
+                            <tr>
+                                <td>NN/g Heurísticas</td>
+                                <td>Marco de Usabilidad</td>
+                                <td>Define la calidad de la interacción.</td>
+                            </tr>
+                            <tr>
+                                <td>RD 1112/2018 / UNE 139803</td>
+                                <td>Legal/Técnico (España)</td>
+                                <td>Obligaciones de accesibilidad para el sector público.</td>
+                            </tr>
+                            <tr>
+                                <td>EAA (Ley 11/2023)</td>
+                                <td>Legal (UE/España)</td>
+                                <td>Contexto de cumplimiento para el sector privado/e-commerce (2025).</td>
+                            </tr>
+                            <tr>
+                                <td>GOV.UK Manual</td>
+                                <td>Guía Operativa</td>
+                                <td>Define el cómo: Patrones y checklist de implementación.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- Epígrafe 2: Ejemplos de Código para la Accesibilidad (WCAG) -->
+        <details>
+            <summary>2. Código Accesible: Ejemplos Prácticos de Implementación WCAG</summary>
+            <div class="contenido-leccion">
+                <p>El código accesible se enfoca en asegurar los principios Perceptible (ej. texto alternativo), Operable (ej. navegación por teclado), Comprensible y Robusto (ej. HTML semántico).</p>
+
+                <h4>2.1. Imágenes y Contenido No Textual (Perceptible y Robusto)</h4>
+                <p>La barrera más común es la falta de textos alternativos en imágenes o vídeos. El desarrollador debe usar el atributo `alt`.</p>
+                <div class="codigo-ejemplo">
+                    <p><strong>CÓDIGO INACCESIBLE (Error común):</strong></p>
+                    <pre><code>&lt;img src="logo.png"&gt;</code></pre>
+                    <p><em>Riesgo: Los lectores de pantalla no saben qué es la imagen.</em></p>
+                    <p><strong>CÓDIGO ACCESIBLE (Patrón recomendado):</strong></p>
+                    <pre><code>&lt;!-- Imagen informativa --&gt;
+&lt;img src="producto.jpg" alt="Zapatillas deportivas azules con suela blanca"&gt;
+
+&lt;!-- Imagen decorativa (oculta para lectores de pantalla) --&gt;
+&lt;img src="icono.svg" alt="" aria-hidden="true"&gt;</code></pre>
+                </div>
+
+                <h4>2.2. Formularios y Etiquetas (Operable y Comprensible)</h4>
+                <p>La falta de etiquetas adecuadas en formularios es un fallo grave de accesibilidad. Siempre deben asociarse los controles (`<input>`) con su etiqueta (`<label>`) para que el usuario pueda interactuar correctamente.</p>
+                <div class="codigo-ejemplo">
+                    <p><strong>CÓDIGO INACCESIBLE (Fallo en Asociación):</strong></p>
+                    <pre><code>&lt;input type="text" id="nombre"&gt;
+&lt;span&gt;Nombre de Usuario&lt;/span&gt; 
+</code></pre>
+                    <p><em>Riesgo: El lector de pantalla no asocia el texto con el campo de entrada.</em></p>
+                    <p><strong>CÓDIGO ACCESIBLE (Patrón recomendado):</strong></p>
+                    <pre><code>&lt;label for="nombreUsuario"&gt;Nombre de Usuario&lt;/label&gt;
+&lt;input type="text" id="nombreUsuario" required&gt;</code></pre>
+                </div>
+
+                <h4>2.3. Contenido Dinámico (ARIA y Robustez)</h4>
+                <p>Para elementos que no son controles HTML nativos (como un acordeón o una pestaña personalizada), necesitamos ARIA (Accessible Rich Internet Applications) para comunicar roles y estados.</p>
+                <div class="codigo-ejemplo">
+                    <p><strong>CÓDIGO ACCESIBLE (Menú desplegable controlado por botón):</strong></p>
+                    <pre><code>&lt;button aria-expanded="false" aria-controls="menu-desplegable"&gt;Menú&lt;/button&gt;
+&lt;div id="menu-desplegable" role="menu" hidden&gt;
+    &lt;a href="#" role="menuitem"&gt;Opción 1&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+                    <p><em>Explicación: `aria-expanded` indica al lector de pantalla si el menú está abierto o cerrado.</em></p>
+                </div>
+            </div>
+        </details>
+
+        <!-- Epígrafe 3: Ejemplos de Código para la Usabilidad (NN/g) -->
+        <details>
+            <summary>3. Código Usable: Implementación de la Eficiencia y Satisfacción</summary>
+            <div class="contenido-leccion">
+                <p>El código usable se centra en reducir la carga cognitiva del usuario, mejorar la eficiencia y garantizar la satisfacción. Se logra mediante una interacción clara y predecible.</p>
+
+                <h4>3.1. Navegación e Interacción por Teclado (Operable y Eficiente)</h4>
+                <p>Asegurar la navegación completa con la tecla Tab es un requisito tanto de usabilidad inclusiva como de accesibilidad. El foco debe ser siempre visible (Usabilidad) y lógico (Accesibilidad).</p>
+                <div class="codigo-ejemplo">
+                    <p><strong>CÓDIGO USABLE (Foco visible con CSS):</strong></p>
+                    <pre><code>/* Patrón GOV.UK y WCAG: Asegurar foco claro, no depender del navegador */
+button:focus,
+a:focus,
+input:focus {
+    outline: 3px solid #ffbf47; /* Color de contraste alto */
+    outline-offset: 2px; /* Espacio para no chocar con el borde */
+}
+
+/* Evitar mala práctica */
+*:focus {
+    outline: none; /* ¡NUNCA USAR ESTO! */
+}</code></pre>
+                </div>
+
+                <h4>3.2. Retroalimentación Inmediata (Eficiencia y Errores)</h4>
+                <p>La usabilidad exige que el sistema informe al usuario sobre el estado de cada acción (principio de Retroalimentación). Esto reduce los errores y la frustración.</p>
+                <div class="codigo-ejemplo">
+                    <p><strong>CÓDIGO USABLE (Validación y retroalimentación con JS/HTML):</strong></p>
+                    <pre><code>&lt;input type="email" id="email" required onblur="validarEmail(this)"&gt;
+&lt;p id="emailError" class="feedback incorrecto" aria-live="polite"&gt;
+    El formato de correo no es válido.
+&lt;/p&gt;</code></pre>
+                    <p><em>Explicación: `aria-live="polite"` asegura que si el mensaje de error aparece dinámicamente, el lector de pantalla lo anuncia automáticamente, combinando usabilidad (informar error) y accesibilidad (anunciar error).</em></p>
+                </div>
+                
+                <h4>3.3. Estructura y Claridad (Comprensible y Memorabilidad)</h4>
+                <p>El uso de encabezados semánticos de forma correcta ayuda a la memorabilidad del sitio y permite la navegación por estructura.</p>
+                <div class="codigo-ejemplo">
+                    <p><strong>CÓDIGO USABLE (Estructura semántica):</strong></p>
+                    <pre><code>&lt;main&gt;
+    &lt;h1&gt;Título principal de la página&lt;/h1&gt;
+    &lt;p&gt;Contenido introductorio.&lt;/p&gt;
+
+    &lt;section&gt;
+        &lt;h2&gt;Subsección: Noticias del Sector&lt;/h2&gt;
+        &lt;article&gt;
+            &lt;h3&gt;Noticia A: Lanzamiento de producto&lt;/h3&gt;
+        &lt;/article&gt;
+    &lt;/section&gt;
+&lt;/main&gt;</code></pre>
+                    <p><em>Nota: Nunca se debe saltar niveles de encabezado (ej. de `h1` a `h4`).</em></p>
+                </div>
+            </div>
+        </details>
+        
+        <!-- Test de Repaso: Referencias y Código (30 preguntas) -->
+        <div class="test-repaso">
+            <h3>Test de Repaso: Referencias y Código Accesible/Usable (30 Preguntas)</h3>
+            <p>Seleccione la opción correcta para cada pregunta. (La funcionalidad de autocorrección requiere JavaScript en un entorno real).</p>
+            <form id="test-referencias-codigo">
+                
+                <!-- P1 (Referencia Usabilidad) -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>1. ¿Cuál es el marco fundamental utilizado para revisar interfaces y justificar hallazgos de usabilidad en el laboratorio, según las referencias del curso?</p>
+                    <label class="opcion"><input type="radio" name="p1" value="a"> Real Decreto 1112/2018.</label><br>
+                    <label class="opcion"><input type="radio" name="p1" value="b"> 10 Heurísticas de Nielsen (NN/g).</label><br>
+                    <label class="opcion"><input type="radio" name="p1" value="c"> Norma ISO 9241-11.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P2 (WCAG Principio) -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>2. El principio WCAG que exige el uso correcto de HTML semántico y ARIA para la compatibilidad con tecnologías asistivas es:</p>
+                    <label class="opcion"><input type="radio" name="p2" value="a"> Perceptible.</label><br>
+                    <label class="opcion"><input type="radio" name="p2" value="b"> Comprensible.</label><br>
+                    <label class="opcion"><input type="radio" name="p2" value="c"> Robusto.</label>
+                    <div class="feedback"></div>
+                </div>
+                
+                <!-- P3 (Código ARIA) -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>3. ¿Qué atributo ARIA se utiliza en un menú desplegable para indicar a un lector de pantalla si está abierto o cerrado?</p>
+                    <label class="opcion"><input type="radio" name="p3" value="a"> `aria-expanded`.</label><br>
+                    <label class="opcion"><input type="radio" name="p3" value="b"> `alt`.</label><br>
+                    <label class="opcion"><input type="radio" name="p3" value="c"> `role="link"`.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P4 (Legal España) -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>4. ¿Cuál es la base legal principal en España para la accesibilidad de sitios web del sector público, citada en las referencias?</p>
+                    <label class="opcion"><input type="radio" name="p4" value="a"> Real Decreto 1112/2018.</label><br>
+                    <label class="opcion"><input type="radio" name="p4" value="b"> Ley de Protección de Datos.</label><br>
+                    <label class="opcion"><input type="radio" name="p4" value="c"> Directiva GDPR.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P5 (Código alt) -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>5. Si una imagen es meramente decorativa, el código accesible más adecuado para ella es:</p>
+                    <label class="opcion"><input type="radio" name="p5" value="a"> `alt="decoración sin importancia"`.</label><br>
+                    <label class="opcion"><input type="radio" name="p5" value="b"> `alt=""` y/o `aria-hidden="true"`.</label><br>
+                    <label class="opcion"><input type="radio" name="p5" value="c"> Omitir el atributo `alt` completamente.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P6 (GOV.UK) -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>6. ¿Qué recurso se recomienda como guía operativa muy clara para integrar la accesibilidad en servicios digitales con patrones y checklists accionables?</p>
+                    <label class="opcion"><input type="radio" name="p6" value="a"> GOV.UK Service Manual.</label><br>
+                    <label class="opcion"><input type="radio" name="p6" value="b"> Adobe Acrobat Manual.</label><br>
+                    <label class="opcion"><input type="radio" name="p6" value="c"> Google Search Console.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P7 (Usability 101) -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>7. Según NN/g Usability 101, ¿cuál de estos no es uno de los cinco componentes de la usabilidad?</p>
+                    <label class="opcion"><input type="radio" name="p7" value="a"> Satisfacción.</label><br>
+                    <label class="opcion"><input type="radio" name="p7" value="b"> Eficiencia.</label><br>
+                    <label class="opcion"><input type="radio" name="p7" value="c"> Estética.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P8 (Foco CSS) -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>8. Para asegurar la Operabilidad con teclado, un desarrollador debe incluir en CSS la regla:</p>
+                    <label class="opcion"><input type="radio" name="p8" value="a"> `*:focus { outline: none; }`.</label><br>
+                    <label class="opcion"><input type="radio" name="p8" value="b"> Indicadores visuales claros del foco activo usando `:focus`.</label><br>
+                    <label class="opcion"><input type="radio" name="p8" value="c"> Un color de fondo muy claro.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P9 (Legal Privado) -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>9. ¿Qué marco legal amplía las obligaciones de accesibilidad al sector privado y al e-commerce, con plena vigencia a partir de 2025?</p>
+                    <label class="opcion"><input type="radio" name="p9" value="a"> El Acta Europea de Accesibilidad (EAA / Ley 11/2023).</label><br>
+                    <label class="opcion"><input type="radio" name="p9" value="b"> El Código Civil.</label><br>
+                    <label class="opcion"><input type="radio" name="p9" value="c"> La Ley de Propiedad Intelectual.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P10 (HTML Semántico) -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>10. ¿Cuál es el error en la jerarquía semántica del código:</p>
+                    <pre><code>&lt;h1&gt;Título&lt;/h1&gt; &lt;h4&gt;Subtítulo&lt;/h4&gt;</code></pre>
+                    <label class="opcion"><input type="radio" name="p10" value="a"> No usar la etiqueta `&lt;p&gt;`.</label><br>
+                    <label class="opcion"><input type="radio" name="p10" value="b"> El uso del `&lt;h1&gt;` es correcto.</label><br>
+                    <label class="opcion"><input type="radio" name="p10" value="c"> Se saltó un nivel de encabezado (`h2`, `h3`), rompiendo la jerarquía Comprensible.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P11 (WebAIM) -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>11. Además de explicar WCAG y POUR, WebAIM también proporciona guías sobre accesibilidad como estrategia, abarcando:</p>
+                    <label class="opcion"><input type="radio" name="p11" value="a"> Gobierno, formación y evaluación continua.</label><br>
+                    <label class="opcion"><input type="radio" name="p11" value="b"> Reglas de SEO avanzado.</label><br>
+                    <label class="opcion"><input type="radio" name="p11" value="c"> Exclusivamente diseño gráfico.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P12 (Formularios Accesibles) -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>12. Para asociar una etiqueta con un campo de entrada (`<input>`) en HTML de forma correcta, se usa:</p>
+                    <label class="opcion"><input type="radio" name="p12" value="a"> El atributo `name` en el `<input>`.</label><br>
+                    <label class="opcion"><input type="radio" name="p12" value="b"> El atributo `for` en el `<label>` y `id` en el `<input>`.</label><br>
+                    <label class="opcion"><input type="radio" name="p12" value="c"> Exclusivamente CSS.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P13 (W3C/WAI Definición) -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>13. La W3C/WAI define la accesibilidad web como la capacidad de:</p>
+                    <label class="opcion"><input type="radio" name="p13" value="a"> Solo percibir e interactuar.</label><br>
+                    <label class="opcion"><input type="radio" name="p13" value="b"> Solo navegar y contribuir.</label><br>
+                    <label class="opcion"><input type="radio" name="p13" value="c"> Percibir, entender, navegar, interactuar y contribuir.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P14 (Mala Práctica CSS) -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>14. ¿Qué fragmento CSS es una mala práctica que elimina la Operabilidad con teclado?</p>
+                    <pre><code>*:focus { outline: none; }</code></pre>
+                    <label class="opcion"><input type="radio" name="p14" value="a"> Correcto, elimina el indicador de foco.</label><br>
+                    <label class="opcion"><input type="radio" name="p14" value="b"> Incorrecto, es la forma correcta de asegurar el foco.</label><br>
+                    <label class="opcion"><input type="radio" name="p14" value="c"> Irrelevante para la accesibilidad.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P15 (Usabilidad: Retroalimentación) -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>15. El principio de Usabilidad de "Retroalimentación" se traduce en código mediante:</p>
+                    <label class="opcion"><input type="radio" name="p15" value="a"> Dejar al usuario adivinar si la acción funcionó.</label><br>
+                    <label class="opcion"><input type="radio" name="p15" value="b"> Mensajes claros que indican el estado de la acción (ej. "Formulario enviado con éxito").</label><br>
+                    <label class="opcion"><input type="radio" name="p15" value="c"> El uso de JavaScript avanzado, sin mensajes visibles.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P16 (Referencia Legal/Técnica Española) -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>16. ¿Cuál es la adaptación técnica española de las WCAG?</p>
+                    <label class="opcion"><input type="radio" name="p16" value="a"> ADA.</label><br>
+                    <label class="opcion"><input type="radio" name="p16" value="b"> Ley 11/2023.</label><br>
+                    <label class="opcion"><input type="radio" name="p16" value="c"> Norma UNE 139803.</label>
+                    <div class="feedback"></div>
+                </div>
+                
+                <!-- P17 (Principio Perceptible) -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>17. Los colores y contrastes inapropiados en un diseño web son una barrera directa al principio WCAG de:</p>
+                    <label class="opcion"><input type="radio" name="p17" value="a"> Perceptible.</label><br>
+                    <label class="opcion"><input type="radio" name="p17" value="b"> Operable.</label><br>
+                    <label class="opcion"><input type="radio" name="p17" value="c"> Memorabilidad.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P18 (Usabilidad: Errores) -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>18. Para reducir los errores (componente de usabilidad) en formularios, el desarrollador debe asegurar:</p>
+                    <label class="opcion"><input type="radio" name="p18" value="a"> Que los mensajes de error sean técnicos y complejos.</label><br>
+                    <label class="opcion"><input type="radio" name="p18" value="b"> Que haya validación inmediata y opciones para corregir fácilmente.</label><br>
+                    <label class="opcion"><input type="radio" name="p18" value="c"> Que el usuario solo pueda usar el teclado.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P19 (ARIA Live) -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>19. Si un mensaje de error aparece de forma dinámica, ¿qué comando ARIA asegura que el lector de pantalla lo anuncie automáticamente?</p>
+                    <label class="opcion"><input type="radio" name="p19" value="a"> `aria-hidden="true"`.</label><br>
+                    <label class="opcion"><input type="radio" name="p19" value="b"> `role="alert"` sin más atributos.</label><br>
+                    <label class="opcion"><input type="radio" name="p19" value="c"> `aria-live="polite"` o `role="alert"` (implica `aria-live="assertive"`).</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P20 (Referencia Motivacional) -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>20. ¿Qué recurso se recomienda para iniciar debates con los alumnos sobre las razones éticas, legales y de negocio de la accesibilidad?</p>
+                    <label class="opcion"><input type="radio" name="p20" value="a"> Usability Testing 101.</label><br>
+                    <label class="opcion"><input type="radio" name="p20" value="b"> WebAIM – Motivar a equipos (Why Accessibility?).</label><br>
+                    <label class="opcion"><input type="radio" name="p20" value="c"> La guía de SEO de Google.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P21 (Componente de usabilidad) -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>21. ¿Cuál de los siguientes es uno de los 5 componentes de la usabilidad según NN/g?</p>
+                    <label class="opcion"><input type="radio" name="p21" value="a"> Memorabilidad.</label><br>
+                    <label class="opcion"><input type="radio" name="p21" value="b"> Robustez.</label><br>
+                    <label class="opcion"><input type="radio" name="p21" value="c"> Flexibilidad.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P22 (Jump Links) -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>22. Los enlaces que permiten al usuario de teclado saltar directamente al contenido principal se conocen como:</p>
+                    <label class="opcion"><input type="radio" name="p22" value="a"> `alt` links.</label><br>
+                    <label class="opcion"><input type="radio" name="p22" value="b"> ARIA links.</label><br>
+                    <label class="opcion"><input type="radio" name="p22" value="c"> Enlaces de Salto (`skip links`).</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P23 (Usabilidad vs Accesibilidad) -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>23. ¿Qué implicación tiene la EAA (Acta Europea de Accesibilidad) para el sector privado a partir de 2025?</p>
+                    <label class="opcion"><input type="radio" name="p23" value="a"> Genera un contexto de cumplimiento legal y una oportunidad empresarial.</label><br>
+                    <label class="opcion"><input type="radio" name="p23" value="b"> Elimina toda obligación de accesibilidad.</label><br>
+                    <label class="opcion"><input type="radio" name="p23" value="c"> Solo afecta a los documentos PDF.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P24 (Estructura semántica) -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>24. ¿Por qué es fundamental que un desarrollador use correctamente las etiquetas de encabezado (`h1`, `h2`, etc.) en orden?</p>
+                    <label class="opcion"><input type="radio" name="p24" value="a"> Para reducir el tiempo de carga del servidor.</label><br>
+                    <label class="opcion"><input type="radio" name="p24" value="b"> Para crear una jerarquía clara y mejorar la navegabilidad por estructura (Comprensible y Robusto).</label><br>
+                    <label class="opcion"><input type="radio" name="p24" value="c"> Porque Google lo obliga para el SEO, exclusivamente.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P25 (Formularios Inaccesibles) -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>25. ¿Cuál es el riesgo de no asociar el `<input>` con un `<label>` en un formulario?</p>
+                    <label class="opcion"><input type="radio" name="p25" value="a"> El código se vuelve muy lento.</label><br>
+                    <label class="opcion"><input type="radio" name="p25" value="b"> Se rompe el CSS.</label><br>
+                    <label class="opcion"><input type="radio" name="p25" value="c"> El lector de pantalla no identifica el propósito del campo de entrada (Fallo Operable).</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P26 (Guía W3C) -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>26. El recurso W3C/WAI se recomienda para obtener, entre otras cosas, ejemplos de:</p>
+                    <label class="opcion"><input type="radio" name="p26" value="a"> "Buen vs. mal" patrón.</label><br>
+                    <label class="opcion"><input type="radio" name="p26" value="b"> Las últimas cotizaciones de bolsa.</label><br>
+                    <label class="opcion"><input type="radio" name="p26" value="c"> Exclusivamente código de backend.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P27 (CSS Contraste) -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>27. Para cumplir con el principio Perceptible, ¿qué se recomienda en CSS respecto al foco?</p>
+                    <label class="opcion"><input type="radio" name="p27" value="a"> Eliminar el contorno por defecto del navegador.</label><br>
+                    <label class="opcion"><input type="radio" name="p27" value="b"> Usar colores de contraste alto para el contorno del foco (outline) para que sea visible al navegar con teclado.</label><br>
+                    <label class="opcion"><input type="radio" name="p27" value="c"> Usar la etiqueta `<blink>`.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P28 (Propósito ARIA) -->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>28. Los atributos ARIA se utilizan principalmente para:</p>
+                    <label class="opcion"><input type="radio" name="p28" value="a"> Reemplazar HTML por completo.</label><br>
+                    <label class="opcion"><input type="radio" name="p28" value="b"> Mejorar la velocidad de las animaciones.</label><br>
+                    <label class="opcion"><input type="radio" name="p28" value="c"> Suplementar los elementos HTML nativos para comunicar roles, estados y propiedades a tecnologías asistivas.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P29 (Usabilidad en la práctica) -->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>29. ¿Qué define el NN/g como un marco de "solidez de la evidencia" de investigación, útil para informes de clase?</p>
+                    <label class="opcion"><input type="radio" name="p29" value="a"> Strength of User Research Evidence.</label><br>
+                    <label class="opcion"><input type="radio" name="p29" value="b"> WCAG A.</label><br>
+                    <label class="opcion"><input type="radio" name="p29" value="c"> GOV.UK EAA.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P30 (Programación defensiva) -->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>30. La Ley 11/2023 se refiere principalmente a:</p>
+                    <label class="opcion"><input type="radio" name="p30" value="a"> El sector público y el RD 1112/2018.</label><br>
+                    <label class="opcion"><input type="radio" name="p30" value="b"> El Acta Europea de Accesibilidad y su impacto en productos/servicios digitales.</label><br>
+                    <label class="opcion"><input type="radio" name="p30" value="c"> La usabilidad puramente estética.</label>
+                    <div class="feedback"></div>
+                </div>
+                
+                <button type="button" class="btn-corregir" onclick="corregirTest('test-referencias-codigo', 30)">Corregir Test de Referencias y Código</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Script necesario para la autocorrección y retroalimentación -->
+    <script>
+        function corregirTest(testId, totalQuestions) {
+            const form = document.getElementById(testId);
+            const questions = form.querySelectorAll('.pregunta');
+            let correctCount = 0;
+
+            questions.forEach((q, index) => {
+                const feedback = q.querySelector('.feedback');
+                const selected = q.querySelector('input:checked');
+                const correctAnswer = q.getAttribute('data-correct-answer');
+                const questionNumber = index + 1;
+
+                feedback.style.display = 'block';
+                feedback.classList.remove('correcto', 'incorrecto');
+                
+                if (selected && selected.value === correctAnswer) {
+                    feedback.classList.add('correcto');
+                    feedback.innerHTML = `¡Correcto! Pregunta ${questionNumber}.`;
+                    correctCount++;
+                } else {
+                    feedback.classList.add('incorrecto');
+                    feedback.innerHTML = `Incorrecto. Pregunta ${questionNumber}. La respuesta correcta es: ${correctAnswer}.`;
+                }
+            });
+
+            alert(`Test completado. Puntuación: ${correctCount} de ${totalQuestions}.`);
+        }
+    </script>
+</body>
+</html>
+```

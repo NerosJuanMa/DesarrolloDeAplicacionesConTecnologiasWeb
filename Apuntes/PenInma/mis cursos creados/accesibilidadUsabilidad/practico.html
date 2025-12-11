@@ -1,0 +1,642 @@
+El archivo HTML a continuación está estructurado según el estilo solicitado (utilizando el `styles.css` proporcionado anteriormente) e incluye la lección extensa y didáctica sobre la importancia de la planificación de un sitio web usable, con cuadros resumen y un test de repaso de 30 preguntas.
+
+## Archivo `planificacion_usable.html`
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lección: Planificación de Usabilidad</title>
+    <!-- Asegúrese de que este archivo styles.css esté en la misma carpeta que este HTML -->
+    <link rel="stylesheet" href="styles.css"> 
+    <link rel="icon" href="favicon.png">
+    <style>
+        /* Estilos específicos para esta lección si fuera necesario, aunque se usa styles.css */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>UF1843: Planificación Usable y Diseño Centrado en el Usuario</h1>
+      <nav>
+            <a href="index.html">Accesibilidad Web</a>
+            <a href="usabilidad.html">Usabilidad Web</a>
+            <a href="practico.html">Planificación</a>
+             <a href="diseñoweb.html">Diseño Web</a>
+            <a href="desarrollo.html">Referencias y Código</a>
+           
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Lección: La Importancia Vital de Planificar un Sitio Web Usable</h2>
+        <p>¡Bienvenidos! La construcción de una experiencia digital de calidad no se improvisa. Si no planificamos la usabilidad y la accesibilidad desde el inicio, estamos construyendo barreras invisibles que frustrarán a nuestros usuarios y condenarán nuestro proyecto al fracaso.</p>
+
+        <!-- Epígrafe 1: Fundamentos -->
+        <details open>
+            <summary>1. Definiendo las Bases: Usabilidad, Eficacia y Satisfacción</summary>
+            <div class="contenido-leccion">
+                <p>La usabilidad es la capacidad de un sitio web para ser entendido, aprendido y utilizado de manera sencilla y eficiente. Mide qué tan fácil e intuitivo es manejar una plataforma digital para cumplir un objetivo.</p>
+                <p>La usabilidad se define por tres pilares que deben guiar nuestra planificación:</p>
+                <ul>
+                    <li>Eficacia: El usuario logra completar las tareas con éxito.</li>
+                    <li>Eficiencia: Las tareas se completan sin desperdiciar recursos ni tiempo.</li>
+                    <li>Satisfacción: El usuario experimenta agrado y comodidad durante y después del uso.</li>
+                </ul>
+                
+                <h4>La Experiencia de Usuario (UX) como marco global</h4>
+                <p>La Experiencia de Usuario (UX) es más amplia que la usabilidad. Abarca no solo la facilidad de uso, sino también las emociones, percepciones, expectativas y el contexto completo de interacción. Una planificación adecuada, basada en la UX, busca crear experiencias globales agradables, funcionales y valiosas.</p>
+                
+                <!-- Cuadro Resumen -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Pilares de la Usabilidad y UX</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Concepto</th>
+                                <th>Definición clave</th>
+                                <th>Impacto en la Planificación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Usabilidad</td>
+                                <td>Facilidad para usar y aprender una plataforma.</td>
+                                <td>Diseño de flujos y procesos eficientes.</td>
+                            </tr>
+                            <tr>
+                                <td>Eficacia</td>
+                                <td>Capacidad para lograr objetivos correctamente.</td>
+                                <td>Validar la tasa de éxito de tareas clave.</td>
+                            </tr>
+                            <tr>
+                                <td>Satisfacción</td>
+                                <td>Percepción positiva y agrado del usuario.</td>
+                                <td>Evaluar con encuestas y NPS.</td>
+                            </tr>
+                            <tr>
+                                <td>UX</td>
+                                <td>Experiencia total vivida (emociones, percepciones).</td>
+                                <td>Diseñar con enfoque centrado en el usuario.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- Epígrafe 2: Metodología: Diseño Centrado en el Usuario (UCD) y Requerimientos -->
+        <details>
+            <summary>2. El Corazón de la Planificación: Diseño Centrado en el Usuario y Casos de Uso</summary>
+            <div class="contenido-leccion">
+                <p>Planificar un sitio usable significa adoptar el Diseño Centrado en el Usuario (UCD). Esta metodología pone a las personas reales en el foco del desarrollo, asegurando correspondencia con sus necesidades.</p>
+                
+                <h4>Técnicas clave de planificación:</h4>
+                <p>El análisis de requerimientos identifica qué necesitan y quieren los usuarios mediante técnicas estructuradas.</p>
+                <ul>
+                    <li>Personas (Buyer Personas): Perfiles semificticios creados a partir de investigación, que representan segmentos concretos de clientes ideales.</li>
+                    <li>Casos de Uso: Describen escenarios reales de interacción entre el usuario y el sistema. Permiten diseñar el sitio para responder a necesidades concretas, prevenir problemas y construir flujos efectivos.</li>
+                </ul>
+
+                <h4>¿Qué logramos con casos de uso claros?</h4>
+                <p>Diseñar con casos de uso claros ayuda a:</p>
+                <ul>
+                    <li>Centrarse en lo que el usuario realmente necesita.</li>
+                    <li>Crear interfaces coherentes y orientadas a tareas.</li>
+                    <li>Evitar funciones innecesarias o confusas.</li>
+                    <li>Validar diseños mediante pruebas con escenarios reales.</li>
+                </ul>
+
+                <p><strong>Ejemplo (Tienda Online):</strong> El Caso de Uso de "Laura, que quiere comprar zapatillas deportivas" define un flujo principal claro: acceder al sitio, usar el buscador, filtrar por talla y marca, agregar al carrito, revisar el carrito, introducir datos de envío y pago, y confirmar la compra.</p>
+
+                <!-- Cuadro Resumen -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: UCD y Herramientas de Planificación</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Concepto</th>
+                                <th>Propósito</th>
+                                <th>Resultado de Planificación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>UCD</td>
+                                <td>Poner al usuario en el foco del desarrollo.</td>
+                                <td>Diseño que corresponde a necesidades reales.</td>
+                            </tr>
+                            <tr>
+                                <td>Personas</td>
+                                <td>Representar segmentos de clientes.</td>
+                                <td>Mensajes y diseño ajustados a los hábitos del cliente.</td>
+                            </tr>
+                            <tr>
+                                <td>Casos de Uso</td>
+                                <td>Describir escenarios de interacción reales.</td>
+                                <td>Flujos de tareas eficientes y predecibles.</td>
+                            </tr>
+                            <tr>
+                                <td>Prototipado</td>
+                                <td>Crear modelos para validar estructura y funciones.</td>
+                                <td>Validación iterativa centrada en el usuario.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- Epígrafe 3: La Visión Global: Accesibilidad y Usabilidad -->
+        <details>
+            <summary>3. Planificación Inclusiva: La Integración de Accesibilidad y Usabilidad</summary>
+            <div class="contenido-leccion">
+                <p>Es fundamental recordar que la accesibilidad y la usabilidad son complementarias, pero no equivalentes. La accesibilidad garantiza que cualquier persona pueda acceder sin barreras, mientras que la usabilidad se enfoca en que esa experiencia sea eficiente y satisfactoria.</p>
+                
+                <h4>Planificación de la accesibilidad (WCAG):</h4>
+                <p>La accesibilidad se basa en los cuatro principios WCAG (Pautas de accesibilidad al contenido web), los cuales deben integrarse desde la planificación inicial:</p>
+                <ol>
+                    <li>Perceptible: La información debe poder ser percibida (ej. texto alternativo).</li>
+                    <li>Operable: Los controles deben ser accesibles (ej. navegación con teclado).</li>
+                    <li>Comprensible: El contenido y la interfaz deben ser fáciles de entender.</li>
+                    <li>Robusto: El contenido debe ser compatible con diversas tecnologías.</li>
+                </ol>
+                
+                <p><strong>Ventajas de la combinación:</strong> La planificación conjunta genera una experiencia inclusiva para todos, mejora la calidad, facilita el cumplimiento legal y optimiza el SEO.</p>
+                <p><strong>El Desafío en España:</strong> Los datos recientes muestran que solo alrededor del 27% de las webs españolas alcanzan el nivel AA exigido en accesibilidad. Más de la mitad presentan fallos graves que dificultan el acceso a personas con discapacidad. Esto subraya la urgencia de planificar ambos aspectos desde el inicio para evitar riesgos legales ante la normativa europea de 2025.</p>
+                
+                <!-- Cuadro Resumen -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Diferencias y Cumplimiento</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ámbito</th>
+                                <th>Foco Principal</th>
+                                <th>Estándar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Accesibilidad</td>
+                                <td>Eliminar barreras para diversidad funcional.</td>
+                                <td>WCAG (Niveles A, AA, AAA).</td>
+                            </tr>
+                            <tr>
+                                <td>Usabilidad</td>
+                                <td>Optimizar eficacia, eficiencia y satisfacción.</td>
+                                <td>Diseño Centrado en el Usuario (UCD).</td>
+                            </tr>
+                            <tr>
+                                <td>Cumplimiento en España</td>
+                                <td>Deficiente; solo el 27% alcanza Nivel AA.</td>
+                                <td>La nueva normativa europea exige cambios urgentes.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- Epígrafe 4: Consecuencias de una Planificación Deficiente -->
+        <details>
+            <summary>4. Fallos Comunes y Consecuencias de la Mala Usabilidad</summary>
+            <div class="contenido-leccion">
+                <p>La ausencia de una planificación rigurosa conduce a la pérdida de usuario por frustración y el abandono del carrito. Una web con mala usabilidad se caracteriza por:</p>
+                <ul>
+                    <li>Menús confusos y ocultos, navegación poco intuitiva.</li>
+                    <li>Falta de jerarquía visual y organización.</li>
+                    <li>Proceso de pago extenso y sin posibilidad de corrección fácil de errores.</li>
+                    <li>Sobrecarga de información o gráficos sin sentido.</li>
+                    <li>Ausencia de retroalimentación clara o mensajes amigables.</li>
+                    <li>Colores y contrastes inapropiados (problema de accesibilidad que impacta la usabilidad).</li>
+                </ul>
+
+                <h4>Ejemplos españoles de baja usabilidad:</h4>
+                <p>Incluso grandes plataformas en España presentan problemas de usabilidad por mala planificación:</p>
+                <ul>
+                    <li>Renfe: Problemas de navegación con teclado y formularios complejos con validaciones poco claras.</li>
+                    <li>Mercadona: Dificultad para encontrar métodos de pago alternativos y problemas en la estructura del carrito de compra.</li>
+                    <li>Páginas de PYMES: Interfaces complejas, menús poco legibles y procesos de contacto confusos.</li>
+                </ul>
+                <p>Por contraste, sitios como Mango o El Corte Inglés demuestran alta usabilidad gracias a menús accesibles, navegación intuitiva y retroalimentación efectiva.</p>
+
+                <!-- Cuadro Resumen -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Problemas y Consecuencias</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Problema de Planificación</th>
+                                <th>Ejemplo Práctico</th>
+                                <th>Consecuencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ausencia de UCD</td>
+                                <td>Menús ocultos o difíciles de encontrar.</td>
+                                <td>Frustración del usuario.</td>
+                            </tr>
+                            <tr>
+                                <td>Flujo de tarea deficiente</td>
+                                <td>Proceso de pago extenso.</td>
+                                <td>Abandono del carrito (Tasa > 75%).</td>
+                            </tr>
+                            <tr>
+                                <td>Falta de accesibilidad</td>
+                                <td>Contraste inadecuado o sin alt en imágenes.</td>
+                                <td>Barreras legales y exclusión de usuarios.</td>
+                            </tr>
+                            <tr>
+                                <td>Mala estética/coherencia</td>
+                                <td>Diseño obsoleto, colores incoherentes.</td>
+                                <td>Pérdida de confianza y percepción no profesional.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+        
+        <!-- Epígrafe 5: Evaluación y Métricas de Usabilidad para la Planificación -->
+        <details>
+            <summary>5. Métricas de Usabilidad y Umbrales Clave</summary>
+            <div class="contenido-leccion">
+                <p>Una planificación exitosa requiere establecer qué vamos a medir para validar el diseño. Las métricas clave incluyen:</p>
+                <ul>
+                    <li>Tasa de éxito: Porcentaje de tareas completadas satisfactoriamente (Indica eficacia).</li>
+                    <li>Tiempo de la tarea: Cuánto se tarda el usuario (Indica eficiencia).</li>
+                    <li>Número de errores: Cantidad de errores cometidos durante la tarea.</li>
+                    <li>Satisfacción del usuario: Feedback directo (ej. escalas SUS).</li>
+                    <li>Tasa de abandono: Usuarios que abandonan antes de completar la acción.</li>
+                </ul>
+                
+                <h4>Umbrales Recomendados (Guías de Planificación):</h4>
+                <p>Nuestra planificación debe establecer umbrales específicos:</p>
+                <ol>
+                    <li>Tiempo de Tarea: Para acciones comunes (ej. llenar un formulario sencillo), el tiempo ideal es inferior a 1 o 2 minutos.</li>
+                    <li>Tasa de Abandono en Carrito (E-commerce): El promedio global es alto (60%-80%), pero una planificación debe buscar bajar del 70-75%.</li>
+                    <li>Tasa de Abandono en Formularios: Tasas superiores al 30% indican problemas graves de usabilidad o confusión.</li>
+                </ol>
+
+                <h4>Umbrales según el Embudo de Conversión:</h4>
+                <p>La rigurosidad de los umbrales se ajusta a la fase del embudo de conversión:</p>
+                <ul>
+                    <li>TOFU (Atracción): Los umbrales de abandono son más flexibles (hasta 50-60%) porque el usuario solo explora.</li>
+                    <li>BOFU (Decisión): Aquí se exigen umbrales estrictos. El tiempo de tarea debe ser corto (menos de 2 minutos) y la tasa de abandono debe ser mínima (idealmente menos del 20%) en pasos críticos como el pago.</li>
+                </ul>
+
+                <!-- Cuadro Resumen -->
+                <div class="cuadro-resumen">
+                    <h4>Cuadro Resumen: Métricas y Umbrales de Usabilidad</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Métrica</th>
+                                <th>Definición</th>
+                                <th>Umbral de Planificación (BOFU)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tasa de Éxito</td>
+                                <td>Porcentaje de tareas completadas.</td>
+                                <td>Objetivo alto (90%+).</td>
+                            </tr>
+                            <tr>
+                                <td>Tiempo de Tarea</td>
+                                <td>Duración para completar la tarea.</td>
+                                <td>Menos de 2 minutos (tareas sencillas).</td>
+                            </tr>
+                            <tr>
+                                <td>Tasa de Abandono (Carrito)</td>
+                                <td>Usuarios que abandonan el proceso de compra.</td>
+                                <td>Idealmente menos del 20%.</td>
+                            </tr>
+                            <tr>
+                                <td>Satisfacción (SUS/NPS)</td>
+                                <td>Percepción y agrado.</td>
+                                <td>Puntuación superior al 70%.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+        
+        
+        <!-- Test de Repaso: Planificación y Usabilidad (30 preguntas) -->
+        <div class="test-repaso">
+            <h3>Test de Repaso: Planificación y Usabilidad Web (30 Preguntas)</h3>
+            <p>Seleccione la opción correcta para cada pregunta. (La funcionalidad de autocorrección requiere JavaScript en un entorno real).</p>
+            <form id="test-planificacion">
+                
+                <!-- P16: Definición usabilidad (REPETIDA)-->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>1. Según la norma ISO 9241-11, la usabilidad se define por eficacia, eficiencia y:</p>
+                    <label class="opcion"><input type="radio" name="p16" value="a"> Diseño visual.</label><br>
+                    <label class="opcion"><input type="radio" name="p16" value="b"> Satisfacción.</label><br>
+                    <label class="opcion"><input type="radio" name="p16" value="c"> Velocidad de carga.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P17: Eficacia (REPETIDA)-->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>2. Dentro de la usabilidad, la Eficacia se refiere a:</p>
+                    <label class="opcion"><input type="radio" name="p17" value="a"> Capacidad para cumplir tareas con éxito.</label><br>
+                    <label class="opcion"><input type="radio" name="p17" value="b"> Rapidez con la que se completa una tarea.</label><br>
+                    <label class="opcion"><input type="radio" name="p17" value="c"> Grado de agrado después del uso.</label>
+                    <div class="feedback"></div>
+                </div>
+                
+                <!-- P18: UCD (REPETIDA)-->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>3. ¿Cuál es el proceso clave de la metodología de Diseño Centrado en el Usuario (UCD)?</p>
+                    <label class="opcion"><input type="radio" name="p18" value="a"> Diseño secuencial y lineal.</label><br>
+                    <label class="opcion"><input type="radio" name="p18" value="b"> Desarrollo basado únicamente en supuestos técnicos.</label><br>
+                    <label class="opcion"><input type="radio" name="p18" value="c"> Diseño iterativo (crear, probar y ajustar continuamente).</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P19: Relación Accesibilidad/Usabilidad (REPETIDA)-->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>4. ¿Cómo se relaciona la accesibilidad con la usabilidad?</p>
+                    <label class="opcion"><input type="radio" name="p20" value="a"> La accesibilidad es un requisito para la usabilidad inclusiva.</label><br>
+                    <label class="opcion"><input type="radio" name="p20" value="b"> Son conceptos totalmente independientes.</label><br>
+                    <label class="opcion"><input type="radio" name="p20" value="c"> La usabilidad solo se aplica a usuarios con discapacidad.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P20: Enfoque Accesibilidad/Usabilidad (REPETIDA)-->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>5. Mientras la accesibilidad se enfoca en eliminar barreras técnicas y cognitivas, la usabilidad se enfoca en:</p>
+                    <label class="opcion"><input type="radio" name="p21" value="a"> El cumplimiento estricto de WCAG Nivel AAA.</label><br>
+                    <label class="opcion"><input type="radio" name="p21" value="b"> Facilitar tareas, navegación y comprensión para todos los usuarios.</label><br>
+                    <label class="opcion"><input type="radio" name="p21" value="c"> Priorizar el diseño estético sobre la funcionalidad.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P21: Método cualitativo (REPETIDA)-->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>6. ¿Qué método de usabilidad implica que expertos revisen el sitio comparándolo con principios universales?</p>
+                    <label class="opcion"><input type="radio" name="p24" value="a"> Pruebas A/B.</label><br>
+                    <label class="opcion"><input type="radio" name="p24" value="b"> Evaluación heurística.</label><br>
+                    <label class="opcion"><input type="radio" name="p24" value="c"> Análisis de métricas web.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P22: Requerimiento usuario (REPETIDA)-->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>7. ¿Qué tipo de requerimiento se refiere a criterios de calidad, rendimiento o usabilidad?</p>
+                    <label class="opcion"><input type="radio" name="p25" value="a"> Requerimiento funcional.</label><br>
+                    <label class="opcion"><input type="radio" name="p25" value="b"> Historia de usuario.</label><br>
+                    <label class="opcion"><input type="radio" name="p25" value="c"> Requerimiento no funcional.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P23: Estructurar requerimientos (REPETIDA)-->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>8. Los perfiles semificticios que representan grupos de usuarios se denominan:</p>
+                    <label class="opcion"><input type="radio" name="p26" value="a"> Casos de uso.</label><br>
+                    <label class="opcion"><input type="radio" name="p26" value="b"> Personas.</label><br>
+                    <label class="opcion"><input type="radio" name="p26" value="c"> Historias de vida.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P24: Principio Diseño Conceptual (REPETIDA)-->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>9. El principio de diseño conceptual que exige que las opciones y acciones disponibles siempre estén claras y visibles es:</p>
+                    <label class="opcion"><input type="radio" name="p27" value="a"> Visibilidad.</label><br>
+                    <label class="opcion"><input type="radio" name="p27" value="b"> Sencillez.</label><br>
+                    <label class="opcion"><input type="radio" name="p27" value="c"> Flexibilidad.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P25: Tipo de prototipo (REPETIDA)-->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>10. Los prototipos de baja fidelidad son comúnmente:</p>
+                    <label class="opcion"><input type="radio" name="p28" value="a"> Simulaciones digitales idénticas al producto final.</label><br>
+                    <label class="opcion"><input type="radio" name="p28" value="b"> Pruebas A/B con usuarios reales.</label><br>
+                    <label class="opcion"><input type="radio" name="p28" value="c"> Bocetos, wireframes o diagramas simples.</label>
+                    <div class="feedback"></div>
+                </div>
+                
+                <!-- P26: Pauta Usabilidad (REPETIDA)-->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>11. Para mejorar la usabilidad, en los formularios se recomienda:</p>
+                    <label class="opcion"><input type="radio" name="p29" value="a"> Evitar la retroalimentación inmediata.</label><br>
+                    <label class="opcion"><input type="radio" name="p29" value="b"> Usar ayudas contextuales (ejemplos, pistas).</label><br>
+                    <label class="opcion"><input type="radio" name="p29" value="c"> Depender solo de colores para indicar errores.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P27: Métrica de usabilidad (REPETIDA)-->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>12. ¿Cuál de estas es una métrica clave en la evaluación de usabilidad?</p>
+                    <label class="opcion"><input type="radio" name="p30" value="a"> Tasa de éxito (porcentaje de tareas completadas correctamente).</label><br>
+                    <label class="opcion"><input type="radio" name="p30" value="b"> Densidad de código.</label><br>
+                    <label class="opcion"><input type="radio" name="p30" value="c"> Inversión publicitaria.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P28: WCAG (NUEVA)-->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>13. ¿Cuál de los siguientes no es uno de los cuatro principios clave de la WCAG (Accesibilidad)?</p>
+                    <label class="opcion"><input type="radio" name="p31" value="a"> Operable.</label><br>
+                    <label class="opcion"><input type="radio" name="p31" value="b"> Robusto.</label><br>
+                    <label class="opcion"><input type="radio" name="p31" value="c"> Estético.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P29: Umbral tiempo (NUEVA)-->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>14. Para tareas comunes en sitios web, el tiempo de tarea ideal en usabilidad es generalmente inferior a:</p>
+                    <label class="opcion"><input type="radio" name="p32" value="a"> 5 minutos.</label><br>
+                    <label class="opcion"><input type="radio" name="p32" value="b"> 2 minutos.</label><br>
+                    <label class="opcion"><input type="radio" name="p32" value="c"> 30 minutos.</label>
+                    <div class="feedback"></div>
+                </div>
+                
+                <!-- P30: Umbral abandono (NUEVA)-->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>15. Una tasa de abandono en formularios de más del 30% típicamente indica:</p>
+                    <label class="opcion"><input type="radio" name="p33" value="a"> Problemas graves de usabilidad o confusión.</label><br>
+                    <label class="opcion"><input type="radio" name="p33" value="b"> Alta satisfacción del usuario.</label><br>
+                    <label class="opcion"><input type="radio" name="p33" value="c"> Un diseño robusto y accesible.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P31: Mala usabilidad (NUEVA)-->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>16. ¿Cuál es un fallo común de usabilidad citado en el caso del "Gates 'N Fences"?</p>
+                    <label class="opcion"><input type="radio" name="p34" value="a"> Alto cumplimiento WCAG AA.</label><br>
+                    <label class="opcion"><input type="radio" name="p34" value="b"> Usabilidad perfecta con móviles.</label><br>
+                    <label class="opcion"><input type="radio" name="p34" value="c"> Diseño obsoleto y sin jerarquía visual.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P32: Usabilidad española (NUEVA)-->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>17. ¿Qué porcentaje aproximado de webs españolas alcanzan el nivel AA exigido en accesibilidad?</p>
+                    <label class="opcion"><input type="radio" name="p35" value="a"> 75%.</label><br>
+                    <label class="opcion"><input type="radio" name="p35" value="b"> 27%.</label><br>
+                    <label class="opcion"><input type="radio" name="p35" value="c"> 90%.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P33: Flujo de Laura (NUEVA)-->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>18. En el caso de uso de "Laura" comprando zapatillas, un elemento clave del flujo es:</p>
+                    <label class="opcion"><input type="radio" name="p36" value="a"> Filtrar resultados por talla y marca.</label><br>
+                    <label class="opcion"><input type="radio" name="p36" value="b"> Leer el código fuente de la página.</label><br>
+                    <label class="opcion"><input type="radio" name="p36" value="c"> Ignorar el carrito y pagar directamente.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P34: UX (NUEVA)-->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>19. La Experiencia de Usuario (UX) se diferencia de la usabilidad porque también abarca:</p>
+                    <label class="opcion"><input type="radio" name="p37" value="a"> La validación de HTML/CSS.</label><br>
+                    <label class="opcion"><input type="radio" name="p37" value="b"> La velocidad del servidor únicamente.</label><br>
+                    <label class="opcion"><input type="radio" name="p37" value="c"> Las emociones, percepciones y el contexto completo de interacción.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P35: Usabilidad e-commerce (NUEVA)-->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>20. ¿Qué sitio español es citado como ejemplo de buena usabilidad gracias a su navegación intuitiva y filtros claros?</p>
+                    <label class="opcion"><input type="radio" name="p38" value="a"> Spagnolo.</label><br>
+                    <label class="opcion"><input type="radio" name="p38" value="b"> Silbon.</label><br>
+                    <label class="opcion"><input type="radio" name="p38" value="c"> El Corte Inglés.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P36: Métrica de satisfacción (NUEVA)-->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>21. ¿Qué herramienta se utiliza para medir la satisfacción y el agrado del usuario?</p>
+                    <label class="opcion"><input type="radio" name="p39" value="a"> System Usability Scale (SUS) o NPS.</label><br>
+                    <label class="opcion"><input type="radio" name="p39" value="b"> Tasa de éxito.</label><br>
+                    <label class="opcion"><input type="radio" name="p39" value="c"> Dificultad de aprendizaje.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P37: Abandono BOFU (NUEVA)-->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>22. En la etapa BOFU (Decisión) del embudo de conversión, el umbral de abandono ideal en pasos críticos debe ser:</p>
+                    <label class="opcion"><input type="radio" name="p40" value="a"> Superior al 50%.</label><br>
+                    <label class="opcion"><input type="radio" name="p40" value="b"> Mínimo (idealmente menos del 20%).</label><br>
+                    <label class="opcion"><input type="radio" name="p40" value="c"> Igual que en la etapa TOFU.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P38: Objetivo UCD (NUEVA)-->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>23. ¿Qué es uno de los objetivos principales de diseñar con casos de uso claros?</p>
+                    <label class="opcion"><input type="radio" name="p41" value="a"> Ignorar la retroalimentación del usuario.</label><br>
+                    <label class="opcion"><input type="radio" name="p41" value="b"> Añadir tantas funciones como sea posible.</label><br>
+                    <label class="opcion"><input type="radio" name="p41" value="c"> Prevenir problemas y construir flujos efectivos para tareas reales.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P39: Mala Usabilidad Española (NUEVA)-->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>24. Un problema de usabilidad común detectado en el sitio web de Renfe es:</p>
+                    <label class="opcion"><input type="radio" name="p42" value="a"> Formularios complejos y navegación por teclado deficiente.</label><br>
+                    <label class="opcion"><input type="radio" name="p42" value="b"> Uso de alto contraste y etiquetas ARIA impecables.</label><br>
+                    <label class="opcion"><input type="radio" name="p42" value="c"> Navegación con menú visible y estructurado.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P40: Puntos críticos planificación (NUEVA)-->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>25. La planificación de la usabilidad debe poner énfasis en establecer umbrales más estrictos en:</p>
+                    <label class="opcion"><input type="radio" name="p43" value="a"> Páginas de blog (TOFU).</label><br>
+                    <label class="opcion"><input type="radio" name="p43" value="b"> Formularios de registro y procesos de pago (BOFU).</label><br>
+                    <label class="opcion"><input type="radio" name="p43" value="c"> Páginas de "Acerca de nosotros".</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P41: Diseño conceptual (NUEVA)-->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>26. ¿Qué implica el principio de "Retroalimentación" en el diseño conceptual?</p>
+                    <label class="opcion"><input type="radio" name="p44" value="a"> Usar solo texto estático.</label><br>
+                    <label class="opcion"><input type="radio" name="p44" value="b"> Evitar mensajes de error.</label><br>
+                    <label class="opcion"><input type="radio" name="p44" value="c"> Proporcionar una respuesta perceptible al usuario tras una acción.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P42: Consecuencia de no planificar (NUEVA)-->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>27. ¿Cuál es la principal consecuencia en el negocio de un proceso de pago con mala usabilidad?</p>
+                    <label class="opcion"><input type="radio" name="p45" value="a"> Disminución de la confianza y de las conversiones.</label><br>
+                    <label class="opcion"><input type="radio" name="p45" value="b"> Aumento de la fidelidad sin necesidad de soporte.</label><br>
+                    <label class="opcion"><input type="radio" name="p45" value="c"> Reducción de la tasa de abandono.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P43: Accesibilidad WCAG (NUEVA)-->
+                <div class="pregunta" data-correct-answer="b">
+                    <p>28. Si un sitio web utiliza colores monótonos y sin contraste, está fallando en el principio WCAG de:</p>
+                    <label class="opcion"><input type="radio" name="p46" value="a"> Operable.</label><br>
+                    <label class="opcion"><input type="radio" name="p46" value="b"> Perceptible.</label><br>
+                    <label class="opcion"><input type="radio" name="p46" value="c"> Robusto.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P44: Rol de Personas (NUEVA)-->
+                <div class="pregunta" data-correct-answer="c">
+                    <p>29. ¿Para qué se utiliza principalmente el perfil de "Persona" en la planificación UCD?</p>
+                    <label class="opcion"><input type="radio" name="p47" value="a"> Para generar código automáticamente.</label><br>
+                    <label class="opcion"><input type="radio" name="p47" value="b"> Para documentar errores técnicos de código.</label><br>
+                    <label class="opcion"><input type="radio" name="p47" value="c"> Para orientar la estrategia, el diseño y los mensajes hacia las necesidades del cliente ideal.</label>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- P45: Propósito de métricas (NUEVA)-->
+                <div class="pregunta" data-correct-answer="a">
+                    <p>30. El uso de múltiples métricas de usabilidad (eficacia, eficiencia, satisfacción) permite:</p>
+                    <label class="opcion"><input type="radio" name="p48" value="a"> Evaluar la usabilidad de forma holística, identificando fallas y validando soluciones.</label><br>
+                    <label class="opcion"><input type="radio" name="p48" value="b"> Determinar únicamente la velocidad de carga.</label><br>
+                    <label class="opcion"><input type="radio" name="p48" value="c"> Sustituir completamente las pruebas con usuarios reales.</label>
+                    <div class="feedback"></div>
+                </div>
+                
+                <button type="button" class="btn-corregir" onclick="corregirTest('test-planificacion', 30)">Corregir Test de Planificación</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Script necesario para la autocorrección y retroalimentación -->
+    <script>
+        function corregirTest(testId, totalQuestions) {
+            const form = document.getElementById(testId);
+            const questions = form.querySelectorAll('.pregunta');
+            let correctCount = 0;
+
+            questions.forEach((q, index) => {
+                const feedback = q.querySelector('.feedback');
+                const selected = q.querySelector('input:checked');
+                const correctAnswer = q.getAttribute('data-correct-answer');
+                const questionNumber = index + 1;
+
+                feedback.style.display = 'block';
+                feedback.classList.remove('correcto', 'incorrecto');
+                
+                if (selected && selected.value === correctAnswer) {
+                    feedback.classList.add('correcto');
+                    feedback.innerHTML = `¡Correcto! Pregunta ${questionNumber}.`;
+                    correctCount++;
+                } else {
+                    feedback.classList.add('incorrecto');
+                    feedback.innerHTML = `Incorrecto. Pregunta ${questionNumber}. La respuesta correcta es: ${correctAnswer}.`;
+                }
+            });
+
+            alert(`Test completado. Puntuación: ${correctCount} de ${totalQuestions}.`);
+        }
+    </script>
+</body>
+</html>
+```

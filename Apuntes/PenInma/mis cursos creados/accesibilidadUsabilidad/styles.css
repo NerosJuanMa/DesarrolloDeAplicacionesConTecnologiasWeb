@@ -1,0 +1,144 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    background: #0056b3;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para las lecciones (summary/details) */
+details {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+summary {
+    background-color: #e9e9e9;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+details[open] summary {
+    background-color: #ddd;
+    border-bottom: 1px solid #ccc;
+}
+
+.contenido-leccion {
+    padding: 20px;
+}
+
+/* Estilo para cuadros resumen */
+.cuadro-resumen {
+    margin: 20px 0;
+    padding: 15px;
+    border: 2px solid #0056b3;
+    background-color: #eef7ff;
+    border-radius: 5px;
+}
+
+.cuadro-resumen h4 {
+    color: #0056b3;
+    margin-top: 0;
+}
+
+.cuadro-resumen table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cuadro-resumen th, .cuadro-resumen td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.cuadro-resumen th {
+    background-color: #d0e4f7;
+}
+
+/* Estilos para el Test */
+.test-repaso {
+    margin-top: 30px;
+    padding: 20px;
+    border: 2px dashed #0056b3;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+}
+
+.test-repaso h3 {
+    text-align: center;
+    color: #0056b3;
+}
+
+.pregunta {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.opcion input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* Estilos para retroalimentación (requiere JS para alternar clases) */
+.feedback {
+    margin-top: 5px;
+    font-size: 0.9em;
+    display: none; /* Oculto por defecto, mostrado por JS */
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.feedback.correcto {
+    background-color: #e6ffe6;
+    color: green;
+}
+
+.feedback.incorrecto {
+    background-color: #ffe6e6;
+    color: red;
+}
+
+.btn-corregir {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin-top: 20px;
+}

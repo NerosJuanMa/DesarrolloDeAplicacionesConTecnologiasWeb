@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lección — Modelos de diseño web + inspiración + checklist previa (UF1841)</title>
+  <meta name="description" content="Modelos de diseño web con ejemplos, patrones visuales, principios de desarrollo y 10 preguntas clave antes de empezar a programar." />
+  <style>
+    :root{
+      --color-brand:#0d47a1;        /* azul principal */
+      --color-brand-2:#1976d2;      /* azul claro */
+      --color-ink:#1a1a1a;          /* textos */
+      --color-muted:#555;
+      --color-bg:#f9f9f9;
+      --color-surface:#ffffff;
+      --color-accent:#90caf9;       /* azul suave */
+      --radius:16px;
+      --shadow:0 6px 18px rgba(0,0,0,.08);
+      --max:1100px;
+    }
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;
+      color:var(--color-ink); background:var(--color-bg); line-height:1.6;
+    }
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;background:#000;color:#fff;padding:.5rem 1rem;border-radius:.5rem;z-index:1000}
+    a{color:var(--color-brand)}
+    a:focus, button:focus, [href]:focus{outline:3px solid var(--color-brand-2); outline-offset:2px}
+    @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+
+    header{
+      background:linear-gradient(90deg,var(--color-brand),var(--color-brand-2));
+      color:#fff; padding:2.5rem 1rem 1.5rem; position:relative
+    }
+    .wrap{max-width:var(--max); margin-inline:auto; padding-inline:1rem}
+    nav{display:flex; gap:.75rem; flex-wrap:wrap; margin-top:1rem}
+    nav a{display:inline-block; padding:.5rem .8rem; border-radius:999px; background:rgba(255,255,255,.15); color:#fff; text-decoration:none}
+    nav a:hover{background:rgba(255,255,255,.25)}
+
+    h1{font-size:clamp(1.6rem, 2.5vw + 1rem, 2.6rem); margin:.25rem 0}
+    .subtitle{opacity:.9; max-width:65ch}
+
+    main{padding-block:2rem}
+    section{margin:2rem 0; background:var(--color-surface); border-radius:var(--radius); box-shadow:var(--shadow)}
+    section > header{background:transparent; color:inherit; padding:1.25rem 1.25rem .5rem; box-shadow:none}
+    section .content{padding:1rem 1.25rem 1.25rem}
+
+    .grid{display:grid; gap:1rem}
+    .grid.cards{grid-template-columns:repeat(auto-fit, minmax(260px, 1fr))}
+    .card{background:#fff; border:1px solid #ddd; border-radius:12px; padding:1rem; box-shadow:var(--shadow); display:flex; flex-direction:column}
+    .card h3{margin:.25rem 0 .5rem}
+    .eyebrow{font-size:.8rem; letter-spacing:.04em; color:var(--color-muted); text-transform:uppercase}
+
+    ol.check{counter-reset: step}
+    ol.check > li{list-style:none; position:relative; padding-left:2.5rem; margin:.9rem 0}
+    ol.check > li::before{counter-increment: step; content:counter(step); position:absolute; left:0; top:.15rem; width:2rem; height:2rem; display:grid; place-items:center; background:var(--color-brand); color:#fff; border-radius:50%; font-weight:700}
+
+    footer{padding:2rem 1rem; text-align:center; color:var(--color-muted)}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header>
+    <div class="wrap">
+      <h1>Modelos y principios del diseño web</h1>
+      <p class="subtitle">UF1841 — Estilos de diseño, patrones visuales, principios de desarrollo web y preguntas clave antes de programar.</p>
+      <nav>
+            <a href="index.html">Accesibilidad Web</a>
+            <a href="usabilidad.html">Usabilidad Web</a>
+            <a href="practico.html">Planificación</a>
+             <a href="diseñoweb.html">Diseño Web</a>
+            <a href="desarrollo.html">Referencias y Código</a>
+           
+        </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="wrap">
+
+    <section id="modelos">
+  <header>
+    <h2>Modelos de diseño web</h2>
+  </header>
+  <div class="content">
+    <p>
+      Los <strong>modelos de diseño</strong> son enfoques estéticos y funcionales que orientan la experiencia del usuario.
+      Cada uno transmite un estilo, una intención y una forma diferente de jerarquizar la información.
+    </p>
+
+    <div class="grid cards">
+      <!-- Minimalista -->
+      <article class="card">
+        <h3>Minimalista</h3>
+        <p>
+          Usa espacios amplios, tipografía limpia y pocos colores. Ideal para transmitir orden y elegancia.
+        </p>
+        <ul>
+          <li><a href="https://www.apple.com" target="_blank">Apple</a> — claridad, balance y uso magistral del blanco.</li>
+          <li><a href="https://www.superlist.com/" target="_blank">Superlist</a> — simplicidad con microanimaciones.</li>
+        </ul>
+      </article>
+
+      <!-- Material Design -->
+      <article class="card">
+        <h3>Material Design</h3>
+        <p>
+          Propone profundidad y movimiento a través de capas, sombras y transiciones coherentes. Desarrollado por Google.
+        </p>
+        <ul>
+          <li><a href="https://material.io/" target="_blank">Material.io</a> — guía oficial.</li>
+          <li><a href="https://store.google.com/" target="_blank">Google Store</a> — ejemplo aplicado al e-commerce.</li>
+        </ul>
+      </article>
+
+      <!-- Brutalista -->
+      <article class="card">
+        <h3>Brutalista</h3>
+        <p>
+          Contrastes extremos, tipografía grande, estética deliberadamente cruda. Muy usado en diseño experimental y portafolios artísticos.
+        </p>
+        <ul>
+          <li><a href="https://brutalistwebsites.com/" target="_blank">Brutalist Websites</a> — galería dedicada al estilo.</li>
+          <li><a href="https://theoutline.com/" target="_blank">The Outline</a> — ejemplo de brutalismo editorial.</li>
+        </ul>
+      </article>
+
+      <!-- Editorial -->
+      <article class="card">
+        <h3>Editorial</h3>
+        <p>
+          Basado en maquetaciones de revistas: ritmo vertical, rejillas tipográficas, fotografías grandes y jerarquía textual.
+        </p>
+        <ul>
+          <li><a href="https://www.nationalgeographic.com/" target="_blank">National Geographic</a> — narrativa visual fuerte.</li>
+          <li><a href="https://www.smashingmagazine.com/" target="_blank">Smashing Magazine</a> — estructura editorial moderna.</li>
+        </ul>
+      </article>
+
+      <!-- Neumorfismo -->
+      <article class="card">
+        <h3>Neumorfismo</h3>
+        <p>
+          Emplea sombras suaves y relieves para simular botones físicos. Aporta textura, pero exige cuidado con el contraste.
+        </p>
+        <ul>
+          <li><a href="https://dribbble.com/tags/neumorphism" target="_blank">Dribbble — inspiración neumórfica</a></li>
+          <li><a href="https://uimovement.com/ui/neumorphism/" target="_blank">UI Movement — ejemplos reales</a></li>
+        </ul>
+      </article>
+
+      <!-- Extra: Glassmorfismo -->
+      <article class="card">
+        <h3>Glassmorfismo</h3>
+        <p>
+          Derivado del neumorfismo, utiliza efectos de transparencia y desenfoque tipo vidrio esmerilado.
+          Muy usado en dashboards y portafolios.
+        </p>
+        <ul>
+          <li><a href="https://dribbble.com/tags/glassmorphism" target="_blank">Dribbble — glassmorphism</a></li>
+          <li><a href="https://uxdesign.cc/glassmorphism-in-user-interfaces-1f39bb1308c9" target="_blank">Artículo UX Design</a></li>
+        </ul>
+      </article>
+    </div>
+  </div>
+  
+<!-- Responsive / Mobile-first -->
+<article class="card" aria-labelledby="responsive">
+<h3 id="responsive">Mobile‑first / Responsive</h3>
+<p>Prioriza móvil, escala a escritorio con breakpoints y rejillas fluidas.</p>
+<ul>
+<li><a href="https://www.spotify.com" target="_blank" rel="noopener">Spotify</a> — Navegación y tipografía adaptadas.</li>
+<li><a href="https://slack.com" target="_blank" rel="noopener">Slack</a> — Jerarquía consistente entre dispositivos.</li>
+<li><a href="https://www.figma.com" target="_blank" rel="noopener">Figma</a> — Coherencia web ↔ móvil.</li>
+</ul>
+</article>
+
+
+<!-- Asimétrico / Experimental -->
+<article class="card" aria-labelledby="asimetrico">
+<h3 id="asimetrico">Asimétrico / Experimental</h3>
+<p>Rompe la rejilla tradicional con propósito (marca, narrativa, emoción).</p>
+<ul>
+<li><a href="https://brutalistwebsites.com/" target="_blank" rel="noopener">Brutalist Websites</a> — Colección cruda y provocadora.</li>
+<li><a href="https://activetheory.net/" target="_blank" rel="noopener">Active Theory</a> — 3D y movimiento inmersivo.</li>
+<li><a href="https://resn.co.nz/" target="_blank" rel="noopener">Resn</a> — Narrativa + contraste extremo.</li>
+</ul>
+</article>
+
+
+<!-- Editorial / Magazine -->
+<article class="card" aria-labelledby="editorial">
+<h3 id="editorial">Editorial / Magazine</h3>
+<p>Rejillas tipográficas, ritmo vertical, bloques de lectura y fotografía fuerte.</p>
+<ul>
+<li><a href="https://www.nationalgeographic.com" target="_blank" rel="noopener">National Geographic</a> — Fotografía y storytelling.</li>
+<li><a href="https://blog.adobe.com" target="_blank" rel="noopener">Adobe Blog</a> — Claridad y respiración visual.</li>
+<li><a href="https://www.smashingmagazine.com" target="_blank" rel="noopener">Smashing Magazine</a> — Maquetación editorial moderna.</li>
+</ul>
+</article>
+</div>
+</section>
+
+
+   <section id="patrones">
+  <header>
+    <h2>Patrones visuales: Z, F y diseño por capas</h2>
+  </header>
+
+  <div class="content">
+    <p>
+      Los <strong>patrones visuales</strong> definen cómo el ojo humano recorre la interfaz. Comprenderlos permite 
+      organizar la información de manera que el usuario encuentre fácilmente lo importante. 
+      A continuación se muestran los tres patrones más frecuentes y algunos ejemplos reales.
+    </p>
+
+    <div class="grid cards">
+      <!-- Patrón Z -->
+      <article class="card">
+        <h3>Patrón Z</h3>
+        <p>
+          Ideal para <strong>landing pages o páginas de inicio simples</strong>. 
+          La vista del usuario sigue una trayectoria en “Z”: 
+          logo y menú en la parte superior → diagonal hacia la imagen o mensaje principal → llamada a la acción final abajo a la derecha.
+        </p>
+        <p><strong>Ventaja:</strong> guía la mirada de forma natural y favorece el enfoque en el CTA.</p>
+        <ul>
+          <li><a href="https://stripe.com" target="_blank">Stripe</a> — estructura diagonal clara con botón destacado.</li>
+          <li><a href="https://www.dropbox.com" target="_blank">Dropbox</a> — cabecera simple, ilustración central y CTA final.</li>
+          <li><a href="https://www.mailchimp.com" target="_blank">Mailchimp</a> — equilibrio entre texto, imagen y llamada a la acción.</li>
+        </ul>
+      </article>
+
+      <!-- Patrón F -->
+      <article class="card">
+        <h3>Patrón F</h3>
+        <p>
+          Común en <strong>páginas con mucho texto o listados</strong>, como blogs o periódicos. 
+          El ojo recorre la pantalla en forma de “F”: primero líneas horizontales en la parte superior, luego un descenso vertical por la izquierda. 
+          Este patrón refleja cómo escaneamos información escrita.
+        </p>
+        <p><strong>Ventaja:</strong> facilita la lectura secuencial y la comparación entre elementos repetidos.</p>
+        <ul>
+          <li><a href="https://www.bbc.com/news" target="_blank">BBC News</a> — titulares principales seguidos de bloques verticales.</li>
+          <li><a href="https://medium.com" target="_blank">Medium</a> — estructura editorial limpia con ritmo F marcado.</li>
+          <li><a href="https://www.theguardian.com" target="_blank">The Guardian</a> — maquetación clásica de noticias.</li>
+        </ul>
+      </article>
+
+      <!-- Diseño por capas -->
+      <article class="card">
+        <h3>Diseño por capas</h3>
+        <p>
+          Organiza la información en <strong>niveles visuales</strong>: fondo, contenido principal y elementos destacados. 
+          Se logra mediante color, sombra y profundidad. Aporta jerarquía y guía la atención sin sobrecargar.
+        </p>
+        <p><strong>Ventaja:</strong> mejora la comprensión y crea sensación de orden y fluidez visual.</p>
+        <ul>
+          <li><a href="https://m3.material.io/" target="_blank">Material Design 3 Showcase</a> — ejemplo didáctico de elevación y sombra.</li>
+          <li><a href="https://www.notion.so" target="_blank">Notion</a> — fondo neutro, tarjetas y menús flotantes.</li>
+          <li><a href="https://www.apple.com" target="_blank">Apple</a> — jerarquía clara entre fondo, contenido y llamadas a la acción.</li>
+        </ul>
+      </article>
+    </div>
+
+   
+  </div>
+</section>
+
+    <section id="tendencias">
+  <header>
+    <h2>Tendencias de Diseño Web Modernas y Obsoletas</h2>
+  </header>
+
+  <div class="content">
+    <p>
+      El diseño web evoluciona constantemente. A continuación se presentan las
+      <strong>tendencias actuales más destacadas</strong> y aquellas que
+      <strong>han quedado obsoletas</strong>, para que puedas orientar tus proyectos
+      hacia una estética moderna, funcional y sostenible.
+    </p>
+
+    <!-- Espacio para la imagen -->
+    <figure style="text-align:center; margin:1.5rem 0;">
+        <img src="diseño.png" alt="Mapa visual de tendencias modernas y antiguas del diseño web" style="max-width:240px; width:100%; height:auto; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.1);" loading="lazy" />
+        <figcaption style="font-size:0.85rem; color:#555; margin-top:.5rem;">
+            Comparativa visual entre tendencias actuales y prácticas obsoletas en diseño web.
+        </figcaption>
+    </figure>
+
+    <div class="grid cards">
+      <!-- Tendencias Modernas -->
+      <article class="card">
+        <h3>✅ Tendencias Modernas</h3>
+        <ul>
+          <li><strong>Micro-interacciones sutiles:</strong> efectos al pasar el ratón y animaciones ligeras que refuerzan acciones. <em>(Elementor, TheeDigital)</em></li>
+          <li><strong>Experiencias inmersivas / 3D:</strong> los elementos planos tradicionales ganan profundidad y movimiento. <em>(Behance)</em></li>
+          <li><strong>Diseño sostenible:</strong> optimización del rendimiento y menor consumo de datos. <em>(TheeDigital)</em></li>
+          <li><strong>Tipografías expresivas y “bold minimalism”:</strong> protagonismo del texto y el espacio en blanco. <em>(Adobe)</em></li>
+          <li><strong>Anti-diseño o estilo humano:</strong> layouts más “crudos”, imperfección intencionada, estética artesanal. <em>(TheeDigital)</em></li>
+          <li><strong>Rejillas que evolucionan:</strong> estructuras flexibles y creativas que adaptan la información a cada dispositivo. <em>(TheeDigital)</em></li>
+        </ul>
+      </article>
+
+      <!-- Tendencias Obsoletas -->
+      <article class="card">
+        <h3>❌ Tendencias Obsoletas</h3>
+        <ul>
+          <li><strong>Uso excesivo de pop-ups o animaciones sin propósito:</strong> interrumpen la experiencia del usuario. <em>(Lounge Lizard)</em></li>
+          <li><strong>Diseños tipo Flash o maquetados con tablas:</strong> lentos, poco accesibles y difíciles de mantener. <em>(Medium)</em></li>
+          <li><strong>Layouts rígidos y poco responsivos:</strong> no se adaptan correctamente a pantallas móviles. <em>(Lounge Lizard)</em></li>
+          <li><strong>Tendencias visuales agotadas:</strong> como el neumorfismo puro, que causa problemas de contraste. <em>(Design Shack)</em></li>
+        </ul>
+      </article>
+    </div>
+
+    
+  </div>
+</section>
+
+
+
+    <section id="principios">
+      <header>
+        <h2>Principios para un buen desarrollo web</h2>
+      </header>
+      <div class="content">
+        <p>Más allá del estilo, todo sitio web debe construirse sobre <strong>principios sólidos de diseño y desarrollo</strong> que aseguren claridad, coherencia y accesibilidad.</p>
+        <h3>1. Jerarquía visual</h3>
+        <p>El usuario debe identificar de inmediato lo más importante. Se consigue usando contraste de tamaño, color y posición. El título principal y los botones clave deben destacar sobre el resto.</p>
+
+        <h3>2. Consistencia</h3>
+        <p>Los elementos similares deben comportarse igual. Un botón siempre con el mismo color y estado hover crea confianza. Los menús, tipografía y márgenes deben seguir reglas comunes.</p>
+
+        <h3>3. Contraste y legibilidad</h3>
+        <p>El texto debe tener suficiente contraste (nivel AA o superior). No uses fondos saturados o textos muy finos. Prueba la accesibilidad con herramientas como <a href="https://contrast-ratio.com/">contrast-ratio.com</a>.</p>
+
+        <h3>4. Feedback visual</h3>
+        <p>Todo clic, carga o error debe generar respuesta visual (color, animación, mensaje). Los usuarios necesitan saber que algo ha ocurrido tras su acción.</p>
+
+        <h3>5. Ritmo y espaciado</h3>
+        <p>Usar márgenes y paddings regulares da sensación de orden. El espacio vacío también comunica y ayuda a respirar visualmente.</p>
+
+        <h3>6. Accesibilidad</h3>
+        <p>El sitio debe poder usarse con teclado, lector de pantalla o visión reducida. Incluye etiquetas alt, foco visible y orden lógico de tabulación.</p>
+
+        <h3>7. Rendimiento</h3>
+        <p>Un diseño optimizado carga rápido. Comprime imágenes, usa formatos modernos (WebP, AVIF) y evita scripts innecesarios. El rendimiento también es experiencia de usuario.</p>
+
+        <h3>8. Adaptabilidad (Responsive)</h3>
+        <p>El diseño debe responder a distintos tamaños de pantalla. Trabaja con rejillas fluidas y prueba en móvil, tablet y escritorio.</p>
+
+        <h3>9. Coherencia de marca</h3>
+        <p>Color, tono de voz y tipografía deben reflejar la identidad del proyecto. La coherencia crea reconocimiento.</p>
+
+        <h3>10. Iteración continua</h3>
+        <p>El diseño no termina al publicar. Analiza métricas, testea con usuarios y mejora. Un buen diseñador web siempre mide, aprende y ajusta.</p>
+      </div>
+    </section>
+
+    <section id="inspiracion">
+      <header>
+        <h2>Inspiración y ejemplos reales</h2>
+      </header>
+      <div class="content grid cards">
+        <article class="card">
+          <h3>Awwwards</h3>
+          <p>Premios internacionales que destacan la creatividad, usabilidad y contenido de los mejores sitios web.</p>
+          <p><a href="https://www.awwwards.com/websites/" target="_blank">Ver ganadores</a></p>
+        </article>
+        <article class="card">
+          <h3>siteInspire</h3>
+          <p>Galería organizada por estilos, colores y sectores. Ideal para inspirarte antes de empezar un nuevo proyecto.</p>
+          <p><a href="https://www.siteinspire.com/websites" target="_blank">Explorar sitios</a></p>
+        </article>
+        <article class="card">
+          <h3>Behance / Dribbble</h3>
+          <p>Comunidades de diseñadores donde se comparten interfaces, branding y tendencias UI/UX.</p>
+          <p><a href="https://www.behance.net/" target="_blank">Behance</a> · <a href="https://dribbble.com/" target="_blank">Dribbble</a></p>
+        </article>
+      </div>
+    </section>
+
+
+
+
+
+<section id="plantillas">
+<header><h2>Inspiración para uso de plantillas</h2></header>
+<div class="content grid cards">
+<article class="card"><h3>ThemeForest</h3><p>Plataforma con miles de plantillas HTML, WordPress y React.</p><p><a href="https://themeforest.net/" target="_blank">Ver plantillas</a></p></article>
+<article class="card"><h3>TemplateMo</h3><p>Plantillas HTML gratuitas y modernas, ideales para proyectos educativos.</p><p><a href="https://templatemo.com/" target="_blank">Explorar TemplateMo</a></p></article>
+<article class="card"><h3>Colorlib</h3><p>Plantillas adaptables y ligeras. Ofrecen ideas para layouts responsive.</p><p><a href="https://colorlib.com/" target="_blank">Colorlib</a></p></article>
+<article class="card"><h3>BootstrapMade</h3><p>Plantillas HTML gratuitas con Bootstrap, listas para personalizar.</p><p><a href="https://bootstrapmade.com/" target="_blank">BootstrapMade</a></p></article>
+</div>
+</section>
+
+<section id="referencias">
+<header><h2>Referencias visuales y bancos de ideas</h2></header>
+<div class="content grid cards">
+<article class="card"><h3>One Page Love</h3><p>Inspiración en landing pages y portfolios de una sola página.</p><p><a href="https://onepagelove.com/" target="_blank">Ver sitios</a></p></article>
+<article class="card"><h3>CSS Design Awards</h3><p>Premios internacionales a la innovación y creatividad digital.</p><p><a href="https://www.cssdesignawards.com/" target="_blank">CSSDA</a></p></article>
+<article class="card"><h3>Mobbin</h3><p>Base de datos de diseño móvil y apps reales, con patrones de interfaz.</p><p><a href="https://mobbin.com/" target="_blank">Mobbin</a></p></article>
+<article class="card"><h3>Land-book</h3><p>Selección curada de landing pages modernas, limpias y funcionales.</p><p><a href="https://land-book.com/" target="_blank">Land-book</a></p></article>
+<article class="card"><h3>UI Movement</h3><p>Recopila tendencias semanales en interfaces y animaciones.</p><p><a href="https://uimovement.com/" target="_blank">UI Movement</a></p></article>
+</div>
+</section>
+<section id="wp-inspiracion">
+  <header>
+    <h2>Inspiración con plantillas WordPress</h2>
+  </header>
+
+  <div class="content">
+    <p>
+      Explora temas y patrones de WordPress para estudiar <strong>rejillas, jerarquía, tipografía,
+      componentes y responsive</strong>. Después, traslada las ideas a tu propia maqueta HTML/CSS.
+    </p>
+
+    <div class="grid cards">
+      <!-- Directorios oficiales -->
+      <article class="card">
+        <h3>WordPress.org — Themes</h3>
+        <p>El directorio oficial con miles de temas gratuitos (filtra por “Block Themes”).</p>
+        <p><a href="https://wordpress.org/themes/" target="_blank" rel="noopener">Explorar temas</a></p>
+      </article>
+
+      <article class="card">
+        <h3>WordPress.org — Block Patterns</h3>
+        <p>Patrones de bloques listos para reutilizar (hero, grids, FAQs, testimonios…).</p>
+        <p><a href="https://wordpress.org/patterns/" target="_blank" rel="noopener">Ver patrones</a></p>
+      </article>
+
+      <article class="card">
+        <h3>WordPress.org — Showcase</h3>
+        <p>Selección de sitios reales hechos con WordPress para inspirarte por sectores.</p>
+        <p><a href="https://wordpress.org/showcase/" target="_blank" rel="noopener">Visitar Showcase</a></p>
+      </article>
+
+      <!-- Marketplaces y colecciones -->
+      <article class="card">
+        <h3>ThemeForest</h3>
+        <p>Catálogo enorme de temas premium (útil para ver tendencias y demos).</p>
+        <p>
+          <a href="https://themeforest.net/category/wordpress" target="_blank" rel="noopener">Catálogo general</a> ·
+          <a href="https://themeforest.net/popular_item/by_category?category=wordpress" target="_blank" rel="noopener">Más vendidos (2025)</a>
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>WordPress.com — Themes</h3>
+        <p>Galería de temas (free/premium) con previsualización rápida.</p>
+        <p><a href="https://wordpress.com/themes/" target="_blank" rel="noopener">Ver WordPress.com Themes</a></p>
+      </article>
+    </div>
+
+    <h3 style="margin-top:1.5rem;">Temas modernos para estudiar (rendimiento y bloques)</h3>
+    <div class="grid cards">
+      <article class="card">
+        <h4>Kadence</h4>
+        <p>Ligero, muy flexible, buen rendimiento y biblioteca de starters.</p>
+        <p><a href="https://wordpress.org/themes/kadence/" target="_blank" rel="noopener">Ficha en WP.org</a></p>
+      </article>
+
+      <article class="card">
+        <h4>Blocksy</h4>
+        <p>Optimizado para editor de bloques y WooCommerce; rápido y personalizable.</p>
+        <p><a href="https://wordpress.org/themes/blocksy/" target="_blank" rel="noopener">Ficha en WP.org</a></p>
+      </article>
+
+      <article class="card">
+        <h4>Astra</h4>
+        <p>Muy popular por su velocidad, compatibilidad con constructores y variedad de demos.</p>
+        <p><a href="https://wordpress.org/themes/astra/" target="_blank" rel="noopener">Ficha en WP.org</a></p>
+      </article>
+
+      <article class="card">
+        <h4>GeneratePress</h4>
+        <p>Base minimal enfocada en accesibilidad y peso ultraligero (&lt;10KB gz).</p>
+        <p><a href="https://wordpress.org/themes/generatepress/" target="_blank" rel="noopener">Ficha en WP.org</a></p>
+      </article>
+    </div>
+
+    <aside style="margin-top:1.5rem; background:#f0f4ff; padding:1rem 1.25rem; border-radius:12px;">
+      <h4 style="margin-top:0;">Cómo “traducir” una plantilla WP a tu HTML/CSS</h4>
+      <ul>
+        <li><strong>Rejilla:</strong> identifica columnas del layout (p. ej., 12 cols en desktop, 6 en tablet, 2–3 en móvil) y reprodúcelo con <code>CSS Grid</code>/<code>Flexbox</code>.</li>
+        <li><strong>Jerarquía:</strong> anota tamaños/espaciados de H1–H6, subtítulos y botones; respeta su contraste.</li>
+        <li><strong>Componentes:</strong> copia patrones (hero, tarjetas, testimonios) como <em>secciones reutilizables</em>.</li>
+        <li><strong>Responsive:</strong> observa <em>breakpoints</em> de la demo y replica con <code>@media</code>.</li>
+        <li><strong>Rendimiento:</strong> analiza el peso de imágenes y fuentes; en tu HTML usa WebP/AVIF y <code>font-display: swap</code>.</li>
+      </ul>
+    </aside>
+
+    <p style="font-size:.9rem; color:#555; margin-top:1rem;">
+      Nota: revisa siempre la <strong>licencia</strong> de cada tema antes de reutilizar código o activos. Para clase, úsalo como
+      <em>referencia visual y estructural</em>, no como copia literal.
+    </p>
+  </div>
+</section>
+
+
+<section id="malasideas">
+<header><h2>Errores y malas ideas de diseño web</h2></header>
+<div class="content">
+<ul>
+<li><strong>Exceso de texto o animaciones:</strong> saturan la vista y ralentizan la carga.</li>
+<li><strong>Falta de jerarquía visual:</strong> todo parece igual de importante, el usuario se pierde.</li>
+<li><strong>Colores sin contraste:</strong> fondo y texto poco diferenciados hacen ilegible el contenido.</li>
+<li><strong>Navegación confusa:</strong> menús escondidos o desordenados frustran al usuario.</li>
+<li><strong>No pensar en móvil:</strong> el diseño no se adapta y rompe la experiencia responsive.</li>
+<li><strong>Imágenes pesadas:</strong> hacen lenta la web y penalizan el SEO.</li>
+<li><strong>Fuentes poco legibles:</strong> tipografías decorativas o demasiado pequeñas dificultan la lectura.</li>
+<li><strong>Falta de accesibilidad:</strong> sin texto alternativo o foco visible, parte de los usuarios queda fuera.</li>
+</ul>
+<p>El objetivo no es solo que la web sea bonita, sino que sea <em>usable, rápida y accesible</em>.</p>
+</div>
+</section>
+
+    <section id="preguntas">
+      <header>
+        <h2>Diez preguntas clave antes de escribir código</h2>
+      </header>
+      <div class="content">
+        <ol class="check">
+          <li>¿Cuál es el objetivo principal del sitio web?</li>
+          <li>¿Quiénes son los usuarios y qué problema vienen a resolver?</li>
+          <li>¿Qué contenido debe aparecer primero y qué jerarquía tendrá?</li>
+          <li>¿Qué estructura o mapa de navegación es más lógico?</li>
+          <li>¿Qué modelo de diseño se adapta mejor al propósito?</li>
+          <li>¿Cómo garantizo accesibilidad y legibilidad?</li>
+          <li>¿Qué componentes reutilizables necesitaré?</li>
+          <li>¿Cómo voy a medir el éxito del diseño?</li>
+          <li>¿Qué limitaciones técnicas o de rendimiento debo prever?</li>
+          <li>¿Qué tareas priorizaré para la primera versión?</li>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+  <footer>
+    <p>UF1841 · Diseño Web — Paleta azul/gris. Basado en buenas prácticas de accesibilidad y usabilidad.</p>
+  </footer>
+</body>
+</html>
