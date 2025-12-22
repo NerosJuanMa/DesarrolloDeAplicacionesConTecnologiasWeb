@@ -3,6 +3,9 @@ Apuntes Recurrentes:
 npx kill-port 3000
 
 -------------------------------------------------------------
+Para crear el Dist compilado en React 
+npm run build
+---------------------------------------
 
 # gitcolaborativo
 Ejercicio de Git colaborativo
