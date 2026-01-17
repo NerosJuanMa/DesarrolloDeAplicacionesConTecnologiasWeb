@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>99-Tips</title>
+
+    <link rel="stylesheet" href="styles.css" />
+    
+</head>
+<body>
+    <header>  
+    <h1>📚 99-Tips</h1>
+
+    <div class="header-actions">
+        <button id="themeToggle" title="Cambiar tema">🌙</button>
+        <span class="like-container">
+        <span id="likeBtn">🤍</span>
+        <span id="likeCount">0</span>
+        </span>
+    </div>
+    </header>
+
+     <!-- Seleccionador de color -->
+  <label for="color">Selecciona color: <br>
+  <input type="color" id="color" style="height: 50px; background-color: red; text-align: left;align-content: left;"/>
+  <!-- control deslizante (slider) -->
+  <br><input type="range" min="0" max="100">
+ <!-- Barra de progreso -->
+  <br><progress max="100" value="70">70%</progress>
+  </label> 
+
+  <!-- Area de texto con corrector de errores -->
+        <br><textarea spellcheck="true">
+          Aquí ai un error
+          </textarea>
+        <br> <textarea lang="en" spellcheck="true">
+          Jere is some text widt some eror
+          </textarea>
+  
+    <br><label>
+    ¿Qué quieres comer?
+    <input list="elementos" />
+    </label>
+      <datalist id="elementos">
+      <option>Hamburguesa</option>
+      <option>Pizza</option>
+      <option>Tacos</option>
+      <option>Arepas</option>
+      </datalist>
+<!-- Solo imagenes --><br>
+<input type="file" accept="image/*" />
+<!-- Solo archivos .pdf --><br>
+<input type="file" accept=".pdf" />
+<!-- Multiples archivos --><br>
+<input type="file" multiple />
+
+<!-- Se muestra por que se solicita por Script --><br>
+<template>
+  <div class="card">
+    <h2>Producto</h2>
+    <p>20€</p>
+  </div>
+</template>
+
+<h1 class="centrado">Mi nombre es Freddy</h1>
+
+<picture>
+    <source
+    srcset="navidadGhiblli.jpg"
+    media="(min-width: 800px)">
+    <img src="fondoNegro.jpg" style="max-width: 100%;" />
+  </picture><br>
+  <img src="fondoNegro.jpg" loading="lazy" style="max-width: 100%;"/>
+
+
+<footer>
+  <span>© Formación profesional</span>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
