@@ -127,8 +127,62 @@ footer {
   color: var(--muted);
 }
 .centrado {
-width: 400px;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis
+    width: 100vw;
+    height: 50vh;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    /* width: 400px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis */
+}
+.puntitos{
+    width: 400px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+input {
+border: solid 1px blue;
+}
+input:placeholder-shown {
+border: solid 3px green;
+}
+input:valid {
+border: solid 5px green;
+}
+input:invalid {
+border: solid 5px red;
+}
+p:not(:empty) {
+border: solid 3px;
+}
+p:first-letter {
+font-family: Georgia;
+font-size: 4rem;
+line-height: 1;
+}
+img {
+width: 200px;
+height: 200px;
+object-fit: cover;
+}
+h2 {
+font-size: 72px;
+background: -webkit-linear-gradient(#eee, #333);
+background-clip: text;
+-webkit-text-fill-color: transparent;
+
+}
+h3{
+/* Imagen de fondo: */
+background: blue url('fondoNegro.jpg');
+background-clip: text;
+color: transparent;
+font-size: 10rem;
+}
+.element {
+filter: blur(1rem);
+height: 50px; background-color: red; text-align: left;align-content: left;
 }

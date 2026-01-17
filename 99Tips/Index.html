@@ -15,15 +15,22 @@
     <div class="header-actions">
         <button id="themeToggle" title="Cambiar tema">🌙</button>
         <span class="like-container">
-        <span id="likeBtn">🤍</span>
+        <span id="likeBtn" >🤍</span>
         <span id="likeCount">0</span>
         </span>
     </div>
     </header>
+<h2 class="puntitos">Entre puntos</h2>
 
+<!-- Borde verde -->
+<input type="text" placeholder="Ingresa tu nombre" />
+<!-- Borde azul -->
+<input type="text"
+placeholder="Ingresa tu apellido"
+value="Montes" ><br>
      <!-- Seleccionador de color -->
   <label for="color">Selecciona color: <br>
-  <input type="color" id="color" style="height: 50px; background-color: red; text-align: left;align-content: left;"/>
+  <input type="color" id="color" class="element"/>
   <!-- control deslizante (slider) -->
   <br><input type="range" min="0" max="100">
  <!-- Barra de progreso -->
@@ -63,14 +70,37 @@
   </div>
 </template>
 
-<h1 class="centrado">Mi nombre es Freddy</h1>
+<!-- Este texto se muestra al seleccionar Sumary -->
+    <details>
+        <summary>Título-Oculto</summary>
+        Este es el contenido que se muestra
+    </details>
+<!-- Agregar “citas” a un documento -->
+    <blockquote cite="https://www.facebook.com">
+        <p>Este texto es algo que dijo alguien más.</p>
+    </blockquote>
+<h3 class="centrado">Mi nombre es Freddy</h3>
 
-<picture>
-    <source
-    srcset="navidadGhiblli.jpg"
-    media="(min-width: 800px)">
-    <img src="fondoNegro.jpg" style="max-width: 100%;" />
-  </picture><br>
+<!-- Un elemento para mostrar fecha y hora -->
+    <p>
+        Oasis va a celebrar su 25 aniversario
+        <time datetime="2021-07-07">el 7 de julio</time>
+        en el Hyde Park de Londres.
+        </p>
+        <p>
+        El concierto comienza a las
+        <time datetime="20:00">08:00pm</time>
+    </p>
+<label for="requerido">Patron de entrada de 4 a 8 letras minusculas
+    <input type="text" pattern="[a-z]{4,8}" required id="requerido"/>
+</label><br>
+<!-- Desactiva el boton derecho del raton sobre la imagen -->
+    <picture  oncontextmenu="return false">
+        <source
+        srcset="navidadGhiblli.jpg"
+        media="(min-width: 800px)">
+        <img src="fondoNegro.jpg" style="max-width: 100%;" />
+    </picture><br>
   <img src="fondoNegro.jpg" loading="lazy" style="max-width: 100%;"/>
 
 
