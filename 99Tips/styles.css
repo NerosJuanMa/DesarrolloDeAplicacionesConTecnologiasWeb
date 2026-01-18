@@ -27,13 +27,15 @@ body {
 }
 
 header {
-  display: flex;
+  display:inline-flex;
   justify-content:space-between;
+  width: 100%;  
   align-items: center;
   padding: 0.5rem 2rem;
   background: var(--card);
   box-shadow: 0 20px 10px rgba(0,0,0,.05);
   height: 10rem;
+  
 }
 
 .header-actions {
