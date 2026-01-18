@@ -19,7 +19,10 @@
   font-family: 'Inter', sans-serif;
   /* appearance: none; */
 }
-
+*::selection {
+background-color: yellow;
+color: blue;
+}
 body {
   margin: 0;
   background: var(--bg);
@@ -94,6 +97,9 @@ form input, form textarea {
   padding: .6rem;
   border-radius: 8px;
   border: 1px solid #ccc;
+
+  caret-color: red;
+  resize: both; /* También puedes usar 'vertical' y 'horizonta' */
 }
 
 form button {
@@ -186,10 +192,18 @@ font-family: Georgia;
 font-size: 4rem;
 line-height: 1;
 }
+
 img {
 width: 100%;
 height: 100%;
 object-fit: cover;
+filter: drop-shadow(5px 5px 5px #222222);
+}
+.img2 {
+float: left;
+width: 150px;
+margin: 20px;
+shape-outside: url("output.png");
 }
 /* --Poner un filtro de color sobre una imagen */
 .picturecolor{
@@ -255,5 +269,23 @@ svg {
   width: 32px;
   height: 32px;
   
+}
+
+input:in-range {
+border: solid 1px green;
+}
+input:out-of-range {
+border: solid 1px red;
+}
+
+*:fullscreen {
+background-color: #faa;
+}
+
+.cards2 {
+display: grid;
+grid-template-columns:
+repeat(auto-fit, minmax(200px, 1fr));
+grid-gap: 1rem;
 }
 
