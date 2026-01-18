@@ -1,114 +1,116 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>99-Tips</title>
 
     <link rel="stylesheet" href="styles.css" />
-    
+
 </head>
+
 <body>
-    <header>  
-    <h1>📚 99-Tips</h1>
+    <header>
+        <h1>📚 99-Tips</h1>
 
-    <div class="header-actions">
-        <button id="themeToggle" title="Cambiar tema">🌙</button>
-        <span class="like-container">
-        <span id="likeBtn" >🤍</span>
-        <span id="likeCount">0</span>
-        </span>
-    </div>
+        <div class="header-actions">
+            <button id="themeToggle" title="Cambiar tema">🌙</button>
+            <span class="like-container">
+                <span id="likeBtn">🤍</span>
+                <span id="likeCount">0</span>
+            </span>
+        </div>
     </header>
-<h2 class="puntitos">Entre puntos</h2>
+    <main>
+        <h2 class="puntitos">Entre puntos</h2>
+        <br>
+        <!-- Borde verde -->
+        <input type="text" placeholder="Ingresa tu nombre" />
+        <!-- Borde azul -->
+        <input type="text" placeholder="Ingresa tu apellido" value="Montes"><br>
+        <!-- Seleccionador de color -->
+        <label for="color">Selecciona color: <br>
+            <input type="color" id="color" class="element" />
+            
+        </label>
+        <!-- control deslizante (slider) -->
+        <input type="range" min="0" max="100">
+        <!-- Barra de progreso -->
+        <br><progress max="100" value="70">70%</progress>
 
-<!-- Borde verde -->
-<input type="text" placeholder="Ingresa tu nombre" />
-<!-- Borde azul -->
-<input type="text"
-placeholder="Ingresa tu apellido"
-value="Montes" ><br>
-     <!-- Seleccionador de color -->
-  <label for="color">Selecciona color: <br>
-  <input type="color" id="color" class="element"/>
-  <!-- control deslizante (slider) -->
-  <br><input type="range" min="0" max="100">
- <!-- Barra de progreso -->
-  <br><progress max="100" value="70">70%</progress>
-  </label> 
-
-  <!-- Area de texto con corrector de errores -->
-        <br><textarea spellcheck="true">
+        <!-- Area de texto con corrector de errores -->
+        <textarea spellcheck="true">
           Aquí ai un error
           </textarea>
         <br> <textarea lang="en" spellcheck="true">
           Jere is some text widt some eror
           </textarea>
-  
-    <br><label>
-    ¿Qué quieres comer?
-    <input list="elementos" />
-    </label>
-      <datalist id="elementos">
-      <option>Hamburguesa</option>
-      <option>Pizza</option>
-      <option>Tacos</option>
-      <option>Arepas</option>
-      </datalist>
-<!-- Solo imagenes --><br>
-<input type="file" accept="image/*" />
-<!-- Solo archivos .pdf --><br>
-<input type="file" accept=".pdf" />
-<!-- Multiples archivos --><br>
-<input type="file" multiple />
 
-<!-- Se muestra por que se solicita por Script --><br>
-<template>
-  <div class="card">
-    <h2>Producto</h2>
-    <p>20€</p>
-  </div>
-</template>
+        <label>
+            ¿Qué quieres comer?
+            <input list="elementos" />
+        </label>
+        <datalist id="elementos">
+            <option>Hamburguesa</option>
+            <option>Pizza</option>
+            <option>Tacos</option>
+            <option>Arepas</option>
+        </datalist>
+        <!-- Solo imagenes -->
+        <input type="file" accept="image/*" />
+        <!-- Solo archivos .pdf --><br>
+        <input type="file" accept=".pdf" />
+        <!-- Multiples archivos --><br>
+        <input type="file" multiple />
 
-<!-- Este texto se muestra al seleccionar Sumary -->
-    <details>
-        <summary>Título-Oculto</summary>
-        Este es el contenido que se muestra
-    </details>
-<!-- Agregar “citas” a un documento -->
-    <blockquote cite="https://www.facebook.com">
-        <p>Este texto es algo que dijo alguien más.</p>
-    </blockquote>
-<h3 class="centrado">Mi nombre es Freddy</h3>
+        <!-- Se muestra por que se solicita por Script --><br>
+        <template>
+            <div class="card">
+                <h2>Producto</h2>
+                <p>20€</p>
+            </div>
+        </template>
 
-<!-- Un elemento para mostrar fecha y hora -->
-    <p>
-        Oasis va a celebrar su 25 aniversario
-        <time datetime="2021-07-07">el 7 de julio</time>
-        en el Hyde Park de Londres.
+        <!-- Este texto se muestra al seleccionar Sumary -->
+        <details>
+            <summary>Título-Oculto</summary>
+            Este es el contenido que se muestra
+        </details>
+        <!-- Agregar “citas” a un documento -->
+        <blockquote cite="https://www.facebook.com">
+            <p>Este texto es algo que dijo alguien más.</p>
+        </blockquote>
+        <h3 class="centrado">Mi nombre es Freddy</h3>
+
+        <!-- Un elemento para mostrar fecha y hora -->
+        <p>
+            Oasis va a celebrar su 25 aniversario
+            <time datetime="2021-07-07">el 7 de julio</time>
+            en el Hyde Park de Londres.
         </p>
         <p>
-        El concierto comienza a las
-        <time datetime="20:00">08:00pm</time>
-    </p>
-<label for="requerido">Patron de entrada de 4 a 8 letras minusculas
-    <input type="text" pattern="[a-z]{4,8}" required id="requerido"/>
-</label><br>
-<!-- Desactiva el boton derecho del raton sobre la imagen -->
-    <picture  oncontextmenu="return false">
-        <source
-        srcset="navidadGhiblli.jpg"
-        media="(min-width: 800px)">
-        <img src="fondoNegro.jpg" style="max-width: 100%;" />
-    </picture><br>
-  <img src="fondoNegro.jpg" loading="lazy" style="max-width: 100%;"/>
+            El concierto comienza a las
+            <time datetime="20:00">08:00pm</time>
+        </p>
+        <!-- patron de entradas -->
+        <label for="requerido">Patron de entrada de 4 a 8 letras minusculas</label>
+            <input type="text" pattern="[a-z]{4,8}" required id="requerido" />
+        
+        <!-- Desactiva el boton derecho del raton sobre la imagen -->
+        <picture oncontextmenu="return false">
+            <source srcset="navidadGhiblli.jpg" media="(min-width: 800px)">
+            <img src="fondoNegro.jpg" style="max-width: 100%;" />
+        </picture>
+        <img src="fondoNegro.jpg" loading="lazy" style="max-width: 100%;" />
 
+    </main>
+    <footer>
+        <span>© Formación profesional</span>
+    </footer>
 
-<footer>
-  <span>© Formación profesional</span>
-</footer>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>
