@@ -12,8 +12,9 @@
 
 <body>
     <header>
+        
         <h1>📚 99-Tips</h1>
-
+        
         <div class="header-actions">
             <button id="themeToggle" title="Cambiar tema">🌙</button>
             <span class="like-container">
@@ -25,13 +26,14 @@
     <main>
         <h2 class="puntitos">Entre puntos</h2>
         <br>
+        
         <!-- Borde verde -->
         <input type="text" placeholder="Ingresa tu nombre" />
         <!-- Borde azul -->
         <input type="text" placeholder="Ingresa tu apellido" value="Montes"><br>
         <!-- Seleccionador de color -->
         <label for="color">Selecciona color: <br>
-            <input type="color" id="color" class="element" />
+            <input type="color" id="color" class="selectcolor" />
             
         </label>
         <!-- control deslizante (slider) -->
@@ -81,8 +83,8 @@
         <blockquote cite="https://www.facebook.com">
             <p>Este texto es algo que dijo alguien más.</p>
         </blockquote>
-        <h3 class="centrado">Mi nombre es Freddy</h3>
-
+        <h3 class="centrado">Mi nombre es Freddy</h3><br>
+        <h4 class="gradiente">Texto con color degradado</h4>
         <!-- Un elemento para mostrar fecha y hora -->
         <p>
             Oasis va a celebrar su 25 aniversario
@@ -93,16 +95,35 @@
             El concierto comienza a las
             <time datetime="20:00">08:00pm</time>
         </p>
+        <h1><span class="stroke">< ∕ ></span> Frontend</h1>
+        <br><span>✓</span>
+        <br><span>◁▷</span>
+
+        <div>             
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-xml h-5 w-5 text-primary">
+                    <path d="m18 16 4-4-4-4"></path>
+                    <path d="m6 8-4 4 4 4"></path>
+                    <path d="m14.5 4-5 16"></path>
+                </svg>                
+                <h4>Frontend</h4>
+                <ul class="space-y-1 text-xs text-muted-foreground font-mono">
+                    <li class="group-hover:text-foreground transition-colors">• React</li>
+                    <li class="group-hover:text-foreground transition-colors">• TypeScript</li>
+                    <li class="group-hover:text-foreground transition-colors">• Next.js</li>
+                    <li class="group-hover:text-foreground transition-colors">• Tailwind CSS</li>
+                    <li class="group-hover:text-foreground transition-colors">• Vue.js</li>
+                </ul>
+        </div>
         <!-- patron de entradas -->
         <label for="requerido">Patron de entrada de 4 a 8 letras minusculas</label>
             <input type="text" pattern="[a-z]{4,8}" required id="requerido" />
         
         <!-- Desactiva el boton derecho del raton sobre la imagen -->
-        <picture oncontextmenu="return false">
+        <picture oncontextmenu="return false" class="picturecolor">
             <source srcset="navidadGhiblli.jpg" media="(min-width: 800px)">
             <img src="fondoNegro.jpg" style="max-width: 100%;" />
         </picture>
-        <img src="fondoNegro.jpg" loading="lazy" style="max-width: 100%;" />
+        <img src="fondoNegro.jpg" loading="lazy" style="max-width: 100%;" class="element"/>
 
     </main>
     <footer>
