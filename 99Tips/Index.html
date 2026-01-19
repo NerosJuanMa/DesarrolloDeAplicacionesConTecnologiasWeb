@@ -37,28 +37,25 @@
             
         </label>
         <!-- control deslizante (slider) -->
-        <input type="range" min="0" max="100">
+        <input type="range" id="miRango" min="0" max="100" value="50" title="Valor: 50">
+
         <!-- Barra de progreso -->
-        <br><progress max="100" value="70">70%</progress>
-
-
-        <!-- En rango -->
-        <br><input type="number" min="0" max="100" value="99" />
-        <!-- Fuera de rango -->
-        <br><input type="number" min="0" max="100" value="200" />
-        <!-- Fuera de rango -->
-        <br><input type="date" max="2019-12-25" step="1"
-        value="2020-12-25">
-
-        <!-- Area de texto con corrector de errores -->
-        <textarea spellcheck="true" class="elemento">
-          Aquí ai un error
-          </textarea>
-        <br> <textarea lang="en" spellcheck="true">
-          Jere is some text widt some eror
-          </textarea>
-
-        <label>
+        <progress max="100" value="70" title="70%">70%</progress>   
+        <!-- control deslizante rango2 visual (slider) -->
+        <div class="range-container">
+            <label for="miRango2">Cantidad: <span id="valorRango">50</span></label>
+            <input type="range" id="miRango2" min="0" max="100" value="50">
+        </div>
+        <!-- control deslizante rango3 visual (slider) -->
+        <div class="range-container">
+            <label for="miRango3">Selecciona cantidad:</label><br>
+            <div class="range-wrapper">
+                <input type="range" id="miRango3" min="0" max="100" value="50">
+                <output id="rangeOutput">50</output>
+            </div>
+        </div>
+        <!-- Selecciona comida -->
+        <label class="comida">
             ¿Qué quieres comer?
             <input list="elementos" />
         </label>
@@ -68,6 +65,22 @@
             <option>Tacos</option>
             <option>Arepas</option>
         </datalist>
+        <!-- En rango -->
+        <input type="number" min="0" max="100" value="99" />
+        <!-- Fuera de rango -->
+        <br><input type="number" min="0" max="100" value="200" />
+        <!-- Fuera de rango -->
+        <input type="date" max="2019-12-25" step="1" value="2020-12-25">
+
+        <!-- Area de texto con corrector de errores -->
+        <textarea spellcheck="true" class="elemento">
+          Aquí ai un error
+          </textarea>
+        <br> <textarea lang="en" spellcheck="true">
+          Jere is some text widt some eror
+          </textarea>
+
+        
         <!-- Solo imagenes -->
         <input type="file" accept="image/*" />
         <!-- Solo archivos .pdf --><br>

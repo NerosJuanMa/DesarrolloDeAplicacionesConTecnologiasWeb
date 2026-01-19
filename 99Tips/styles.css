@@ -289,3 +289,27 @@ repeat(auto-fit, minmax(200px, 1fr));
 grid-gap: 1rem;
 }
 
+.range-container{
+  display:content;
+  gap: 2;
+  border: 2px solid red;
+  max-width: 50%; 
+  height: 50px; 
+  background-color: rgb(244, 244, 103); 
+}
+.range-wrapper {
+  display: contents;
+  align-items: center;
+  gap: 10px;
+}
+
+#rangeOutput {
+  min-width: 40px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+}
+.comida{
+  display:content;
+  
+}
